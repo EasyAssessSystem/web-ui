@@ -1,5 +1,7 @@
 var angular = require('angular');
 var router = require('angular-ui-router');
+require('./components/user.html');
+require('./components/cdc.html');
 /**
  * Created by alexli on 2016/4/3.
  * Edited by aaronchen on 2016/5/14
@@ -136,9 +138,10 @@ EasyAssess.TaskManager = {
 	// },
 	
 	_loadController:function(module){
-		var moduleName = "./modules/" + module
-		console.log(moduleName)
-		require(moduleName)
+		var moduleName = "./components/" + module;
+		console.log(moduleName);
+		require(moduleName);
+		console.log(EasyAssess);
 	},
 
 	start: function(module, state) {
@@ -146,7 +149,7 @@ EasyAssess.TaskManager = {
 			this._loadController(module)
 			var options = {
 					url: "/" + module,
-				    templateUrl: "./modules/" + module + ".html",
+				    templateUrl: module + '.html',
 				    controller: module + "Controller"
 				}
 				

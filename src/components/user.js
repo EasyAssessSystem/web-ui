@@ -1,3 +1,6 @@
+var EasyAssess = require('../easyassess.application');
+
+
 EasyAssess.app.UserController = function($scope, $http) {
 	this.initialize.apply(this, arguments);
 };
