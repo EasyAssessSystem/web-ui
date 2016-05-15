@@ -1,8 +1,3 @@
-	// global.jQuery = require('jquery');
-	// require('bootstrap');
-
-// require('../node_modules/bootstrap/dist/css/bootstrap.css');
-
 var angular = require('angular');
 require('../node_modules/angular-dropdowns/dist/angular-dropdowns.css');
 require('../node_modules/ng-dialog/css/ngDialog.min.css');
@@ -27,9 +22,4 @@ alert(abc);
  app.controller("esApplicationController", function($scope) {
  });
 
- /*var testApp = require('./directives/testApp');
- require('./directives/widget/testAppDirect');
- console.log(testApp.app.name);
- var app = angular.module("App",[testApp.app.name]);
-*/
 

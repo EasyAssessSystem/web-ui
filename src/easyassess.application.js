@@ -116,30 +116,8 @@ EasyAssess.session = {};
 EasyAssess.TaskManager = {
 	_cached: {},
 	
-	// _loadController: function(module, callback) {
-	// 	var url = "./modules/" + module + ".js"
-	// 	var script = document.createElement("script")
-	//     script.type = "text/javascript";
-	//     if (script.readyState) {
-	//         script.onreadystatechange = function(){
-	//             if (script.readyState == "loaded" ||
-	//                     script.readyState == "complete") {
-	//                 script.onreadystatechange = null;
-	//                 callback();
-	//             }
-	//         };
-	//     } else { 
-	//         script.onload = function() {
-	//             callback();
-	//         };
-	//     }
-	//     script.src = url;
-	//     document.getElementsByTagName("head")[0].appendChild(script);
-	// },
-	
 	_loadController:function(module){
-		var moduleName = "./components/" + module;
-		require(moduleName);
+		require("./components/" + module);
 	},
 
 	start: function(module, state) {
@@ -157,20 +135,6 @@ EasyAssess.TaskManager = {
 				
 				EasyAssess.TaskManager._cached[module] = true;
 
-
-			// this._loadController(module, function() {
-			// 	var options = {
-			// 		url: "/" + module,
-			// 	    templateUrl: "./modules/" + module + ".html",
-			// 	    controller: module + "Controller"
-			// 	}
-				
-			// 	EasyAssess.app.stateProvider.state(module, options);
-				
-			// 	state.go(module, {});
-				
-			// 	EasyAssess.TaskManager._cached[module] = true;
-			// });
 		} else {
 			state.go(module, {});
 		}
