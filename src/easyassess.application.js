@@ -139,14 +139,12 @@ EasyAssess.TaskManager = {
 	
 	_loadController:function(module){
 		var moduleName = "./components/" + module;
-		console.log(moduleName);
 		require(moduleName);
-		console.log(EasyAssess);
 	},
 
 	start: function(module, state) {
 		if (!this._cached[module]) {
-			this._loadController(module)
+			this._loadController(module);
 			var options = {
 					url: "/" + module,
 				    templateUrl: module + '.html',

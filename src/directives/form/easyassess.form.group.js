@@ -1,0 +1,351 @@
+/**
+ * 
+ */
+//EasyAssess.formApp.provider('esFormService', function() {
+//	 var self = this;
+//	
+//	 this.setProvider = function(provider) {
+//		 this.provider = provider;
+//	 }
+//	  
+//	 this.$get = function() {
+//		 return self.provider;
+//	 }
+//});
+//
+//
+//EasyAssess.formApp.config(function(esFormServiceProvider) {
+//	esFormServiceProvider.setProvider({
+//		getGroupName: function() {
+//			return "Group here.."
+//		}
+//	});
+//})
+var EasyAssess = require('../../easyassess.application');
+
+
+EasyAssess.directives["esFormGroup"] 
+	= EasyAssess.formApp.directive("esFormGroup", function(ngDialog) {
+	
+	return {
+		restrict: 'E',
+		replace: true,
+		transclude: false,
+		template:  '<div class="es-form-group">' 
+				  +	 '<table class="table table-striped">'
+		          + 	'<thead><tr><th style="width:20%;">检测分类</th><th style="width:40%;">样本</th><th style="width:40%;">编码组</th></tr></thead>'
+		          +     '<tbody>'
+		          +			'<tr>'
+		          +				'<td>'
+		          +					'<table>'
+		          +						'<tr>'
+		          +							'<td class="es-form-group-cell" valign="middle"><es-text-box es-content="{{esGroup.name}}" es-change-callback="nameChanged(val)" class="es-form-group-text" es-placeholder="请输入分组名"></es-text-box></td>'
+		          +						'</tr>'
+		          +						'<tr ng-repeat="row in esGroup.rows">'
+		          +							'<td class="es-form-group-cell" valign="middle"><div>{{row.item.name}} - {{row.item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeRow(row.guid)"></span></div></td>'
+		          +						'</tr>'
+		          +					'</table>'
+		          +				'</td>'
+		          +				'<td>'
+		          +					'<table>'
+		          +						'<tr>'
+		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><table><tr><td><span class="es-form-group-title">{{s_col.number}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'specimens\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
+		          +						'</tr>'
+		          +						'<tr ng-repeat="row in esGroup.rows">'
+		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><div ng-if="!isSetted(row,s_col)" ng-click="setSpecimenOptions(row, s_col)" class="btn btn-danger">未设置</div><div ng-if="isSetted(row,s_col)" ng-click="setSpecimenOptions(row, s_col)" class="btn btn-success">已设置</div></td>'
+		          +						'</tr>'
+		          +					'</table>'
+		          +				'</td>'
+		          +  			'<td>'
+		          +					'<table>'
+		          +						'<tr>'
+		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codes"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codes\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addCode" es-text="编码组" title="添加编码组"></es-add-button></td>'
+		          +						'</tr>'
+		          +						'<tr ng-repeat="row in esGroup.rows">'
+		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codes"><div class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
+		          +						'</tr>'
+		          +					'</table>'
+		          +				'</td>'
+		          +			'</tr>'
+		          +			'<tr>'
+		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
+		          +					'<es-add-button es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'		
+		          +				'</td>'
+		          +			'</tr>'
+		          +	 	'</tbody></table>'
+		          + '</div>',
+		scope: {
+			esGroup:"="
+		},
+		
+		controller: ["$scope", function($scope, $element, $attrs){
+			//edit("Hello");
+			if (!$scope.esGroup.guid) {
+				$scope.esGroup.guid = EasyAssess.utils.generateGUID();
+			}
+			
+			$scope.removeColumn = function(guid, set) {
+				// remove columns
+				var columns = $scope.esGroup[set];
+				for (var i=0;i<columns.length;i++) {
+					if (columns[i].guid == guid) {
+						columns.splice(i, 1);
+						break;
+					}
+				}
+				
+				//remove column for rows
+				for (var n=0;n<$scope.esGroup.rows.length;n++) {
+					var row = $scope.esGroup.rows[n];
+					var key = (set=="specimens") ? "optionMap" : "codeMap";
+					if (row[key][guid]) {
+						delete row[key][guid];
+					}
+				}
+			}
+			
+			$scope.removeRow = function(guid) {
+				for (var i=0;$scope.esGroup.rows.length;i++) {
+					if ($scope.esGroup.rows[i].guid == guid) {
+						$scope.esGroup.rows.splice(i, 1);
+						break;
+					}
+				}
+			}
+			
+			$scope.nameChanged = function(val) {
+				$scope.esGroup.name = val;
+			}
+			
+			$scope.isSetted = function(row, col) {
+				var cell = row.optionMap[col.guid];
+				if (cell) {
+					if (cell.expectedValues && cell.expectedValues.length > 0) {
+						return true;
+					}
+				}
+				return false;
+			}
+			
+			$scope.setSpecimenOptions = function(row, col) {
+				ngDialog.open({
+	                template: '<div class="es-dialog-content">'
+	                		 + '<div style="height:350px;overflow:auto;">'
+	                		 + '<div class="es-dialog-form-line">'
+	                		 +	'<select es-ids="drpType" style="width:100%;" ng-model="type"><option value="S">定性</option><option value="V">定量</option></select>'
+	                		 + '</div>'
+	                		 + '<div es-ids="pnlSelect">'
+	                		 +		'<div class="es-dialog-form-line">'
+	                		 +      	'<span>正确值</span><a href="javascript:void(0)" style="padding-left:20px;" ng-click="addExpectedValue()">添加</a>'
+	                		 + 		'</div>'
+	                		 +		'<div class="es-dialog-form-line">'
+	                		 +			'<table class="table table-striped">'
+	       		          	 + 				'<thead><tr><th>答案值</th><th>分值</th></tr></thead>'
+	       		          	 +				'<tbody>'
+	       		          	 +					'<tr ng-repeat="ev in settings.expectedValues"><td>{{ev.value}}</td><td>{{ev.weight}}</td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeExpectedValue(ev.value)"></span></td></tr>'
+	       		          	 +				'</tbody>'
+	       		          	 +			'<table>'
+	                		 + 		'</div>'
+	                		 + '</div>'
+	                		 + '<div es-ids="pnlValue" ng-if="type==\'S\'">'
+	                		 +		'<div class="es-dialog-form-line">'
+	                		 +			'<span>选项值</span><a href="javascript:void(0)" style="padding-left:20px;" ng-click="addOptionValue()">添加</a>'
+	                		 +      '</div>'
+	                		 +		'<div class="es-dialog-form-line">'
+	                		 +			'<table class="table table-striped"  ng-if="type==\'S\'">'
+	       		          	 + 				'<thead><tr><th>选项</th></tr></thead>'
+	       		          	 +				'<tbody>'
+	       		          	 +					'<tr ng-repeat="ov in settings.optionValues"><td>{{ov.value}}</td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeOptionValue(ov.value)"></span></td></tr>'
+	       		          	 +				'</tbody>'
+	       		          	 +			'<table>'
+	                		 + 		'</div>'
+	                		 + '</div>'
+	                		 + '</div>'
+	                		 + '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+	                plain: true,
+	                controller: ['$scope', function($dialog) {
+	                		
+	                	if (!$dialog.type) {
+	                		if (row.optionMap && row.optionMap[col.guid]) {
+	                			$dialog.type = row.optionMap[col.guid].type;
+	                			$dialog.settings = row.optionMap[col.guid];
+	                		} else {
+	                			$dialog.settings = {
+	                				expectedValues: []	
+	                			}
+	                			$dialog.type = "S";
+	                		}
+	                	}
+	                	
+	                	$dialog.removeExpectedValue = function(val) {
+	                		for (var i=0;i<$dialog.settings.expectedValues.length;i++) {
+	                			if ($dialog.settings.expectedValues[i].value == val) {
+	                				$dialog.settings.expectedValues.splice(i,1);
+	                				break;
+	                			}
+	                		}
+	                	}
+	                	
+	                	$dialog.removeOptionValue = function(val) {
+	                		for (var i=0;i<$dialog.settings.optionValues.length;i++) {
+	                			if ($dialog.settings.optionValues[i].value == val) {
+	                				$dialog.settings.optionValues.splice(i,1);
+	                				break;
+	                			}
+	                		}
+	                	}
+	                	
+	                	$dialog.submit = function(){
+	                		if ($dialog.type == "S" && !$dialog.settings.optionValues) {
+	                			$dialog.settings.optionValues = [];
+	                		} else if ($dialog.type == "V") {
+	                			delete $dialog.settings.optionValues;
+	                		}
+	                		$dialog.settings.type = $dialog.type;
+	                		row.optionMap[col.guid] = $dialog.settings;
+	                    	$dialog.closeThisDialog();
+	                    }
+	                	
+	                	
+	                	$dialog.addExpectedValue = function() {
+	                		ngDialog.open({
+	    		                template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" style="width:300px;" placeholder="输入答案值" es-ids="txtValue"/></div>'
+	    		                		+ '<div class="es-dialog-form-line"><input class="form-control" style="width:300px;" placeholder="输入得分值" es-ids="txtWeight"/></div>' 
+	    		                		+ '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+	    		                plain: true,
+	    		                controller: ['$scope', function($digExepectedValue) {
+	    		                	$digExepectedValue.submit = function(){
+	    		                		$dialog.settings.expectedValues.push({
+	    		                			"value":$('[es-ids=txtValue]').val(),
+	    		                			"weight":Number($('[es-ids=txtWeight]').val())
+	    		                		});
+	    		                		$digExepectedValue.closeThisDialog();
+	    		                    }
+	    		                }]
+	    		         });
+	                	};
+	                	
+	                	$dialog.addOptionValue = function() {
+	                		ngDialog.open({
+	    		                template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" style="width:300px;" placeholder="输入选项值" es-ids="txtValue"/></div>'
+	    		                		+ '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+	    		                plain: true,
+	    		                controller: ['$scope', function($digOptionValue) {
+	    		                	$digOptionValue.submit = function(){
+	    		                		if (!$dialog.settings.optionValues) {
+	    		                			$dialog.settings.optionValues = [];
+	    		                		}
+	    		                		$dialog.settings.optionValues.push({
+	    		                			"value":$('[es-ids=txtValue]').val()
+	    		                		});
+	    		                		$digOptionValue.closeThisDialog();
+	    		                    }
+	    		                }]
+	                		 });
+	                	};
+	                }]
+				});
+			}
+		}],
+		link: function($scope, ele, attrs, ctrl) {
+			 var btnAddSpecimen = $(ele).find('[es-ids=addSpecimen]');
+			 var btnAddCode = $(ele).find('[es-ids=addCode]');
+			 var btnAddItem = $(ele).find('[es-ids=addItem]');
+			 
+			 function isDuplicated(field, set) {
+				for (var i=0;i<set.length;i++) {
+					if (set[i].number == field) return true;
+					if (set[i].model == field) return true;
+				}
+				return false;
+			 }
+			 
+			 // add specimen
+			 btnAddSpecimen.on("click", function() {
+				 ngDialog.open({
+		                template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" placeholder="请输入样本编号" es-ids="txtSpecimenNumber"/></div>'
+		                		 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+		                plain: true,
+		                scope: $scope,
+		                controller: ['$scope', function($dialog) {
+		                	$dialog.submit = function(){
+		                		var field = $("[es-ids=txtSpecimenNumber]").val();
+		                		if (field && !isDuplicated(field, $scope.esGroup.specimens)) {
+		                			$scope.esGroup.specimens.push({
+		                				"guid": EasyAssess.utils.generateGUID(),
+			                    		"number": field
+			                    	});
+		                		}
+		                    	$dialog.closeThisDialog();
+		                    }
+		                }],
+		                preCloseCallback: function() {
+		                	
+		                }
+		         });
+			 });
+			 
+			 // add code group
+			 btnAddCode.on("click", function() {
+				 ngDialog.open({
+		                template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><select es-ids="drpGroup" style="width:100%;"><option ng-repeat="group in groups" value="{{group.value}}">{{group.text}}</option></select></div>'
+		                		 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+		                plain: true,
+		                controller: ['$scope', function($dialog) {
+		                	$dialog.submit = function(){
+		                		var field = $("[es-ids=drpGroup]").val();
+		                		if (field && !isDuplicated(field, $scope.esGroup.codes)) {
+			                		$scope.esGroup.codes.push({
+			                			"guid": EasyAssess.utils.generateGUID(),
+			                    		"name":$("[es-ids=drpGroup]").find("option:selected").text(),
+			                    		"model":field
+			                    	});
+		                		}
+		                		$dialog.closeThisDialog();
+		                    };
+		                    
+		                    $dialog.groups = EasyAssess.codeGroups;
+		                }],
+		                preCloseCallback: function() {
+		                	
+		                }
+		         });
+			 });
+			 
+			 //add item
+			 btnAddItem.on("click", function() {
+				 ngDialog.open({
+		                template: '<div class="es-dialog-content">'
+		                	     +'<div class="es-dialog-form-line"><input class="form-control" placeholder="请输入项目名" es-ids="txtItem"/></div>'
+		                		 +'<div class="es-dialog-form-line"><select es-ids="drpUnits" style="width:100%;"><option ng-repeat="unit in units" value="{{unit.value}}">{{unit.value}}</option></select></div>'
+		                		 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+		                plain: true,
+		                controller: ['$scope', function($dialog) {
+		                	$dialog.submit = function(){
+		                		var name = $("[es-ids=txtItem]").val();
+		                		var unit = $("[es-ids=drpUnits]").val();
+		                		
+		                		$scope.esGroup.rows.push({
+		                			"guid": EasyAssess.utils.generateGUID(),
+		                			"item": {
+			                			"name": name,
+			                			"unit": unit 
+		                			},
+		                			"optionMap": {
+		                				
+		                			}
+		                		});
+		                		$dialog.closeThisDialog();
+		                    };
+		                    
+		                    $dialog.units = EasyAssess.units;
+		                }],
+		                preCloseCallback: function() {
+		                	
+		                }
+		         });
+			 });
+		}
+	}
+
+});

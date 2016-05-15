@@ -1,15 +1,22 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
-    './src/index.js'
-  ],
+  entry: {
+    app:[
+     'webpack-dev-server/client?http://localhost:8080',
+     'webpack/hot/only-dev-server',
+     './src/application.js'
+    ],
+    form:[
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/only-dev-server',
+      './src/formeditor.js'
+    ]
+  },
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   module:{
     loaders:[
