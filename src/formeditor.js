@@ -15,7 +15,7 @@ require('./directives/form/easyassess.form.header');
 require('./directives/form/easyassess.form.group');
 require('./directives/form/easyassess.form.page');
 var angular = require('angular');
-console.log(EasyAssess.formApp.name);
+
 var app = angular.module("formEditorApp",[EasyAssess.formApp.name]);
 app.controller("formEditorController", function($scope,ngDialog) {
 	$scope.groups = [];

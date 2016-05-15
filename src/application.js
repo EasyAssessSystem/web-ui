@@ -10,15 +10,13 @@ var EasyAssess = require('./easyassess.application');
 require('./directives/widget/easyassess.app.banner');
 require('./directives/widget/easyassess.app.menu');
 require('./directives/widget/easyassess.app.component');
-require('./directives/widget/easyassess.app.textbox');
-require('./directives/widget/easyassess.app.select');
+require('./directives/control/easyassess.app.textbox');
+require('./directives/control/easyassess.app.select');
 require('./directives/widget/easyassess.app.maint.buttongroup');
 require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 
-var abc = 3;
-alert(abc);
- var app = angular.module("esApplication",[EasyAssess.app.name]);
+var app = angular.module("esApplication",[EasyAssess.app.name]);
  app.controller("esApplicationController", function($scope) {
  });
 
