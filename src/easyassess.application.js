@@ -13,6 +13,13 @@ var EasyAssess = {
     description: 'EasyAssess Application Namespace'
 }
 
+ EasyAssess.env = {
+	dev:'http://localhost:8180/pdm/data/',
+	prod:'',
+	test:''
+}
+
+
 /**
  * Define application
  */
@@ -29,11 +36,14 @@ EasyAssess.formApp = angular.module("EasyAssessForm",
  * Application config
  */
 EasyAssess.app.config(
-	function($stateProvider, $urlRouterProvider) {
+	function($stateProvider, $urlRouterProvider,$httpProvider) {
 	  EasyAssess.app.stateProvider = $stateProvider;
 	  EasyAssess.app.urlRouterProvider = $urlRouterProvider;
+	  $httpProvider.defaults.useXDomain = true;
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	}
 );
+
 
 EasyAssess.app.registerController = function(index, controller) {
 	this.controllerProvider.register(index, controller);

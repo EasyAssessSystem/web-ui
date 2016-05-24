@@ -16,8 +16,19 @@ EasyAssess.app.UserController.prototype = angular.extend({
          $scope.fields = [
               {"title":"用户名", "field":"username", "type":"string"},
               {"title":"姓名", "field":"name", "name":"string"},
-              {"title":"用户类型", "field":"type", "type":"string"}
+              {"title":"状态", "field":"status", "type":"string"}
          ];
+
+		 $scope.transferData = function(rawData){
+			 return rawData.map(function(obj){
+				 console.log(obj);
+				 if (obj['status'] === "A")
+					 obj['status'] = "有效"
+				 else
+					 obj['status'] = "无效"
+				 return obj
+			 })
+		 }
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 

@@ -34,11 +34,12 @@ EasyAssess.directives["esAppDatagrid"]
         scope: {
             esColumns:"=",
             esResource: "@",
-            esPageSize: "@"
+            esPageSize: "@",
+			esTransfer: "&"
         },
         controller: ["$scope", function($scope,$element,$attrs) {	
            if (!$scope.esPageSize) {
-        	   $scope.esPageSize = 10;
+        	   $scope.esPageSize = 5;
            }
            
            var conditions = {
@@ -74,10 +75,12 @@ EasyAssess.directives["esAppDatagrid"]
            $scope.last = function() {
         	   $scope.jump(pageCount);
            }
-           
+
+
            function _loadData (resource, pageSize, pageNum, filterBy, filterValue, sortBy) {
         	   $scope.isLoading = true;
-        	   $http.get("../../dashboard/pdm/" + resource + "/" + ((filterBy && filterValue) ? + filterBy + "/" + filterValue : ""), {
+			   pageNum=0;
+        	   $http.get(EasyAssess.env.dev + resource + "/list" + ((filterBy && filterValue) ? + filterBy + "/" + filterValue : ""), {
 	       			params: {
 	       				size: pageSize,
 	       				page: pageNum,
@@ -86,10 +89,11 @@ EasyAssess.directives["esAppDatagrid"]
 	       		}).success(
 	       			function(response) {
 	       				$scope.isLoading = false;
-	       				if (response.total && response.set) {
-	       					$scope.esData = response.set;
+	       				if (response.data.content.length > 0) {
+	       					$scope.esData = $scope.esTransfer()(response.data.content);
+							console.log($scope.esData)
 	       					$scope.pagination = [];
-	       					pageCount = Math.ceil(response.total/pageSize);
+	       					pageCount = response.data.totalPages;
 	       					if (!pageCount) pageCount = 1;
 	       					
 	       					var max = 5;
