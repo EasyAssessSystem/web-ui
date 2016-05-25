@@ -79,11 +79,10 @@ EasyAssess.directives["esAppDatagrid"]
 
            function _loadData (resource, pageSize, pageNum, filterBy, filterValue, sortBy) {
         	   $scope.isLoading = true;
-			   pageNum=0;
         	   $http.get(EasyAssess.env.dev + resource + "/list" + ((filterBy && filterValue) ? + filterBy + "/" + filterValue : ""), {
 	       			params: {
 	       				size: pageSize,
-	       				page: pageNum,
+	       				page: pageNum -1,
 	       				sortBy: sortBy
 	       			}
 	       		}).success(
@@ -91,7 +90,6 @@ EasyAssess.directives["esAppDatagrid"]
 	       				$scope.isLoading = false;
 	       				if (response.data.content.length > 0) {
 	       					$scope.esData = $scope.esTransfer()(response.data.content);
-							console.log($scope.esData)
 	       					$scope.pagination = [];
 	       					pageCount = response.data.totalPages;
 	       					if (!pageCount) pageCount = 1;
