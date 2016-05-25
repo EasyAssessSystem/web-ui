@@ -21,14 +21,24 @@ EasyAssess.app.UserController.prototype = angular.extend({
 
 		 $scope.transferData = function(rawData){
 			 return rawData.map(function(obj){
-				 console.log(obj);
 				 if (obj['status'] === "A")
-					 obj['status'] = "有效"
+					 obj['status'] = "有效";
 				 else
-					 obj['status'] = "无效"
+					 obj['status'] = "无效";
 				 return obj
 			 })
 		 }
+
+		var _transfer2RawData = function(model){
+			if(model['status'] == "有效")
+				model['status'] = 'A';
+			else
+				model['status'] = 'U';
+		}
+		
+		$scope.$on('$selected', function(e, model){
+			$scope.activeModel = _transfer2RawData(model);
+		});
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 

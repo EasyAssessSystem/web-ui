@@ -13,11 +13,13 @@ var EasyAssess = {
     description: 'EasyAssess Application Namespace'
 }
 
- EasyAssess.env = {
+var env = {
 	dev:'http://localhost:8180/pdm/data/',
 	prod:'',
 	test:''
 }
+
+ EasyAssess.activeEnv = env.dev;
 
 
 /**
@@ -198,11 +200,12 @@ EasyAssess.app.MaintenanceController.prototype = {
     	
     	$scope.$on('$save', function(e){
     		if ($scope.activeModel.id > 0) {
-    			$http.put('../../dashboard/pdm/' + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
+				//$http.put(EasyAssess.activeEnv + $scope.resource + '/' + '34',{active:'1'});
+                $http.put(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
     				$scope.activeModel = null;
                 });
     		} else {
-    			$http.post('../../dashboard/pdm/' + $scope.resource, $scope.activeModel).success(function(){
+    			$http.post(EasyAssess.activeEnv + $scope.resource, $scope.activeModel).success(function(){
     				$scope.activeModel = null;
                 });
     		}

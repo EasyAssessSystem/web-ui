@@ -1,6 +1,6 @@
 <div>
 	<div ng-if="!activeModel || !activeModel.id">
-		<es-app-datagrid es-resource="users" es-columns="fields" es-transfer="transferData"></es-app-datagrid>
+		<es-app-datagrid es-resource="user" es-columns="fields" es-transfer="transferData"></es-app-datagrid>
 	</div>
 	<div ng-if="activeModel && activeModel.id">
 		<es-app-textbox es-model="activeModel.username" es-field="username" es-placeholder="输入用户名" es-label="用户名"></es-app-textbox>
