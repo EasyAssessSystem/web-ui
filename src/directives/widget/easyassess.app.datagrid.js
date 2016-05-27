@@ -35,7 +35,7 @@ EasyAssess.directives["esAppDatagrid"]
             esColumns:"=",
             esResource: "@",
             esPageSize: "@",
-			esTransfer: "&"
+			esTransfer: "&?"
         },
         controller: ["$scope", function($scope,$element,$attrs) {	
            if (!$scope.esPageSize) {
@@ -55,7 +55,15 @@ EasyAssess.directives["esAppDatagrid"]
         	   $scope.pageNum = pageNum;
         	   _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
            }
-           
+
+		   if (!$scope.esTransfer) {
+			   $scope.esTransfer = function(rawData){
+				   return function(rawData) {
+					   return rawData;
+				   };
+			   }
+		   }
+
            $scope.previous = function() {
         	   if ($scope.pageNum > 1) {
         		   $scope.jump($scope.pageNum - 1);

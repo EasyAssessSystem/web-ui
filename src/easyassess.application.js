@@ -2,6 +2,7 @@ var angular = require('angular');
 var router = require('angular-ui-router');
 require('./components/user.html');
 require('./components/cdc.html');
+require('./components/role.html');
 /**
  * Created by alexli on 2016/4/3.
  * Edited by aaronchen on 2016/5/14
@@ -140,11 +141,11 @@ EasyAssess.TaskManager = {
 				    templateUrl: module + '.html',
 				    controller: module + "Controller"
 				}
-				
+
 				EasyAssess.app.stateProvider.state(module, options);
-				
+
 				state.go(module, {});
-				
+
 				EasyAssess.TaskManager._cached[module] = true;
 
 		} else {

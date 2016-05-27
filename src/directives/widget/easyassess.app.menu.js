@@ -73,23 +73,14 @@ EasyAssess.directives["esAppMenu"]
     							items: [
     							    {
     							    	text:"用户管理",
-    							    	component: {
-    							    		list:[
-    							    		      {text:"用户名"},
-    							    		      {text:"密码"}
-    							    		]
-    							    	},
     							    	link:"user"
     							    },
+									{
+										text:"角色管理",
+										link:"role"
+									},
     							    {
     							    	text:"机构管理",
-    							    	component:{
-    							    		list:[
-    							    		      {text:"机构名"},
-    							    		      {text:"代码"},
-    							    		      {text:"登录名"}
-    							    		]
-    							    	},
     							    	link:"cdc"
     							    }
     							],
@@ -101,7 +92,6 @@ EasyAssess.directives["esAppMenu"]
     							items: [
 									{
 										text:"制作模板",
-										component:"",
 										link:"template"
 									}
 
