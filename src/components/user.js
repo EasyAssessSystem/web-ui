@@ -40,7 +40,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		return model;
 	},
 
-	_onSelect: function (model) {
+	_select: function (model) {
 		this.$scope.activeModel = this._transfer2RawData(model);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);

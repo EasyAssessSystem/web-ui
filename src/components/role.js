@@ -5,7 +5,7 @@ EasyAssess.app.RoleController = function($scope, $http, ngDialog) {
 	this.initialize.apply(this, arguments);
 };
 
-EasyAssess.app.RoleController.prototype = angular.extend({
+EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		 $scope.resource = "role";
      	
