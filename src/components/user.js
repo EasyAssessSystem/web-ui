@@ -5,7 +5,7 @@ EasyAssess.app.UserController = function($scope, $http, ngDialog) {
 	this.initialize.apply(this, arguments);
 };
 
-EasyAssess.app.UserController.prototype = angular.extend({
+EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		 $scope.resource = "user";
 		 $scope.userType = [
@@ -29,17 +29,19 @@ EasyAssess.app.UserController.prototype = angular.extend({
 				 return obj
 			 })
 		 }
+	},
 
-		var _transfer2RawData = function(model){
-			if(model['status'] == "有效")
-				model['status'] = 'A';
-			else
-				model['status'] = 'U';
+	_transfer2RawData: function(model){
+		if(model['status'] == "有效") {
+			model['status'] = 'A';
+		} else {
+			model['status'] = 'U';
 		}
-		
-		$scope.$on('$selected', function(e, model){
-			$scope.activeModel = _transfer2RawData(model);
-		});
+		return model;
+	},
+
+	_onSelect: function (model) {
+		this.$scope.activeModel = this._transfer2RawData(model);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 

@@ -20,7 +20,7 @@ var env = {
 	test:''
 }
 
- EasyAssess.activeEnv = env.dev;
+EasyAssess.activeEnv = env.dev;
 
 
 /**
@@ -178,6 +178,19 @@ var Class = {
     }
 }
 
+EasyAssess.extend = function (destination, source) {
+	for (property in source) {
+		if (property.toString().indexOf("super_") != -1) continue;
+		if (destination[property] != null) {
+			destination["super_" + property] = source[property];
+			continue;
+		} else {
+			destination[property] = source[property];
+		}
+	}
+	return destination;
+}
+
 
 EasyAssess.app.MaintenanceController = Class.create();
 
@@ -186,15 +199,31 @@ EasyAssess.app.MaintenanceController.prototype = {
 		if (this._initialize) {
 			this._initialize.apply(this, arguments);
 		}
+
+		var caller = arguments.callee.caller;
+
+		var params = caller.toString()
+			.replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/mg,'')
+			.match(/^function\s*[^\(]*\(\s*([^\)]*)\)/m)[1]
+			.split(/,/)
+
+		for (var i=0;i<params.length;i++) {
+			this[params[i]] = arguments[i];
+		}
+
 		this.__default.apply(this, arguments);
 	},
-    
+
+	_onSelect: function(model) {
+		this.$scope.activeModel = model;
+	},
+
     __default: function($scope, $http, ngDialog) {
 
-    	$scope.$on('$selected', function(e, model){
-    		$scope.activeModel = model;
-        });
-    	
+    	$scope.$on('$selected', (function(e, model){
+    		this._onSelect(model);
+        }).bind(this));
+
     	$scope.$on('$cancel', function(e){
     		$scope.activeModel = null;
         });
