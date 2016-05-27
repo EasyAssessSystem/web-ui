@@ -16,7 +16,8 @@ EasyAssess.app.UserController.prototype = angular.extend({
          $scope.fields = [
               {"title":"用户名", "field":"username", "type":"string"},
               {"title":"姓名", "field":"name", "name":"string"},
-              {"title":"状态", "field":"status", "type":"string"}
+              {"title":"状态", "field":"status", "type":"string"},
+			  {"title":"角色", "field":"roles[0].name", "type":"string"}
          ];
 
 		 $scope.transferData = function(rawData){

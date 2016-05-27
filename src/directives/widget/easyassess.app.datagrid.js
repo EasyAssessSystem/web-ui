@@ -16,7 +16,7 @@ EasyAssess.directives["esAppDatagrid"]
 		              + '</tr></thead>'
 		              + '<tr ng-show="isLoading" style="padding:20px 20px 20px 20px;"><td colspan="{{esColumns.length}}"><es-spinner></es-spinner></td></tr>'
 		              + '<tr ng-hide="isLoading" ng-click="select(rec)" ng-repeat="rec in esData" style="cursor:pointer;">'
-		              +   '<td ng-repeat="column in esColumns"><span ng-bind="rec[column.field]"></span></td>'
+		              +   '<td ng-repeat="column in esColumns"><span ng-bind="rec.{{column.field}}"></span></td>'
 		              + '</tr>'
 		              + '</table>'
 		              + '<div ng-show="pagination.length">'
