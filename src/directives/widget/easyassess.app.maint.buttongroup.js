@@ -11,7 +11,7 @@ EasyAssess.directives["esAppMaintButtonGroup"]
 					+ 	'<span class="glyphicon glyphicon-ok"></span>'
 					+ 	'<span class="es-icon-button-text">保存</span>'
 					+ '</button>'
-					+ '<button type="button" class="btn btn-primary">'
+					+ '<button ng-click="delete()" type="button" class="btn btn-primary">'
 					+ 	'<span class="glyphicon glyphicon-remove"></span>'
 					+ 	'<span class="es-icon-button-text">删除</span>'
 					+ '</button>'
@@ -31,6 +31,10 @@ EasyAssess.directives["esAppMaintButtonGroup"]
 			
 			$scope.save = function() {
 				 $scope.$emit('$save');
+			};
+
+			$scope.delete = function() {
+				 $scope.$emit('$delete');
 			};
 		}],
 		

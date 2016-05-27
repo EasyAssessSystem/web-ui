@@ -189,7 +189,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 		this.__default.apply(this, arguments);
 	},
     
-    __default: function($scope, $http) {
+    __default: function($scope, $http, ngDialog) {
 
     	$scope.$on('$selected', function(e, model){
     		$scope.activeModel = model;
@@ -198,10 +198,27 @@ EasyAssess.app.MaintenanceController.prototype = {
     	$scope.$on('$cancel', function(e){
     		$scope.activeModel = null;
         });
+
+		$scope.$on('$delete', function(e){
+			ngDialog.openConfirm({
+				template:   '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
+				          + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+				plain: true
+			}).then(
+				function(value){
+					if ($scope.activeModel.id > 0) {
+						$http.delete(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
+							$scope.activeModel = null;
+						});
+					}
+				},
+				function(reason){
+				}
+			);
+		});
     	
     	$scope.$on('$save', function(e){
     		if ($scope.activeModel.id > 0) {
-				//$http.put(EasyAssess.activeEnv + $scope.resource + '/' + '34',{active:'1'});
                 $http.put(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
     				$scope.activeModel = null;
                 });
