@@ -214,49 +214,63 @@ EasyAssess.app.MaintenanceController.prototype = {
 		this.__default.apply(this, arguments);
 	},
 
-	_onSelect: function(model) {
+	_select: function(model) {
 		this.$scope.activeModel = model;
+	},
+
+	_cancel: function() {
+		this.$scope.activeModel = null;
+	},
+
+	_save: function () {
+		var $http = this.$http;
+		var $scope = this.$scope;
+		if (this.$scope.activeModel.id > 0) {
+			$http.put(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
+				$scope.activeModel = null;
+			});
+		} else {
+			$http.post(EasyAssess.activeEnv + $scope.resource, $scope.activeModel).success(function(){
+				$scope.activeModel = null;
+			});
+		}
+	},
+
+	_delete: function() {
+		this.ngDialog.openConfirm({
+			template:   '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
+			+ '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+			plain: true
+		}).then(
+			(function(value){
+				if (this.$scope.activeModel.id > 0) {
+					this.$http.delete(EasyAssess.activeEnv + this.$scope.resource + '/' + this.$scope.activeModel.id, this.$scope.activeModel).success((function(){
+						this.$scope.activeModel = null;
+					}).bind(this));
+				}
+			}).bind(this),
+			function(reason){
+			}
+		);
 	},
 
     __default: function($scope, $http, ngDialog) {
 
     	$scope.$on('$selected', (function(e, model){
-    		this._onSelect(model);
+    		this._select(model);
         }).bind(this));
 
-    	$scope.$on('$cancel', function(e){
-    		$scope.activeModel = null;
-        });
+    	$scope.$on('$cancel', (function(e){
+    		this._cancel();
+        }).bind(this));
 
-		$scope.$on('$delete', function(e){
-			ngDialog.openConfirm({
-				template:   '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
-				          + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
-				plain: true
-			}).then(
-				function(value){
-					if ($scope.activeModel.id > 0) {
-						$http.delete(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
-							$scope.activeModel = null;
-						});
-					}
-				},
-				function(reason){
-				}
-			);
-		});
+		$scope.$on('$delete', (function(e){
+			this._delete();
+		}).bind(this));
     	
-    	$scope.$on('$save', function(e){
-    		if ($scope.activeModel.id > 0) {
-                $http.put(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
-    				$scope.activeModel = null;
-                });
-    		} else {
-    			$http.post(EasyAssess.activeEnv + $scope.resource, $scope.activeModel).success(function(){
-    				$scope.activeModel = null;
-                });
-    		}
-        });
+    	$scope.$on('$save', (function(e){
+			this._save();
+        }).bind(this));
     	
     	if (this._default) {
     		this._default.apply(this, arguments);
