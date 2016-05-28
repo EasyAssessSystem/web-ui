@@ -25,7 +25,12 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
               {"title":"状态", "field":"status", "type":"string"},
 			  {"title":"角色", "field":"roles[0].name", "type":"string"}
          ];
-		$scope.options = [
+
+		 $scope.roleFields = [
+			{"title":"姓名", "field":"name", "name":"string"}
+		 ];
+
+		 $scope.options = [
 			{
 				text: '用户名',
 				value: 'username'
@@ -34,7 +39,18 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 				text: '姓名',
 				value: 'name'
 			}
-		];
+		 ];
+
+		 $scope.roleOptions = [
+			{
+				text: '用户组',
+				value: 'name'
+			}
+		 ];
+
+		 $scope.$on('$roleLookup_selected', function(e, model){
+			$scope.activeModel.roles[0] = model;
+		 });
 
 		 $scope.transferData = function(rawData){
 			 return rawData.map(function(obj){
