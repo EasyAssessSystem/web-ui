@@ -1,6 +1,5 @@
 var $ = require('jQuery');
 window.$ = $;
-require('../node_modules/angular-dropdowns/dist/angular-dropdowns.css');
 require('../node_modules/ng-dialog/css/ngDialog.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-default.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-plain.min.css');

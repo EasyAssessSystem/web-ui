@@ -7,31 +7,24 @@ EasyAssess.directives["esAppFilter"]
 		replace: true,
 		transclude: false,
 		template:'<div class="input-group">'
-				+ '<span class="input-group-addon" style="cursor:pointer;">'
-				+ '<a dropdown-menu="options" dropdown-model="selected" dropdown-disabled="dropdownsDisabled" dropdown-item-label="text">'
-				+ '<table><tr><td><span class="glyphicon glyphicon-chevron-down"></span></td><td><span ng-bind="selected.text" style="padding-left:5px;"></td></tr></table></span>'
-				+ '</a>'
+				+ '<span class="input-group-addon" style="cursor:pointer;" uib-dropdown>'
+				+ '<a uib-dropdown-toggle><span class="glyphicon glyphicon-collapse-down"><span>{{selected.text}}</span></span></a>'
+				+ '<ul class="dropdown-menu" uib-dropdown-menu><li ng-repeat="option in esSearchOptions"><a ng-click="click(option)">{{option.text}}</a></li></ul>'
 				+ '</span>'
 				+ '<input ng-model="keyword" type="text" placeholder="输入关键字..." class="form-control">'
 				+ '<span ng-click="search()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
 				+ '</div>',
 		scope: {
-			
+			esSearchOptions:"="
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
-			$scope.options = [
-				{
-				    text: 'Field 1',
-				    value: 'field_1'
-				},
-				{
-				    text: 'Field 2',
-				    value: 'field_2'
-				},          
-			];
+
 				
 			$scope.selected = {};
-			
+
+			$scope.click =function(option){
+				$scope.selected = option;
+			};
 			$scope.search = function() {
 				 $scope.$emit('$onSearch', {
 					 keyword: $scope.keyword,

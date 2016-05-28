@@ -10,7 +10,7 @@ EasyAssess.directives["esAppDatagrid"]
         template: function($element, $attr) {
         	var tpl = '<div>'
 					  +	'<div class="glyphicon glyphicon-plus-sign" ng-click="addNew()"></div>'
-		        	  + '<es-app-filter></es-app-filter>'
+		        	  + '<es-app-filter es-search-options="esOptions"></es-app-filter>'
 		        	  + '<table class="table table-striped">'
 		              + '<thead><tr>'
 		              +   '<th ng-repeat="column in esColumns" style="cursor:pointer;"><span ng-bind="column.title"></span></th>'
@@ -36,7 +36,8 @@ EasyAssess.directives["esAppDatagrid"]
             esColumns:"=",
             esResource: "@",
             esPageSize: "@",
-			esTransfer: "&?"
+			esTransfer: "&?",
+			esOptions:"=?"
         },
         controller: ["$scope", function($scope,$element,$attrs) {	
            if (!$scope.esPageSize) {
@@ -87,12 +88,15 @@ EasyAssess.directives["esAppDatagrid"]
 
 
            function _loadData (resource, pageSize, pageNum, filterBy, filterValue, sortBy) {
+			   console.log($scope.esOptions);
         	   $scope.isLoading = true;
-        	   $http.get(EasyAssess.activeEnv + resource + "/list" + ((filterBy && filterValue) ? + filterBy + "/" + filterValue : ""), {
+        	   $http.get(EasyAssess.activeEnv + resource + "/list", {
 	       			params: {
 	       				size: pageSize,
 	       				page: pageNum -1,
-	       				sortBy: sortBy
+	       				sortBy: sortBy,
+						filterField:filterBy,
+						filterValue:filterValue
 	       			}
 	       		}).success(
 	       			function(response) {

@@ -26,7 +26,8 @@ EasyAssess.activeEnv = env.dev;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-sanitize'),require('ng-dialog')],function($controllerProvider){
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown')
+],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });
 
@@ -276,7 +277,6 @@ EasyAssess.app.MaintenanceController.prototype = {
         }).bind(this));
 
 		$scope.$on('$added', (function(e){
-			console.log('added action is fired!')
 			this._add();
 		}).bind(this));
 
