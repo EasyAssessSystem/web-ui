@@ -25,6 +25,16 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
               {"title":"状态", "field":"status", "type":"string"},
 			  {"title":"角色", "field":"roles[0].name", "type":"string"}
          ];
+		$scope.options = [
+			{
+				text: '用户名',
+				value: 'username'
+			},
+			{
+				text: '姓名',
+				value: 'name'
+			}
+		];
 
 		 $scope.transferData = function(rawData){
 			 return rawData.map(function(obj){
