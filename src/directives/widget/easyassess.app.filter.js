@@ -8,10 +8,10 @@ EasyAssess.directives["esAppFilter"]
 		transclude: false,
 		template:'<div class="input-group">'
 				+ '<span class="input-group-addon" style="cursor:pointer;" uib-dropdown>'
-				+ '<a uib-dropdown-toggle><span class="glyphicon glyphicon-collapse-down"><span>{{selected.text}}</span></span></a>'
+				+ '<a uib-dropdown-toggle><span style="color:grey;" class="glyphicon glyphicon-chevron-down"><span>{{selected.text}}</span></span></a>'
 				+ '<ul class="dropdown-menu" uib-dropdown-menu><li ng-repeat="option in esSearchOptions"><a ng-click="click(option)">{{option.text}}</a></li></ul>'
 				+ '</span>'
-				+ '<input ng-model="keyword" type="text" placeholder="输入关键字..." class="form-control">'
+				+ '<input ng-model="keyword" type="text" placeholder="输入关键字..." class="form-control" style="height:36px;">'
 				+ '<span ng-click="search()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
 				+ '</div>',
 		scope: {
