@@ -7,6 +7,7 @@ EasyAssess.app.UserController = function($scope, $http, ngDialog) {
 
 EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
+		 $scope.newUser = {"id":-1,"name":"","status":"A","username":"","password":"","canLaunchAssessment":true,"roles":[{"id":1,"name":"系统用户","status":"A"}]},
 		 $scope.resource = "user";
 		 $scope.userStatus = [
      	      {text: "无效", value: "U"},
@@ -47,6 +48,9 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 
 	_select: function (model) {
 		this.$scope.activeModel = this._transfer2RawData(model);
+	},
+	_add:function(){
+		this.$scope.activeModel = this.$scope.newUser;
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 

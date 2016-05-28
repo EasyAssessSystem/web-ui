@@ -222,6 +222,9 @@ EasyAssess.app.MaintenanceController.prototype = {
 		this.$scope.activeModel = null;
 	},
 
+	_add:function(){
+	},
+
 	_save: function () {
 		var $http = this.$http;
 		var $scope = this.$scope;
@@ -271,7 +274,12 @@ EasyAssess.app.MaintenanceController.prototype = {
     	$scope.$on('$save', (function(e){
 			this._save();
         }).bind(this));
-    	
+
+		$scope.$on('$added', (function(e){
+			console.log('added action is fired!')
+			this._add();
+		}).bind(this));
+
     	if (this._default) {
     		this._default.apply(this, arguments);
     	}

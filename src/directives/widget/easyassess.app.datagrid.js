@@ -8,7 +8,8 @@ EasyAssess.directives["esAppDatagrid"]
         replace: true,
         transclude: true,
         template: function($element, $attr) {
-        	var tpl = '<div>' 
+        	var tpl = '<div>'
+					  +	'<div class="glyphicon glyphicon-plus-sign" ng-click="addNew()"></div>'
 		        	  + '<es-app-filter></es-app-filter>'
 		        	  + '<table class="table table-striped">'
 		              + '<thead><tr>'
@@ -138,7 +139,9 @@ EasyAssess.directives["esAppDatagrid"]
            $scope.select = function(rowModel) {
         	   $scope.$emit('$selected', rowModel);
            };
-           
+           $scope.addNew = function(){
+			   $scope.$emit('$added');
+		   };
            $scope.$on('$onSearch', function(e, condition){
         	   conditions = condition;
         	   _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
