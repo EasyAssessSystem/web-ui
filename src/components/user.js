@@ -8,11 +8,16 @@ EasyAssess.app.UserController = function($scope, $http, ngDialog) {
 EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		 $scope.resource = "user";
+		 $scope.userStatus = [
+     	      {text: "无效", value: "U"},
+			 {text: "有效", value: "A"}
+		 ];
+
 		 $scope.userType = [
-     	      {text: "管理员", value: "A"},
-     	      {text: "普通用户", value: "U"}
-     	 ];
-     	
+			 {text:"系统管理员",value:"系统管理员"},
+			 {text:"系统用户",value:"系统用户"}
+		 ];
+
          $scope.fields = [
               {"title":"用户名", "field":"username", "type":"string"},
               {"title":"姓名", "field":"name", "name":"string"},

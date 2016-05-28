@@ -7,7 +7,9 @@
 		<es-app-textbox es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="姓名"></es-app-textbox>
 		<es-app-textbox es-model="activeModel.password" es-field="password" es-placeholder="输入密码" es-label="密码"></es-app-textbox>
 		<es-app-textbox es-model="activeModel.password" es-field="confirmPassword" es-placeholder="再次输入密码" es-label="确认密码"></es-app-textbox>
-		<es-app-select es-field="type" es-label="用户组" es-options="userType"></es-app-select>
+		<es-app-select  es-model="activeModel.roles[0].name" es-field="type" es-label="角色" es-options="userType"></es-app-select>
+		<es-app-select  es-model="activeModel.status" es-field="type" es-label="状态" es-options="userStatus"></es-app-select>
+pos
 		<es-app-maint-button-group es-model="activeModel"></es-app-maint-button-group>
 	</div>
 </div>
