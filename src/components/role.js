@@ -59,7 +59,7 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 	},
 
 	_add: function (){
-		this.$scope.activeModel = this.$scope.newRole;
+		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newRole);
 		this._loadPermissions(0);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);

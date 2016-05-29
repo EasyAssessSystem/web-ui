@@ -78,7 +78,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		this.$scope.activeModel = this._transfer2RawData(model);
 	},
 	_add:function(){
-		this.$scope.activeModel = this.$scope.newUser;
+		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newUser);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 
