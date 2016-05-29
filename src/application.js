@@ -8,6 +8,7 @@ require('./css/es.theme.css')
 var EasyAssess = require('./easyassess.application');
 require('./directives/widget/easyassess.app.banner');
 require('./directives/widget/easyassess.app.menu');
+require('./directives/widget/easyassess.app.addbutton');
 require('./directives/widget/easyassess.app.component');
 require('./directives/control/easyassess.app.textbox');
 require('./directives/control/easyassess.app.select');

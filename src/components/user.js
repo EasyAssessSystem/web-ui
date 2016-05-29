@@ -9,6 +9,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		 $scope.newUser = {"id":-1,"name":"","status":"A","username":"","password":"","canLaunchAssessment":true,"roles":[{"id":1,"name":"系统用户","status":"A"}]},
 		 $scope.resource = "user";
+		 $scope.newItem = "创建新用户";
 		 $scope.userStatus = [
      	      {text: "无效", value: "U"},
 			 {text: "有效", value: "A"}
@@ -20,26 +21,27 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		 ];
 
          $scope.fields = [
-              {"title":"用户名", "field":"username", "type":"string"},
-              {"title":"姓名", "field":"name", "name":"string"},
-              {"title":"状态", "field":"status", "type":"string"},
-			  {"title":"角色", "field":"roles[0].name", "type":"string"}
+              {title:"用户名", field:"username", type:"string",searchable:true,default:true},
+              {title:"姓名", field:"name", type:"string",searchable:true,default:false},
+              {title:"状态", field:"status", type:"string",searchable:false,default:false},
+			  {title:"角色", field:"roles[0].name", type:"string",searchable:false,default:false}
          ];
 
 		 $scope.roleFields = [
 			{"title":"姓名", "field":"name", "name":"string"}
 		 ];
 
-		 $scope.options = [
-			{
-				text: '用户名',
-				value: 'username'
-			},
-			{
-				text: '姓名',
-				value: 'name'
-			}
-		 ];
+		 $scope.options = $scope.fields.filter(function(eachfield){
+             return eachfield.searchable;
+         }).map(function(item){
+             var option = {text:"",value:"",default:false};
+             option.text = item.title;
+             option.value = item.field;
+             option.default = item.default;
+             return option;
+         });
+
+        console.log($scope.options);
 
 		 $scope.roleOptions = [
 			{

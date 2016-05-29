@@ -1,6 +1,15 @@
 <div>
 	<div ng-if="!activeModel || !activeModel.id">
-		<es-app-datagrid es-resource="role" es-columns="fields"></es-app-datagrid>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<es-add-new es-text="创建新角色"></es-add-new>
+			</div>
+			<div class="panel-body">
+				<es-app-datagrid es-resource="role" es-columns="fields" es-options="options"></es-app-datagrid>
+			</div>
+		</div>
+	</div>
+	<div ng-if="!activeModel || !activeModel.id">
 	</div>
 	<div ng-if="activeModel && activeModel.id">
 		<es-app-textbox es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="姓名"></es-app-textbox>

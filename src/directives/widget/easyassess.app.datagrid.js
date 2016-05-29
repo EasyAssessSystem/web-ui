@@ -9,7 +9,6 @@ EasyAssess.directives["esAppDatagrid"]
         transclude: true,
         template: function($element, $attr) {
         	var tpl = '<div>'
-					  +	'<div class="glyphicon glyphicon-plus-sign" ng-click="addNew()"></div>'
 		        	  + '<es-app-filter es-search-options="esOptions"></es-app-filter>'
 		        	  + '<table class="table table-striped">'
 		              + '<thead><tr>'
@@ -132,7 +131,10 @@ EasyAssess.directives["esAppDatagrid"]
 	       						var pageIndex = i + 1;
 	       						$scope.pagination.push(pageIndex);
 	       					}
-	       				}
+	       				}else {
+							$scope.esData = [];
+							$scope.pagination = [];
+						}
 	       			}
 	       		);
 	       };	
@@ -142,9 +144,6 @@ EasyAssess.directives["esAppDatagrid"]
            $scope.select = function(rowModel) {
         	   $scope.$emit('$selected', rowModel);
            };
-           $scope.addNew = function(){
-			   $scope.$emit('$added');
-		   };
            $scope.$on('$onSearch', function(e, condition){
         	   conditions = condition;
         	   _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
