@@ -33,12 +33,13 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 
 	_select: function(model){
 		this.$scope.activeModel = model
-		this._loadPermissions(model);
+		this._loadPermissions(model.id);
 	},
 
-	_loadPermissions: function(model) {
+	_loadPermissions: function(id) {
+		this.$scope.permissions = [];
 		this.$scope.permissionLoaded = false;
-		this.$http.get(EasyAssess.activeEnv + "authentication/get/" + model.id).success(
+		this.$http.get(EasyAssess.activeEnv + "authentication/get/" + id).success(
 			(function(response) {
 				this.$scope.permissionLoaded = true;
 				if (response.permissions.length > 0) {
@@ -48,21 +49,18 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 		);
 	},
 
-	_save: function() {
+	_postSave: function(model) {
 		this.$http.put(EasyAssess.activeEnv + "authentication/update",
 			{
-				"role":this.$scope.activeModel.id,
+				"role":model.id,
 				"permissions": this.$scope.permissions
 			}
-		).success(
-			(function(response) {
-				this.super__save();
-			}).bind(this)
 		);
 	},
 
 	_add: function (){
 		this.$scope.activeModel = this.$scope.newRole;
+		this._loadPermissions(0);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 

@@ -230,13 +230,19 @@ EasyAssess.app.MaintenanceController.prototype = {
 		var $http = this.$http;
 		var $scope = this.$scope;
 		if (this.$scope.activeModel.id > 0) {
-			$http.put(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success(function(){
+			$http.put(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success((function(response){
+				if (this._postSave) {
+					this._postSave(response.data)
+				}
 				$scope.activeModel = null;
-			});
+			}).bind(this));
 		} else {
-			$http.post(EasyAssess.activeEnv + $scope.resource, $scope.activeModel).success(function(){
+			$http.post(EasyAssess.activeEnv + $scope.resource, $scope.activeModel).success((function(response){
+				if (this._postSave) {
+					this._postSave(response.data)
+				}
 				$scope.activeModel = null;
-			});
+			}).bind(this));
 		}
 	},
 
