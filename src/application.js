@@ -12,6 +12,7 @@ require('./directives/widget/easyassess.app.addbutton');
 require('./directives/widget/easyassess.app.component');
 require('./directives/control/easyassess.app.textbox');
 require('./directives/control/easyassess.app.select');
+require('./directives/control/easyassess.app.checkbox');
 require('./directives/widget/easyassess.app.maint.buttongroup');
 require('./directives/widget/easyassess.app.two.buttongroup');
 require('./directives/widget/easyassess.app.filter');

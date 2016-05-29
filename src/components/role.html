@@ -12,7 +12,30 @@
 	<div ng-if="!activeModel || !activeModel.id">
 	</div>
 	<div ng-if="activeModel && activeModel.id">
-		<es-app-textbox es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="姓名"></es-app-textbox>
+		<es-app-textbox es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="用户组"></es-app-textbox>
+		<div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th><span>模块</span></th>
+						<th><span>查看</span></th>
+						<th><span>修改</span></th>
+						<th><span>添加</span></th>
+						<th><span>删除</span></th>
+					</tr>
+				</thead>
+				<tr ng-hide="permissionLoaded" style="padding:20px 20px 20px 20px;">
+					<td colspan="5"><es-spinner></es-spinner></td>
+				</tr>
+				<tr ng-show="permissionLoaded" ng-repeat="permission in permissions" style="cursor:pointer;">
+					<td><span ng-bind="permission.desc"></span></td>
+					<td><es-app-checkbox es-model="permission.get" es-value-field="get"></es-app-checkbox></td>
+					<td><es-app-checkbox es-model="permission.put" es-value-field="put"></es-app-checkbox></td>
+					<td><es-app-checkbox es-model="permission.post" es-value-field="post"></es-app-checkbox></td>
+					<td><es-app-checkbox es-model="permission.delete" es-value-field="delete"></es-app-checkbox></td>
+				</tr>
+			</table>
+		</div>
 		<es-app-maint-button-group ng-if="activeModel.id != -1"es-model="activeModel"></es-app-maint-button-group>
 		<es-app-two-button-group ng-if="activeModel.id == -1"es-model="activeModel"></es-app-two-button-group>
 	</div>

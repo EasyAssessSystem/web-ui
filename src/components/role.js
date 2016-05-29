@@ -32,8 +32,35 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 	},
 
 	_select: function(model){
-		this.$scope.activeModel = model;
+		this.$scope.activeModel = model
+		this._loadPermissions(model);
 	},
+
+	_loadPermissions: function(model) {
+		this.$scope.permissionLoaded = false;
+		this.$http.get(EasyAssess.activeEnv + "authentication/get/" + model.id).success(
+			(function(response) {
+				this.$scope.permissionLoaded = true;
+				if (response.permissions.length > 0) {
+					this.$scope.permissions = response.permissions;
+				}
+			}).bind(this)
+		);
+	},
+
+	_save: function() {
+		this.$http.put(EasyAssess.activeEnv + "authentication/update",
+			{
+				"role":this.$scope.activeModel.id,
+				"permissions": this.$scope.permissions
+			}
+		).success(
+			(function(response) {
+				this.super__save();
+			}).bind(this)
+		);
+	},
+
 	_add: function (){
 		this.$scope.activeModel = this.$scope.newRole;
 	}
