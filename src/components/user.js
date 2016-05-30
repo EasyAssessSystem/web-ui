@@ -41,8 +41,6 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
              return option;
          });
 
-        console.log($scope.options);
-
 		 $scope.roleOptions = [
 			{
 				text: '用户组',
@@ -76,6 +74,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 
 	_select: function (model) {
 		this.$scope.activeModel = this._transfer2RawData(model);
+		this.$scope.confirmedPassword = this.$scope.activeModel.password;
 	},
 	_add:function(){
 		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newUser);

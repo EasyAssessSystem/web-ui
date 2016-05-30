@@ -6,11 +6,14 @@ EasyAssess.directives["esAppLookup"]
 		restrict: 'E',
 		replace: true,
 		transclude: false,
-		template:'<div class="input-group" style="width:{{esWidth}}px;">'
+		template: '<div style="padding-bottom:10px;">'
+				+ '<label ng-if="esLabel">{{esLabel}}</label>'
+				+ '<div class="input-group" style="width:{{esWidth}}px;">'
 				+ '<input ng-model="esModel" style="height:36px;" ng-readonly="esReadonly" type="text" class="form-control">'
 				+ '<span ng-click="lookup()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
-				+ '</div>',
+				+ '</div></div>',
 		scope: {
+			esLabel: "@",
 			esReadonly: "@",
 			esWidth:"@",
 			esResource:"@",

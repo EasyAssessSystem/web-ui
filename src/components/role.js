@@ -39,7 +39,7 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 	_loadPermissions: function(id) {
 		this.$scope.permissions = [];
 		this.$scope.permissionLoaded = false;
-		this.$http.get(EasyAssess.activeEnv + "authentication/get/" + id).success(
+		this.$http.get(EasyAssess.activeEnv.pdm() + "authentication/get/" + id).success(
 			(function(response) {
 				this.$scope.permissionLoaded = true;
 				if (response.permissions.length > 0) {
@@ -50,7 +50,7 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 	},
 
 	_postSave: function(model) {
-		this.$http.put(EasyAssess.activeEnv + "authentication/update",
+		this.$http.put(EasyAssess.activeEnv.pdm() + "authentication/update",
 			{
 				"role":model.id,
 				"permissions": this.$scope.permissions

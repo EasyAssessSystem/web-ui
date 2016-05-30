@@ -6,11 +6,33 @@
 	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body ng-app="esApplication" ng-controller="esApplicationController">
- <es-app-banner></es-app-banner>
-	 <es-app-menu></es-app-menu>
-	<es-app-component>
-		<div ui-view></div>
-	</es-app-component>
+	<div ng-if="authenticated">
+		<es-app-banner></es-app-banner>
+		<es-app-menu></es-app-menu>
+		<es-app-component>
+			<div ui-view></div>
+		</es-app-component>
+	</div>
+	<div ng-if="!authenticated" align="center">
+		<div style="position: relative;top:100px;width:600px;heigh:300px;border-radius: 8px 8px 8px 8px;background-color: #5B6A7D;box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);" align="left">
+			<div style="padding: 20px 30px 0px 30px;">
+				<div class="es-app-banner-title">
+					<span class="glyphicon glyphicon-fire" style="color:#00B312;padding-right:10px;"></span>
+					<span>Easy</span><span style="color:#00B312">Assess</span>
+					<div style="color:white;font-size:12px;font-weight:normal;padding-left: 42px;">QC Tracking System</div>
+				</div>
+			</div>
+			<div style="padding: 10px 30px 30px 30px;">
+				<div ng-if="error" style="color:red;"></div>
+				<es-app-textbox es-field="username" es-model="input.username" es-placeholder="输入用户名"></es-app-textbox>
+				<es-app-textbox es-field="password" es-model="input.password" es-type="password" es-placeholder="输入密码"></es-app-textbox>
+				<button ng-click="logon()" type="button" class="btn btn-success">
+					<span class="glyphicon glyphicon-ok"></span>
+					<span class="es-icon-button-text">登录</span>
+				</button>
+			</div>
+		</div>
+	</div>
 	<script src="app.bundle.js" charset="utf-8"></script>
 </body>
 </html>

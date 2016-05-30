@@ -11,17 +11,26 @@ var EasyAssess = {
     version: '1.0.0',
     copyright:'Stardust',
     author: 'Cheng,Li',
-    description: 'EasyAssess Application Namespace'
+    description: 'EasyAssess Application Namespace',
 }
 
-var env = {
-	dev:'http://localhost:8180/pdm/data/',
-	prod:'',
-	test:''
+EasyAssess.session = {};
+
+EasyAssess.environments = {
+	'dev': {
+		pdm: function(domain) {
+			return 'http://localhost:8180/' + (domain ? domain : EasyAssess.session.domain) + '/data/'
+		}
+	},
+	'prod':{
+
+	},
+	'test':{
+
+	}
 }
 
-EasyAssess.activeEnv = env.dev;
-
+EasyAssess.activeEnv = EasyAssess.environments.dev;
 
 /**
  * Define application
@@ -224,20 +233,21 @@ EasyAssess.app.MaintenanceController.prototype = {
 	},
 
 	_add:function(){
+
 	},
 
 	_save: function () {
 		var $http = this.$http;
 		var $scope = this.$scope;
 		if (this.$scope.activeModel.id > 0) {
-			$http.put(EasyAssess.activeEnv + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success((function(response){
+			$http.put(EasyAssess.activeEnv.pdm() + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success((function(response){
 				if (this._postSave) {
 					this._postSave(response.data)
 				}
 				$scope.activeModel = null;
 			}).bind(this));
 		} else {
-			$http.post(EasyAssess.activeEnv + $scope.resource, $scope.activeModel).success((function(response){
+			$http.post(EasyAssess.activeEnv.pdm() + $scope.resource, $scope.activeModel).success((function(response){
 				if (this._postSave) {
 					this._postSave(response.data)
 				}
@@ -254,7 +264,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 		}).then(
 			(function(value){
 				if (this.$scope.activeModel.id > 0) {
-					this.$http.delete(EasyAssess.activeEnv + this.$scope.resource + '/' + this.$scope.activeModel.id, this.$scope.activeModel).success((function(){
+					this.$http.delete(EasyAssess.activeEnv.pdm() + this.$scope.resource + '/' + this.$scope.activeModel.id, this.$scope.activeModel).success((function(){
 						this.$scope.activeModel = null;
 					}).bind(this));
 				}
