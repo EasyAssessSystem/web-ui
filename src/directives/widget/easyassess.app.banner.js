@@ -1,6 +1,6 @@
 var EasyAssess = require('../../easyassess.application');
 
-EasyAssess.app.directive("esAppBanner", function() {
+EasyAssess.app.directive("esAppBanner", function($window, $http) {
 	return {
 		restrict: 'E',
 		replace: true,
@@ -13,7 +13,7 @@ EasyAssess.app.directive("esAppBanner", function() {
 			     +		'<div style="float:right;position:absolute;top:20px;right:30px;">'
 			     +			'<button class="btn btn-success" style="width:90px;background-color:#00b312">'
 			     +				'<span class="glyphicon glyphicon-log-out"></span>'
-			     +				'<span class="es-icon-button-text">登出</span>'
+			     +				'<span class="es-icon-button-text" ng-click="logoff()">登出</span>'
 			     +			'</button>'
 			     +		'</div>'
 			     +	'</div>',
@@ -21,7 +21,11 @@ EasyAssess.app.directive("esAppBanner", function() {
 			
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
-			
+			$scope.logoff = function () {
+				$http.get(EasyAssess.activeEnv.pdm() + "user/session/logoff").success(function () {
+					$window.location.reload();
+				});
+			}
 		}],
 		link: function($scope) {
 			
