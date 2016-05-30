@@ -19,25 +19,27 @@ require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
 
-var app = angular.module("esApplication",[EasyAssess.app.name]);
- app.controller("esApplicationController", function($scope,$http) {
-   $scope.input = {
-       username: '',
-       password: ''
-   }
+var app = angular.module("esApplication", [EasyAssess.app.name]);
+app.controller("esApplicationController", function ($scope, $http) {
+    $scope.input = {
+        username: '',
+        password: ''
+    }
 
-   $scope.logon = function() {
-    $http.get(EasyAssess.activeEnv.pdm('default') + "user/session/" + $scope.input.username + "/" + $scope.input.password).success(
-        (function(response) {
-         if (response.result == "SUCC") {
-             $scope.authenticated = true;
-             EasyAssess.session = response.data;
-         } else if (response.messages.length > 0){
-            $scope.error = response.messages[0].message;
-         }
-        }).bind(this)
-    );
-   };
- });
+    $scope.logon = function () {
+        $http.get(EasyAssess.activeEnv.pdm('default') + "user/session/" + $scope.input.username + "/" + $scope.input.password).success(
+            (function (response) {
+                if (response.result == "SUCC") {
+                    $scope.authenticated = true;
+                    EasyAssess.session = response.data;
+                } else if (response.messages.length > 0) {
+                    $scope.error = response.messages[0].message;
+                }
+            }).bind(this)
+        ).error(function(){
+            $scope.error = "登录失败";
+        });
+    };
+});
 
 

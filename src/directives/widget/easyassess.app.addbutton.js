@@ -7,7 +7,7 @@ EasyAssess.directives["esAddNew"]
         restrict: 'E',
         replace: true,
         transclude: false,
-        template: '<div ng-click="addNew()"><span class="glyphicon glyphicon-plus-sign"></span><a style="text-decoration: underline;padding-left: 5px;" ng-bind="esText"></a></div>',
+        template: '<div ng-click="addNew()"><span class="glyphicon glyphicon-plus-sign"></span><a style="text-decoration: underline;padding-left: 5px;cursor: pointer;" ng-bind="esText"></a></div>',
         scope: {
             esText:"@"
         },
