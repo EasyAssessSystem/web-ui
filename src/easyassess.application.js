@@ -274,10 +274,21 @@ EasyAssess.app.MaintenanceController.prototype = {
 		);
 	},
 
+	_postSelect: function(model) {
+		$('.es-maint-button-group button[ng-click="delete()"]').show();
+	},
+
+	_postAdd: function() {
+		$('.es-maint-button-group button[ng-click="delete()"]').hide();
+	},
+
     __default: function($scope, $http, ngDialog) {
 
     	$scope.$on('$selected', (function(e, model){
     		this._select(model);
+			if(this._postSelect) {
+				this._postSelect(model);
+			}
         }).bind(this));
 
     	$scope.$on('$cancel', (function(e){
@@ -294,6 +305,9 @@ EasyAssess.app.MaintenanceController.prototype = {
 
 		$scope.$on('$added', (function(e){
 			this._add();
+			if(this._postAdd) {
+				this._postAdd();
+			}
 		}).bind(this));
 
     	if (this._default) {
