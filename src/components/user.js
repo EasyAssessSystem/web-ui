@@ -1,7 +1,5 @@
 var EasyAssess = require('../easyassess.application');
-
-
-EasyAssess.app.UserController = function($scope, $http, ngDialog) {
+EasyAssess.app.UserController = function($scope,ngDialog,esRequestService) {
 	this.initialize.apply(this, arguments);
 };
 

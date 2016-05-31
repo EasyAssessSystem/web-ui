@@ -66,6 +66,7 @@ EasyAssess.app.registerController = function(index, controller) {
  * Define directive hash
  */
 EasyAssess.directives = {};
+EasyAssess.services={};
 EasyAssess.builders = {
 	_widgets: {},
 	
@@ -240,19 +241,21 @@ EasyAssess.app.MaintenanceController.prototype = {
 		var $http = this.$http;
 		var $scope = this.$scope;
 		if (this.$scope.activeModel.id > 0) {
-			$http.put(EasyAssess.activeEnv.pdm() + $scope.resource + '/' + $scope.activeModel.id, $scope.activeModel).success((function(response){
-				if (this._postSave) {
-					this._postSave(response.data)
-				}
-				$scope.activeModel = null;
-			}).bind(this));
+			this.esRequestService.esPut(EasyAssess.activeEnv.pdm() + $scope.resource + '/' + $scope.activeModel.id,$scope.activeModel)
+				.then((function(result){
+					if (this._postSave) {
+						this._postSave(result.data)
+					}
+					$scope.activeModel = null;
+				}).bind(this));
 		} else {
-			$http.post(EasyAssess.activeEnv.pdm() + $scope.resource, $scope.activeModel).success((function(response){
-				if (this._postSave) {
-					this._postSave(response.data)
-				}
-				$scope.activeModel = null;
-			}).bind(this));
+			this.esRequestService.esPost(EasyAssess.activeEnv.pdm() + $scope.resource,$scope.activeModel)
+				.then((function(result){
+					if (this._postSave) {
+						this._postSave(result.data)
+					}
+					$scope.activeModel = null;
+				}).bind(this));
 		}
 	},
 
@@ -264,9 +267,10 @@ EasyAssess.app.MaintenanceController.prototype = {
 		}).then(
 			(function(value){
 				if (this.$scope.activeModel.id > 0) {
-					this.$http.delete(EasyAssess.activeEnv.pdm() + this.$scope.resource + '/' + this.$scope.activeModel.id, this.$scope.activeModel).success((function(){
-						this.$scope.activeModel = null;
-					}).bind(this));
+					this.esRequestService.esDelete(EasyAssess.activeEnv.pdm() + this.$scope.resource + '/' + this.$scope.activeModel.id,this.$scope.activeModel.activeModel)
+						.then((function(){
+							this.$scope.activeModel = null;
+						}).bind(this));
 				}
 			}).bind(this),
 			function(reason){
@@ -274,21 +278,10 @@ EasyAssess.app.MaintenanceController.prototype = {
 		);
 	},
 
-	_postSelect: function(model) {
-		$('.es-maint-button-group button[ng-click="delete()"]').show();
-	},
-
-	_postAdd: function() {
-		$('.es-maint-button-group button[ng-click="delete()"]').hide();
-	},
-
-    __default: function($scope, $http, ngDialog) {
+    __default: function($scope,ngDialog,esRequestService) {
 
     	$scope.$on('$selected', (function(e, model){
     		this._select(model);
-			if(this._postSelect) {
-				this._postSelect(model);
-			}
         }).bind(this));
 
     	$scope.$on('$cancel', (function(e){
@@ -298,16 +291,13 @@ EasyAssess.app.MaintenanceController.prototype = {
 		$scope.$on('$delete', (function(e){
 			this._delete();
 		}).bind(this));
-    	
+
     	$scope.$on('$save', (function(e){
 			this._save();
         }).bind(this));
 
 		$scope.$on('$added', (function(e){
 			this._add();
-			if(this._postAdd) {
-				this._postAdd();
-			}
 		}).bind(this));
 
     	if (this._default) {
@@ -315,5 +305,6 @@ EasyAssess.app.MaintenanceController.prototype = {
     	}
     }
 }
+
 
 module.exports = EasyAssess;

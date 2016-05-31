@@ -1,7 +1,7 @@
 var EasyAssess = require('../easyassess.application');
 
 
-EasyAssess.app.RoleController = function($scope, $http, ngDialog) {
+EasyAssess.app.RoleController = function($scope,ngDialog,esRequestService) {
 	this.initialize.apply(this, arguments);
 };
 
@@ -39,18 +39,18 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 	_loadPermissions: function(id) {
 		this.$scope.permissions = [];
 		this.$scope.permissionLoaded = false;
-		this.$http.get(EasyAssess.activeEnv.pdm() + "authentication/get/" + id).success(
-			(function(response) {
+		this.esRequestService.esGet(EasyAssess.activeEnv.pdm() + "authentication/get/" + id).then(
+			(function(result) {
 				this.$scope.permissionLoaded = true;
-				if (response.permissions.length > 0) {
-					this.$scope.permissions = response.permissions;
+				if (result.permissions.length > 0) {
+					this.$scope.permissions = result.permissions;
 				}
 			}).bind(this)
 		);
 	},
 
 	_postSave: function(model) {
-		this.$http.put(EasyAssess.activeEnv.pdm() + "authentication/update",
+		this.esRequestService.esPut(EasyAssess.activeEnv.pdm() + "authentication/update",
 			{
 				"role":model.id,
 				"permissions": this.$scope.permissions

@@ -9,6 +9,8 @@ require('../node_modules/ng-dialog/css/ngDialog-custom-width.css');
 require('./css/es.theme.css')
 
 var EasyAssess = require('./easyassess.application');
+require('./services/easyassess.requestservice');
+
 require('./directives/widget/easyassess.app.banner');
 require('./directives/widget/easyassess.app.menu');
 require('./directives/widget/easyassess.app.addbutton');
@@ -20,6 +22,7 @@ require('./directives/widget/easyassess.app.maint.buttongroup');
 require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
+
 
 var app = angular.module("esApplication", [EasyAssess.app.name]);
 app.controller("esApplicationController", function ($scope, $http) {
