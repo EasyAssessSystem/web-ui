@@ -28,11 +28,11 @@
 					<td colspan="5"><es-spinner></es-spinner></td>
 				</tr>
 				<tr ng-show="permissionLoaded" ng-repeat="permission in permissions" style="cursor:pointer;">
-					<td ng-if="permission.menuRef"><span ng-bind="permission.desc"></span></td>
-					<td ng-if="permission.menuRef"><es-app-checkbox es-model="permission.get" es-value-field="get"></es-app-checkbox></td>
-					<td ng-if="permission.menuRef"><es-app-checkbox es-model="permission.put" es-value-field="put"></es-app-checkbox></td>
-					<td ng-if="permission.menuRef"><es-app-checkbox es-model="permission.post" es-value-field="post"></es-app-checkbox></td>
-					<td ng-if="permission.menuRef"><es-app-checkbox es-model="permission.delete" es-value-field="delete"></es-app-checkbox></td>
+					<td ng-if="permission.component"><table><tr><td><es-app-checkbox es-model="permission.usability" es-value-field="usability"></es-app-checkbox></td><td><span style="position:relative;bottom:5px;" ng-bind="permission.desc"></span></td></tr></table></td>
+					<td ng-if="permission.component"><es-app-checkbox es-model="permission.get" es-value-field="get"></es-app-checkbox></td>
+					<td ng-if="permission.component"><es-app-checkbox es-model="permission.put" es-value-field="put"></es-app-checkbox></td>
+					<td ng-if="permission.component"><es-app-checkbox es-model="permission.post" es-value-field="post"></es-app-checkbox></td>
+					<td ng-if="permission.component"><es-app-checkbox es-model="permission.delete" es-value-field="delete"></es-app-checkbox></td>
 				</tr>
 			</table>
 		</div>
@@ -51,11 +51,11 @@
 					<td colspan="5"><es-spinner></es-spinner></td>
 				</tr>
 				<tr ng-show="permissionLoaded" ng-repeat="permission in permissions" style="cursor:pointer;">
-					<td ng-if="!permission.menuRef"><span ng-bind="permission.desc"></span></td>
-					<td ng-if="!permission.menuRef"><es-app-checkbox es-model="permission.get" es-value-field="get"></es-app-checkbox></td>
-					<td ng-if="!permission.menuRef"><es-app-checkbox es-model="permission.put" es-value-field="put"></es-app-checkbox></td>
-					<td ng-if="!permission.menuRef"><es-app-checkbox es-model="permission.post" es-value-field="post"></es-app-checkbox></td>
-					<td ng-if="!permission.menuRef"><es-app-checkbox es-model="permission.delete" es-value-field="delete"></es-app-checkbox></td>
+					<td ng-if="!permission.component"><span ng-bind="permission.desc"></span></td>
+					<td ng-if="!permission.component"><es-app-checkbox es-model="permission.get" es-value-field="get"></es-app-checkbox></td>
+					<td ng-if="!permission.component"><es-app-checkbox es-model="permission.put" es-value-field="put"></es-app-checkbox></td>
+					<td ng-if="!permission.component"><es-app-checkbox es-model="permission.post" es-value-field="post"></es-app-checkbox></td>
+					<td ng-if="!permission.component"><es-app-checkbox es-model="permission.delete" es-value-field="delete"></es-app-checkbox></td>
 				</tr>
 			</table>
 		</div>

@@ -1,4 +1,5 @@
 var EasyAssess = require('../../easyassess.application');
+var MenuTemplate = require('../../data/menu.template');
 
 EasyAssess.app.filter('esMenuFilter', function() {  
    return function(input, keyword, group) {  
@@ -63,52 +64,33 @@ EasyAssess.directives["esAppMenu"]
 			}
 			
 			$scope.isLoading = true;
-			$http.get("../../statistic/statistic/test/expected").error( function(response) {
+			$timeout(function() {
 				$scope.isLoading = false;
-				$scope.esMenu = {
-    					items: [
-    						{
-    							text:"数据管理",
-    							icon:"glyphicon-tasks",
-    							items: [
-    							    {
-    							    	text:"用户管理",
-    							    	link:"user"
-    							    },
-									{
-										text:"角色管理",
-										link:"role"
-									},
-    							    {
-    							    	text:"机构管理",
-    							    	link:"cdc"
-    							    }
-    							],
-    							root: true
-    						},
-    						{
-    							text:"考评管理",
-    							icon:"glyphicon-list-alt",
-    							items: [
-									{
-										text:"制作模板",
-										link:"template"
-									}
-
-    							],
-    							root: true
-    						},
-    						{
-    							text:"数据统计",
-    							icon:"glyphicon-stats",
-    							items: [
-    							        
-    							],
-    							root: true
-    						}
-    					]
-    				}
-             });
+				var menu = {
+					items:[]
+				};
+				for (var i=0;i<MenuTemplate.items.length;i++) {
+					var group = MenuTemplate.items[i];
+					var items = [];
+					for (var j=0;j<group.items.length;j++) {
+						var item = group.items[j];
+						var permission = EasyAssess.session.componentPermissionMap[item.link];
+						if (!permission) continue;
+						if (permission.usability) {
+							items.push(item);
+						}
+					}
+					if (items.length > 0) {
+						menu.items.push({
+							text: group.text,
+							icon: group.icon,
+							items: items,
+							root: true
+						});
+					}
+				}
+				$scope.esMenu = menu;
+             }, 700);
 		}],
 		link: function($scope) {
 			
