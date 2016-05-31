@@ -6,7 +6,7 @@ require('../node_modules/ng-dialog/css/ngDialog.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-default.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-plain.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-custom-width.css');
-require('./css/es.theme.css')
+require('./css/es.theme.css');
 
 var EasyAssess = require('./easyassess.application');
 require('./services/easyassess.requestservice');
@@ -29,7 +29,7 @@ app.controller("esApplicationController", function ($scope, $http) {
     $scope.input = {
         username: '',
         password: ''
-    }
+    };
 
     $scope.logon = function () {
         $http.get(EasyAssess.activeEnv.pdm('default') + "user/session/" + $scope.input.username + "/" + $scope.input.password).success(
