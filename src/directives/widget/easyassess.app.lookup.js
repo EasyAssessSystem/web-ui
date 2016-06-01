@@ -8,28 +8,31 @@ EasyAssess.directives["esAppLookup"]
 		transclude: false,
 		template: '<div style="padding-bottom:10px;">'
 				+ '<label ng-if="esLabel">{{esLabel}}</label>'
-				+ '<div class="input-group" style="width:{{esWidth}}px;">'
-				+ '<input ng-model="esModel" style="height:36px;" ng-readonly="esReadonly" type="text" class="form-control">'
+				+ '<div ng-hide="esReadonly" class="input-group" style="width:{{esWidth}}px;">'
+				+ '<input ng-model="esModel" style="height:36px;" ng-readonly="esEditable" type="text" class="form-control">'
 				+ '<span ng-click="lookup()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
-				+ '</div></div>',
+				+ '</div>'
+				+ '<div ng-hide="!esReadonly">{{esModel}}</div>'
+				+ '</div>',
 		scope: {
 			esLabel: "@",
-			esReadonly: "@",
+			esEditable: "@",
 			esWidth:"@",
 			esResource:"@",
 			esColumns: "=",
 			esOptions:"=?",
 			esId:"@",
 			esValueField:"@",
-			esModel:"="
+			esModel:"=",
+			esReadonly:"="
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
 			if (!$scope.esWidth) {
 				$scope.esWidth = 200;
 			}
 
-			if (!$scope.esReadonly) {
-				$scope.esReadonly = true;
+			if (!$scope.esEditable) {
+				$scope.esEditable = true;
 			}
 
 			$scope.lookup = function() {

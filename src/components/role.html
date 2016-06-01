@@ -12,7 +12,7 @@
 	<div ng-show="!activeModel || !activeModel.id">
 	</div>
 	<div ng-show="activeModel && activeModel.id">
-		<es-app-textbox es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="用户组"></es-app-textbox>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="用户组"></es-app-textbox>
 		<div>
 			<table class="table table-striped">
 				<thead>

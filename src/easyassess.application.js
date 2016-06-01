@@ -249,6 +249,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 		}
 		if (!this._permission.put) {
 			$('.es-maint-button-group button[ng-click="save()"]').hide();
+			this.$scope.readonly = true;
 		}
 	},
 

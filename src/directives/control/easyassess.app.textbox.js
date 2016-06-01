@@ -8,14 +8,16 @@ EasyAssess.directives["esAppTextbox"]
 		transclude: false,
 		template: '<div class="form-group">'
 		    	+ 	'<label for="{{esField}}">{{esLabel}}</label>'
-		    	+ 	'<input type="{{esType}}" ng-model="esModel" class="form-control" id="{{esField}}" placeholder="{{esPlaceholder}}">'
+		    	+ 	'<input ng-hide="esReadonly" type="{{esType}}" ng-model="esModel" class="form-control" id="{{esField}}" placeholder="{{esPlaceholder}}">'
+				+   '<div ng-hide="!esReadonly">{{esModel}}</div>'
 				+ '</div>',
 		scope: {
 			esLabel: "@",
 			esField: "@",
 			esType: "@",
 			esPlaceholder: "@",
-			esModel:"="
+			esModel:"=",
+			esReadonly: "="
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
 			if (!$scope.esType) {
