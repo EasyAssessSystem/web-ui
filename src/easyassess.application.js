@@ -10,7 +10,7 @@ require('./components/role.html');
 var EasyAssess = {
     version: '1.0.0',
     copyright:'Stardust',
-    author: 'Cheng,Li',
+    author: 'Li, Cheng;Cheng, Dong',
     description: 'EasyAssess Application Namespace',
 }
 
@@ -145,6 +145,7 @@ EasyAssess.TaskManager = {
 	},
 
 	start: function(module, state) {
+
 		if (!this._cached[module]) {
 			this._loadController(module);
 			var options = {
@@ -162,10 +163,16 @@ EasyAssess.TaskManager = {
 		} else {
 			state.go(module, {});
 		}
+
+		this.module = module;
 	},
 	
 	terminate: function() {
 		
+	},
+
+	current: function() {
+		return this.module;
 	}
 };
 
@@ -223,6 +230,26 @@ EasyAssess.app.MaintenanceController.prototype = {
 		}
 
 		this.__default.apply(this, arguments);
+
+		this._permission = EasyAssess.session.componentPermissionMap[EasyAssess.TaskManager.current()];
+
+		this._postInitialize();
+	},
+
+	_postInitialize: function() {
+		this._restrict();
+	},
+
+	_restrict: function() {
+		if (!this._permission.post) {
+			$("div[ng-click='addNew()']").hide();
+		}
+		if (!this._permission.delete) {
+			$('.es-maint-button-group button[ng-click="delete()"]').hide();
+		}
+		if (!this._permission.put) {
+			$('.es-maint-button-group button[ng-click="save()"]').hide();
+		}
 	},
 
 	_select: function(model) {
@@ -279,7 +306,9 @@ EasyAssess.app.MaintenanceController.prototype = {
 	},
 
 	_postSelect: function(model) {
-		$('.es-maint-button-group button[ng-click="delete()"]').show();
+		if (this._permission.delete) {
+			$('.es-maint-button-group button[ng-click="delete()"]').show();
+		}
 	},
 
 	_postAdd: function() {
