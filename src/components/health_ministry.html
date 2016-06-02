@@ -1,0 +1,19 @@
+<div>
+	<div ng-show="!activeModel || !activeModel.id">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<es-add-new es-text="创建卫生医疗单位"></es-add-new>
+			</div>
+			<div class="panel-body">
+				<es-app-datagrid es-resource="{{resource}}" es-columns="fields" es-options="options"></es-app-datagrid>
+			</div>
+		</div>
+	</div>
+	<div ng-show="!activeModel || !activeModel.id">
+	</div>
+	<div ng-show="activeModel && activeModel.id">
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
+		<es-app-lookup  es-provider="button" es-readonly="readonly" es-label="添加" es-columns="fields" es-id="ministryLookup" es-resource="{{resource}}"></es-app-lookup>
+		<es-app-maint-button-group es-model="activeModel"></es-app-maint-button-group>
+	</div>
+</div>

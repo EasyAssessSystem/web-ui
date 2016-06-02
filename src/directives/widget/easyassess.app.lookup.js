@@ -1,26 +1,48 @@
 var EasyAssess = require('../../easyassess.application');
 
+EasyAssess.builders.register("esAppLookup", "textfield", function(){
+	var html = '<label ng-if="esLabel">{{esLabel}}</label>'
+		+ '<div ng-hide="esReadonly" class="input-group" style="width:{{esWidth}}px;">'
+		+ '<input ng-model="esModel" style="height:36px;" ng-readonly="esEditable" type="text" class="form-control">'
+		+ '<span ng-click="lookup()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
+		+ '</div>'
+		+ '<div ng-hide="!esReadonly">{{esModel}}</div>';
+	return html;
+});
+
+EasyAssess.builders.register("esAppLookup", "button", function(){
+	var html = '<div ng-hide="esReadonly" style="width:{{esWidth}}px;">'
+		+ '<button ng-click="lookup()" type="button" class="btn btn-primary">'
+		+ 	'<span class="glyphicon glyphicon-plus-sign"></span>'
+		+ 	'<span class="es-icon-button-text">{{esLabel}}</span>'
+		+ '</button>'
+		+ '</div>';
+	return html;
+});
+
 EasyAssess.directives["esAppLookup"]
 	= EasyAssess.app.directive("esAppLookup", function(ngDialog) {
+
 	return {
 		restrict: 'E',
 		replace: true,
 		transclude: false,
-		template: '<div style="padding-bottom:10px;">'
-				+ '<label ng-if="esLabel">{{esLabel}}</label>'
-				+ '<div ng-hide="esReadonly" class="input-group" style="width:{{esWidth}}px;">'
-				+ '<input ng-model="esModel" style="height:36px;" ng-readonly="esEditable" type="text" class="form-control">'
-				+ '<span ng-click="lookup()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
-				+ '</div>'
-				+ '<div ng-hide="!esReadonly">{{esModel}}</div>'
-				+ '</div>',
+		template: function(ele, attrs) {
+			var provider = "textfield";
+			if (attrs["esProvider"]) {
+				provider = attrs["esProvider"];
+			}
+			var html = '<div style="padding-bottom:10px;">'
+				+ EasyAssess.builders.get("esAppLookup", provider)()
+				+ '</div>';
+			return html;
+		},
 		scope: {
 			esLabel: "@",
 			esEditable: "@",
 			esWidth:"@",
 			esResource:"@",
 			esColumns: "=",
-			esOptions:"=?",
 			esId:"@",
 			esValueField:"@",
 			esModel:"=",
@@ -34,6 +56,16 @@ EasyAssess.directives["esAppLookup"]
 			if (!$scope.esEditable) {
 				$scope.esEditable = true;
 			}
+
+			$scope.esOptions = $scope.esColumns.filter(function(eachfield){
+				return eachfield.searchable;
+			}).map(function(item){
+				var option = {text:"",value:"",default:false};
+				option.text = item.title;
+				option.value = item.field;
+				option.default = item.default;
+				return option;
+			});
 
 			$scope.lookup = function() {
 				ngDialog.open({
@@ -55,3 +87,5 @@ EasyAssess.directives["esAppLookup"]
 		}]
 	}
 });
+
+

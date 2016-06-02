@@ -3,6 +3,7 @@ var router = require('angular-ui-router');
 require('./components/user.html');
 require('./components/cdc.html');
 require('./components/role.html');
+require('./components/health_ministry.html');
 /**
  * Created by alexli on 2016/4/3.
  * Edited by aaronchen on 2016/5/14
@@ -71,19 +72,21 @@ EasyAssess.builders = {
 	_widgets: {},
 	
 	register: function(widgetName, providerName, provider) {
-		if (!EasyAssess.providers._widgets[widget]) {
-			EasyAssess.providers._widgets[widget] = {};
+		if (!this._widgets[widgetName]) {
+			this._widgets[widgetName] = {};
 		} 
-		EasyAssess.providers._widgets[widget][providerName] = provider;
+		this._widgets[widgetName][providerName] = provider;
 	},
-	
+
 	get: function(widgetName, providerName) {
-		if (EasyAssess.providers._widgets[widget]) {
-			return EasyAssess.providers._widgets[widget][providerName];
+		if (EasyAssess.builders._widgets[widgetName]) {
+			return EasyAssess.builders._widgets[widgetName][providerName];
 		}
 		return null;
 	}
-}
+};
+
+
 /**
  * Loading spinner
  */
@@ -238,6 +241,19 @@ EasyAssess.app.MaintenanceController.prototype = {
 
 	_postInitialize: function() {
 		this._restrict();
+		this._filterOptions();
+	},
+
+	_filterOptions: function() {
+		this.$scope.options = this.$scope.fields.filter(function(eachfield){
+			return eachfield.searchable;
+		}).map(function(item){
+			var option = {text:"",value:"",default:false};
+			option.text = item.title;
+			option.value = item.field;
+			option.default = item.default;
+			return option;
+		});
 	},
 
 	_restrict: function() {

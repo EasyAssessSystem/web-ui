@@ -26,18 +26,8 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
          ];
 
 		 $scope.roleFields = [
-			{"title":"姓名", "field":"name", "name":"string"}
+			{title:"姓名", field:"name", type:"string", searchable:true, default:true}
 		 ];
-
-		 $scope.options = $scope.fields.filter(function(eachfield){
-             return eachfield.searchable;
-         }).map(function(item){
-             var option = {text:"",value:"",default:false};
-             option.text = item.title;
-             option.value = item.field;
-             option.default = item.default;
-             return option;
-         });
 
 		 $scope.roleOptions = [
 			{
@@ -74,6 +64,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		this.$scope.activeModel = this._transfer2RawData(model);
 		this.$scope.confirmedPassword = this.$scope.activeModel.password;
 	},
+
 	_add:function(){
 		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newUser);
 	}

@@ -14,7 +14,7 @@ var MenuTemplate = {
                 },
                 {
                     text:"机构管理",
-                    link:"cdc"
+                    link:"health_ministry"
                 }
             ],
             root: true
