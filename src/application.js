@@ -24,7 +24,6 @@ require('./directives/widget/easyassess.app.maint.buttongroup');
 require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
-require('./directives/widget/easyassess.app.tree');
 
 
 var app = angular.module("esApplication", [EasyAssess.app.name]);

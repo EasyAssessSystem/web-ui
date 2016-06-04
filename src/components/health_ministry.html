@@ -13,8 +13,52 @@
 	</div>
 	<div ng-show="activeModel && activeModel.id">
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
-		<es-app-lookup  es-provider="button" es-readonly="readonly" es-label="添加" es-columns="fields" es-id="ministryLookup" es-resource="{{resource}}"></es-app-lookup>
-		<es-app-tree></es-app-tree>
+		<div style="overflow: auto;height:300px;">
+			<fieldset>
+				<legend style="font-size:14px;font-weight: 700;margin-bottom: 0px;">下属机构</legend>
+				<div style="padding-top: 10px;">
+					<es-app-lookup  es-provider="link" es-readonly="readonly" es-label="添加机构" es-columns="fields" es-id="ministryLookup" es-resource="{{resource}}/list/unassigned"></es-app-lookup>
+				</div>
+				<div ng-if="activeModel.ministries.length == 0" style="text-decoration: underline; color:grey;">
+					尚无下属机构...
+				</div>
+				<div ng-if="activeModel.ministries.length > 0">
+					<script type="text/ng-template" id="ministry_renderer.html">
+						<div ui-tree-handle class="tree-node tree-node-content">
+							<table style="width: 100%;cursor: pointer;">
+								<tr>
+									<td style="width: 20px;padding: 0px 5px 0px 5px;">
+									<span ng-if="ministry.ministries && ministry.ministries.length > 0" data-nodrag ng-click="toggle(this)"
+										  class="glyphicon"
+										  ng-class="{
+												   'glyphicon-chevron-right': collapsed,
+												   'glyphicon-chevron-down': !collapsed
+												  }"
+										  style="color: #333;font-size:12px;">
+									</span>
+									</td>
+									<td style="width: 100%;">{{ministry.name}}</td>
+									<td style="width: 10px;"><span ng-if="ministry.supervisorId == activeModel.id" class="glyphicon glyphicon-remove" data-nodrag ng-click="removeMinistry(ministry)" style="color: darkred;font-size:12px;"></span></a></td>
+								</tr>
+							</table>
+						</div>
+						<ul ui-tree-nodes="" data-nodrop-enabled="true" ng-model="ministry.ministries" ng-class="{hidden: collapsed}">
+							<li ng-repeat="ministry in ministry.ministries" ui-tree-node ng-include="'ministry_renderer.html'">
+							</li>
+						</ul>
+					</script>
+					<div class="row">
+						<div style="padding: 5px 5px 5px 5px;">
+							<div ui-tree id="tree-root">
+								<ul data-nodrop-enabled="true" ui-tree-nodes ng-model="activeModel">
+									<li ng-repeat="ministry in activeModel.ministries" ui-tree-node ng-include="'ministry_renderer.html'"></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</div>
 		<es-app-maint-button-group es-model="activeModel"></es-app-maint-button-group>
 	</div>
 </div>

@@ -20,6 +20,13 @@ EasyAssess.builders.register("esAppLookup", "button", function(){
 	return html;
 });
 
+EasyAssess.builders.register("esAppLookup", "link", function(){
+	var html = '<div ng-hide="esReadonly" style="width:{{esWidth}}px;">'
+		+ '<span class="glyphicon glyphicon-plus-sign"></span><a ng-click="lookup()" style="text-decoration: underline;padding-left: 5px;cursor: pointer;">{{esLabel}}</a>'
+		+ '</div>';
+	return html;
+});
+
 EasyAssess.directives["esAppLookup"]
 	= EasyAssess.app.directive("esAppLookup", function(ngDialog) {
 

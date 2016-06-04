@@ -216,9 +216,6 @@ EasyAssess.app.MaintenanceController = Class.create();
 
 EasyAssess.app.MaintenanceController.prototype = {
 	initialize: function () {
-		if (this._initialize) {
-			this._initialize.apply(this, arguments);
-		}
 
 		var caller = arguments.callee.caller;
 
@@ -229,6 +226,10 @@ EasyAssess.app.MaintenanceController.prototype = {
 
 		for (var i=0;i<params.length;i++) {
 			this[params[i]] = arguments[i];
+		}
+
+		if (this._initialize) {
+			this._initialize.apply(this, arguments);
 		}
 
 		this.__default.apply(this, arguments);
@@ -335,6 +336,11 @@ EasyAssess.app.MaintenanceController.prototype = {
     __default: function($scope,ngDialog,esRequestService) {
 
     	$scope.$on('$selected', (function(e, model){
+			if (this._preSelect) {
+				if (!this._preSelect(model)) {
+					return;
+				}
+			}
     		this._select(model);
 			if(this._postSelect) {
 				this._postSelect(model);

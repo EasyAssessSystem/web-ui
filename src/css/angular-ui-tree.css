@@ -55,6 +55,11 @@ tr.angular-ui-tree-empty {
     margin-right: 10px;
 }
 
+.tree-node-content {
+    margin: 2px 10px 2px 10px;
+}
+
+
 .angular-ui-tree-handle:hover {
 }
 
