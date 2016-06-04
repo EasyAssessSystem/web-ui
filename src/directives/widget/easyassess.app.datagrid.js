@@ -36,7 +36,9 @@ EasyAssess.directives["esAppDatagrid"]
             esResource: "@",
             esPageSize: "@",
 			esTransfer: "&?",
-			esOptions:"=?"
+			esOptions:"=?",
+			esQuery:"=",
+			esId:"@"
         },
         controller: ["$scope", function($scope,$element,$attrs) {
            if (!$scope.esPageSize) {
@@ -88,7 +90,7 @@ EasyAssess.directives["esAppDatagrid"]
 
            function _loadData (resource, pageSize, pageNum, filterBy, filterValue, sortBy) {
         	   $scope.isLoading = true;
-			   esRequestService.esGet(EasyAssess.activeEnv.pdm() + resource + "/list", {
+			   esRequestService.esGet(EasyAssess.activeEnv.pdm() + resource + "/list" + ($scope.esQuery ? "?" + $scope.esQuery : ""), {
 				   size: pageSize,
 				   page: pageNum -1,
 				   sortBy: sortBy,
@@ -133,8 +135,10 @@ EasyAssess.directives["esAppDatagrid"]
 					   $scope.pagination = [];
 				   }
 			   }).then(function(error){
-				   $scope.isLoading = false;
-				   console.log('fetching data error');
+				   if (error) {
+					   $scope.isLoading = false;
+					   console.log('fetching data error');
+				   }
 			   });
         	   //$http.get(EasyAssess.activeEnv.pdm() + resource + "/list", {
 	       		//	params: {
@@ -188,10 +192,17 @@ EasyAssess.directives["esAppDatagrid"]
 	       };	
         	
            $scope.isLoading = true;	
-           
+
+		   if (!$scope.esId) {
+			   $scope.esId = "";
+		   } else {
+			   $scope.esId = $scope.esId + "_";
+		   }
+
            $scope.select = function(rowModel) {
-        	   $scope.$emit('$selected', rowModel);
+        	   $scope.$emit('$' + $scope.esId + 'selected', rowModel);
            };
+
            $scope.$on('$onSearch', function(e, condition){
         	   conditions = condition;
         	   _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);

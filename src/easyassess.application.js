@@ -36,7 +36,7 @@ EasyAssess.activeEnv = EasyAssess.environments.dev;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown')
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-tree')
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });
@@ -148,7 +148,6 @@ EasyAssess.TaskManager = {
 	},
 
 	start: function(module, state) {
-
 		if (!this._cached[module]) {
 			this._loadController(module);
 			var options = {

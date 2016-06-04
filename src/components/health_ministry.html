@@ -14,6 +14,7 @@
 	<div ng-show="activeModel && activeModel.id">
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
 		<es-app-lookup  es-provider="button" es-readonly="readonly" es-label="添加" es-columns="fields" es-id="ministryLookup" es-resource="{{resource}}"></es-app-lookup>
+		<es-app-tree></es-app-tree>
 		<es-app-maint-button-group es-model="activeModel"></es-app-maint-button-group>
 	</div>
 </div>

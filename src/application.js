@@ -6,7 +6,9 @@ require('../node_modules/ng-dialog/css/ngDialog.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-default.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-plain.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-custom-width.css');
+require('../node_modules/angular-ui-tree/dist/angular-ui-tree.min.css');
 require('./css/es.theme.css');
+require('./css/angular-ui-tree.css');
 
 var EasyAssess = require('./easyassess.application');
 require('./services/easyassess.requestservice');
@@ -22,6 +24,7 @@ require('./directives/widget/easyassess.app.maint.buttongroup');
 require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
+require('./directives/widget/easyassess.app.tree');
 
 
 var app = angular.module("esApplication", [EasyAssess.app.name]);

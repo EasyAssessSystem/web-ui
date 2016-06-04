@@ -46,7 +46,8 @@ EasyAssess.directives["esAppLookup"]
 			esId:"@",
 			esValueField:"@",
 			esModel:"=",
-			esReadonly:"="
+			esReadonly:"=",
+			esQuery:"=?"
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
 			if (!$scope.esWidth) {
