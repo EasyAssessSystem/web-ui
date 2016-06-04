@@ -205,6 +205,7 @@ EasyAssess.directives["esAppDatagrid"]
 
            $scope.$on('$onSearch', function(e, condition){
         	   conditions = condition;
+			   $scope.pageNum = 1;
         	   _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
            });
            
