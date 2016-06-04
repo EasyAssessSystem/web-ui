@@ -17,7 +17,7 @@
 			<fieldset>
 				<legend style="font-size:14px;font-weight: 700;margin-bottom: 0px;">下属机构</legend>
 				<div style="padding-top: 10px;">
-					<es-app-lookup  es-provider="link" es-readonly="readonly" es-label="添加机构" es-columns="fields" es-id="ministryLookup" es-resource="{{resource}}/list/unassigned"></es-app-lookup>
+					<es-app-lookup  es-provider="link" es-readonly="readonly" es-label="添加机构" es-columns="fields" es-id="ministryLookup" es-resource="{{resource}}/list/unassigned?for={{activeModel.id}}"></es-app-lookup>
 				</div>
 				<div ng-if="activeModel.ministries.length == 0" style="text-decoration: underline; color:grey;">
 					尚无下属机构...
