@@ -7,7 +7,7 @@ EasyAssess.app.directive("esAppBanner", function($window, $http) {
 		transclude: false,
 		template: '<div class="es-app-banner">'
 			     + 		'<div class="es-app-banner-title">'
-			     +	 		'<span class="glyphicon glyphicon-fire" style="color:#00B312;padding-right:10px;"></span><span>Easy</span><span style="color:#00B312">Assess</span>'
+			     +	 		'<img src="logo_64.png" width="32" height="32" /><span style="padding-left: 5px;">Easy</span><span style="color:#00B312">Assess</span>'
 			     +		'</div>'
 			     +		'<div class="es-app-banner-subtitle" style="margin-left:35px;">EQA AND IQC Tracking System</div>'
 			     +		'<div style="float:right;position:absolute;top:20px;right:30px;">'
