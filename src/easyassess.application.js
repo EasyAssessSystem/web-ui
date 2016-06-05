@@ -343,6 +343,12 @@ EasyAssess.app.MaintenanceController.prototype = {
 			{text: "有效", value: "A"}
 		];
 
+		$scope.$watch('activeModel',function(newValue, oldValue, scope){
+			if (newValue == null) {
+				$scope.$broadcast('$refresh');
+			}
+		});
+
     	$scope.$on('$selected', (function(e, model){
 			if (this._preSelect) {
 				if (!this._preSelect(model)) {
