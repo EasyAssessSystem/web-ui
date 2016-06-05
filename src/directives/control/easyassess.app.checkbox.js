@@ -7,9 +7,9 @@ EasyAssess.directives["esAppCheckbox"]
 		replace: true,
 		transclude: false,
 		template: '<div class="form-group">'
-		    	+ 	'<label ng-show="esLabel">{{esLabel}}</label>'
+		    	+ 	'<label ng-show="esLabel" style="padding-right: 5px;">{{esLabel}}</label>'
 		    	+ 	'<input ng-hide="esReadonly" type="checkbox" ng-model="esModel" ng-checked="esModel">'
-				+   '<div ng-hide="!esReadonly">{{esModel}}</div>'
+				+   '<div ng-hide="!esReadonly" ng-bind="readonlyText()"></div>'
 				+ '</div>',
 		scope: {
 			esLabel: "@",
@@ -17,7 +17,13 @@ EasyAssess.directives["esAppCheckbox"]
 			esReadonly: "="
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
-			
+			$scope.readonlyText = function() {
+				if ($scope.esModel) {
+					return "是";
+				} else {
+					return "否";
+				}
+			}
 		}]
 	}
 });

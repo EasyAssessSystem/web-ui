@@ -8,9 +8,9 @@ EasyAssess.directives["esAppTextbox"]
 		transclude: false,
 		template: '<div class="form-group" ng-class="error">'
 		    	+ 	'<label class="control-label" for="{{esField}}">{{esLabel}}</label>'
-		    	+ 	'<input type="{{esType}}" ng-model="esModel" class="form-control" id="{{esField}}" name="inputName" placeholder="{{esPlaceholder}}">'
+		    	+ 	'<input ng-hide="esReadonly" type="{{esType}}" ng-model="esModel" class="form-control" id="{{esField}}" name="inputName" placeholder="{{esPlaceholder}}">'
 				+   '<div ng-hide="!esReadonly">{{esModel}}</div>'
-				+	'<p class="control-label" ng-hide="esValidate.validateResult" ng-class="error">{{esValidate.errorMessage}}</p>'
+				+	'<p ng-hide="esReadonly" class="control-label" ng-hide="esValidate.validateResult" ng-class="error">{{esValidate.errorMessage}}</p>'
 				+ '</div>',
 		scope: {
 			esLabel: "@",
