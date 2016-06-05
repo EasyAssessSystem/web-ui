@@ -7,7 +7,7 @@ EasyAssess.app.RoleController = function($scope,ngDialog,esRequestService) {
 
 EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
-		 $scope.newRole = {
+		 $scope.emptyModel = {
 			 "id": -1,
 			 "name": "",
 			 "status": "A"
@@ -70,9 +70,12 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 		}
 		return model;
 	},
+
 	_select: function(model){
-		this.$scope.validateFinalResult = true;
-		this.$scope.activeModel = this._transfer2RawData(model)
+		this.$scope.activeModel = this._transfer2RawData(model);
+	},
+
+	_postSelect: function(model) {
 		this._loadPermissions(model.id);
 	},
 
@@ -98,9 +101,7 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 		);
 	},
 
-	_add: function (){
-		this.$scope.validateFinalResult = false;
-		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newRole);
+	_postAdd: function (){
 		this._loadPermissions(0);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);

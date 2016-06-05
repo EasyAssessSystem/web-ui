@@ -10,7 +10,7 @@ EasyAssess.directives["esAppTextbox"]
 		    	+ 	'<label class="control-label" for="{{esField}}">{{esLabel}}</label>'
 		    	+ 	'<input ng-hide="esReadonly" type="{{esType}}" ng-model="esModel" class="form-control" id="{{esField}}" name="inputName" placeholder="{{esPlaceholder}}">'
 				+   '<div ng-hide="!esReadonly">{{esModel}}</div>'
-				+	'<p ng-hide="esReadonly" class="control-label" ng-hide="esValidate.validateResult" ng-class="error">{{esValidate.errorMessage}}</p>'
+				+	'<p class="control-label" ng-hide="esValidate.validateResult || esReadonly" ng-class="error">{{esValidate.errorMessage}}</p>'
 				+ '</div>',
 		scope: {
 			esLabel: "@",

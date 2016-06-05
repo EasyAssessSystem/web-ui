@@ -27,7 +27,7 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			}
 		}
 
-		$scope.newMinistry = {
+		$scope.emptyModel = {
 			"id": -1,
 			"name": "",
 			"status": "A",
@@ -58,13 +58,7 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 		});
 	},
 
-	_add: function (){
-		this.$scope.validateFinalResult = false;
-		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newMinistry);
-	},
-
 	_preSelect: function() {
-		this.$scope.validateFinalResult = true;
 		this.$timeout((function(){
 			this.$scope.$broadcast('angular-ui-tree:collapse-all');
 		}).bind(this), 100);

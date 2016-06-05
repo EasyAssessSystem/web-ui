@@ -5,7 +5,7 @@ EasyAssess.app.UserController = function($scope,ngDialog,esRequestService) {
 
 EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
-		 $scope.newUser = {"id":-1,"name":"","status":"A","username":"","password":"",confirmedPassword:"","canLaunchAssessment":true,"roles":[{"id":1,"name":"系统用户","status":"A"}]},
+		 $scope.emptyModel = {"id":-1,"name":"","status":"A","username":"","password":"",confirmedPassword:"","canLaunchAssessment":true,"ministries":[],"roles":[{"id":1,"name":"系统用户","status":"A"}]},
 		 $scope.resource = "user";
 		 $scope.newItem = "创建新用户";
 		 $scope.validations = {
@@ -117,7 +117,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		 });
 
 		 $scope.$watch('bindWithMinistry',function(newValue,oldValue, scope){
-			if (!newValue) {
+			if (!newValue && $scope.activeModel) {
 				$scope.activeModel.ministries = [];
 			} 
 		 });
@@ -152,11 +152,6 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		} else {
 			this.$scope.bindWithMinistry = false;
 		}
-	},
-
-	_add:function(){
-		this.$scope.validateFinalResult = false;
-		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newUser);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 

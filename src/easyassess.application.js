@@ -278,7 +278,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 	},
 
 	_add:function(){
-
+		this.$scope.activeModel = EasyAssess.extend({},this.$scope.emptyModel);
 	},
 
 	_save: function () {
@@ -332,7 +332,6 @@ EasyAssess.app.MaintenanceController.prototype = {
 		$('.es-maint-button-group button[ng-click="delete()"]').hide();
 	},
 
-
     __default: function($scope,ngDialog,esRequestService) {
 
     	$scope.$on('$selected', (function(e, model){
@@ -342,6 +341,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 				}
 			}
     		this._select(model);
+			this.$scope.validateFinalResult = true;
 			if(this._postSelect) {
 				this._postSelect(model);
 			}
@@ -360,6 +360,7 @@ EasyAssess.app.MaintenanceController.prototype = {
         }).bind(this));
 
 		$scope.$on('$added', (function(e){
+			this.$scope.validateFinalResult = false;
 			this._add();
 			if(this._postAdd) {
 				this._postAdd();
