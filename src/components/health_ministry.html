@@ -12,7 +12,7 @@
 	<div ng-show="!activeModel || !activeModel.id">
 	</div>
 	<div ng-show="activeModel && activeModel.id">
-		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
+		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
 		<div style="overflow: auto;height:300px;">
 			<fieldset>
 				<legend style="font-size:14px;font-weight: 700;margin-bottom: 0px;">下属机构</legend>
@@ -59,6 +59,6 @@
 				</div>
 			</fieldset>
 		</div>
-		<es-app-maint-button-group es-model="activeModel"></es-app-maint-button-group>
+		<es-app-maint-button-group es-model="activeModel" es-validate="validateFinalResult"></es-app-maint-button-group>
 	</div>
 </div>

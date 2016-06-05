@@ -5,14 +5,14 @@
 				<es-add-new es-text="创建新角色"></es-add-new>
 			</div>
 			<div class="panel-body">
-				<es-app-datagrid es-resource="role" es-columns="fields" es-options="options"></es-app-datagrid>
+				<es-app-datagrid es-resource="role" es-columns="fields" es-transfer="transferData" es-options="options"></es-app-datagrid>
 			</div>
 		</div>
 	</div>
 	<div ng-show="!activeModel || !activeModel.id">
 	</div>
 	<div ng-show="activeModel && activeModel.id">
-		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="用户组"></es-app-textbox>
+		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="用户组"></es-app-textbox>
 		<div>
 			<table class="table table-striped">
 				<thead>
@@ -59,6 +59,6 @@
 				</tr>
 			</table>
 		</div>
-		<es-app-maint-button-group es-model="activeModel"></es-app-maint-button-group>
+		<es-app-maint-button-group es-model="activeModel" es-validate="validateFinalResult"></es-app-maint-button-group>
 	</div>
 </div>

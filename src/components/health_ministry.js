@@ -11,6 +11,22 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			{title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
 		];
 
+		$scope.validations = {
+			name: {
+				validateMethod: function (value) {
+					var result = false;
+					if (typeof value == 'string' && value != 0) {
+						result = true;
+					} else {
+						result = false;
+					}
+					return result;
+				},
+				validateResult: true,
+				errorMessage: "名称不能为空"
+			}
+		}
+
 		$scope.newMinistry = {
 			"id": -1,
 			"name": "",
@@ -35,13 +51,20 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			}
 			ministry.supervisorId = -1;
 		};
+
+		$scope.$on('$es-validated-changed',function(){
+			$scope.validateFinalResult = $scope.validations.name.validateResult;
+			$scope.$apply();
+		});
 	},
 
 	_add: function (){
+		this.$scope.validateFinalResult = false;
 		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newMinistry);
 	},
 
 	_preSelect: function() {
+		this.$scope.validateFinalResult = true;
 		this.$timeout((function(){
 			this.$scope.$broadcast('angular-ui-tree:collapse-all');
 		}).bind(this), 100);
