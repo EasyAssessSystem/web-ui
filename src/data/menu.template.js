@@ -26,7 +26,7 @@ var MenuTemplate = {
                 },
                 {
                     text:"代码管理",
-                    link:"code"
+                    link:"assay_code"
                 }
             ],
             root: true
