@@ -5,6 +5,7 @@ require('./components/cdc.html');
 require('./components/role.html');
 require('./components/health_ministry.html');
 require('./components/assay_category.html');
+require('./components/code_group.html');
 /**
  * Created by alexli on 2016/4/3.
  * Edited by aaronchen on 2016/5/14
