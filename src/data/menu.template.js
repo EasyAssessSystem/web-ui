@@ -15,6 +15,18 @@ var MenuTemplate = {
                 {
                     text:"机构管理",
                     link:"health_ministry"
+                },
+                {
+                    text:"检测类别管理",
+                    link:"assay_category"
+                },
+                {
+                    text:"代码组管理",
+                    link:"code_group"
+                },
+                {
+                    text:"代码管理",
+                    link:"code"
                 }
             ],
             root: true

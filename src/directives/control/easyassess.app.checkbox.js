@@ -14,7 +14,6 @@ EasyAssess.directives["esAppCheckbox"]
 		scope: {
 			esLabel: "@",
 			esModel:"=",
-			esValueField:"@",
 			esReadonly: "="
 		},
 		controller: ["$scope", function($scope, $element, $attrs){

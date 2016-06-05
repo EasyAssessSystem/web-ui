@@ -34,12 +34,14 @@ EasyAssess.directives["esAppMenu"]
 			     + '<div ng-repeat="group in esMenu.items">'
 			     +		'<div ng-click="toggle(group)" class="es-app-menu-group" align="center" ><span class="glyphicon {{group.icon}}" style="padding-right:20px;color:#00B312;"></span><span>{{group.text}}</span><div class="glyphicon {{arrowIcon(group)}}" style="float:right;"></div></div>'
 			     + 		'<div class="es-app-menu-block" align="center" ng-show="expanded(group)">'
-			     +			'<div class="es-app-menu-item" ng-repeat="item in group.items| esMenuFilter:searchKeyword:group"><span class="glyphicon glyphicon-circle-arrow-right" style="font-size:12px;padding-right:20px;"></span><a ng-click="activate(item)">{{item.text}}</a></div>'
+                 +			'<table style="width:100%;"><tr class="es-app-menu-item" ng-repeat="item in group.items| esMenuFilter:searchKeyword:group">'
+                 +			   '<td><span class="glyphicon glyphicon-circle-arrow-right" style="font-size:12px;position:relative;left:80px;"></span></td><td><a style="position:relative;left:80px;" ng-click="activate(item)">{{item.text}}</a></td>'
+                 +			'</tr></table>'
 			     +		'</div>'
 			     + '</div>'
 			     +'</div>',
 		scope: {
-	
+
 		},
 		controller: ["$scope","$timeout", function($scope, $element, $attrs){
 			$scope.expanded = function(group) {

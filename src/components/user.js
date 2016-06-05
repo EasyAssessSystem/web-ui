@@ -29,6 +29,12 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 			{title:"姓名", field:"name", type:"string", searchable:true, default:true}
 		 ];
 
+		 $scope.ministriesFields = [
+			{title:"名称", field:"name", type:"string",searchable:true,default:true},
+			{title:"状态", field:"status", type:"string",searchable:false},
+			{title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
+		 ];
+
 		 $scope.roleOptions = [
 			{
 				text: '用户组',
@@ -38,6 +44,16 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 
 		 $scope.$on('$roleLookup_selected', function(e, model){
 			$scope.activeModel.roles[0] = model;
+		 });
+
+		 $scope.$on('$ministryLookup_selected', function(e, model){
+			$scope.activeModel.ministries[0] = model;
+		 });
+
+		 $scope.$watch('bindWithMinistry',function(newValue,oldValue, scope){
+			if (!newValue) {
+				$scope.activeModel.ministries = [];
+			} 
 		 });
 
 		 $scope.transferData = function(rawData){
@@ -63,6 +79,11 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_select: function (model) {
 		this.$scope.activeModel = this._transfer2RawData(model);
 		this.$scope.confirmedPassword = this.$scope.activeModel.password;
+		if (this.$scope.activeModel.ministries.length > 0) {
+			this.$scope.bindWithMinistry = true;
+		} else {
+			this.$scope.bindWithMinistry = false;
+		}
 	},
 
 	_add:function(){
