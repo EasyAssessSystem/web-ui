@@ -7,9 +7,9 @@ EasyAssess.directives["esAppMaintButtonGroup"]
 		replace: true,
 		transclude: false,
 		template: '<div class="es-maint-button-group">'
-					+ '<button ng-click="save()" type="button" class="btn btn-primary">'
+					+ '<button ng-click="save()" type="button" class="btn btn-primary" ng-class="{disabled:!esValidate}">'
 					+ 	'<span class="glyphicon glyphicon-ok"></span>'
-					+ 	'<span class="es-icon-button-text">保存</span>'
+					+ 	'<span class="es-icon-button-text" >保存</span>'
 					+ '</button>'
 					+ '<button ng-click="delete()" type="button" class="btn btn-primary">'
 					+ 	'<span class="glyphicon glyphicon-remove"></span>'
@@ -21,16 +21,18 @@ EasyAssess.directives["esAppMaintButtonGroup"]
 					+ '</button>'
 				+'</div>',
 		scope: {
-			
+			esValidate:'=?'
 		},
-		
+
 		controller: ["$scope", function($scope, $element, $attrs){
 			$scope.cancel = function() {
 				 $scope.$emit('$cancel');
 			};
-			
+
 			$scope.save = function() {
-				 $scope.$emit('$save');
+				if($scope.esValidate){
+					$scope.$emit('$save');
+				}
 			};
 
 			$scope.delete = function() {
@@ -38,7 +40,8 @@ EasyAssess.directives["esAppMaintButtonGroup"]
 			};
 		}],
 		
-		link: function($scope, $element, $attrs, $parentController) {
+		link: function(scope, $element, $attrs, $parentController) {
+
 		}
 	}
 });

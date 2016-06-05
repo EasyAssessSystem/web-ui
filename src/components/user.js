@@ -5,9 +5,67 @@ EasyAssess.app.UserController = function($scope,ngDialog,esRequestService) {
 
 EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
-		 $scope.newUser = {"id":-1,"name":"","status":"A","username":"","password":"","canLaunchAssessment":true,"roles":[{"id":1,"name":"系统用户","status":"A"}]},
+		 $scope.newUser = {"id":-1,"name":"","status":"A","username":"","password":"",confirmedPassword:"","canLaunchAssessment":true,"roles":[{"id":1,"name":"系统用户","status":"A"}]},
 		 $scope.resource = "user";
 		 $scope.newItem = "创建新用户";
+		 $scope.validations = {
+			 username:{
+				 validateMethod: function(value){
+					 var result = false;
+					 if(typeof value=='string' && value.length >=3 && value.length <=8){
+						 result =  true;
+					 }else {
+						 result =  false;
+					 }
+					 return result;
+				 },
+
+				 validateResult:true,
+				 errorMessage:"请输入有效用户名(长度3到8位的字符)"
+			 },
+			 name:{
+				 validateMethod: function(value){
+					 var result = false;
+					 if(typeof value=='string'&& value != 0){
+						 result =  true;
+					 }else {
+						 result =  false;
+					 }
+					 return result;
+				 },
+				 validateResult:true,
+				 errorMessage:"姓名不能为空"
+			 },
+			 password:{
+				 validateMethod: function(value){
+					 var result = false;
+					 if(typeof value=='string'  && value.length >=6){
+						 result =  true;
+					 }else {
+						 result =  false;
+					 }
+					 return result;
+				 },
+				 validateResult:true,
+				 errorMessage:"请输入有效密码(长度6到10位的字符)"
+			 },
+			 comfirmPassword:{
+				 validateMethod: function(value){
+					 var result = false;
+					 if(value === $scope.activeModel.password){
+						 result =  true;
+					 }else {
+						 result =  false;
+					 }
+					 return result;
+				 },
+
+				 validateResult:true,
+				 errorMessage:"两次密码不一致"
+			 }
+		 };
+
+
 		 $scope.userStatus = [
      	      {text: "无效", value: "U"},
 			 {text: "有效", value: "A"}
@@ -40,6 +98,13 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 			$scope.activeModel.roles[0] = model;
 		 });
 
+		$scope.$on('$es-validated-changed',function(){
+			$scope.validateFinalResult = $scope.validations.name.validateResult
+				&& $scope.validations.username.validateResult
+				&& $scope.validations.password.validateResult
+				&& $scope.validations.comfirmPassword.validateResult;
+			$scope.$apply();
+		});
 		 $scope.transferData = function(rawData){
 			 return rawData.map(function(obj){
 				 if (obj['status'] === "A")
@@ -51,6 +116,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		 }
 	},
 
+
 	_transfer2RawData: function(model){
 		if(model['status'] == "有效") {
 			model['status'] = 'A';
@@ -61,11 +127,13 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	},
 
 	_select: function (model) {
+		this.$scope.validateFinalResult = true;
 		this.$scope.activeModel = this._transfer2RawData(model);
 		this.$scope.confirmedPassword = this.$scope.activeModel.password;
 	},
 
 	_add:function(){
+		this.$scope.validateFinalResult = false;
 		this.$scope.activeModel = EasyAssess.extend({},this.$scope.newUser);
 	}
 }, EasyAssess.app.MaintenanceController.prototype);

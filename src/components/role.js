@@ -19,10 +19,38 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
               {title:"姓名", "field":"name", "name":"string",searchable:true,default:true},
               {title:"状态", "field":"status", "type":"string",searchable:true,default:true}
          ];
+
+		 $scope.options = $scope.fields.filter(function(eachfield){
+			return eachfield.searchable;
+		 }).map(function(item){
+			var option = {text:"",value:"",default:false};
+			option.text = item.title;
+			option.value = item.field;
+			option.default = item.default;
+			return option;
+		 });
+
+		$scope.transferData = function(rawData){
+			return rawData.map(function(obj){
+				if (obj['status'] === "A")
+					obj['status'] = "有效";
+				else
+					obj['status'] = "无效";
+				return obj
+			})
+		}
 	},
 
+	_transfer2RawData: function(model){
+		if(model['status'] == "有效") {
+			model['status'] = 'A';
+		} else {
+			model['status'] = 'U';
+		}
+		return model;
+	},
 	_select: function(model){
-		this.$scope.activeModel = model
+		this.$scope.activeModel = this._transfer2RawData(model)
 		this._loadPermissions(model.id);
 	},
 
