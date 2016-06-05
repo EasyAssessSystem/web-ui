@@ -1,0 +1,19 @@
+<div>
+	<div ng-show="!activeModel || !activeModel.id">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<es-add-new es-text="创建检测分类"></es-add-new>
+			</div>
+			<div class="panel-body">
+				<es-app-datagrid es-resource="{{resource}}" es-columns="fields" es-options="options"></es-app-datagrid>
+			</div>
+		</div>
+	</div>
+	<div ng-show="!activeModel || !activeModel.id">
+	</div>
+	<div ng-show="activeModel && activeModel.id">
+		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
+		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="状态"></es-app-select>
+		<es-app-maint-button-group es-model="activeModel" es-validate="validateFinalResult"></es-app-maint-button-group>
+	</div>
+</div>

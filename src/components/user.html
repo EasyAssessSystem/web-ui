@@ -5,7 +5,7 @@
 				<es-add-new es-text="创建新用户"></es-add-new>
 			</div>
 			<div class="panel-body">
-				<es-app-datagrid es-resource="user" es-columns="fields" es-transfer="transferData" es-options="options"></es-app-datagrid>
+				<es-app-datagrid es-resource="user" es-columns="fields" es-options="options"></es-app-datagrid>
 			</div>
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 		<es-app-lookup  es-readonly="readonly" es-model="activeModel.roles[0].name" es-label="用户组" es-resource="role" es-columns="roleFields" es-options="roleOptions" es-id="roleLookup" es-value-field="name"></es-app-lookup>
 		<es-app-checkbox es-readonly="readonly" style="padding-top:5px;" es-model="bindWithMinistry" es-label="卫生机构用户"></es-app-checkbox>
 		<es-app-lookup es-readonly="readonly" ng-if="bindWithMinistry" es-readonly="readonly" es-model="activeModel.ministries[0].name" es-label="所属卫生机构" es-resource="ministry" es-columns="ministriesFields" es-id="ministryLookup" es-value-field="name"></es-app-lookup>
-		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="type" es-label="状态" es-options="userStatus"></es-app-select>
+		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="type" es-label="状态" es-options="normalStatus"></es-app-select>
 		<es-app-maint-button-group es-model="activeModel" es-validate="validateFinalResult"></es-app-maint-button-group>
 	</div>
 </div>

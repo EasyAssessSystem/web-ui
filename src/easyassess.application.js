@@ -4,6 +4,7 @@ require('./components/user.html');
 require('./components/cdc.html');
 require('./components/role.html');
 require('./components/health_ministry.html');
+require('./components/assay_category.html');
 /**
  * Created by alexli on 2016/4/3.
  * Edited by aaronchen on 2016/5/14
@@ -333,6 +334,11 @@ EasyAssess.app.MaintenanceController.prototype = {
 	},
 
     __default: function($scope,ngDialog,esRequestService) {
+
+		$scope.normalStatus = [
+			{text: "无效", value: "U"},
+			{text: "有效", value: "A"}
+		];
 
     	$scope.$on('$selected', (function(e, model){
 			if (this._preSelect) {
