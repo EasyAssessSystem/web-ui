@@ -7,19 +7,23 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		$scope.fields = [
 			{title:"名称", field:"name", type:"string",searchable:true,default:true},
-			{title:"状态", field:"status", type:"string",searchable:false,default:false}
+			{title:"状态", field:"status", type:"string",searchable:false},
+			{title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
 		];
 
 		$scope.newMinistry = {
 			"id": -1,
 			"name": "",
-			"status": "A"
+			"status": "A",
+			"ministries":[],
+			"type": "C"
 		};
 
 		$scope.resource = "ministry";
 
 		$scope.$on('$ministryLookup_selected', function(e, model){
 			$scope.activeModel.ministries.push(model);
+			model.supervisorId = $scope.activeModel.id;
 		});
 
 		$scope.removeMinistry = function(ministry) {
@@ -29,6 +33,7 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 					break;
 				}
 			}
+			ministry.supervisorId = -1;
 		};
 	},
 

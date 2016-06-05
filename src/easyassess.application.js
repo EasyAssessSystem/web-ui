@@ -250,7 +250,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 		}).map(function(item){
 			var option = {text:"",value:"",default:false};
 			option.text = item.title;
-			option.value = item.field;
+			option.value = item.cascadeField ? item.cascadeField : item.field;
 			option.default = item.default;
 			return option;
 		});
