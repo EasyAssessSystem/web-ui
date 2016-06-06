@@ -7,6 +7,7 @@ require('./components/health_ministry.html');
 require('./components/assay_category.html');
 require('./components/code_group.html');
 require('./components/assay_code.html');
+require('./components/template.html');
 
 /**
  * Created by alexli on 2016/4/3.
@@ -47,7 +48,7 @@ EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),re
 
 EasyAssess.formApp = angular.module("EasyAssessForm",
 		[require('angular-sanitize'), require('ng-dialog')],function(){
-	
+
 });
 
 /**

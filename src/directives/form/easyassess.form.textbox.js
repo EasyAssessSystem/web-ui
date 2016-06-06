@@ -1,7 +1,7 @@
 var EasyAssess = require('../../easyassess.application');
 
 EasyAssess.directives["esTextBox"] 
-	= EasyAssess.formApp.directive("esTextBox", function() {
+	= EasyAssess.app.directive("esTextBox", function() {
 	
 	return {
 		restrict: 'E',

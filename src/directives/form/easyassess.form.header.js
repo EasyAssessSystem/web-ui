@@ -1,7 +1,7 @@
 var EasyAssess = require('../../easyassess.application');
 
 EasyAssess.directives["esFormHeader"] 
-	= EasyAssess.formApp.directive("esFormHeader", function() {
+	= EasyAssess.app.directive("esFormHeader", function() {
 	
 	return {
 		restrict: 'E',

@@ -25,6 +25,11 @@ require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
 
+require('./directives/form/easyassess.form.textbox');
+require('./directives/form/easyassess.form.addbutton');
+require('./directives/form/easyassess.form.header');
+require('./directives/form/easyassess.form.group');
+require('./directives/form/easyassess.form.page');
 
 var app = angular.module("esApplication", [EasyAssess.app.name]);
 app.controller("esApplicationController", function ($scope, $http) {

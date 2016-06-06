@@ -25,7 +25,7 @@ var EasyAssess = require('../../easyassess.application');
 
 
 EasyAssess.directives["esFormGroup"] 
-	= EasyAssess.formApp.directive("esFormGroup", function(ngDialog) {
+	= EasyAssess.app.directive("esFormGroup", function(ngDialog) {
 	
 	return {
 		restrict: 'E',

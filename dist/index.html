@@ -6,7 +6,7 @@
 	<link href="resource/fav.ico" rel="shortcut icon">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-<body ng-app="esApplication" ng-controller="esApplicationController" ng-style="{'background-image': authenticated ? '':'url(resource/dark-grey-tile.png)'}">
+<body ng-app="esApplication" ng-controller="esApplicationController" ng-style="{'background-image': authenticated ? '':'url(resource/bg-noise.jpg)'}">
 	<div ng-if="authenticated">
 		<es-app-banner></es-app-banner>
 		<es-app-menu></es-app-menu>
@@ -20,7 +20,7 @@
 				<div class="es-app-banner-title">
 					<img src="resource/logo_64.png" width="32" height="32"/>
 					<span>Easy</span><span style="color:#00B312">Assess</span>
-					<img src="resource/stardust.png" style="position: relative; top:0px;left: 180px;" width="220" height="28"/>
+					<img src="resource/stardust.png" style="position: relative; top:0px;left: 180px;" width="220" height="30"/>
 					<div style="color:white;font-size:12px;font-weight:normal;padding-left: 42px;">QC Tracking System</div>
 				</div>
 			</div>
@@ -32,6 +32,12 @@
 					<span class="glyphicon glyphicon-ok"></span>
 					<span class="es-icon-button-text">登录</span>
 				</button>
+			</div>
+		</div>
+		<div style="position:absolute;bottom: 10px;width: 100%;">
+			<div class="es-sep-line"></div>
+			<div style="color:#aaa;font-size:8px;">
+				Copyright Stardust 2016 | <a  style="color:#aaa;" href="http://www.renaijiance.com" target="_blank">www.renaijiance.com</a>
 			</div>
 		</div>
 	</div>
