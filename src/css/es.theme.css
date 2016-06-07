@@ -36,6 +36,7 @@
 	cursor:pointer;
 	border-radius:5px 5px 5px 5px;
 	padding:5px 5px 5px 5px;
+	font-size: 11px;
 }
 
 .es-delete-button {
@@ -58,7 +59,7 @@
 }
 
 .es-form-header-text {
-	font-size:40px;
+	font-size:20px;
 	font-weight:bold;
 	font-family:宋体,arial,sans-serif;
 }
@@ -69,18 +70,18 @@
 }
 
 .es-form-group-title {
-	font-size:16px;
+	font-size:11px;
 	padding: 0 2px 0 2px;
 }
 
 .es-form-group-text {
-	font-size:18px;
+	font-size:14px;
 }
 
 .es-form-group-cell {
 	padding:0px 5px 0px 5px; 
 	white-space: nowrap;
-	height:40px;
+	height:30px;
 }
 
 .es-dialog-content {
@@ -158,14 +159,19 @@ select {
 
 .es-app-menu-handle {
 	cursor: pointer;
-	background: grey;
-	color:white;
-	border: solid #2a2d33 1px;
-	border-bottom-right-radius: 8px;
-	border-top-right-radius: 8px;
-	padding: 30px 0px 30px 0px;
-	width:15px;
+	background: #f5f7f8;
+	color: gray;
+	border: 1px solid #e2e4e7;
+	border-bottom-right-radius: 3px;
+	border-top-right-radius: 3px;
+	padding: 20px 0px 15px 0px;
+	width:10px;
+	font-size:8px;
 	z-index: 888;
+	box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);
+	position:relative;
+	top:30px;
+	height:50px;
 }
 
 .es-app-menu-group {
@@ -191,6 +197,7 @@ select {
     padding: 3em;
     border: 1px solid rgba(20,53,80,0.14);
     box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);
+	overflow:visible;
 }
 
 

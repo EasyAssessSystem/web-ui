@@ -25,7 +25,7 @@ EasyAssess.directives["esAppMenu"]
 		transclude: false,
 		template:  '<div class="es-app-sidebar-wrapper">'
                      +'<table><tr>'
-                     +'<td ng-if="showMenu">'
+                     +'<td ng-if="showMenu" ng-mouseleave="collapse()">'
                      +'<div class="es-app-sidebar" style="height:700px;">'
                      + '<div class="es-app-seperator-line es-app-search-wrapper">'
                      +	'<div class="input-group">'
@@ -46,7 +46,7 @@ EasyAssess.directives["esAppMenu"]
                      +'</td>'
                      +'<td valign="top">'
                      +'<div class="es-app-seperator-line"></div>'
-                     + '<div ng-click="collapse()" class="es-app-menu-handle" style="position:relative;top:5px;"><span>菜单</span></div>'
+                     + '<div ng-if="!showMenu" ng-mouseenter="collapse()" valign="middle" class="es-app-menu-handle"><span class="glyphicon glyphicon-chevron-right"></span></div>'
                      +'</td>'
                      +'</tr></table>'
                  +'</div>',
