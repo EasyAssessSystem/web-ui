@@ -18,15 +18,15 @@ EasyAssess.app.filter('esMenuFilter', function() {
 
 
 EasyAssess.directives["esAppMenu"] 
-	= EasyAssess.app.directive("esAppMenu", function($timeout, $http, $state) {
+	= EasyAssess.app.directive("esAppMenu", function($timeout, $http, $state,$animate) {
 	return {
 		restrict: 'E',
 		replace: true,
 		transclude: false,
 		template:  '<div class="es-app-sidebar-wrapper">'
                      +'<table><tr>'
-                     +'<td ng-if="showMenu" ng-mouseleave="collapse()">'
-                     +'<div class="es-app-sidebar" style="height:700px;">'
+                     +'<td>'
+                     +'<div ng-hide="!showMenu" class="es-app-sidebar animate-show" style="height:700px;" ng-mouseleave="collapse()">'
                      + '<div class="es-app-seperator-line es-app-search-wrapper">'
                      +	'<div class="input-group">'
                      +		'<input ng-model="searchKeyword" type="text" placeholder="搜索功能..." class="form-control">'
@@ -54,7 +54,7 @@ EasyAssess.directives["esAppMenu"]
 
 		},
 		controller: ["$scope","$timeout", function($scope, $element, $attrs){
-            $scope.showMenu = false;
+            $scope.showMenu = true;
 
 			$scope.expanded = function(group) {
 				return group.expanded;
@@ -110,7 +110,7 @@ EasyAssess.directives["esAppMenu"]
 				$scope.esMenu = menu;
              }, 700);
 		}],
-		link: function($scope) {
+		link: function(scope,elem) {
 			
 		}
 	}

@@ -41,7 +41,7 @@ EasyAssess.activeEnv = EasyAssess.environments.dev;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-tree')
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-tree')
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });

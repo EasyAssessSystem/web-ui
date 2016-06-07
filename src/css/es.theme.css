@@ -200,7 +200,22 @@ select {
 	overflow:visible;
 }
 
+.animate-show{
+	max-width: 300px;
+	transition: 0.3s ease all;
+	opacity: 1;
 
+}
+.animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+	display: block !important; /* yes, important */
+
+}
+
+.animate-show.ng-hide {
+	max-width: 0px;
+	opacity: 0;
+
+}
 /**************** spinner **********************/
 #fountainG{
 	position:relative;
