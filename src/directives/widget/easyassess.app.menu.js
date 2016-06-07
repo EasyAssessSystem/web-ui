@@ -23,31 +23,47 @@ EasyAssess.directives["esAppMenu"]
 		restrict: 'E',
 		replace: true,
 		transclude: false,
-		template: '<div class="es-app-sidebar" style="height:700px;">'
-			     + '<div class="es-app-seperator-line es-app-search-wrapper">'
-			     +	'<div class="input-group">'
-		         +		'<input ng-model="searchKeyword" type="text" placeholder="搜索功能..." class="form-control">'
-		         + 		'<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>'
-			     +'	</div>'
-			     + '</div>'
-			     + '<div ng-show="isLoading" style="padding:20px 20px 20px 20px;"><es-spinner></es-spinner></div>'
-			     + '<div ng-repeat="group in esMenu.items">'
-			     +		'<div ng-click="toggle(group)" class="es-app-menu-group" align="center" ><span class="glyphicon {{group.icon}}" style="padding-right:20px;color:#00B312;"></span><span>{{group.text}}</span><div class="glyphicon {{arrowIcon(group)}}" style="float:right;"></div></div>'
-			     + 		'<div class="es-app-menu-block" align="center" ng-show="expanded(group)">'
-                 +			'<table style="width:100%;"><tr class="es-app-menu-item" ng-repeat="item in group.items| esMenuFilter:searchKeyword:group">'
-                 +			   '<td><span class="glyphicon glyphicon-circle-arrow-right" style="font-size:12px;position:relative;left:50px;"></span></td><td><a style="position:relative;left:50px;" ng-click="activate(item)">{{item.text}}</a></td>'
-                 +			'</tr></table>'
-			     +		'</div>'
-			     + '</div>'
-			     +'</div>',
+		template:  '<div class="es-app-sidebar-wrapper">'
+                     +'<table><tr>'
+                     +'<td ng-if="showMenu">'
+                     +'<div class="es-app-sidebar" style="height:700px;">'
+                     + '<div class="es-app-seperator-line es-app-search-wrapper">'
+                     +	'<div class="input-group">'
+                     +		'<input ng-model="searchKeyword" type="text" placeholder="搜索功能..." class="form-control">'
+                     + 		'<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>'
+                     +'	</div>'
+                     + '</div>'
+                     + '<div ng-show="isLoading" style="padding:20px 20px 20px 20px;"><es-spinner></es-spinner></div>'
+                     + '<div ng-repeat="group in esMenu.items">'
+                     +		'<div ng-click="toggle(group)" class="es-app-menu-group" align="center" ><span class="glyphicon {{group.icon}}" style="padding-right:20px;color:#00B312;"></span><span>{{group.text}}</span><div class="glyphicon {{arrowIcon(group)}}" style="float:right;"></div></div>'
+                     + 		'<div class="es-app-menu-block" align="center" ng-show="expanded(group)">'
+                     +			'<table style="width:100%;"><tr class="es-app-menu-item" ng-repeat="item in group.items| esMenuFilter:searchKeyword:group">'
+                     +			   '<td><span class="glyphicon glyphicon-circle-arrow-right" style="font-size:12px;position:relative;left:50px;"></span></td><td><a style="position:relative;left:50px;" ng-click="activate(item)">{{item.text}}</a></td>'
+                     +			'</tr></table>'
+                     +		'</div>'
+                     + '</div>'
+                     +'</div>'
+                     +'</td>'
+                     +'<td valign="top">'
+                     +'<div class="es-app-seperator-line"></div>'
+                     + '<div ng-click="collapse()" class="es-app-menu-handle" style="position:relative;top:5px;"><span>菜单</span></div>'
+                     +'</td>'
+                     +'</tr></table>'
+                 +'</div>',
 		scope: {
 
 		},
 		controller: ["$scope","$timeout", function($scope, $element, $attrs){
+            $scope.showMenu = false;
+
 			$scope.expanded = function(group) {
 				return group.expanded;
 			}
-			
+
+            $scope.collapse = function() {
+                $scope.showMenu = !$scope.showMenu;
+            }
+
 			$scope.toggle = function(group) {
 				if (group.expanded) {
 					group.expanded = false;
