@@ -31,6 +31,8 @@ require('./directives/form/easyassess.form.header');
 require('./directives/form/easyassess.form.group');
 require('./directives/form/easyassess.form.page');
 
+require('./directives/charts/easyassess.chart.doughnut');
+
 var app = angular.module("esApplication", [EasyAssess.app.name]);
 app.controller("esApplicationController", function ($scope, $http) {
     $scope.input = {

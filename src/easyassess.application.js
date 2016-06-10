@@ -1,5 +1,6 @@
 var angular = require('angular');
 var router = require('angular-ui-router');
+require('./components/dashboard.html');
 require('./components/user.html');
 require('./components/cdc.html');
 require('./components/role.html');
@@ -8,6 +9,7 @@ require('./components/assay_category.html');
 require('./components/code_group.html');
 require('./components/assay_code.html');
 require('./components/template.html');
+
 
 /**
  * Created by alexli on 2016/4/3.
@@ -41,7 +43,7 @@ EasyAssess.activeEnv = EasyAssess.environments.dev;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-tree')
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-tree'),require('angular-chart.js').name
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });
@@ -60,6 +62,15 @@ EasyAssess.app.config(
 	  EasyAssess.app.urlRouterProvider = $urlRouterProvider;
 	  $httpProvider.defaults.useXDomain = true;
       delete $httpProvider.defaults.headers.common['X-Requested-With'];
+		require('./components/dashboard');
+		EasyAssess.app.stateProvider.state('dashborad',{
+		  url:'/dashboard',
+		  templateUrl:'dashboard.html',
+		  controller:'dashboardController'
+	  });
+		$urlRouterProvider.otherwise('/dashboard');
+		$urlRouterProvider.when('','/dashboard');
+
 	}
 );
 
@@ -182,6 +193,7 @@ EasyAssess.TaskManager = {
 		return this.module;
 	}
 };
+
 
 var $A = Array.from = function (iterable) {
     if (!iterable) return [];

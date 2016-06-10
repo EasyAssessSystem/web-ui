@@ -136,56 +136,7 @@ EasyAssess.directives["esAppDatagrid"]
                         console.log('fetching data error');
                     }
                 });
-                //$http.get(EasyAssess.activeEnv.pdm() + resource + "/list", {
-                //	params: {
-                //		size: pageSize,
-                //		page: pageNum -1,
-                //		sortBy: sortBy,
-                //		filterField:filterBy,
-                //		filterValue:filterValue
-                //	}
-                //}).success(
-                //	function(response) {
-                //		$scope.isLoading = false;
-                //		if (response.data.content.length > 0) {
-                //			$scope.esData = $scope.esTransfer()(response.data.content);
-                //			$scope.pagination = [];
-                //			pageCount = response.data.totalPages;
-                //			if (!pageCount) pageCount = 1;
-                //
-                //			var max = 5;
-                //			var start = 0;
-                //			var end = pageCount;
-                //            if (pageCount > max)
-                //            {
-                //                if (($scope.pageNum + max) <= pageCount && ($scope.pageNum - Math.ceil((max/2)) <= 0))
-                //                {
-                //                    start = 0;
-                //                    end = start + max;
-                //                }
-                //                else if (($scope.pageNum + max) <= pageCount && ($scope.pageNum - Math.ceil((max / 2)) > 0))
-                //                {
-                //                    start = $scope.pageNum - Math.ceil((max / 2));
-                //                    end = start + max;
-                //                }
-                //                else
-                //                {
-                //                    end = pageCount;
-                //                    start = pageCount - max;
-                //                }
-                //            }
-                //
-                //			for (var i=start;i<end;i++) {
-                //				var pageIndex = i + 1;
-                //				$scope.pagination.push(pageIndex);
-                //			}
-                //		}else {
-                //			$scope.esData = [];
-                //			$scope.pagination = [];
-                //		}
-                //	}
-                //);
-            };
+            }
 
             $scope.isLoading = true;
 
