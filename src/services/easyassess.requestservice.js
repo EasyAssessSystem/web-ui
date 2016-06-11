@@ -12,6 +12,94 @@ EasyAssess.services['esRequestSerivce'] =
         function getRequest(url,paramsData){
             var def = $q.defer();
             // templairy code for dashboard
+
+
+            if(url.indexOf('dashboard/1') > -1){
+                rawData = {
+                    "result": "SUCC",
+                    "messages": [],
+                    "data": {
+                        "content": [
+                            {
+                                "id": 1,
+                                "name": "卫生机构1",
+                                "status": "U"
+                            },{
+                                "id": 2,
+                                "name": "卫生机构2",
+                                "status": "F"
+                            },{
+                                "id": 3,
+                                "name": "卫生机构3",
+                                "status": "A"
+                            }
+                        ],
+                        "totalElements": 3,
+                        "totalPages": 1,
+                        "last": true,
+                        "size": 5,
+                        "number": 0,
+                        "sort": [
+                            {
+                                "direction": "ASC",
+                                "property": "id",
+                                "ignoreCase": false,
+                                "nullHandling": "NATIVE",
+                                "ascending": true
+                            }
+                        ],
+                        "numberOfElements": 5,
+                        "first": true
+                    }
+                };
+                def.resolve(rawData)
+            }
+
+            if(url.indexOf('dashboard/2')>-1){
+                rawData = {
+                    "result": "SUCC",
+                    "messages": [],
+                    "data": {
+                        "content": [
+                            {
+                                "id": 1,
+                                "name": "卫生机构1",
+                                "status": "U"
+                            },{
+                                "id": 2,
+                                "name": "卫生机构2",
+                                "status": "F"
+                            },{
+                                "id": 3,
+                                "name": "卫生机构3",
+                                "status": "A"
+                            },{
+                                "id": 4,
+                                "name": "卫生机构4",
+                                "status": "U"
+                            }
+                        ],
+                        "totalElements": 4,
+                        "totalPages": 1,
+                        "last": true,
+                        "size": 5,
+                        "number": 0,
+                        "sort": [
+                            {
+                                "direction": "ASC",
+                                "property": "id",
+                                "ignoreCase": false,
+                                "nullHandling": "NATIVE",
+                                "ascending": true
+                            }
+                        ],
+                        "numberOfElements": 5,
+                        "first": true
+                    }
+                };
+                def.resolve(rawData)
+
+            }
             if (url.indexOf('dashboard') > -1){
                 rawData = {
                     "result": "SUCC",
@@ -21,31 +109,16 @@ EasyAssess.services['esRequestSerivce'] =
                             {
                                 "id": 1,
                                 "name": "assessment1",
-                                "libraries": 20,
-                                "results": "6/16"
+                                "libraries": 3,
+                                "results":"1/3"
                             },{
                                 "id": 2,
                                 "name": "assessment2",
-                                "libraries": 45,
-                                "results": "10/16"
-                            },{
-                                "id": 3,
-                                "name": "assessment3",
-                                "libraries": 58,
-                                "results": "9/16"
-                            },{
-                                "id": 4,
-                                "name": "assessment4",
-                                "libraries": 90,
-                                "results": "10/16"
-                            },{
-                                "id": 5,
-                                "name": "assessment5",
-                                "libraries": 108,
-                                "results": "15/16"
+                                "libraries": 8,
+                                "results":"4/8"
                             }
                         ],
-                        "totalElements": 5,
+                        "totalElements": 2,
                         "totalPages": 1,
                         "last": true,
                         "size": 5,

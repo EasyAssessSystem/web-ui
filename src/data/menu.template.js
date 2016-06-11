@@ -38,6 +38,10 @@ var MenuTemplate = {
                 {
                     text:"制作模板",
                     link:"template"
+                },
+                {
+                    text:"考评历史",
+                    link:"assessment"
                 }
             ],
             root: true

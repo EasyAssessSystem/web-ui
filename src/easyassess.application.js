@@ -1,6 +1,6 @@
 var angular = require('angular');
 var router = require('angular-ui-router');
-require('./components/dashboard.html');
+require('./components/assessment.html');
 require('./components/user.html');
 require('./components/cdc.html');
 require('./components/role.html');
@@ -18,7 +18,7 @@ require('./components/template.html');
 var EasyAssess = {
     version: '1.0.0',
     copyright:'Stardust',
-    author: 'Li, Cheng;Cheng, Dong',
+    author: 'Li, Cheng;Chen, Dong',
     description: 'EasyAssess Application Namespace',
 }
 
@@ -62,14 +62,14 @@ EasyAssess.app.config(
 	  EasyAssess.app.urlRouterProvider = $urlRouterProvider;
 	  $httpProvider.defaults.useXDomain = true;
       delete $httpProvider.defaults.headers.common['X-Requested-With'];
-		require('./components/dashboard');
-		EasyAssess.app.stateProvider.state('dashborad',{
-		  url:'/dashboard',
-		  templateUrl:'dashboard.html',
-		  controller:'dashboardController'
-	  });
-		$urlRouterProvider.otherwise('/dashboard');
-		$urlRouterProvider.when('','/dashboard');
+		//require('./components/assessment');
+		//EasyAssess.app.stateProvider.state('dashborad',{
+		//  url:'/assessment',
+		//  templateUrl:'assessment.html',
+		//  controller:'assessmentController'
+	  //});
+		//$urlRouterProvider.otherwise('/assessment');
+		//$urlRouterProvider.when('','/assessment');
 
 	}
 );
