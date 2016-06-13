@@ -9,6 +9,7 @@ require('./components/assay_category.html');
 require('./components/code_group.html');
 require('./components/assay_code.html');
 require('./components/template.html');
+require('./components/assessment_detail.html');
 
 
 /**
@@ -163,26 +164,39 @@ EasyAssess.TaskManager = {
 		require("./components/" + module);
 	},
 
-	start: function(module, state) {
+	start: function(module, state, options,statePrams) {
 		if (!this._cached[module]) {
 			this._loadController(module);
-			var options = {
+			if (!options) {
+				options = {
 					url: "/" + module,
-				    templateUrl: module + '.html',
-				    controller: module + "Controller"
+					templateUrl: module + '.html',
+					controller: module + "Controller"
 				}
+			}
 
-				EasyAssess.app.stateProvider.state(module, options);
-
+			debugger;
+			EasyAssess.app.stateProvider.state(module, options);
+			if (!statePrams) {
 				state.go(module, {});
+			} else {
+				state.go(module, statePrams);
+			}
 
-				EasyAssess.TaskManager._cached[module] = true;
+			EasyAssess.TaskManager._cached[module] = true;
 
 		} else {
-			state.go(module, {});
+			if (!statePrams) {
+				state.go(module, {});
+			} else {
+				state.go(module, statePrams);
+			}
 		}
 
-		this.module = module;
+		this.module = {
+			module: module,
+			permissions: EasyAssess.session.componentPermissionMap[options.authenticationModule ? options.authenticationModule :module]
+		};
 	},
 	
 	terminate: function() {
@@ -251,7 +265,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 
 		this.__default.apply(this, arguments);
 
-		this._permission = EasyAssess.session.componentPermissionMap[EasyAssess.TaskManager.current()];
+		this._permission = EasyAssess.TaskManager.current().permissions;//.session.componentPermissionMap[EasyAssess.TaskManager.current()];
 
 		this._postInitialize();
 	},

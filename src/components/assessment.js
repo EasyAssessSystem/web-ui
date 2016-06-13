@@ -1,5 +1,5 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.AssessmentController = function($scope,esRequestService) {
+EasyAssess.app.AssessmentController = function($scope,esRequestService,$state) {
     this.initialize.apply(this, arguments);
 };
 
@@ -33,24 +33,35 @@ EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
     },
 
     _select: function(model){
-        this.$scope.activeModel = model;
-        this.$scope.itemId = this.$scope.activeModel.id;
-        this.$scope.detailFields = [
-            {title:"机构名称", field:"name", type:"string",searchable:true,default:true},
-            {title:"状态", field:"status", type:"string",searchable:false,default:false},
-            {title:"操作", field:"actions", type:"string",searchable:false,default:false}
-        ];
+
+        stateOptions = {
+            url:"/assessment/:id",
+            templateUrl:  'assessment_detail.html',
+            controller: "assessment_detailController"
+        };
+        debugger;
+        EasyAssess.TaskManager.start('detail',this.$state,stateOptions,{id:model.id});
+        console.log('statenow is ',this.$state.current);
 
 
-        this.$scope.detailOptions = this.$scope.detailFields.filter(function(eachfield){
-            return eachfield.searchable;
-        }).map(function(item){
-            var option = {text:"",value:"",default:false};
-            option.text = item.title;
-            option.value = item.cascadeField ? item.cascadeField : item.field;
-            option.default = item.default;
-            return option;
-        });
+        //this.$scope.activeModel = model;
+        //this.$scope.itemId = this.$scope.activeModel.id;
+        //this.$scope.detailFields = [
+        //    {title:"机构名称", field:"name", type:"string",searchable:true,default:true},
+        //    {title:"状态", field:"status", type:"string",searchable:false,default:false},
+        //    {title:"操作", field:"actions", type:"string",searchable:false,default:false}
+        //];
+        //
+        //
+        //this.$scope.detailOptions = this.$scope.detailFields.filter(function(eachfield){
+        //    return eachfield.searchable;
+        //}).map(function(item){
+        //    var option = {text:"",value:"",default:false};
+        //    option.text = item.title;
+        //    option.value = item.cascadeField ? item.cascadeField : item.field;
+        //    option.default = item.default;
+        //    return option;
+        //});
     }
 
 
