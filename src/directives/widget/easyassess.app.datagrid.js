@@ -39,8 +39,7 @@ EasyAssess.directives["esAppDatagrid"]
             esOptions: "=?",
             esItemId:"=?",
             esQuery: "=",
-            esId: "@",
-            esTemplate:"=?"
+            esId: "@"
         },
         controller: ["$scope", function ($scope, $element, $attrs) {
             if (!$scope.esPageSize) {
