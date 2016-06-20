@@ -164,7 +164,7 @@ EasyAssess.TaskManager = {
 		require("./components/" + module);
 	},
 
-	start: function(module, state, options,statePrams) {
+	start: function(module, state, options, statePrams) {
 		if (!this._cached[module]) {
 			this._loadController(module);
 			if (!options) {
@@ -194,7 +194,7 @@ EasyAssess.TaskManager = {
 
 		this.module = {
 			module: module,
-			permissions: EasyAssess.session.componentPermissionMap[options.authenticationModule ? options.authenticationModule :module]
+			permissions: EasyAssess.session.componentPermissionMap[(options && options.authenticationModule) ? options.authenticationModule :module]
 		};
 	},
 	
