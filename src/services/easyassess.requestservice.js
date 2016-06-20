@@ -139,7 +139,7 @@ EasyAssess.services['esRequestSerivce'] =
                 def.resolve(rawData);
             }
             // need to be deleted when done.
-            $http.get(url,{params:paramsData})
+            $http.get(url,{params:paramsData, withCredentials: true})
                 .success(function(data){
                     def.resolve(data);
                 })
@@ -151,7 +151,7 @@ EasyAssess.services['esRequestSerivce'] =
 
         function putRequest(url,data){
             var def = $q.defer();
-            $http.put(url,data)
+            $http.put(url,data,{withCredentials: true})
                 .success(function(data){
                     def.resolve(data);
                 })
@@ -163,7 +163,7 @@ EasyAssess.services['esRequestSerivce'] =
 
         function postRequest(url,data){
             var def = $q.defer();
-            $http.post(url,data)
+            $http.post(url,data,{withCredentials: true})
                 .success(function(data){
                     def.resolve(data);
                 })
@@ -175,7 +175,7 @@ EasyAssess.services['esRequestSerivce'] =
 
         function  deleteRequest(url,data){
             var def = $q.defer();
-            $http.delete(url,data)
+            $http.delete(url,data,{withCredentials: true})
                 .success(function(data){
                     def.resolve(data);
                 })

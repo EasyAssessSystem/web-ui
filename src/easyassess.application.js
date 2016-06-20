@@ -175,7 +175,6 @@ EasyAssess.TaskManager = {
 				}
 			}
 
-			debugger;
 			EasyAssess.app.stateProvider.state(module, options);
 			if (!statePrams) {
 				state.go(module, {});

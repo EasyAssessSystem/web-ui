@@ -91,7 +91,7 @@ EasyAssess.directives["esAppDatagrid"]
 
             function _loadData(resource, pageSize, pageNum, filterBy, filterValue, sortBy) {
                 $scope.isLoading = true;
-                    esRequestService.esGet(EasyAssess.activeEnv.pdm() + resource + ($scope.esItemId ? "/"+ $scope.esItemId : ($scope.esResource.indexOf("/list") != -1 ? "" : "/list")) + ($scope.esQuery ? "?" + $scope.esQuery : ""), {
+                esRequestService.esGet(EasyAssess.activeEnv.pdm() + resource + ($scope.esItemId ? "/"+ $scope.esItemId : ($scope.esResource.indexOf("/list") != -1 ? "" : "/list")) + ($scope.esQuery ? "?" + $scope.esQuery : ""), {
                     size: pageSize,
                     page: pageNum - 1,
                     sortBy: sortBy,

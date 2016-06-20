@@ -2,6 +2,7 @@ var $ = require('jQuery');
 window.$ = $;
 
 var angular = require('angular');
+require('../node_modules/angular-cookies/angular-cookies.min')
 require('../node_modules/ng-dialog/css/ngDialog.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-default.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-plain.min.css');
@@ -33,13 +34,12 @@ require('./directives/form/easyassess.form.page');
 
 require('./directives/charts/easyassess.chart.doughnut');
 
-var app = angular.module("esApplication", [EasyAssess.app.name]);
-app.controller("esApplicationController", function ($scope, $http) {
+var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);
+app.controller("esApplicationController", function ($scope, $http, $cookies) {
     $scope.input = {
         username: '',
         password: ''
     };
-
     $scope.logon = function () {
         $http.get(EasyAssess.activeEnv.pdm('default') + "user/session/" + $scope.input.username + "/" + $scope.input.password).success(
             (function (response) {
@@ -57,6 +57,8 @@ app.controller("esApplicationController", function ($scope, $http) {
 
 
         function buildSession() {
+            $cookies.put("SESSION", EasyAssess.session.sessionKey);
+
             // component-permission map
             EasyAssess.session.componentPermissionMap = {};
             var authentication = EasyAssess.session.authentication;
