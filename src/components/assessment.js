@@ -1,15 +1,15 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.AssessmentController = function($scope,esRequestService,$state) {
+EasyAssess.app.AssessmentController = function($scope,esRequestService,$state,ngDialog) {
     this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
-    _initialize: function($scope) {
+    _initialize: function($scope,esRequestService,$state,ngDialog) {
         $scope.fields = [
             {title:"考评记录", field:"name", type:"string",searchable:true,default:true},
             {title:"参考单位", field:"libraries", type:"string",searchable:false,default:false},
             {title:"考评状态", field:"results", type:"string",searchable:false,default:false},
-            {title:"操作",field:"actions",type:"string",searchable:false,default:false}
+            {title:"操作",field:"actions",type:"string",searchable:false,default:false,template:true,text:"Finalise"}
         ];
         $scope.data = [300, 500, 100];
         $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
@@ -27,41 +27,28 @@ EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
         $scope.itemId = "";
         $scope.goback = function(){
             $scope.activeModel = null;
-        }
+        };
+
+        $scope.$on('$btnClick',function(){
+            ngDialog.openConfirm({
+                template:   '<div class="ngdialog-message">是否确定要结束这次考评</div>'
+                + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                plain: true
+            })
+        });
     },
     _restrict: function() {
     },
 
     _select: function(model){
-
         stateOptions = {
             url:"/assessment/:id",
             templateUrl:  'assessment_detail.html',
             controller: "assessment_detailController"
         };
-        debugger;
         EasyAssess.TaskManager.start('detail',this.$state,stateOptions,{id:model.id});
         console.log('statenow is ',this.$state.current);
 
-
-        //this.$scope.activeModel = model;
-        //this.$scope.itemId = this.$scope.activeModel.id;
-        //this.$scope.detailFields = [
-        //    {title:"机构名称", field:"name", type:"string",searchable:true,default:true},
-        //    {title:"状态", field:"status", type:"string",searchable:false,default:false},
-        //    {title:"操作", field:"actions", type:"string",searchable:false,default:false}
-        //];
-        //
-        //
-        //this.$scope.detailOptions = this.$scope.detailFields.filter(function(eachfield){
-        //    return eachfield.searchable;
-        //}).map(function(item){
-        //    var option = {text:"",value:"",default:false};
-        //    option.text = item.title;
-        //    option.value = item.cascadeField ? item.cascadeField : item.field;
-        //    option.default = item.default;
-        //    return option;
-        //});
     }
 
 

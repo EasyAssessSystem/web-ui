@@ -15,8 +15,8 @@ EasyAssess.directives["esAppDatagrid"]
                 + '<th ng-repeat="column in esColumns" style="cursor:pointer;"><span ng-bind="column.title"></span></th>'
                 + '</tr></thead>'
                 + '<tr ng-show="isLoading" style="padding:20px 20px 20px 20px;"><td colspan="{{esColumns.length}}"><es-spinner></es-spinner></td></tr>'
-                + '<tr ng-hide="isLoading" ng-click="select(rec)" ng-repeat="rec in esData" style="cursor:pointer;">'
-                + '<td ng-repeat="column in esColumns"><span ng-bind="rec.{{column.field}}"></span></td>'
+                + '<tr ng-hide="isLoading" ng-click="select(rec,$event)" ng-repeat="rec in esData" style="cursor:pointer;">'
+                + '<td ng-repeat="column in esColumns"><div ng-if="column.template"><span data-btn="1" type="button" class="btn btn-default" ng-click="clickBtn()">{{column.text}}</span></div><span ng-if="!column.template" ng-bind="rec.{{column.field}}"></span></td>'
                 + '</tr>'
                 + '</table>'
                 + '<div ng-show="pagination.length">'
@@ -39,7 +39,8 @@ EasyAssess.directives["esAppDatagrid"]
             esOptions: "=?",
             esItemId:"=?",
             esQuery: "=",
-            esId: "@"
+            esId: "@",
+            esTemplate:"=?"
         },
         controller: ["$scope", function ($scope, $element, $attrs) {
             if (!$scope.esPageSize) {
@@ -58,7 +59,7 @@ EasyAssess.directives["esAppDatagrid"]
             $scope.jump = function (pageNum) {
                 $scope.pageNum = pageNum;
                 _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
-            }
+            };
 
             if (!$scope.esTransfer) {
                 $scope.esTransfer = function (rawData) {
@@ -68,11 +69,15 @@ EasyAssess.directives["esAppDatagrid"]
                 }
             }
 
+            $scope.clickBtn = function(){
+                $scope.$emit('$btnClick');
+            };
+
             $scope.previous = function () {
                 if ($scope.pageNum > 1) {
                     $scope.jump($scope.pageNum - 1);
                 }
-            }
+            };
 
             $scope.next = function () {
                 if ($scope.pageNum < pageCount) {
@@ -147,7 +152,10 @@ EasyAssess.directives["esAppDatagrid"]
                 $scope.esId = $scope.esId + "_";
             }
 
-            $scope.select = function (rowModel) {
+            $scope.select = function (rowModel,$event) {
+                if($event.target.getAttribute('data-btn') == 1){
+                    return false;
+                }
                 $scope.$emit('$' + $scope.esId + 'selected', rowModel);
             };
 
