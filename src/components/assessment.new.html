@@ -1,3 +1,26 @@
 <div>
-    <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称" es-label="考评名" ></es-app-textbox>
+    <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称"
+                    es-label="考评名"></es-app-textbox>
+    <es-app-lookup es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
+                   es-columns="templateFields" es-id="templateLookup" es-value-field="name"></es-app-lookup>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened"
+                       datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+          <span class="input-group-btn">
+            <span type="button" class="btn btn-default" ng-click="open2()"><i
+                    class="glyphicon glyphicon-calendar"></i></span>
+          </span>
+            </div>
+        </div>
+        <!--<div class="col-md-4">-->
+        <!--<p class="input-group">-->
+        <!--<input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="true"  ng-required="true" close-text="Close" />-->
+        <!--<span class="input-group-btn">-->
+        <!--<button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>-->
+        <!--</span>-->
+        <!--</p>-->
+        <!--</div>-->
+    </div>
 </div>

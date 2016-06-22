@@ -23,7 +23,6 @@ var EasyAssess = {
     description: 'EasyAssess Application Namespace'
 }
 
-console.log('------Time--------');
 
 EasyAssess.session = {};
 
@@ -46,10 +45,9 @@ EasyAssess.activeEnv = EasyAssess.environments.dev;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-tree'),require('angular-chart.js').name
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-bootstrap/src/datepickerPopup'),require('angular-ui-tree'),require('angular-chart.js').name
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
-	console.log('this is the contrlP',	EasyAssess.app.controllerProvider);
 });
 
 EasyAssess.formApp = angular.module("EasyAssessForm",
@@ -79,7 +77,6 @@ EasyAssess.app.config(
 );
 
 EasyAssess.app.registerController = function(index, controller) {
-	console.log(this);
 	this.controllerProvider.register(index, controller);
 }
 
