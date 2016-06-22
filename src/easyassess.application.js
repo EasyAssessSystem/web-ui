@@ -9,8 +9,8 @@ require('./components/assay_category.html');
 require('./components/code_group.html');
 require('./components/assay_code.html');
 require('./components/template.html');
-require('./components/assessment_detail.html');
-
+require('./components/assessment.detail.html');
+require('./components/assessment.new.html');
 
 /**
  * Created by alexli on 2016/4/3.
@@ -20,8 +20,10 @@ var EasyAssess = {
     version: '1.0.0',
     copyright:'Stardust',
     author: 'Li, Cheng;Chen, Dong',
-    description: 'EasyAssess Application Namespace',
+    description: 'EasyAssess Application Namespace'
 }
+
+console.log('------Time--------');
 
 EasyAssess.session = {};
 
@@ -47,6 +49,7 @@ EasyAssess.activeEnv = EasyAssess.environments.dev;
 EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-tree'),require('angular-chart.js').name
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
+	console.log('this is the contrlP',	EasyAssess.app.controllerProvider);
 });
 
 EasyAssess.formApp = angular.module("EasyAssessForm",
@@ -75,8 +78,8 @@ EasyAssess.app.config(
 	}
 );
 
-
 EasyAssess.app.registerController = function(index, controller) {
+	console.log(this);
 	this.controllerProvider.register(index, controller);
 }
 
@@ -156,45 +159,33 @@ EasyAssess.utils = {
 };
 
 EasyAssess.session = {};
-
 EasyAssess.TaskManager = {
-	_cached: {},
+	_loaded:false,
 	
-	_loadController:function(module){
-		require("./components/" + module);
-	},
-
 	start: function(module, state, options, statePrams) {
-		if (!this._cached[module]) {
-			this._loadController(module);
-			if (!options) {
-				options = {
-					url: "/" + module,
-					templateUrl: module + '.html',
-					controller: module + "Controller"
-				}
-			}
+		if(!this._loaded){
+			require('./easyassess.application.state');
+			this._loaded = true;
+		}
 
-			EasyAssess.app.stateProvider.state(module, options);
-			if (!statePrams) {
-				state.go(module, {});
-			} else {
-				state.go(module, statePrams);
-			}
-
-			EasyAssess.TaskManager._cached[module] = true;
-
+		if (!statePrams) {
+			state.go(module, {});
 		} else {
-			if (!statePrams) {
-				state.go(module, {});
-			} else {
-				state.go(module, statePrams);
-			}
+			state.go(module, statePrams);
+		}
+
+
+		var parentModule;
+
+		if(module.indexOf('.') > -1){
+			parentModule = module.split('.')[0];
+		}else{
+			parentModule = module;
 		}
 
 		this.module = {
 			module: module,
-			permissions: EasyAssess.session.componentPermissionMap[(options && options.authenticationModule) ? options.authenticationModule :module]
+			permissions: EasyAssess.session.componentPermissionMap[parentModule]
 		};
 	},
 	
@@ -206,7 +197,6 @@ EasyAssess.TaskManager = {
 		return this.module;
 	}
 };
-
 
 var $A = Array.from = function (iterable) {
     if (!iterable) return [];

@@ -42,6 +42,10 @@ var MenuTemplate = {
                 {
                     text:"考评历史",
                     link:"assessment"
+                },
+                {
+                    text:"发起考评",
+                    link:"assessment.new"
                 }
             ],
             root: true

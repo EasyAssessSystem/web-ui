@@ -144,4 +144,5 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 
+
 EasyAssess.app.registerController("userController", EasyAssess.app.UserController);

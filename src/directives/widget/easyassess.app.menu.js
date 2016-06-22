@@ -92,7 +92,7 @@ EasyAssess.directives["esAppMenu"]
 					var items = [];
 					for (var j=0;j<group.items.length;j++) {
 						var item = group.items[j];
-						var permission = EasyAssess.session.componentPermissionMap[item.link];
+						var permission = EasyAssess.session.componentPermissionMap[item.link.split('.')[0]];
 						if (!permission) continue;
 						if (permission.usability) {
 							items.push(item);

@@ -12,9 +12,11 @@ require('./css/es.theme.css');
 require('./css/angular-ui-tree.css');
 
 var EasyAssess = require('./easyassess.application');
+
 require('./services/easyassess.requestservice');
 
 require('./directives/widget/easyassess.app.banner');
+
 require('./directives/widget/easyassess.app.menu');
 require('./directives/widget/easyassess.app.addbutton');
 require('./directives/widget/easyassess.app.component');
@@ -25,16 +27,16 @@ require('./directives/widget/easyassess.app.maint.buttongroup');
 require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
-
 require('./directives/form/easyassess.form.textbox');
+
 require('./directives/form/easyassess.form.addbutton');
 require('./directives/form/easyassess.form.header');
 require('./directives/form/easyassess.form.group');
 require('./directives/form/easyassess.form.page');
-
 require('./directives/charts/easyassess.chart.doughnut');
 
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);
+
 app.controller("esApplicationController", function ($scope, $http, $cookies) {
     $scope.input = {
         username: '',
