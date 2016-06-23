@@ -30,6 +30,10 @@ EasyAssess.environments = {
 	'dev': {
 		pdm: function(domain) {
 			return 'http://localhost:8180/' + (domain ? domain : EasyAssess.session.domain) + '/data/'
+		},
+
+		assess: function(domain) {
+			return 'http://localhost:9190/' + (domain ? domain : EasyAssess.session.domain) + '/assess/'
 		}
 	},
 	'prod':{
@@ -401,5 +405,31 @@ EasyAssess.app.MaintenanceController.prototype = {
     }
 }
 
+
+EasyAssess.app.directive('contenteditable', ['$sce', function($sce) {
+	return {
+		restrict: 'A',
+		require: '?ngModel',
+		link: function(scope, element, attrs, ngModel) {
+			if (!ngModel) return;
+			ngModel.$render = function() {
+				element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));
+			};
+
+			element.on('blur keyup change', function() {
+				scope.$evalAsync(read);
+			});
+			read();
+
+			function read() {
+				var html = element.html();
+				if ( attrs.stripBr && html == '<br>' ) {
+					html = '';
+				}
+				ngModel.$setViewValue(html);
+			}
+		}
+	};
+}]);
 
 module.exports = EasyAssess;

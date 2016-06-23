@@ -1,11 +1,11 @@
 var EasyAssess = require('../easyassess.application');
 
-EasyAssess.app.TemplateController = function($scope, $timeout, ngDialog, esRequestService) {
+EasyAssess.app.TemplateController = function($scope, ngDialog, esRequestService) {
 	this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
-	initialize: function($scope) {
+	initialize: function($scope, ngDialog, esRequestService) {
 		$scope.groups = [];
 
 		$scope.header = {
@@ -29,6 +29,16 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 					break;
 				}
 			}
+		}
+
+		$scope.save = function() {
+			esRequestService.esPost(EasyAssess.activeEnv.assess() + "template",
+				angular.toJson({
+					"guid": EasyAssess.utils.generateGUID(),
+					"header": $scope.header,
+					"groups": $scope.groups
+				})).then(
+			);
 		}
 	}
 }, {});
