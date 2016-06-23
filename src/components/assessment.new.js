@@ -8,29 +8,31 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         $scope.emptyModel = {"id": -1, "name": "", "template": "", "endDate": ""};
         $scope.templateFields = [
             {title: "模板", field: "name", type: "string", searchable: true, default: true}
-        ]
-        $scope.today = function() {
-            $scope.dt = new Date();
-        };
-        $scope.today();
+        ];
+        //$scope.startDate = null;
+        //$scope.endedDate = null;
+        $scope.hideStart = true;
+        $scope.hideEnd = true;
+        $scope.closeStartPop = function(){
+            $scope.hideStart = true;
 
-        $scope.clear = function() {
-            $scope.dt = null;
         };
 
-        //$scope.inlineOptions = {
-        //    customClass: getDayClass,
-        //    minDate: new Date(),
-        //    showWeeks: true
-        //};
-
-        $scope.dateOptions = {
-            dateDisabled: true,
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
+        $scope.openStart = function() {
+            $scope.hideStart = false;
         };
+
+        $scope.openEnd = function(){
+            $scope.hideEnd = false;
+        }
+
+        $scope.closeEndPop = function(){
+            $scope.hideEnd = true
+        }
+
+
+
+
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 

@@ -8,6 +8,7 @@ require('../node_modules/ng-dialog/css/ngDialog-theme-default.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-plain.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-custom-width.css');
 require('../node_modules/angular-ui-tree/dist/angular-ui-tree.min.css');
+require('../node_modules/angular-date-picker/angular-date-picker.css');
 require('./css/es.theme.css');
 require('./css/angular-ui-tree.css');
 

@@ -3,24 +3,27 @@
                     es-label="考评名"></es-app-textbox>
     <es-app-lookup es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
                    es-columns="templateFields" es-id="templateLookup" es-value-field="name"></es-app-lookup>
-    <div class="row">
-        <div class="col-md-2">
+    <div>
+        <div style="position: relative">
+            <p>开始时间:</p>
             <div class="input-group">
-                <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened"
-                       datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
-          <span class="input-group-btn">
-            <span type="button" class="btn btn-default" ng-click="open2()"><i
-                    class="glyphicon glyphicon-calendar"></i></span>
-          </span>
+                <date-picker ng-hide="hideStart" ng-model="startDate" style="position: absolute;top:45px;z-index: 999"
+                             on-date-selected="closeStartPop()"></date-picker>
+                <input type="text" class="form-control" ng-model="startDate">
+                <span class="input-group-addon" ng-click="openStart()"><span
+                        class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
-        <!--<div class="col-md-4">-->
-        <!--<p class="input-group">-->
-        <!--<input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="true"  ng-required="true" close-text="Close" />-->
-        <!--<span class="input-group-btn">-->
-        <!--<button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>-->
-        <!--</span>-->
-        <!--</p>-->
-        <!--</div>-->
+
+        <div style="position: relative">
+            <p>结束时间:</p>
+            <div class="input-group">
+                <date-picker ng-hide="hideEnd" ng-model="endedDate" style="position: absolute;top:45px;z-index: 999"
+                             on-date-selected="closeEndPop()"></date-picker>
+                <input type="text" class="form-control" ng-model="endedDate">
+                <span class="input-group-addon" ng-click="openEnd()"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>
     </div>
+
 </div>

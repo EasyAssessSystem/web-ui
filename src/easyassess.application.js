@@ -1,5 +1,6 @@
 var angular = require('angular');
 var router = require('angular-ui-router');
+
 require('./components/assessment.html');
 require('./components/user.html');
 require('./components/cdc.html');
@@ -49,7 +50,7 @@ EasyAssess.activeEnv = EasyAssess.environments.dev;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-ui-bootstrap/src/datepickerPopup'),require('angular-ui-tree'),require('angular-chart.js').name
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-date-picker').name,require('angular-ui-tree'),require('angular-chart.js').name
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });

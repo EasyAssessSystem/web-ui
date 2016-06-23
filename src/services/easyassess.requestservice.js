@@ -138,6 +138,39 @@ EasyAssess.services['esRequestSerivce'] =
                 };
                 def.resolve(rawData);
             }
+
+            if(url.indexOf('template') > -1){
+                rawData= {
+                    "result": "SUCC",
+                    "messages": [],
+                    "data": {
+                        "content": [
+                            {
+                                "id": 1,
+                                "name": "测试模板101",
+                                "status": "U"
+                            }
+                        ],
+                        "totalElements":1,
+                        "totalPages": 1,
+                        "last": true,
+                        "size": 5,
+                        "number": 0,
+                        "sort": [
+                            {
+                                "direction": "ASC",
+                                "property": "id",
+                                "ignoreCase": false,
+                                "nullHandling": "NATIVE",
+                                "ascending": true
+                            }
+                        ],
+                        "first": true,
+                        "numberOfElements": 5
+                    }
+                };
+                def.resolve(rawData)
+            }
             // need to be deleted when done.
             $http.get(url,{params:paramsData, withCredentials: true})
                 .success(function(data){
