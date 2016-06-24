@@ -6,10 +6,12 @@ EasyAssess.app.AssessmentController = function($scope,esRequestService,$state,ng
 EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
     _initialize: function($scope,esRequestService,$state,ngDialog) {
         $scope.fields = [
-            {title:"考评记录", field:"name", type:"string",searchable:true,default:true},
-            {title:"参考单位", field:"libraries", type:"string",searchable:false,default:false},
-            {title:"考评状态", field:"results", type:"string",searchable:false,default:false},
-            {title:"操作",field:"actions",type:"string",searchable:false,default:false,template:true,text:"Finalise"}
+            {title:"考评名称", field:"name", type:"string",searchable:true,default:true},
+            {title:"开始日期", field:"startDate", type:"string",searchable:false,default:false},
+            {title:"截止日期", field:"startDate", type:"string",searchable:false,default:false},
+            {title:"发起人", field:"owner", type:"string",searchable:true,default:false},
+            {title:"状态", field:"status", type:"string",searchable:true,default:false},
+            {title:"操作",field:"actions",type:"string",searchable:false,default:false,template:true,text:"完成考评"}
         ];
         $scope.data = [300, 500, 100];
         $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
@@ -24,7 +26,7 @@ EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
             [28, 48, 40, 19, 86, 27, 90]
         ];
 
-        $scope.itemId = "";
+       // $scope.itemId = "";
         $scope.goback = function(){
             $scope.activeModel = null;
         };
@@ -46,16 +48,12 @@ EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
 
     _select: function(model){
         stateOptions = {
-            url:"/:id",
+            url:"",
             templateUrl:  'assessment.detail.html',
             controller: "assessment_detailController"
         };
-        EasyAssess.TaskManager.start('assessment.detail',this.$state,stateOptions,{id:model.id});
-        console.log('statenow is ',this.$state.current);
-
+        EasyAssess.TaskManager.start('assessment.detail',this.$state,stateOptions, {data:model});
     }
-
-
 }, EasyAssess.app.MaintenanceController.prototype);
 
 EasyAssess.app.registerController("assessmentController", EasyAssess.app.AssessmentController);

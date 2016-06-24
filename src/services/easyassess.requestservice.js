@@ -14,130 +14,130 @@ EasyAssess.services['esRequestSerivce'] =
             // templairy code for dashboard
 
 
-            if(url.indexOf('dashboard/1') > -1){
-                rawData = {
-                    "result": "SUCC",
-                    "messages": [],
-                    "data": {
-                        "content": [
-                            {
-                                "id": 1,
-                                "name": "卫生机构1",
-                                "status": "U"
-                            },{
-                                "id": 2,
-                                "name": "卫生机构2",
-                                "status": "F"
-                            },{
-                                "id": 3,
-                                "name": "卫生机构3",
-                                "status": "A"
-                            }
-                        ],
-                        "totalElements": 3,
-                        "totalPages": 1,
-                        "last": true,
-                        "size": 5,
-                        "number": 0,
-                        "sort": [
-                            {
-                                "direction": "ASC",
-                                "property": "id",
-                                "ignoreCase": false,
-                                "nullHandling": "NATIVE",
-                                "ascending": true
-                            }
-                        ],
-                        "numberOfElements": 5,
-                        "first": true
-                    }
-                };
-                def.resolve(rawData)
-            }
-
-            if(url.indexOf('dashboard/2')>-1){
-                rawData = {
-                    "result": "SUCC",
-                    "messages": [],
-                    "data": {
-                        "content": [
-                            {
-                                "id": 1,
-                                "name": "卫生机构1",
-                                "status": "U"
-                            },{
-                                "id": 2,
-                                "name": "卫生机构2",
-                                "status": "F"
-                            },{
-                                "id": 3,
-                                "name": "卫生机构3",
-                                "status": "A"
-                            },{
-                                "id": 4,
-                                "name": "卫生机构4",
-                                "status": "U"
-                            }
-                        ],
-                        "totalElements": 4,
-                        "totalPages": 1,
-                        "last": true,
-                        "size": 5,
-                        "number": 0,
-                        "sort": [
-                            {
-                                "direction": "ASC",
-                                "property": "id",
-                                "ignoreCase": false,
-                                "nullHandling": "NATIVE",
-                                "ascending": true
-                            }
-                        ],
-                        "numberOfElements": 5,
-                        "first": true
-                    }
-                };
-                def.resolve(rawData)
-
-            }
-            if (url.indexOf('dashboard') > -1){
-                rawData = {
-                    "result": "SUCC",
-                    "messages": [],
-                    "data": {
-                        "content": [
-                            {
-                                "id": 1,
-                                "name": "assessment1",
-                                "libraries": 3,
-                                "results":"1/3"
-                            },{
-                                "id": 2,
-                                "name": "assessment2",
-                                "libraries": 8,
-                                "results":"4/8"
-                            }
-                        ],
-                        "totalElements": 2,
-                        "totalPages": 1,
-                        "last": true,
-                        "size": 5,
-                        "number": 0,
-                        "sort": [
-                            {
-                                "direction": "ASC",
-                                "property": "id",
-                                "ignoreCase": false,
-                                "nullHandling": "NATIVE",
-                                "ascending": true
-                            }
-                        ],
-                        "numberOfElements": 5,
-                        "first": true
-                    }
-                };
-                def.resolve(rawData);
-            }
+            // if(url.indexOf('dashboard/1') > -1){
+            //     rawData = {
+            //         "result": "SUCC",
+            //         "messages": [],
+            //         "data": {
+            //             "content": [
+            //                 {
+            //                     "id": 1,
+            //                     "name": "卫生机构1",
+            //                     "status": "U"
+            //                 },{
+            //                     "id": 2,
+            //                     "name": "卫生机构2",
+            //                     "status": "F"
+            //                 },{
+            //                     "id": 3,
+            //                     "name": "卫生机构3",
+            //                     "status": "A"
+            //                 }
+            //             ],
+            //             "totalElements": 3,
+            //             "totalPages": 1,
+            //             "last": true,
+            //             "size": 5,
+            //             "number": 0,
+            //             "sort": [
+            //                 {
+            //                     "direction": "ASC",
+            //                     "property": "id",
+            //                     "ignoreCase": false,
+            //                     "nullHandling": "NATIVE",
+            //                     "ascending": true
+            //                 }
+            //             ],
+            //             "numberOfElements": 5,
+            //             "first": true
+            //         }
+            //     };
+            //     def.resolve(rawData)
+            // }
+            //
+            // if(url.indexOf('dashboard/2')>-1){
+            //     rawData = {
+            //         "result": "SUCC",
+            //         "messages": [],
+            //         "data": {
+            //             "content": [
+            //                 {
+            //                     "id": 1,
+            //                     "name": "卫生机构1",
+            //                     "status": "U"
+            //                 },{
+            //                     "id": 2,
+            //                     "name": "卫生机构2",
+            //                     "status": "F"
+            //                 },{
+            //                     "id": 3,
+            //                     "name": "卫生机构3",
+            //                     "status": "A"
+            //                 },{
+            //                     "id": 4,
+            //                     "name": "卫生机构4",
+            //                     "status": "U"
+            //                 }
+            //             ],
+            //             "totalElements": 4,
+            //             "totalPages": 1,
+            //             "last": true,
+            //             "size": 5,
+            //             "number": 0,
+            //             "sort": [
+            //                 {
+            //                     "direction": "ASC",
+            //                     "property": "id",
+            //                     "ignoreCase": false,
+            //                     "nullHandling": "NATIVE",
+            //                     "ascending": true
+            //                 }
+            //             ],
+            //             "numberOfElements": 5,
+            //             "first": true
+            //         }
+            //     };
+            //     def.resolve(rawData)
+            //
+            // }
+            // if (url.indexOf('dashboard') > -1){
+            //     rawData = {
+            //         "result": "SUCC",
+            //         "messages": [],
+            //         "data": {
+            //             "content": [
+            //                 {
+            //                     "id": 1,
+            //                     "name": "assessment1",
+            //                     "libraries": 3,
+            //                     "results":"1/3"
+            //                 },{
+            //                     "id": 2,
+            //                     "name": "assessment2",
+            //                     "libraries": 8,
+            //                     "results":"4/8"
+            //                 }
+            //             ],
+            //             "totalElements": 2,
+            //             "totalPages": 1,
+            //             "last": true,
+            //             "size": 5,
+            //             "number": 0,
+            //             "sort": [
+            //                 {
+            //                     "direction": "ASC",
+            //                     "property": "id",
+            //                     "ignoreCase": false,
+            //                     "nullHandling": "NATIVE",
+            //                     "ascending": true
+            //                 }
+            //             ],
+            //             "numberOfElements": 5,
+            //             "first": true
+            //         }
+            //     };
+            //     def.resolve(rawData);
+            // }
 
             if(url.indexOf('template') > -1){
                 rawData= {
