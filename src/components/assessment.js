@@ -39,20 +39,13 @@ EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
             })
         });
 
-        $scope.startNewAssessment = function(){
-            EasyAssess.TaskManager.start('start_assessment', $state);
-        }
     },
     _restrict: function() {
     },
 
     _select: function(model){
-        stateOptions = {
-            url:"",
-            templateUrl:  'assessment.detail.html',
-            controller: "assessment_detailController"
-        };
-        EasyAssess.TaskManager.start('assessment.detail',this.$state,stateOptions, {data:model});
+        this.$state.current.data.detail = model;
+        EasyAssess.TaskManager.start('assessment.detail',this.$state);
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 

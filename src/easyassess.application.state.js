@@ -64,7 +64,8 @@ EasyAssess.app.stateProvider.state('assay_category', {
 EasyAssess.app.stateProvider.state('assessment', {
     url:"/assessment",
     templateUrl: 'assessment.html',
-    controller:  "assessmentController"
+    controller:  "assessmentController",
+    data:{detail:{}}
 });
 
 EasyAssess.app.stateProvider.state('assessment.detail', {
