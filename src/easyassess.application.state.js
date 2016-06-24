@@ -68,7 +68,7 @@ EasyAssess.app.stateProvider.state('assessment', {
 });
 
 EasyAssess.app.stateProvider.state('assessment.detail', {
-    url:"/:id",
+    url:"/detail/:id",
     templateUrl:  'assessment.detail.html',
     controller: "assessment_detailController"
 });
