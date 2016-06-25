@@ -69,9 +69,6 @@ EasyAssess.app.config(
 		EasyAssess.app.urlRouterProvider = $urlRouterProvider;
 		$httpProvider.defaults.useXDomain = true;
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
-		//require('./easyassess.application.state');
-		//$urlRouterProvider.otherwise('/assessment');
-		//$urlRouterProvider.when('','/assessment');
 	}
 );
 

@@ -39,8 +39,6 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
 
         $scope.chooseItem = function(item){
-            console.log('update_item',item);
-
             //update child
             _updateChild(item);
 
@@ -64,7 +62,6 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         function _updateParent(item){
             if(item.supervisorId >0){
                 var parentMinistry = _searchParent(item.supervisorId,$scope.list);
-                debugger;
                 var parentState = false;
                 angular.forEach(parentMinistry.ministries,function(eachMinistry){
                     parentState = eachMinistry || parentMinistry;
@@ -76,36 +73,20 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         }
 
 
-        //function _searchParent(id,nodes){
-        //    var parent;
-        //
-        //    nodes.filter(function(node,id){
-        //        if(!parent){
-        //
-        //        }
-        //    })
-        //
-        //
-        //    nodes.every(function(node,id){
-        //       if(node.id == id){
-        //           parent = node;
-        //       }
-        //    });
-        //
-        //    angular.forEach(nodes,function(each){
-        //        if(!parent){
-        //            if(each.id == id){
-        //                return parent = each;
-        //            }else{
-        //                _searchParent(id,each.ministries)
-        //            }
-        //        }else{
-        //            return
-        //        }
-        //    });
-        //
-        //    return parent;
-        //};
+        function _searchParent(id,nodes){
+            var parent;
+            angular.forEach(nodes,function(each){
+                if(!parent){
+                    if(each.id == id){
+                        return parent = each;
+                    }else{
+                       parent =  _searchParent(id,each.ministries)
+                    }
+                }else{
+                }
+            });
+            return parent;
+        };
 
         //var _updateItem = function(eachItem){
         //    if(eachItem.ministries.length <=0){
@@ -116,8 +97,6 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         //        }}
         //
         //}
-
-        $scope.checked = false;
 
         $scope.list = [
             {
