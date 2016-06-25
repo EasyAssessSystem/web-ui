@@ -5,17 +5,17 @@ EasyAssess.app.assessmentNewController = function($scope,$element,ngDialog,esReq
 
 EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
     _initialize: function($scope,$element,ngDialog,esReqeustService) {
-        $scope.emptyModel = {"id": -1, "name": "", "template": "", "endDate": "",};
+        $scope.emptyModel = {"id": -1, "name": "", "templateGuid": "", "startDate": "","endDate":"","owner":"","participants":{},"specimenCodes":{}};
         $scope.templateFields = [
             {title: "模板", field: "name", type: "string", searchable: true, default: true}
         ];
-        //$scope.startDate = null;
-        //$scope.endedDate = null;
+        $scope.emptyModel.startDate = null;
+        $scope.emptyModel.endDate = null;
         $scope.hideStart = true;
         $scope.hideEnd = true;
         $scope.closeStartPop = function(){
             $scope.hideStart = true;
-
+            console.log($scope.emptyModel, typeof ($scope.emptyModel));
         };
 
         $scope.openStart = function() {
@@ -27,8 +27,21 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         };
 
         $scope.closeEndPop = function(){
-            $scope.hideEnd = true
+            $scope.hideEnd = true;
+            console.log($scope.emptyModel, typeof ($scope.emptyModel));
+
         };
+
+        $scope.formatDate = function (date) {
+            function pad(n) {
+                return n < 10 ? '0' + n : n;
+            }
+
+            return date && date.getFullYear()
+                + '-' + pad(date.getMonth() + 1)
+                + '-' + pad(date.getDate());
+        };
+
 
         $scope.page1Show = true;
         $scope.page2Show = false;
@@ -44,6 +57,13 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
            // update parent
            // _updateParent(item);
+
+           //update the model
+
+            $scope.emptyModel.participants = {};
+            _updateEmptyModel($scope.list);
+
+            console.log($scope.emptyModel);
 
         };
 
@@ -86,17 +106,20 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                 }
             });
             return parent;
-        };
+        }
 
-        //var _updateItem = function(eachItem){
-        //    if(eachItem.ministries.length <=0){
-        //
-        //    }else{
-        //        if(eachItem.selected){
-        //
-        //        }}
-        //
-        //}
+        function _updateEmptyModel(nodes){
+            angular.forEach(nodes,function(node){
+                if(node.selected){
+                    $scope.emptyModel.participants[node.id] = node.name;
+                }else{
+
+                }
+                if(node.ministries.length >0){
+                    _updateEmptyModel(node.ministries)
+                }
+            })
+        }
 
         $scope.list = [
             {
