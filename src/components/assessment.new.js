@@ -1,11 +1,11 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.assessmentNewController = function($scope,ngDialog,esRequestService) {
+EasyAssess.app.assessmentNewController = function($scope,$element,ngDialog,esRequestService) {
     this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
-    _initialize: function($scope,ngDialog,esReqeustService) {
-        $scope.emptyModel = {"id": -1, "name": "", "template": "", "endDate": ""};
+    _initialize: function($scope,$element,ngDialog,esReqeustService) {
+        $scope.emptyModel = {"id": -1, "name": "", "template": "", "endDate": "",};
         $scope.templateFields = [
             {title: "模板", field: "name", type: "string", searchable: true, default: true}
         ];
@@ -37,8 +37,87 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             $scope.page2Show = true;
         };
 
-        $scope.options = {};
 
+        $scope.chooseItem = function(item){
+            console.log('update_item',item);
+
+            //update child
+            _updateChild(item);
+
+           // update parent
+           // _updateParent(item);
+
+        };
+
+
+        function _updateChild(item){
+            if(item.ministries.length >0){
+                var newState = item.selected;
+                angular.forEach(item.ministries,function(eachMinistry){
+                    eachMinistry.selected = newState;
+                    _updateChild(eachMinistry);
+                })
+
+            }
+        }
+
+        function _updateParent(item){
+            if(item.supervisorId >0){
+                var parentMinistry = _searchParent(item.supervisorId,$scope.list);
+                debugger;
+                var parentState = false;
+                angular.forEach(parentMinistry.ministries,function(eachMinistry){
+                    parentState = eachMinistry || parentMinistry;
+                });
+                parentMinistry.selected = parentState;
+                _updateParent(parentMinistry);
+            }
+
+        }
+
+
+        //function _searchParent(id,nodes){
+        //    var parent;
+        //
+        //    nodes.filter(function(node,id){
+        //        if(!parent){
+        //
+        //        }
+        //    })
+        //
+        //
+        //    nodes.every(function(node,id){
+        //       if(node.id == id){
+        //           parent = node;
+        //       }
+        //    });
+        //
+        //    angular.forEach(nodes,function(each){
+        //        if(!parent){
+        //            if(each.id == id){
+        //                return parent = each;
+        //            }else{
+        //                _searchParent(id,each.ministries)
+        //            }
+        //        }else{
+        //            return
+        //        }
+        //    });
+        //
+        //    return parent;
+        //};
+
+        //var _updateItem = function(eachItem){
+        //    if(eachItem.ministries.length <=0){
+        //
+        //    }else{
+        //        if(eachItem.selected){
+        //
+        //        }}
+        //
+        //}
+
+        $scope.checked = false;
 
         $scope.list = [
             {
@@ -52,7 +131,26 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                         "name": "西安CDC",
                         "type": "C",
                         "status": "A",
-                        "ministries": [],
+                        "ministries": [{
+                            "id": 11,
+                            "name": "未央CDC",
+                            "type": "C",
+                            "status": "A",
+                            "ministries": [],
+                            "selected":false,
+                            "supervisorId": 5,
+                            "supervisorName": "西安CDC"
+                        },{
+                            "id": 12,
+                            "name": "碑林CDC",
+                            "type": "C",
+                            "status": "A",
+                            "ministries": [],
+                            "selected":false,
+                            "supervisorId": 5,
+                            "supervisorName": "西安CDC"
+                        }],
+                        "selected":false,
                         "supervisorId": 3,
                         "supervisorName": "陕西CDC"
                     },
@@ -62,11 +160,13 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                         "type": "C",
                         "status": "A",
                         "ministries": [],
+                        "selected":false,
                         "supervisorId": 3,
                         "supervisorName": "陕西CDC"
                     }
                 ],
-                "supervisorId": 1,
+                "selected":false,
+                "supervisorId": -1,
                 "supervisorName": "中国CDC总局"
             },
             {
@@ -75,7 +175,8 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                 "type": "C",
                 "status": "A",
                 "ministries": [],
-                "supervisorId": 1,
+                "selected":false,
+                "supervisorId": -1,
                 "supervisorName": "中国CDC总局"
             }
         ]

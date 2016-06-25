@@ -69,9 +69,9 @@ EasyAssess.app.config(
 		EasyAssess.app.urlRouterProvider = $urlRouterProvider;
 		$httpProvider.defaults.useXDomain = true;
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
-		require('./easyassess.application.state');
-		$urlRouterProvider.otherwise('/assessment');
-		$urlRouterProvider.when('','/assessment');
+		//require('./easyassess.application.state');
+		//$urlRouterProvider.otherwise('/assessment');
+		//$urlRouterProvider.when('','/assessment');
 	}
 );
 
@@ -154,7 +154,7 @@ EasyAssess.utils = {
 	}
 };
 
-EasyAssess.currentpermissionState = "assessment";
+//EasyAssess.currentpermissionState = "assessment";
 EasyAssess.session = {};
 EasyAssess.TaskManager = {
 	_loaded:false,
@@ -180,7 +180,6 @@ EasyAssess.TaskManager = {
 			parentModule = module;
 		}
 
-		EasyAssess.current.permissionState = parentModule;
 		this.module = {
 			module: module,
 			permissions: EasyAssess.session.componentPermissionMap[parentModule]
@@ -252,9 +251,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 
 		this.__default.apply(this, arguments);
 
-		//this._permission = EasyAssess.TaskManager.current().permissions;//.session.componentPermissionMap[EasyAssess.TaskManager.current()];
-
-		this._permission = EasyAssess.session.componentPermissionMap[EasyAssess.currentpermissionState];
+		this._permission = EasyAssess.TaskManager.current().permissions;
 
 		this._postInitialize();
 	},

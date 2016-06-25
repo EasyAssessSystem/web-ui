@@ -49,7 +49,7 @@
                             </span>
                         </td>
                         <td>
-                            <input type="checkbox" ng-checked="item.isSelected" indeterminate-checkbox node="item"/>
+                            <input type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
                         </td>
                         <td style="width: 100%;">{{item.name}}</td>
                         </td>

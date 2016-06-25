@@ -38,7 +38,7 @@ require('./directives/charts/easyassess.chart.doughnut');
 
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);
 
-app.controller("esApplicationController", function ($scope, $http, $cookies) {
+app.controller("esApplicationController", function ($scope, $http, $cookies,$state) {
     $scope.input = {
         username: '',
         password: ''
@@ -50,6 +50,7 @@ app.controller("esApplicationController", function ($scope, $http, $cookies) {
                     EasyAssess.session = response.data;
                     buildSession();
                     $scope.authenticated = true;
+                    EasyAssess.TaskManager.start("assessment", $state);
                 } else if (response.messages.length > 0) {
                     $scope.error = response.messages[0].message;
                 }
