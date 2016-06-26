@@ -9,8 +9,8 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         $scope.templateFields = [
             {title: "模板", field: "name", type: "string", searchable: true, default: true}
         ];
-        $scope.emptyModel.startDate = null;
-        $scope.emptyModel.endDate = null;
+        //$scope.emptyModel.startDate = null;
+        //$scope.emptyModel.endDate = null;
         $scope.hideStart = true;
         $scope.hideEnd = true;
         $scope.closeStartPop = function(){
@@ -52,19 +52,9 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
 
         $scope.chooseItem = function(item){
-            //update child
             _updateChild(item);
-
-           // update parent
-           // _updateParent(item);
-
-           //update the model
-
             $scope.emptyModel.participants = {};
             _updateEmptyModel($scope.list);
-
-            console.log($scope.emptyModel);
-
         };
 
 
@@ -121,67 +111,76 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             })
         }
 
-        $scope.list = [
-            {
-                "id": 3,
-                "name": "陕西CDC",
-                "type": "C",
-                "status": "A",
-                "ministries": [
-                    {
-                        "id": 5,
-                        "name": "西安CDC",
-                        "type": "C",
-                        "status": "A",
-                        "ministries": [{
-                            "id": 11,
-                            "name": "未央CDC",
-                            "type": "C",
-                            "status": "A",
-                            "ministries": [],
-                            "selected":false,
-                            "supervisorId": 5,
-                            "supervisorName": "西安CDC"
-                        },{
-                            "id": 12,
-                            "name": "碑林CDC",
-                            "type": "C",
-                            "status": "A",
-                            "ministries": [],
-                            "selected":false,
-                            "supervisorId": 5,
-                            "supervisorName": "西安CDC"
-                        }],
-                        "selected":false,
-                        "supervisorId": 3,
-                        "supervisorName": "陕西CDC"
-                    },
-                    {
-                        "id": 6,
-                        "name": "咸阳CDC",
-                        "type": "C",
-                        "status": "A",
-                        "ministries": [],
-                        "selected":false,
-                        "supervisorId": 3,
-                        "supervisorName": "陕西CDC"
-                    }
-                ],
-                "selected":false,
-                "supervisorId": -1,
-                "supervisorName": "中国CDC总局"
-            },
-            {
-                "id": 4,
-                "name": "江苏CDC",
-                "type": "C",
-                "status": "A",
-                "ministries": [],
-                "selected":false,
-                "supervisorId": -1,
-                "supervisorName": "中国CDC总局"
-            }
-        ]
+
+        esReqeustService.esGet(EasyAssess.activeEnv['pdm']() + 'ministry' + "/list", {
+            size: 1000,
+            page: 0
+        }).then(function (result) {
+            $scope.list = result.data.content
+        });
+
+
+        //$scope.list = [
+        //    {
+        //        "id": 3,
+        //        "name": "陕西CDC",
+        //        "type": "C",
+        //        "status": "A",
+        //        "ministries": [
+        //            {
+        //                "id": 5,
+        //                "name": "西安CDC",
+        //                "type": "C",
+        //                "status": "A",
+        //                "ministries": [{
+        //                    "id": 11,
+        //                    "name": "未央CDC",
+        //                    "type": "C",
+        //                    "status": "A",
+        //                    "ministries": [],
+        //                    "selected":false,
+        //                    "supervisorId": 5,
+        //                    "supervisorName": "西安CDC"
+        //                },{
+        //                    "id": 12,
+        //                    "name": "碑林CDC",
+        //                    "type": "C",
+        //                    "status": "A",
+        //                    "ministries": [],
+        //                    "selected":false,
+        //                    "supervisorId": 5,
+        //                    "supervisorName": "西安CDC"
+        //                }],
+        //                "selected":false,
+        //                "supervisorId": 3,
+        //                "supervisorName": "陕西CDC"
+        //            },
+        //            {
+        //                "id": 6,
+        //                "name": "咸阳CDC",
+        //                "type": "C",
+        //                "status": "A",
+        //                "ministries": [],
+        //                "selected":false,
+        //                "supervisorId": 3,
+        //                "supervisorName": "陕西CDC"
+        //            }
+        //        ],
+        //        "selected":false,
+        //        "supervisorId": -1,
+        //        "supervisorName": "中国CDC总局"
+        //    },
+        //    {
+        //        "id": 4,
+        //        "name": "江苏CDC",
+        //        "type": "C",
+        //        "status": "A",
+        //        "ministries": [],
+        //        "selected":false,
+        //        "supervisorId": -1,
+        //        "supervisorName": "中国CDC总局"
+        //    }
+        //]
 
 
     }
