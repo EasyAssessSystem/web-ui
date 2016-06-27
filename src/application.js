@@ -28,6 +28,7 @@ require('./directives/widget/easyassess.app.maint.buttongroup');
 require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
+require('./directives/widget/easyassess.app.wizard');
 require('./directives/form/easyassess.form.textbox');
 
 require('./directives/form/easyassess.form.addbutton');

@@ -1,11 +1,11 @@
 <div>
 	<es-form-page>
 		<div class="es-page-section">
-			<button class="btn btn-primary" style="width:90px;"><span class="glyphicon glyphicon-file"></span><span class="es-icon-button-text">新建</span></button>
-			<button class="btn btn-success" style="width:90px;" ng-click="open()"><span class="glyphicon glyphicon-folder-open"></span><span class="es-icon-button-text">打开</span></button>
-			<button class="btn btn-info" style="width:90px;" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">保存</span></button>
-			<button class="btn btn-warning" style="width:90px;"><span class="glyphicon glyphicon-floppy-open"></span><span class="es-icon-button-text">另存为</span></button>
-			<button class="btn btn-danger" style="width:90px;"><span class="glyphicon glyphicon-eye-open"></span><span class="es-icon-button-text">预览</span></button>
+			<button class="btn btn-success" ng-click="new()"><span class="glyphicon glyphicon-file"></span><span class="es-icon-button-text">新建</span></button>
+			<div style="float: left;padding-right: 15px;"><es-app-lookup  es-width="100" es-provider="button" ng-if="!readonly" es-label="打开" es-columns="lookupFields" es-id="templateLookup" es-service="assess" es-resource="template"></es-app-lookup></div>
+			<button class="btn btn-info" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">保存</span></button>
+			<button ng-if="activeModel" class="btn btn-warning" ng-click="copy()"><span class="glyphicon glyphicon-floppy-open"></span><span class="es-icon-button-text">复制</span></button>
+			<button ng-if="activeModel" class="btn btn-danger" ng-click="remove()"><span class="glyphicon glyphicon-remove"></span><span class="es-icon-button-text">删除</span></button>
 		</div>
 		<div class="es-page-section">
 			<es-form-header es-header="header"></es-form-header>

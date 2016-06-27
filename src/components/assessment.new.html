@@ -1,96 +1,99 @@
-<div ng-show="page1Show">
-    <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称"
-                    es-label="考评名"></es-app-textbox>
-    <es-app-lookup es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
-                   es-columns="templateFields" es-id="templateLookup" es-value-field="name"></es-app-lookup>
-    <div style="height: 250px">
-        <div style="position: relative">
-            <p>开始时间:</p>
-            <div class="input-group">
-                <date-picker ng-hide="hideStart" ng-model="emptyModel.startDate" style="position: absolute;top:45px;z-index: 999"
-                             on-date-selected="closeStartPop()"
-                             format-date="formatDate"></date-picker>
-                <input type="text" class="form-control" ng-model="emptyModel.startDate">
+<div>
+    <es-spinner ng-if="isLoading"></es-spinner>
+    <es-app-wizard ng-if="!isLoading">
+        <es-app-wizard-content>
+            <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称"
+                            es-label="考评名"></es-app-textbox>
+            <es-app-lookup es-service="assess" es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
+                           es-columns="templateFields" es-id="templateLookup" es-value-field="header.name"></es-app-lookup>
+            <div style="height: 250px">
+                <div style="position: relative">
+                    <p>开始时间:</p>
+                    <div class="input-group" style="width: 200px;">
+                        <date-picker ng-hide="hideStart" ng-model="emptyModel.startDate" style="position: absolute;top:45px;z-index: 999"
+                                     on-date-selected="closeStartPop()"
+                                     format-date="formatDate"></date-picker>
+                        <input type="text" class="form-control" ng-model="emptyModel.startDate">
                 <span class="input-group-addon" ng-click="openStart()"><span
                         class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-        </div>
+                    </div>
+                </div>
 
-        <div style="position: relative">
-            <p>结束时间:</p>
-            <div class="input-group">
-                <date-picker ng-hide="hideEnd" ng-model="emptyModel.endDate" style="position: absolute;top:45px;z-index: 999"
-                             on-date-selected="closeEndPop()"
-                             format-date="formatDate"></date-picker>
-                <input type="text" class="form-control" ng-model="emptyModel.endDate">
-                <span class="input-group-addon" ng-click="openEnd()"><span class="glyphicon glyphicon-calendar"></span></span>
+                <div style="position: relative">
+                    <p>结束时间:</p>
+                    <div class="input-group" style="width: 200px;">
+                        <date-picker ng-hide="hideEnd" ng-model="emptyModel.endDate" style="position: absolute;top:45px;z-index: 999"
+                                     on-date-selected="closeEndPop()"
+                                     format-date="formatDate"></date-picker>
+                        <input type="text" class="form-control" ng-model="emptyModel.endDate">
+                        <span class="input-group-addon" ng-click="openEnd()"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div>
-        <button ng-click="next()" type="button" class="btn btn-primary">
-            <span class="glyphicon glyphicon glyphicon-menu-right"></span>
-            <span class="es-icon-button-text">下一步</span>
-        </button>
-    </div>
-</div>
-
-<div ng-show="page2Show">
-    <div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <p>请选择考评机构:</p>
-            </div>
-            <div class="panel-body">
-                <script type="text/ng-template" id="ministry_renderer_ass.html">
-                    <div ui-tree-handle class="tree-node tree-node-content">
-                        <table style="width: 100%;cursor: pointer;">
-                            <tr>
-                                <td style="width: 20px;padding: 0px 5px 0px 5px;">
+        </es-app-wizard-content>
+        <es-app-wizard-content>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p>请选择考评机构:</p>
+                </div>
+                <div class="panel-body">
+                    <script type="text/ng-template" id="ministry_renderer_ass.html">
+                        <div ui-tree-handle class="tree-node tree-node-content">
+                            <table style="width: 100%;cursor: pointer;">
+                                <tr>
+                                    <td style="width: 20px;padding: 0px 5px 0px 5px;">
                             <span ng-if="item.ministries && item.ministries.length > 0" ng-click="toggle(this)"
                                   class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,
 												   'glyphicon-chevron-down': !collapsed
 												  }" style="color: #333;font-size:12px;">
                             </span>
-                                </td>
-                                <td>
-                                    <input type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
-                                </td>
-                                <td style="width: 100%;">{{item.name}}</td>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <ul ui-tree-nodes ng-model="item.ministries" ng-class="{hidden: collapsed,displayed:!collapsed}">
-                        <li ng-repeat="item in item.ministries" ui-tree-node collapsed="true"
-                            ng-include="'ministry_renderer_ass.html'">
-                        </li>
-                    </ul>
-                </script>
-                <div class="row">
-                    <div style="padding: 5px 5px 5px 5px;">
-                        <div ui-tree id="tree-root" data-drag-enabled="false">
-                            <ul ui-tree-nodes ng-model="list">
-                                <li ng-repeat="item in list" ui-tree-node collapsed="true"
-                                    ng-include="'ministry_renderer_ass.html'"></li>
-                            </ul>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
+                                    </td>
+                                    <td style="width: 100%;">{{item.name}}</td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <ul ui-tree-nodes ng-model="item.ministries" ng-class="{hidden: collapsed,displayed:!collapsed}">
+                            <li ng-repeat="item in item.ministries" ui-tree-node collapsed="true"
+                                ng-include="'ministry_renderer_ass.html'">
+                            </li>
+                        </ul>
+                    </script>
+                    <div class="row">
+                        <div style="padding: 5px 5px 5px 5px;">
+                            <div ui-tree id="tree-root" data-drag-enabled="false">
+                                <ul ui-tree-nodes ng-model="list">
+                                    <li ng-repeat="item in list" ui-tree-node collapsed="true"
+                                        ng-include="'ministry_renderer_ass.html'"></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div style="padding:30px 10px 10px 10px">
-                        <button ng-click="last()" type="button" class="btn btn-primary">
-                            <span class="glyphicon glyphicon glyphicon-menu-left"></span>
-                            <span class="es-icon-button-text">上一步</span>
-                        </button>
-                        <button ng-click="next()" type="button" class="btn btn-primary">
-                            <span class="glyphicon glyphicon glyphicon-menu-right"></span>
-                            <span class="es-icon-button-text">下一步</span>
-                        </button>
-                    </div>
+            </div>
+        </es-app-wizard-content>
+        <es-app-wizard-content>
+            <div>
+                <div ng-if="!selectedTemplate">没有选择测试模版</div>
+                <div ng-if="selectedTemplate">
+                    <table ng-repeat="group in selectedTemplate.groups" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><span>样本代码</span></th>
+                            <th><span>操作</span></th>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="specimen in group.specimens" style="cursor:pointer;">
+                            <td>{{specimen.number}}</td>
+                            <td><button ng-click="setSpecimenCodes(specimen)" class="btn" ng-class="getSetButtonClass(specimen)">设置盲样码</button></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
+        </es-app-wizard-content>
+    </es-app-wizard>
 </div>
+

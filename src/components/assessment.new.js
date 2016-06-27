@@ -1,35 +1,41 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.assessmentNewController = function($scope,$element,ngDialog,esRequestService) {
+EasyAssess.app.assessmentNewController = function ($scope, $element, ngDialog, esRequestService, $state) {
     this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
-    _initialize: function($scope,$element,ngDialog,esReqeustService) {
-        $scope.emptyModel = {"id": -1, "name": "", "templateGuid": "", "startDate": "","endDate":"","owner":"","participants":{},"specimenCodes":{}};
+    _initialize: function ($scope, $element, ngDialog, esRequestService, $state) {
+        $scope.emptyModel = {
+            "id": -1,
+            "name": "",
+            "templateGuid": "",
+            "startDate": "",
+            "endDate": "",
+            "owner": "",
+            "participants": {},
+            "specimenCodes": {}
+        };
         $scope.templateFields = [
-            {title: "模板", field: "name", type: "string", searchable: true, default: true}
+            {title: "模板", field: "header.name", type: "string", searchable: true, default: true}
         ];
         $scope.emptyModel.startDate = null;
         $scope.emptyModel.endDate = null;
         $scope.hideStart = true;
         $scope.hideEnd = true;
-        $scope.closeStartPop = function(){
+        $scope.closeStartPop = function () {
             $scope.hideStart = true;
-            console.log($scope.emptyModel, typeof ($scope.emptyModel));
         };
 
-        $scope.openStart = function() {
+        $scope.openStart = function () {
             $scope.hideStart = false;
         };
 
-        $scope.openEnd = function(){
+        $scope.openEnd = function () {
             $scope.hideEnd = false;
         };
 
-        $scope.closeEndPop = function(){
+        $scope.closeEndPop = function () {
             $scope.hideEnd = true;
-            console.log($scope.emptyModel, typeof ($scope.emptyModel));
-
         };
 
         $scope.formatDate = function (date) {
@@ -43,35 +49,35 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         };
 
 
-        $scope.page1Show = true;
-        $scope.page2Show = false;
-        $scope.next = function(){
-            $scope.page1Show = false;
-            $scope.page2Show = true;
-        };
-
-
-        $scope.chooseItem = function(item){
+        $scope.chooseItem = function (item) {
             //update child
             _updateChild(item);
 
-           // update parent
-           // _updateParent(item);
+            // update parent
+            // _updateParent(item);
 
-           //update the model
-
+            //update the model
             $scope.emptyModel.participants = {};
             _updateEmptyModel($scope.list);
-
-            console.log($scope.emptyModel);
-
         };
 
+        $scope.$on('$templateLookup_selected', function(e, model){
+            $scope.selectedTemplate = model;
+            $scope.emptyModel.templateGuid = model.id;
+        });
 
-        function _updateChild(item){
-            if(item.ministries.length >0){
+        $scope.$on('$wizard_complete', function(e, model){
+            esRequestService.esPost(EasyAssess.activeEnv.assess() + "assessment", $scope.emptyModel).then(
+                function (response) {
+                    EasyAssess.TaskManager.start("assessment", $state);
+                }
+            );
+        });
+
+        function _updateChild(item) {
+            if (item.ministries.length > 0) {
                 var newState = item.selected;
-                angular.forEach(item.ministries,function(eachMinistry){
+                angular.forEach(item.ministries, function (eachMinistry) {
                     eachMinistry.selected = newState;
                     _updateChild(eachMinistry);
                 })
@@ -79,11 +85,11 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             }
         }
 
-        function _updateParent(item){
-            if(item.supervisorId >0){
-                var parentMinistry = _searchParent(item.supervisorId,$scope.list);
+        function _updateParent(item) {
+            if (item.supervisorId > 0) {
+                var parentMinistry = _searchParent(item.supervisorId, $scope.list);
                 var parentState = false;
-                angular.forEach(parentMinistry.ministries,function(eachMinistry){
+                angular.forEach(parentMinistry.ministries, function (eachMinistry) {
                     parentState = eachMinistry || parentMinistry;
                 });
                 parentMinistry.selected = parentState;
@@ -92,98 +98,68 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
         }
 
-
-        function _searchParent(id,nodes){
+        function _searchParent(id, nodes) {
             var parent;
-            angular.forEach(nodes,function(each){
-                if(!parent){
-                    if(each.id == id){
+            angular.forEach(nodes, function (each) {
+                if (!parent) {
+                    if (each.id == id) {
                         return parent = each;
-                    }else{
-                       parent =  _searchParent(id,each.ministries)
+                    } else {
+                        parent = _searchParent(id, each.ministries)
                     }
-                }else{
+                } else {
                 }
             });
             return parent;
         }
 
-        function _updateEmptyModel(nodes){
-            angular.forEach(nodes,function(node){
-                if(node.selected){
+        function _updateEmptyModel(nodes) {
+            angular.forEach(nodes, function (node) {
+                if (node.selected) {
                     $scope.emptyModel.participants[node.id] = node.name;
-                }else{
+                } else {
 
                 }
-                if(node.ministries.length >0){
+                if (node.ministries.length > 0) {
                     _updateEmptyModel(node.ministries)
                 }
             })
         }
 
-        $scope.list = [
-            {
-                "id": 3,
-                "name": "陕西CDC",
-                "type": "C",
-                "status": "A",
-                "ministries": [
-                    {
-                        "id": 5,
-                        "name": "西安CDC",
-                        "type": "C",
-                        "status": "A",
-                        "ministries": [{
-                            "id": 11,
-                            "name": "未央CDC",
-                            "type": "C",
-                            "status": "A",
-                            "ministries": [],
-                            "selected":false,
-                            "supervisorId": 5,
-                            "supervisorName": "西安CDC"
-                        },{
-                            "id": 12,
-                            "name": "碑林CDC",
-                            "type": "C",
-                            "status": "A",
-                            "ministries": [],
-                            "selected":false,
-                            "supervisorId": 5,
-                            "supervisorName": "西安CDC"
-                        }],
-                        "selected":false,
-                        "supervisorId": 3,
-                        "supervisorName": "陕西CDC"
-                    },
-                    {
-                        "id": 6,
-                        "name": "咸阳CDC",
-                        "type": "C",
-                        "status": "A",
-                        "ministries": [],
-                        "selected":false,
-                        "supervisorId": 3,
-                        "supervisorName": "陕西CDC"
-                    }
-                ],
-                "selected":false,
-                "supervisorId": -1,
-                "supervisorName": "中国CDC总局"
-            },
-            {
-                "id": 4,
-                "name": "江苏CDC",
-                "type": "C",
-                "status": "A",
-                "ministries": [],
-                "selected":false,
-                "supervisorId": -1,
-                "supervisorName": "中国CDC总局"
+        $scope.isLoading = true;
+
+        esRequestService.esGet(EasyAssess.activeEnv.pdm() + "ministry/list/unassigned?page=0&size=99").then(
+            function (response) {
+                $scope.isLoading = false;
+                $scope.list = response.data.content;
             }
-        ]
+        );
 
+        $scope.getSetButtonClass = function(specimen) {
+            if ($scope.emptyModel.specimenCodes[specimen.number]) {
+                return "btn-success";
+            }
+            return "btn-danger";
+        }
 
+        $scope.setSpecimenCodes = function (specimen) {
+            ngDialog.open({
+                template: '<div class="es-dialog-content">'
+                          + '<div>盲样码</div>'
+                          + '<div><textarea class="form-control" style="height:300px;padding-bottom: 10px;" ng-model="codes"></textarea></div>'
+                          + '<div><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+                plain: true,
+                controller: ['$scope', function ($dialog) {
+                    $dialog.submit = function () {
+                        if ($dialog.codes) {
+                            var codes = $dialog.codes.indexOf("\r\n") != -1 ? $dialog.codes.split("\r\n") : $dialog.codes.split("\n");
+                            $scope.emptyModel.specimenCodes[specimen.number] = codes;
+                        }
+                        $dialog.closeThisDialog();
+                    }
+                }]
+            });
+        };
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 

@@ -52,9 +52,10 @@ EasyAssess.directives["esAppLookup"]
 			esColumns: "=",
 			esId:"@",
 			esValueField:"@",
-			esModel:"=",
+			esModel:"=?",
 			esReadonly:"=",
-			esQuery:"=?"
+			esQuery:"=?",
+			esService:"@"
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
 			if (!$scope.esWidth) {
@@ -77,15 +78,26 @@ EasyAssess.directives["esAppLookup"]
 
 			$scope.lookup = function() {
 				ngDialog.open({
-					template: '<div><es-app-datagrid es-resource="{{resource}}" es-options="options" es-columns="fields"></es-app-datagrid></div>',
+					template: '<div><es-app-datagrid es-service="{{service}}" es-resource="{{resource}}" es-options="options" es-columns="fields"></es-app-datagrid></div>',
 					plain: true,
 					controller: ['$scope', function($dialog) {
 						$dialog.resource = $scope.esResource;
 						$dialog.fields = $scope.esColumns;
 						$dialog.options = $scope.esOptions;
+						$dialog.service = $scope.esService;
 						$dialog.$on('$selected', function(e, model){
 							$scope.$emit('$' + $scope.esId + '_selected', model);
-							$scope.esModel = model[$scope.esValueField];
+
+							if ($scope.esValueField && $scope.esValueField.indexOf(".") != -1) {
+								var val = model;
+								var fields = $scope.esValueField.split(".")
+								for (var i =0; i < fields.length; i++) {
+									val = val[fields[i]];
+								}
+								$scope.esModel = val;
+							} else {
+								$scope.esModel = model[$scope.esValueField];
+							}
 							$dialog.closeThisDialog();
 						});
 					}]
