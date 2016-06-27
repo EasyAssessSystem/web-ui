@@ -7,6 +7,7 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
     _initialize: function($scope, $state) {
         $scope.assessment = $state.current.data.detail;
         console.log($scope.assessment);
+        $scope.assessname = $scope.assessment.name;
         $scope.fields = [
             {title:"机构名称", field:"name", type:"string",searchable:true,default:true},
             {title:"状态", field:"status", type:"string",searchable:false,default:false},
@@ -20,7 +21,14 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
                 status: "未提交"
             })
         }
+
+        $scope.goback = function(){
+            EasyAssess.TaskManager.start('assessment',$state);
+        }
     },
+
+
+
 
     _restrict: function() {
     },
