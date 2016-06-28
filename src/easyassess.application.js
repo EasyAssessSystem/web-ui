@@ -12,6 +12,11 @@ require('./components/assay_code.html');
 require('./components/template.html');
 require('./components/assessment.detail.html');
 require('./components/assessment.new.html');
+require('./components/myassessment.html');
+require('./components/myassessment.done.html');
+require('./components/myassessment.progress.html');
+
+
 
 /**
  * Created by alexli on 2016/4/3.

@@ -40,7 +40,7 @@ var MenuTemplate = {
                     link:"template"
                 },
                 {
-                    text:"考评历史",
+                    text:"考评记录",
                     link:"assessment"
                 },
                 {
@@ -49,6 +49,19 @@ var MenuTemplate = {
                 }
             ],
             root: true
+        },{
+          text:"我的考评",
+          icon:"glyphicon-list-alt",
+          items:[
+              {
+                text:"我的考评",
+                link:"myassessment.progress"
+              },
+              {
+                text:"考评历史",
+                link:"myassessment.done"
+              }
+          ]
         },
         {
             text:"数据统计",

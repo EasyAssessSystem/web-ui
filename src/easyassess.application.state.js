@@ -11,6 +11,10 @@ require("./components/assessment.new");
 require("./components/assessment.detail");
 require("./components/assay_code");
 require("./components/assay_category");
+require("./components/myassessment");
+require("./components/myassessment.progress");
+require("./components/myassessment.done");
+
 
 
 EasyAssess.app.stateProvider.state('user', {
@@ -78,4 +82,22 @@ EasyAssess.app.stateProvider.state('assessment.new', {
     url:"/new",
     templateUrl:  'assessment.new.html',
     controller: "assessment_newController"
+});
+
+EasyAssess.app.stateProvider.state('myassessment', {
+    url:"/myassessment",
+    templateUrl: 'myassessment.html',
+    controller:  "myassessmentController"
+});
+
+EasyAssess.app.stateProvider.state('myassessment.progress', {
+    url:"/progress",
+    templateUrl:  'myassessment.progress.html',
+    controller: "myassessment_progressController"
+});
+
+EasyAssess.app.stateProvider.state('myassessment.done', {
+    url:"/done",
+    templateUrl:  'myassessment.done.html',
+    controller: "myassessment_doneController"
 });
