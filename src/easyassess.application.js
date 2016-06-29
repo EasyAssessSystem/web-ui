@@ -10,11 +10,11 @@ require('./components/assay_category.html');
 require('./components/code_group.html');
 require('./components/assay_code.html');
 require('./components/template.html');
-require('./components/assessment.detail.html');
-require('./components/assessment.new.html');
+require('./components/assessment_detail.html');
+require('./components/assessment_new.html');
 require('./components/myassessment.html');
-require('./components/myassessment.done.html');
-require('./components/myassessment.progress.html');
+require('./components/myassessment_done.html');
+require('./components/myassessment_progress.html');
 
 
 

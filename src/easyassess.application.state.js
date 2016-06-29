@@ -7,13 +7,13 @@ require("./components/role");
 require("./components/health_ministry");
 require("./components/code_group");
 require("./components/cdc");
-require("./components/assessment.new");
-require("./components/assessment.detail");
+require("./components/assessment_new");
+require("./components/assessment_detail");
 require("./components/assay_code");
 require("./components/assay_category");
 require("./components/myassessment");
-require("./components/myassessment.progress");
-require("./components/myassessment.done");
+require("./components/myassessment_progress");
+require("./components/myassessment_done");
 
 
 
@@ -74,13 +74,13 @@ EasyAssess.app.stateProvider.state('assessment', {
 
 EasyAssess.app.stateProvider.state('assessment.detail', {
     url:"/detail/:id",
-    templateUrl:  'assessment.detail.html',
+    templateUrl:  'assessment_detail.html',
     controller: "assessment_detailController"
 });
 
 EasyAssess.app.stateProvider.state('assessment.new', {
     url:"/new",
-    templateUrl:  'assessment.new.html',
+    templateUrl:  'assessment_new.html',
     controller: "assessment_newController"
 });
 
@@ -92,12 +92,12 @@ EasyAssess.app.stateProvider.state('myassessment', {
 
 EasyAssess.app.stateProvider.state('myassessment.progress', {
     url:"/progress",
-    templateUrl:  'myassessment.progress.html',
+    templateUrl:  'myassessment_progress.html',
     controller: "myassessment_progressController"
 });
 
 EasyAssess.app.stateProvider.state('myassessment.done', {
     url:"/done",
-    templateUrl:  'myassessment.done.html',
+    templateUrl:  'myassessment_done.html',
     controller: "myassessment_doneController"
 });
