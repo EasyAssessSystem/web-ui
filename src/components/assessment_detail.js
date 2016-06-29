@@ -22,9 +22,26 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
             })
         }
 
-        $scope.goback = function(){
+        var firstback = function(){
             EasyAssess.TaskManager.start('assessment',$state);
+
+        };
+
+        var secondback = function(){
         }
+
+        $scope.items = [
+            {
+                name:'考评记录',
+                bindfunc:firstback
+            },
+            {
+                name:$scope.assessname,
+                bindfunc:secondback
+            }]
+
+
+
     },
 
 
