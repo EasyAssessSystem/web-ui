@@ -9,7 +9,7 @@ EasyAssess.app.MyAssessmentController .prototype = EasyAssess.extend({
     _restrict: function() {
     },
     _filterOptions:function(){
-        
+
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 

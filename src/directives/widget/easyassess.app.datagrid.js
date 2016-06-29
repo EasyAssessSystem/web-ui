@@ -38,7 +38,7 @@ EasyAssess.directives["esAppDatagrid"]
             esTransfer: "&?",
             esOptions: "=?",
             esItemId:"=?",
-            esQuery: "=",
+            esQuery: "@",
             esId: "@",
             esService:"@",
         },
