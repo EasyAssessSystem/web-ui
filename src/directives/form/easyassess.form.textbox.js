@@ -7,12 +7,13 @@ EasyAssess.directives["esTextBox"]
 		restrict: 'E',
 		replace: true,
 		transclude: false,
-		template: '<div class="es-editable-box" align="{{esContentAlign}}"><span ng-model="esContent" ng-blur="esChangeCallback({val:esContent})" class="es-editable-content" placeholder="{{esPlaceholder}}" contenteditable="true">{{esContent}}</span></div>',
+		template: '<div class="es-editable-box" align="{{esContentAlign}}"><span ng-model="esContent" ng-blur="esChangeCallback({val:esContent})" class="es-editable-content" placeholder="{{esPlaceholder}}" contenteditable="{{esEditable}}">{{esContent}}</span></div>',
 		scope: {
 			"esPlaceholder":"@",
 			"esContentAlign":"@",
 			"esChangeCallback":"&",
-			"esContent":"@"
+			"esContent":"@",
+			"esEditable":"@"
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
 			if (!$scope.esContentAlign) {
