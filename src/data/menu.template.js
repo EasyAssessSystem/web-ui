@@ -60,6 +60,10 @@ var MenuTemplate = {
               {
                 text:"考评历史",
                 link:"myassessment.done"
+              },
+              {
+                text:"答案测试",
+                link:"myassessment.answer"
               }
           ]
         },

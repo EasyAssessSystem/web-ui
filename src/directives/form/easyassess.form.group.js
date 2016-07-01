@@ -1,28 +1,7 @@
 /**
  * 
  */
-//EasyAssess.formApp.provider('esFormService', function() {
-//	 var self = this;
-//	
-//	 this.setProvider = function(provider) {
-//		 this.provider = provider;
-//	 }
-//	  
-//	 this.$get = function() {
-//		 return self.provider;
-//	 }
-//});
-//
-//
-//EasyAssess.formApp.config(function(esFormServiceProvider) {
-//	esFormServiceProvider.setProvider({
-//		getGroupName: function() {
-//			return "Group here.."
-//		}
-//	});
-//})
 var EasyAssess = require('../../easyassess.application');
-
 
 EasyAssess.directives["esFormGroup"] 
 	= EasyAssess.app.directive("esFormGroup", function(ngDialog) {
@@ -56,16 +35,6 @@ EasyAssess.directives["esFormGroup"]
 		          +						'</tr>'
 		          +					'</table>'
 		          +				'</td>'
-		          // +  			'<td>'
-		          // +					'<table>'
-		          // +						'<tr>'
-		          // +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codes"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codes\')"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addCode" es-text="编码组" title="添加编码组"></es-add-button></td>'
-		          // +						'</tr>'
-		          // +						'<tr ng-repeat="row in esGroup.rows">'
-		          // +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codes"><div class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
-		          // +						'</tr>'
-		          // +					'</table>'
-		          // +				'</td>'
 		          +			'</tr>'
 		          +			'<tr>'
 		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'

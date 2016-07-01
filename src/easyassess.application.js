@@ -15,6 +15,7 @@ require('./components/assessment_new.html');
 require('./components/myassessment.html');
 require('./components/myassessment_done.html');
 require('./components/myassessment_progress.html');
+require('./components/answer.html');
 
 
 

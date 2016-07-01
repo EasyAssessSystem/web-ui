@@ -1,7 +1,10 @@
 <div>
     <es-form-page>
         <div class="es-page-section">
-            <es-form-header es-header="test2016" es-editable="false"></es-form-header>
+            <es-form-header es-header="answer.header" es-editable="false"></es-form-header>
+        </div>
+        <div ng-repeat="group in answer.groups" class="es-page-section">
+            <es-form-group-edit es-group="group"></es-form-group-edit>
         </div>
     </es-form-page>
 </div>

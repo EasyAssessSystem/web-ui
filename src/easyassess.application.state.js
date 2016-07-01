@@ -14,6 +14,7 @@ require("./components/assay_category");
 require("./components/myassessment");
 require("./components/myassessment_progress");
 require("./components/myassessment_done");
+require("./components/answer");
 
 
 
@@ -100,4 +101,10 @@ EasyAssess.app.stateProvider.state('myassessment.done', {
     url:"/done",
     templateUrl:  'myassessment_done.html',
     controller: "myassessment_doneController"
+});
+
+EasyAssess.app.stateProvider.state('myassessment.answer', {
+    url:"/answer",
+    templateUrl:  'answer.html',
+    controller: "assessmentAnswerController"
 });
