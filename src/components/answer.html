@@ -1,9 +1,12 @@
 <div>
     <es-form-page>
-        <div class="es-page-section">
-            <es-form-header es-header="answer.header" es-editable="false"></es-form-header>
+        <div>
+            <button type="button" class="btn btn-success" ng-click="save()">Saved</button>
         </div>
-        <div ng-repeat="group in answer.groups" class="es-page-section">
+        <div class="es-page-section">
+            <es-form-header es-header="template.header" es-editable="false"></es-form-header>
+        </div>
+        <div ng-repeat="group in template.groups" class="es-page-section">
             <es-form-group-edit es-group="group"></es-form-group-edit>
         </div>
     </es-form-page>
