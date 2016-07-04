@@ -37,49 +37,15 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
                 "rows": [
                     {
                         "guid": "b62d6021-ab360ed3-df3344b7b14a",
-                        "subject": "血液检测",
-                        "optionMap": {
-                            "3c518d74-db31caa0-a4d8671af4c4": {
-                                "type": "S",
-                                "expectedValues": [
-                                    {
-                                        "value": "1",
-                                        "weight": 1
-                                    }
-                                ],
-                                "optionValues": [
-                                    {
-                                        "value": "1"
-                                    }
-                                ]
-                            },
-                            "6c8512fb-c256c814-a64a894ad9eb": {
-                                "type": "V",
-                                "expectedValues": [
-                                    {
-                                        "value": "2",
-                                        "weight": 2
-                                    }
-                                ],
-                                "optionValues": []
-                            }
-                        }
+                        "subject": "血液检测"
                     },
                     {
                         "guid": "0a6a2ae5-a840f30e-d591de989b33",
-                        "subject": "尿液检测",
-                        "optionMap": {
-                            "3c518d74-db31caa0-a4d8671af4c4": {
-                                "type": "S",
-                                "expectedValues": [],
-                                "optionValues": []
-                            }
-                        }
+                        "subject": "尿液检测"
                     },
                     {
                         "guid": "d54472ac-f2844053-7e8e30d34d91",
-                        "subject": "血型检查",
-                        "optionMap": {}
+                        "subject": "血型检查"
                     }
                 ]
             }
