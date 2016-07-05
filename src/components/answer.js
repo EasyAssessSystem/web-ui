@@ -14,7 +14,7 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
             "id": "57753080d4c6cfebf63497a4",
             "guid": "88794862-fefdb4fa-5a341cb7fbd0",
             "header": {
-            "name": "2016西安大考评"
+            "name": "testing"
         },
             "groups": [
             {
@@ -37,15 +37,15 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
                 "rows": [
                     {
                         "guid": "b62d6021-ab360ed3-df3344b7b14a",
-                        "subject": "血液检测"
+                        "subject": "test1"
                     },
                     {
                         "guid": "0a6a2ae5-a840f30e-d591de989b33",
-                        "subject": "尿液检测"
+                        "subject": "test2"
                     },
                     {
                         "guid": "d54472ac-f2844053-7e8e30d34d91",
-                        "subject": "血型检查"
+                        "subject": "test3"
                     }
                 ]
             }
@@ -72,48 +72,42 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
             updateTheCodeList(data)
         });
 
-        $scope.$on('valueChanged',function(e,data){
-            updateTheValueList(data);
+        $scope.$on('removeSpecimen',function(e,data){
+            removeFromList(data);
+            console.log($scope.answer);
         });
 
-        function updateTheCodeList(data){
-            console.log(data);
-           var updateItem= $scope.specimensCodes.find(function(item){
-                return item.guid == data.guid
-            });
-            if (updateItem){
-                updateItem.fakeCode = data.fakeCode
-            }else{
-                $scope.specimensCodes.push(data);
-            }
-            console.log($scope.specimensCodes);
+        $scope.$on('valueChanged',function(e,data){
+            updateTheValueList(data);
+            console.log($scope.answer);
+        });
 
-        }
 
         function updateTheValueList(data){
 
-            var switchedData = switchToFakeCode(data);
-
             var updateCode = $scope.answer.values.find(function(item){
-                item.itemId == switchedData.itemId;
-                item.sampleId = switchedData.sampleId
+
+              return (item.subjectGuid == data.subjectGuid) && (item.specimenCode = data.specimenCode)
+
             });
 
             if (updateCode){
-                updateCode.value = switchedData.value
+                updateCode.value = data.value
             }else{
-                $scope.answer.values.push(switchedData);
+                $scope.answer.values.push(data);
             }
 
         }
 
-        function switchToFakeCode(data){
-             var dictObj = $scope.specimensCodes.find(function(item){
-                 return item.guid == data.sampleId
-             });
-            data.sampleId = dictObj.fakeCode;
 
-            return data
+
+        function removeFromList(data){
+            angular.forEach($scope.answer.values,function(item){
+                if(item.specimenCode == data){
+                    $scope.answer.values.pop(item);
+                }
+            })
+
         }
 
 

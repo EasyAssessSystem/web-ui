@@ -101,28 +101,28 @@ EasyAssess.directives["esFormGroupEdit"]
         restrict: 'E',
         replace: true,
         transclude: false,
-        template:  '<div class="es-form-group">'
+        template:'<div class="es-form-group">'
         +	 '<table class="table table-striped">'
         + 	'<thead><tr><th style="width:20%;">检测分类</th><th style="width:40%;">样本</th><!--th style="width:40%;">编码组</th>--></tr></thead>'
         +     '<tbody>'
         +			'<tr>'
         +				'<td>'
-        +					'<table>'
+        +					'<table  border="0" cellspacing="0" cellpadding="0" style="float:left;">'
         +						'<tr>'
         +							'<td class="es-form-group-cell" valign="middle"></td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
-        +							'<td class="es-form-group-cell" valign="middle"><div>{{row.subject}} - {{row.unit}}</div></td>'
+        +							'<td class="es-form-group-cell" valign="middle"><div>{{row.subject}} - {{row.unit}} </div></td>'
         +						'</tr>'
         +					'</table>'
         +				'</td>'
         +				'<td>'
-        +					'<table>'
+        +					'<table  border="0" cellspacing="0" cellpadding="0" style="float:left;">'
         +						'<tr>'
-        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><table><tr><td><span class="es-form-group-title">{{s_col}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col)"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><table><tr><td><span class="es-form-group-title">{{s_col.specimenCode}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid)"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
         +						'</tr>'
-        +						'<tr ng-repeat="row in esGroup.rows ">'
-        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><div ng-show="isInputBox">input</div><div ng-show="!isInputBox">select</div></td>'
+        +						'<tr ng-repeat="row in esGroup.rows">'
+        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><div ng-show="{{isInput(row,s_col).show}}"><div ng-show="{{isInput(row,s_col).input}}"><input type="text" ng-model="inputValue" class="form-control es-form-group-contorl" ng-blur="valueChanged(row,s_col)" ></div><div ng-show="{{isInput(row,s_col).select}}"><select class="form-control es-form-group-contorl" ng-model="inputValue" ng-blur="valueChanged(row,s_col)"><option ng-repeat="option in getOptions(row,s_col)" value="option.value">{{option.value}}</option></select></div></td>'
         +						'</tr>'
         +					'</table>'
         +				'</td>'
@@ -136,60 +136,98 @@ EasyAssess.directives["esFormGroupEdit"]
         controller: ["$scope", function($scope, $element, $attrs){
             //edit("Hello");
 
-            $scope.specimens = [];
+            $scope.inputValue = '';
+            $scope.inputValue2 = "";
 
-            var specimen = {
-                fakeId :'',
+            $scope.specimens = [
+                {
+                    specimenCode:'1111111',
+                    subjects:[
+                        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'1'},{value:'2'}],value:''},
+                        {guid :'d54472ac-f2844053-7e8e30d34d91', optionValues:[],answer:''}
+                    ],
+                },{
+                    specimenCode:'2222222',
+                    subjects:[
+                        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'4'},{value:'5'}],value:''},
+                        {guid :'0a6a2ae5-a840f30e-d591de989b33', optionValues:[],value:''}
+                    ]
+                }
+            ];
 
-                subjects:[
-                    {
-                        guid:'',
-                        optionValues:[{},{},{}]
-                    },
-                    {
-                        guid:'',
-                        optionValues:[]
-                    }
-                ]
-            };
 
-            $scope.isInputBox = function(subject,specimen){
 
-                var selected =specimen.subjects.find(function(item){
-                    return item.guid == subject.guid
+            $scope.getOptions = function(row,specimen){
+                var foundItem = specimen.subjects.find(function(subject){
+                    return subject.guid == row.guid
                 });
-
-                var result = false;
-                if(selected.optionValues.length == 0){
-                    result = true
-
-                }else {
-                    result = false;
+                var result = [];
+                if(foundItem){
+                    result = foundItem.optionValues;
                 }
 
                 return result;
-            }
+            };
+
+            $scope.getModel = function (row,specimen){
+                var foundItem = specimen.subjects.find(function(subject){
+                    return subject.guid == row.guid
+                });
+                var result = {};
+                if(foundItem){
+                    result = foundItem.value;
+                }
+
+                return result;
+            };
+
+            $scope.isInput = function(subject,specimen){
+                var answserItem = specimen.subjects.find(function(item){
+                    return item.guid == subject.guid
+                });
+
+                var result = {
+                    show:false,
+                    input:false,
+                    select:false
+                };
+
+                if(answserItem){
+                    result.show = true;
+                    if(answserItem.optionValues.length == 0){
+                        result.input = true;
+
+                    }else {
+                        result.select = true;
+                    }
+                }
+
+                return result;
+            };
 
 
             $scope.removeColumn = function(specimen) {
                 $scope.specimens.pop(specimen);
                 console.log($scope.specimens);
-            }
+                $scope.$emit('removeSpecimen',specimen.specimenCode);
+            };
+
+            $scope.valueChanged = function(row,specimen){
+                console.log('value changed');
+                console.log($scope.inputValue);
 
 
-            $scope.nameChanged = function(val) {
-                $scope.esGroup.name = val;
+                var value = {
+                    subjectGuid:row.guid,
+                    specimenCode:specimen.specimenCode,
+                    value:$scope.inputValue
+                };
+
+
+
+                $scope.$emit('valueChanged',value);
             }
 
-            $scope.isSetted = function(row, col) {
-                var cell = row.optionMap[col.guid];
-                if (cell) {
-                    if (cell.expectedValues && cell.expectedValues.length > 0) {
-                        return true;
-                    }
-                }
-                return false;
-            }
 
         }],
         link: function($scope, ele, attrs, ctrl) {

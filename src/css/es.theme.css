@@ -84,6 +84,11 @@
 	height:30px;
 }
 
+.es-form-group-contorl{
+	height: 25px;
+}
+
+
 .es-dialog-content {
 	padding: 20px 20px 10px 20px;
 }
@@ -91,6 +96,9 @@
 .es-dialog-form-line {
 	padding: 5px 5px 5px 5px;
 }
+
+
+
 
 select {
 	background-color: #ffffff;
