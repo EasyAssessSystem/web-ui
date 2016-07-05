@@ -62,6 +62,10 @@ EasyAssess.directives["esAppLookup"]
 				$scope.esWidth = 200;
 			}
 
+			if (!$scope.esService) {
+				$scope.esService = "pdm";
+			}
+
 			if (!$scope.esEditable) {
 				$scope.esEditable = true;
 			}
