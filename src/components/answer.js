@@ -68,10 +68,8 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
 
         }
 
-
         $scope.$on('removeSpecimen',function(e,data){
             removeFromList(data);
-            console.log($scope.answer);
         });
 
         $scope.$on('valueChanged',function(e,data){
