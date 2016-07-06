@@ -1,19 +1,25 @@
 <div>
     <es-app-breadcrumb es-items="items"></es-app-breadcrumb>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>机构</th>
-            <th>状态</th>
-        </tr>
-        <tr ng-repeat="participant in participants">
-            <td>
-                {{participant.name}}
-            </td>
-            <td>
-                {{participant.status}}
-            </td>
-        </tr>
-        </thead>
-    </table>
+    <div ng-if="!activeModel">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>机构</th>
+                <th>状态</th>
+            </tr>
+            <tr style="cursor:pointer;" ng-click="show(form)" ng-repeat="form in assessment.forms">
+                <td>
+                    {{form.ownerName}}
+                </td>
+                <td>
+                    {{form.status}}
+                </td>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div ng-if="activeModel">
+        <es-spinner ng-if="loading"></es-spinner>
+        <es-form-result ng-if="!loading" es-form="activeModel.form" es-template="activeModel.template"></es-form-result>
+    </div>
 </div>

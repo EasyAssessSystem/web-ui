@@ -1,12 +1,13 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.AssessmentDetailController = function($scope,$state,$stateParams) {
+EasyAssess.app.AssessmentDetailController = function($scope,$state,$stateParams, esRequestService) {
     this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
     _initialize: function($scope, $state) {
         $scope.assessment = $state.current.data.detail;
-        console.log($scope.assessment);
+        $scope.activeModel = null;
+        $scope.loading = false;
         $scope.assessname = $scope.assessment.name;
         $scope.fields = [
             {title:"机构名称", field:"name", type:"string",searchable:true,default:true},
@@ -14,13 +15,13 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
             {title:"分数", field:"scores", type:"string",searchable:false,default:false}
         ];
 
-        $scope.participants = [];
-        for (var i=0;i<$scope.assessment.forms.length;i++) {
-            $scope.participants.push({
-                name:$scope.assessment.participants[$scope.assessment.forms[i].owner],
-                status: "未提交"
-            })
-        }
+        // $scope.participants = [];
+        // for (var i=0;i<$scope.assessment.forms.length;i++) {
+        //     $scope.participants.push({
+        //         name:$scope.assessment.participants[$scope.assessment.forms[i].owner],
+        //         status: "未提交"
+        //     })
+        // }
 
         var firstback = function(){
             EasyAssess.TaskManager.start('assessment',$state);
@@ -41,7 +42,19 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
             }]
 
 
-
+        var self = this;
+        $scope.show = function (form) {
+            self.$scope.loading = true;
+            self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + form.templateId).then(
+                (function(result) {
+                    self.$scope.loading = false;
+                    self.$scope.activeModel = {
+                        "template": result.data,
+                        "form":form
+                    }
+                }).bind(this)
+            );
+        }
     },
 
 
