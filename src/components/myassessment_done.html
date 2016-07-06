@@ -1,5 +1,9 @@
 <div>
-    <div class="ds-data-grid">
-        <es-app-datagrid es-service="assess" es-resource="myassessment" es-columns="fields" es-options="options" es-query="status=done"></es-app-datagrid>
+    <div ng-if="!activeModel" class="ds-data-grid">
+        <es-app-datagrid es-service="assess" es-resource="form/closed" es-columns="fields" es-options="options"></es-app-datagrid>
+    </div>
+    <div ng-if="activeModel" class="ds-data-grid">
+        <es-spinner ng-if="loading"></es-spinner>
+        <es-form-result ng-if="!loading" es-form="activeModel" es-template="template"></es-form-result>
     </div>
 </div>
