@@ -68,9 +68,6 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
 
         }
 
-        $scope.$on('fakeCodeChanged',function(e,data){
-            updateTheCodeList(data)
-        });
 
         $scope.$on('removeSpecimen',function(e,data){
             removeFromList(data);
@@ -79,15 +76,12 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
 
         $scope.$on('valueChanged',function(e,data){
             updateTheValueList(data);
-            console.log($scope.answer);
         });
 
 
         function updateTheValueList(data){
-
             var updateCode = $scope.answer.values.find(function(item){
-
-              return (item.subjectGuid == data.subjectGuid) && (item.specimenCode = data.specimenCode)
+                return (item.subjectGuid === data.subjectGuid) && (item.specimenCode === data.specimenCode);
 
             });
 
@@ -102,11 +96,12 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
 
 
         function removeFromList(data){
-            angular.forEach($scope.answer.values,function(item){
-                if(item.specimenCode == data){
-                    $scope.answer.values.pop(item);
-                }
-            })
+            console.log(data);
+
+            $scope.answer.values = $scope.answer.values.filter(function(item){
+                return item.specimenCode != data;
+            });
+
 
         }
 
