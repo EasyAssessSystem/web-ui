@@ -47,19 +47,7 @@ EasyAssess.directives["esFormGroupEdit"]
             //edit("Hello");
 
             $scope.specimens = [
-                //{
-                //    specimenCode:'1111111',
-                //    subjects:[
-                //        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'1'},{value:'2'}],value:''},
-                //        {guid :'d54472ac-f2844053-7e8e30d34d91', optionValues:[],value:''}
-                //    ],
-                //},{
-                //    specimenCode:'2222222',
-                //    subjects:[
-                //        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'4'},{value:'5'}],value:''},
-                //        {guid :'0a6a2ae5-a840f30e-d591de989b33', optionValues:[],value:''}
-                //    ]
-                //}
+
             ];
 
 

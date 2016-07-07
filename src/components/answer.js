@@ -77,7 +77,7 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
 
         $scope.save = function(){
             var url = EasyAssess.activeEnv['assess']() + 'form/values/' + $scope.assessment.id;
-            esRequestService.esPost(url,$scope.answer.values).then(function(res){
+            esRequestService.esPut(url,$scope.answer.values).then(function(res){
                 console.log(res);
             });
             console.log($scope.answer);
