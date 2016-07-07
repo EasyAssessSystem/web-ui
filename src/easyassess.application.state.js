@@ -94,7 +94,14 @@ EasyAssess.app.stateProvider.state('myassessment', {
 EasyAssess.app.stateProvider.state('myassessment.progress', {
     url:"/progress",
     templateUrl:  'myassessment_progress.html',
-    controller: "myassessment_progressController"
+    controller: "myassessment_progressController",
+    data:{detail:{}}
+});
+
+EasyAssess.app.stateProvider.state('myassessment.progress.answer', {
+    url:"/answer",
+    templateUrl:  'answer.html',
+    controller: "assessmentAnswerController"
 });
 
 EasyAssess.app.stateProvider.state('myassessment.done', {
@@ -103,8 +110,3 @@ EasyAssess.app.stateProvider.state('myassessment.done', {
     controller: "myassessment_doneController"
 });
 
-EasyAssess.app.stateProvider.state('myassessment.answer', {
-    url:"/answer",
-    templateUrl:  'answer.html',
-    controller: "assessmentAnswerController"
-});

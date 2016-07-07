@@ -1,18 +1,20 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.MyAssessmentProgressController = function($scope) {
+EasyAssess.app.MyAssessmentProgressController = function($scope,$state) {
     this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.MyAssessmentProgressController .prototype = EasyAssess.extend({
-    _initialize: function($scope) {
+    _initialize: function($scope,$state) {
         $scope.fields = [
-            {title:"考评名称", field:"name", type:"string",searchable:true,default:true},
-            {title:"开始日期", field:"startDate", type:"string",searchable:false,default:false},
-            {title:"截止日期", field:"startDate", type:"string",searchable:false,default:false},
-            {title:"发起人", field:"owner", type:"string",searchable:true,default:false},
+            {title:"考评名称", field:"formName", type:"string",searchable:true,default:true},
+            {title:"状态",field:"status",type:"string",searchable:false,default:false},
+            {title:"考评机构", field:"ownerName", type:"string",searchable:true,default:false}
         ];
 
-
+    },
+    _select: function(model){
+        this.$state.current.data.detail = model;
+        EasyAssess.TaskManager.start('myassessment.progress.answer',this.$state);
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 

@@ -21,7 +21,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +							'<td class="es-form-group-cell" valign="middle"></td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
-        +							'<td class="es-form-group-cell" valign="middle"><div>{{row.subject}} - {{row.unit}} </div></td>'
+        +							'<td class="es-form-group-cell" valign="middle"><div>{{row.item.subject}} - {{row.item.unit}} </div></td>'
         +						'</tr>'
         +					'</table>'
         +				'</td>'
@@ -39,26 +39,27 @@ EasyAssess.directives["esFormGroupEdit"]
         +	 	'</tbody></table>'
         + '</div>',
         scope: {
-            esGroup:"="
+            esGroup:"=",
+            esData:"="
         },
 
         controller: ["$scope", function($scope, $element, $attrs){
             //edit("Hello");
 
             $scope.specimens = [
-                {
-                    specimenCode:'1111111',
-                    subjects:[
-                        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'1'},{value:'2'}],value:''},
-                        {guid :'d54472ac-f2844053-7e8e30d34d91', optionValues:[],value:''}
-                    ],
-                },{
-                    specimenCode:'2222222',
-                    subjects:[
-                        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'4'},{value:'5'}],value:''},
-                        {guid :'0a6a2ae5-a840f30e-d591de989b33', optionValues:[],value:''}
-                    ]
-                }
+                //{
+                //    specimenCode:'1111111',
+                //    subjects:[
+                //        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'1'},{value:'2'}],value:''},
+                //        {guid :'d54472ac-f2844053-7e8e30d34d91', optionValues:[],value:''}
+                //    ],
+                //},{
+                //    specimenCode:'2222222',
+                //    subjects:[
+                //        {guid :'b62d6021-ab360ed3-df3344b7b14a', optionValues:[{value:'4'},{value:'5'}],value:''},
+                //        {guid :'0a6a2ae5-a840f30e-d591de989b33', optionValues:[],value:''}
+                //    ]
+                //}
             ];
 
 
@@ -120,6 +121,7 @@ EasyAssess.directives["esFormGroupEdit"]
             }
 
 
+
         }],
         link: function($scope, ele, attrs, ctrl) {
             var btnAddSpecimen = $(ele).find('[es-ids=addSpecimen]');
@@ -134,13 +136,20 @@ EasyAssess.directives["esFormGroupEdit"]
                     controller: ['$scope','esRequestService',function($dialog,esRequestService) {
                         $dialog.submit = function(){
                             var field = $("[es-ids=txtSpecimenNumber]").val();
-                            $scope.specimens.push(field);
                             // send the request to backend to get the options map:
-                            //esRequestService.esGet(url).then(function(data){
-                            //
-                            //});
 
-                            console.log($scope.specimens);
+                            var temp = 'a9951b6c-b2de-4242-90d5-626c21517791';
+                            var url = EasyAssess.activeEnv['assess']() + 'assessment/' +temp + '/specimen/guid/' +field;
+                            esRequestService.esGet(url).then(function(res){
+                                if(res.data.length >0){
+                                    _updateSpecimanList(res.data,field);
+                                }
+                            });
+
+                            //$scope.specimens.push(field);
+                            //
+                            //
+                            //console.log($scope.specimens);
                             $dialog.closeThisDialog();
                         }
                     }],
@@ -149,6 +158,22 @@ EasyAssess.directives["esFormGroupEdit"]
                     }
                 });
             });
+
+            function _updateSpecimanList(data,field){
+                var speciman = {
+                    specimenCode:field,
+                    subjects:[]
+                }
+
+                angular.forEach($scope.esGroup.rows,function(item){
+                    if(data in item.optionMap){
+                        speciman.subjects.push({guid:item.guid,optionValues:item.optionMap[data].optionValues})
+                    }
+                });
+
+                $scope.specimens.push(speciman);
+                console.log($scope.specimens);
+            }
 
         }
     }

@@ -1,13 +1,13 @@
 <div>
     <es-form-page>
         <div>
-            <button type="button" class="btn btn-success" ng-click="save()">Saved</button>
+            <button type="button" class="btn btn-success" ng-click="save()">提交</button>
         </div>
         <div class="es-page-section">
             <es-form-header es-header="template.header" es-editable="false"></es-form-header>
         </div>
         <div ng-repeat="group in template.groups" class="es-page-section">
-            <es-form-group-edit es-group="group"></es-form-group-edit>
+            <es-form-group-edit es-group="group" es-data="helpData"></es-form-group-edit>
         </div>
     </es-form-page>
 </div>
