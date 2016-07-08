@@ -18,6 +18,8 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
             console.log($scope.template);
         });
 
+        $scope.helpData = $scope.assessment.securedAssessment.id;
+
 
         //$scope.template = {
         //    header: {},

@@ -126,8 +126,7 @@ EasyAssess.directives["esFormGroupEdit"]
                             var field = $("[es-ids=txtSpecimenNumber]").val();
                             // send the request to backend to get the options map:
 
-                            var temp = 'a9951b6c-b2de-4242-90d5-626c21517791';
-                            var url = EasyAssess.activeEnv['assess']() + 'assessment/' +temp + '/specimen/guid/' +field;
+                            var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
                             esRequestService.esGet(url).then(function(res){
                                 if(res.data.length >0){
                                     _updateSpecimanList(res.data,field);

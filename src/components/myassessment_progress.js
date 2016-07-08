@@ -8,7 +8,9 @@ EasyAssess.app.MyAssessmentProgressController .prototype = EasyAssess.extend({
         $scope.fields = [
             {title:"考评名称", field:"formName", type:"string",searchable:true,default:true},
             {title:"状态",field:"status",type:"string",searchable:false,default:false},
-            {title:"考评机构", field:"ownerName", type:"string",searchable:true,default:false}
+            {title:"开始时间",field:"securedAssessment.startDate",searchable:false,default:false},
+            {title:"结束时间",field:"securedAssessment.endDate",searchable:false,default:false},
+            {title:"参评机构", field:"ownerName", type:"string",searchable:true,default:false}
         ];
 
     },
