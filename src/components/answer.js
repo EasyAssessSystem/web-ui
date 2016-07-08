@@ -12,7 +12,7 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
 
 
 
-        var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.assessment.templateId;
+        var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.assessment.securedAssessment.templateGuid;
         esRequestService.esGet(url).then(function(data){
            $scope.template = data.data;
             console.log($scope.template);

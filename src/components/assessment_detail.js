@@ -45,7 +45,7 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
         var self = this;
         $scope.show = function (form) {
             self.$scope.loading = true;
-            self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + form.templateId).then(
+            self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + form.securedAssessment.templateGuid).then(
                 (function(result) {
                     self.$scope.loading = false;
                     self.$scope.activeModel = {

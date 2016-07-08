@@ -11,13 +11,13 @@ EasyAssess.app.MyAssessmentDoneController .prototype = EasyAssess.extend({
             {title:"考评名称", field:"formName", type:"string",searchable:true,default:true},
             {title:"提交日期", field:"submitDate", type:"string",searchable:false,default:false},
             {title:"分数", field:"totalScore", type:"string",searchable:false,default:false},
-            {title:"考评发起单位", field:"assessmentOwnerName", type:"string",searchable:false,default:false},
+            {title:"考评发起单位", field:"securedAssessment.ownerName", type:"string",searchable:false,default:false},
         ];
     },
 
     _postSelect: function(model) {
         this.$scope.loading = true;
-        this.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateId).then(
+        this.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.securedAssessment.templateGuid).then(
             (function(result) {
                 this.$scope.loading = false;
                 this.$scope.template = result.data;
