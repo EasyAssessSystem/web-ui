@@ -1,6 +1,6 @@
 var EasyAssess = require('../../easyassess.application');
 
-EasyAssess.app.directive("esAppBanner", function($window, $http) {
+EasyAssess.app.directive("esAppBanner", function($window, $http, $cookies) {
 	return {
 		restrict: 'E',
 		replace: true,
@@ -23,6 +23,7 @@ EasyAssess.app.directive("esAppBanner", function($window, $http) {
 		controller: ["$scope", function($scope, $element, $attrs){
 			$scope.logoff = function () {
 				$http.get(EasyAssess.activeEnv.pdm() + "user/session/logoff").success(function () {
+					$cookies.remove("SESSION");
 					$window.location.reload();
 				});
 			}

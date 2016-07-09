@@ -44,6 +44,8 @@ require('./directives/charts/easyassess.chart.doughnut');
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);
 
 app.controller("esApplicationController", function ($scope, $http, $cookies,$state) {
+    $cookies.remove("SESSION");
+
     $scope.input = {
         username: '',
         password: ''
