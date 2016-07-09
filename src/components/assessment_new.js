@@ -69,6 +69,28 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             );
         });
 
+        $scope.validatePageOne = function() {
+            if (!$scope.emptyModel.name
+                || !$scope.emptyModel.template
+                || !$scope.emptyModel.startDate
+                || !$scope.emptyModel.endDate) {
+                return "所有字段必须填写";
+            }
+            return true;
+        }
+
+        $scope.validatePageTwo = function() {
+            if (Object.getOwnPropertyNames($scope.emptyModel.participants).length > 0) return true;
+            return "至少选择一个参与考评的单位";
+        }
+
+        $scope.validatePageThree = function() {
+            if ($('.btn-danger').length > 0) {
+                return "请输入盲样码";
+            }
+            return true;
+        }
+
         function _updateChild(item) {
             if (item.ministries.length > 0) {
                 var newState = item.selected;

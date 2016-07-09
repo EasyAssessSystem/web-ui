@@ -1,7 +1,7 @@
 <div>
     <es-spinner ng-if="isLoading"></es-spinner>
-    <es-app-wizard ng-if="!isLoading">
-        <es-app-wizard-content>
+    <es-app-wizard ng-if="!isLoading" es-confirm-message="考评提交后将无法修改,请仔细核实提交的数据.是否确定提交?">
+        <es-app-wizard-content es-step-validator="validatePageOne()">
             <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称"
                             es-label="考评名"></es-app-textbox>
             <es-app-lookup es-service="assess" es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </es-app-wizard-content>
-        <es-app-wizard-content>
+        <es-app-wizard-content es-step-validator="validatePageTwo()">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <p>请选择考评机构:</p>
@@ -75,7 +75,7 @@
                 </div>
             </div>
         </es-app-wizard-content>
-        <es-app-wizard-content>
+        <es-app-wizard-content es-step-validator="validatePageThree()">
             <div>
                 <div ng-if="!selectedTemplate">没有选择测试模版</div>
                 <div ng-if="selectedTemplate">

@@ -23,16 +23,23 @@ EasyAssess.directives["esAppTextbox"]
 		},
 		link:function(scope,elem){
 			if(scope.esValidate){
-				elem.find('input').on('blur',function(){
+				function validate() {
 					scope.esValidate.validateResult = scope.esValidate.validateMethod(scope.esModel);
 					scope.error = 'none';
 					if(!scope.esValidate.validateResult){
 						scope.error='has-error';
 					}
-					scope.$apply();
-                    scope.$emit('$es-validated-changed');
-                });
+					//scope.$apply();
+					scope.$emit('$es-validated-changed');
+				}
 
+				elem.find('input').on('blur',function(){
+					validate();
+                })
+
+				scope.$on('$validate', function() {
+					validate();
+				});
 			}
 
 		},

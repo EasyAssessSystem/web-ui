@@ -64,6 +64,16 @@
 	font-family:宋体,arial,sans-serif;
 }
 
+.es-error-message, .es-info-message {
+	font-size: 14px;
+	font-weight: bold;
+	font-family:宋体,arial,sans-serif;
+}
+
+.es-error-message {
+	color: #a94442;
+}
+
 /** ES form group **/
 .es-form-group {
 	
