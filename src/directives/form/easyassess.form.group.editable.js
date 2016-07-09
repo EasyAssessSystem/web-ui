@@ -12,7 +12,7 @@ EasyAssess.directives["esFormGroupEdit"]
         transclude: false,
         template:'<div class="es-form-group">'
         +	 '<table class="table table-striped">'
-        + 	'<thead><tr><th style="width:20%;">检测分类</th><th style="width:40%;">样本</th><!--th style="width:40%;">编码组</th>--></tr></thead>'
+        + 	'<thead><tr><th style="width:15%;">检测分类</th><th style="width:45%;">样本</th><!--th style="width:40%;">编码组</th>--></tr></thead>'
         +     '<tbody>'
         +			'<tr>'
         +				'<td>'

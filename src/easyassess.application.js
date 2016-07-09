@@ -3,7 +3,6 @@ var router = require('angular-ui-router');
 
 require('./components/assessment.html');
 require('./components/user.html');
-require('./components/cdc.html');
 require('./components/role.html');
 require('./components/health_ministry.html');
 require('./components/assay_category.html');

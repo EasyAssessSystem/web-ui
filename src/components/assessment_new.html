@@ -49,7 +49,7 @@
                             </span>
                                     </td>
                                     <td>
-                                        <input type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
+                                        <input ng-if="item.id != currentMinistryId" type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
                                     </td>
                                     <td style="width: 100%;">{{item.name}}</td>
                                     </td>

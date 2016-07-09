@@ -22,6 +22,8 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         $scope.emptyModel.endDate = null;
         $scope.hideStart = true;
         $scope.hideEnd = true;
+        $scope.currentMinistryId = EasyAssess.session.currentUser.ministries.length > 0
+                                            ? EasyAssess.session.currentUser.ministries[0].id : -1;
         $scope.closeStartPop = function () {
             $scope.hideStart = true;
         };
@@ -42,7 +44,6 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             function pad(n) {
                 return n < 10 ? '0' + n : n;
             }
-
             return date && date.getFullYear()
                 + '-' + pad(date.getMonth() + 1)
                 + '-' + pad(date.getDate());
@@ -50,13 +51,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
 
         $scope.chooseItem = function (item) {
-            //update child
             _updateChild(item);
-
-            // update parent
-            // _updateParent(item);
-
-            //update the model
             $scope.emptyModel.participants = {};
             _updateEmptyModel($scope.list);
         };
@@ -81,7 +76,6 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                     eachMinistry.selected = newState;
                     _updateChild(eachMinistry);
                 })
-
             }
         }
 
@@ -95,7 +89,6 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                 parentMinistry.selected = parentState;
                 _updateParent(parentMinistry);
             }
-
         }
 
         function _searchParent(id, nodes) {
@@ -128,7 +121,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
         $scope.isLoading = true;
 
-        esRequestService.esGet(EasyAssess.activeEnv.pdm() + "ministry/list/unassigned?page=0&size=99").then(
+        esRequestService.esGet(EasyAssess.activeEnv.pdm() + "ministry/list/affiliated?page=0&size=99").then(
             function (response) {
                 $scope.isLoading = false;
                 $scope.list = response.data.content;
