@@ -1,0 +1,8 @@
+<div ui-view>
+    <div ng-if="!activeModel">
+        <es-app-datagrid es-service="assess" es-resource="form/activated" es-columns="fields" es-options="options"></es-app-datagrid>
+    </div>
+    <div ng-if="activeModel">
+        <es-form-submit es-form="activeModel"></es-form-submit>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.MyAssessmentDoneController = function($scope, esRequestService) {
+EasyAssess.app.ClosedFormController = function($scope, esRequestService) {
     this.initialize.apply(this, arguments);
 };
 
-EasyAssess.app.MyAssessmentDoneController .prototype = EasyAssess.extend({
+EasyAssess.app.ClosedFormController .prototype = EasyAssess.extend({
     _initialize: function($scope) {
         $scope.loading = false;
         $scope.activeModel = null;
@@ -26,4 +26,4 @@ EasyAssess.app.MyAssessmentDoneController .prototype = EasyAssess.extend({
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 
-EasyAssess.app.registerController("myassessment_doneController", EasyAssess.app.MyAssessmentDoneController);
+EasyAssess.app.registerController("closed_formController", EasyAssess.app.ClosedFormController);

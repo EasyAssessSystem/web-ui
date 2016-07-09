@@ -11,12 +11,8 @@ require('./components/assay_code.html');
 require('./components/template.html');
 require('./components/assessment_detail.html');
 require('./components/assessment_new.html');
-require('./components/myassessment.html');
-require('./components/myassessment_done.html');
-require('./components/myassessment_progress.html');
-require('./components/answer.html');
-
-
+require('./components/closed_form.html');
+require('./components/activated_form.html');
 
 /**
  * Created by alexli on 2016/4/3.

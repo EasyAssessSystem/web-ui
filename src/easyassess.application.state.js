@@ -10,12 +10,8 @@ require("./components/assessment_new");
 require("./components/assessment_detail");
 require("./components/assay_code");
 require("./components/assay_category");
-require('./components/myassessment');
-require("./components/myassessment_progress");
-require("./components/myassessment_done");
-require("./components/answer");
-
-
+require("./components/activated_form");
+require("./components/closed_form");
 
 EasyAssess.app.stateProvider.state('user', {
     url:"/user",
@@ -84,28 +80,15 @@ EasyAssess.app.stateProvider.state('assessment.new', {
     controller: "assessment_newController"
 });
 
-EasyAssess.app.stateProvider.state('myassessment', {
-    url:"/myassessment",
-    templateUrl: 'myassessment.html',
-    controller:  "myassessmentController"
+EasyAssess.app.stateProvider.state('activated_form', {
+    url:"/activated",
+    templateUrl:  'activated_form.html',
+    controller: "activated_formController"
 });
 
-EasyAssess.app.stateProvider.state('myassessment.progress', {
-    url:"/progress",
-    templateUrl:  'myassessment_progress.html',
-    controller: "myassessment_progressController",
-    data:{detail:{}}
-});
-
-EasyAssess.app.stateProvider.state('myassessment.progress.answer', {
-    url:"/answer",
-    templateUrl:  'answer.html',
-    controller: "assessmentAnswerController"
-});
-
-EasyAssess.app.stateProvider.state('myassessment.done', {
-    url:"/done",
-    templateUrl:  'myassessment_done.html',
-    controller: "myassessment_doneController"
+EasyAssess.app.stateProvider.state('closed_form', {
+    url:"/closed",
+    templateUrl:  'closed_form.html',
+    controller: "closed_formController"
 });
 

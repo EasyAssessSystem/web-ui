@@ -26,7 +26,6 @@ EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
             [28, 48, 40, 19, 86, 27, 90]
         ];
 
-       // $scope.itemId = "";
         $scope.goback = function(){
             $scope.activeModel = null;
         };

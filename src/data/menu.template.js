@@ -55,11 +55,11 @@ var MenuTemplate = {
           items:[
               {
                 text:"我的考评",
-                link:"myassessment.progress"
+                link:"activated_form"
               },
               {
                 text:"考评历史",
-                link:"myassessment.done"
+                link:"closed_form"
               }
           ]
         },
