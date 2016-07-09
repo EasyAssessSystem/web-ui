@@ -5,12 +5,7 @@ EasyAssess.app.AssessmentAnswerController = function($scope,$state,esRequestServ
 
 EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
     initialize: function($scope,$state,esRequestService) {
-
         $scope.assessment = $state.current.data.detail;
-
-
-
-
 
         var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.assessment.securedAssessment.templateGuid;
         esRequestService.esGet(url).then(function(data){
@@ -20,7 +15,6 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
 
         $scope.helpData = $scope.assessment.securedAssessment.id;
 
-
         $scope.answer = {
             values:[]
         };
@@ -29,7 +23,6 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
             var url = EasyAssess.activeEnv['assess']() + 'form/values/' + $scope.assessment.id;
             esRequestService.esPut(url,$scope.answer.values).then(function(res){
             });
-
         }
 
         $scope.$on('removeSpecimen',function(e,data){
@@ -40,11 +33,9 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
             updateTheValueList(data);
         });
 
-
         function updateTheValueList(data){
             var updateCode = $scope.answer.values.find(function(item){
                 return (item.subjectGuid === data.subjectGuid) && (item.specimenCode === data.specimenCode);
-
             });
 
             if (updateCode){
@@ -52,23 +43,13 @@ EasyAssess.app.AssessmentAnswerController .prototype = EasyAssess.extend({
             }else{
                 $scope.answer.values.push(data);
             }
-
         }
 
-
-
         function removeFromList(data){
-            console.log(data);
-
             $scope.answer.values = $scope.answer.values.filter(function(item){
                 return item.specimenCode != data;
             });
-
-
         }
-
-
-
     }
 }, {});
 

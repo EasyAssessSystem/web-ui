@@ -28,10 +28,10 @@ EasyAssess.directives["esFormResult"]
                             +				'<td>'
                             +					'<table>'
                             +						'<tr>'
-                            +							'<td class="es-form-group-cell" ng-repeat="s_col in group.specimens"><span class="es-form-group-title">{{s_col.number}}</span></td>'
+                            +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span class="es-form-group-title">{{specimen.number}}</span></td>'
                             +						'</tr>'
                             +						'<tr ng-repeat="row in group.rows">'
-                            +							'<td class="es-form-group-cell" ng-repeat="s_col in group.specimens"></td>'
+                            +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span ng-bind="getValue(row, specimen)"></span></td>'
                             +						'</tr>'
                             +					'</table>'
                             +				'</td>'
@@ -47,6 +47,15 @@ EasyAssess.directives["esFormResult"]
         },
 
         controller: ["$scope", function($scope, $element, $attrs){
+            $scope.valuesMap = {};
+
+            $scope.esForm.values.forEach(function(value) {
+                $scope.valuesMap[value.subjectGuid + "+" + value.specimenGuid] = value.value;
+            });
+
+            $scope.getValue = function(row, specimen) {
+                return $scope.valuesMap[row.guid + "+" + specimen.guid];
+            }
 
         }]
     }

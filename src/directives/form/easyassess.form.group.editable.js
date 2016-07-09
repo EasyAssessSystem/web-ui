@@ -44,14 +44,9 @@ EasyAssess.directives["esFormGroupEdit"]
         },
 
         controller: ["$scope", function($scope, $element, $attrs){
-            //edit("Hello");
-
             $scope.specimens = [
 
             ];
-
-
-
 
             $scope.getOptions = function(row,specimen){
                 var foundItem = specimen.subjects.find(function(subject){
@@ -64,8 +59,6 @@ EasyAssess.directives["esFormGroupEdit"]
 
                 return result;
             };
-
-
 
             $scope.isInput = function(subject,specimen){
                 var answserItem = specimen.subjects.find(function(item){
@@ -91,7 +84,6 @@ EasyAssess.directives["esFormGroupEdit"]
                 return result;
             };
 
-
             $scope.removeColumn = function(specimen) {
                 $scope.specimens.pop(specimen);
                 $scope.$emit('removeSpecimen',specimen.specimenCode);
@@ -107,9 +99,6 @@ EasyAssess.directives["esFormGroupEdit"]
 
                 $scope.$emit('valueChanged',value);
             }
-
-
-
         }],
         link: function($scope, ele, attrs, ctrl) {
             var btnAddSpecimen = $(ele).find('[es-ids=addSpecimen]');
@@ -125,24 +114,15 @@ EasyAssess.directives["esFormGroupEdit"]
                         $dialog.submit = function(){
                             var field = $("[es-ids=txtSpecimenNumber]").val();
                             // send the request to backend to get the options map:
-
                             var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
                             esRequestService.esGet(url).then(function(res){
                                 if(res.data.length >0){
-                                    _updateSpecimanList(res.data,field);
+                                    _updateSpecimanList(res.data, field);
                                 }
                             });
-
-                            //$scope.specimens.push(field);
-                            //
-                            //
-                            //console.log($scope.specimens);
                             $dialog.closeThisDialog();
                         }
-                    }],
-                    preCloseCallback: function() {
-
-                    }
+                    }]
                 });
             });
 
@@ -154,12 +134,11 @@ EasyAssess.directives["esFormGroupEdit"]
 
                 angular.forEach($scope.esGroup.rows,function(item){
                     if(data in item.optionMap){
-                        speciman.subjects.push({guid:item.guid,optionValues:item.optionMap[data].optionValues})
+                        speciman.subjects.push({guid:item.guid, optionValues:item.optionMap[data].optionValues})
                     }
                 });
 
                 $scope.specimens.push(speciman);
-                console.log($scope.specimens);
             }
 
         }
