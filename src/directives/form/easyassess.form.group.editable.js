@@ -12,7 +12,7 @@ EasyAssess.directives["esFormGroupEdit"]
         transclude: false,
         template:'<div class="es-form-group">'
         +	 '<table class="table table-striped">'
-        + 	'<thead><tr><th style="width:15%;">检测分类</th><th style="width:45%;">样本</th><!--th style="width:40%;">编码组</th>--></tr></thead>'
+        + 	'<thead><tr><th style="width:15%;">检测分类</th><th style="width:45%;">样本</th><th style="width:40%;">编码组</th></tr></thead>'
         +     '<tbody>'
         +			'<tr>'
         +				'<td>'
@@ -20,7 +20,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'<tr>'
         +							'<td class="es-form-group-cell" valign="middle"></td>'
         +						'</tr>'
-        +						'<tr ng-repeat="row in esGroup.rows">'
+        +						'<tr ng-repeat="row in esGroup.rows" style="height: 46px;">'
         +							'<td class="es-form-group-cell" valign="middle"><div>{{row.item.subject}} - {{row.item.unit}} </div></td>'
         +						'</tr>'
         +					'</table>'
@@ -30,8 +30,20 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'<tr>'
         +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><table><tr><td><span class="es-form-group-title">{{s_col.specimenCode}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col)"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
         +						'</tr>'
-        +						'<tr ng-repeat="row in esGroup.rows">'
+        +						'<tr ng-repeat="row in esGroup.rows" style="height: 46px;">'
         +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><div ng-show="{{isInput(row,s_col).show}}"><div ng-show="{{isInput(row,s_col).input}}"><input type="text" class="form-control es-form-group-contorl" ng-blur="valueChanged(row,s_col,$event)" ></div><div ng-show="{{isInput(row,s_col).select}}"><select class="form-control es-form-group-contorl" ng-blur="valueChanged(row,s_col,$event)"><option value=""></option><option ng-repeat="option in getOptions(row,s_col)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
+        +						'</tr>'
+        +					'</table>'
+        +				'</td>'
+        +  			    '<td>'
+        +					'<table>'
+        +						'<tr>'
+        +							'<td class="es-form-group-cell" ng-repeat="group in codeGroups"><table><tr><td><span class="es-form-group-title">{{group.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeCode($index)"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" ng-click="addGroup()" es-text="编码" title="添加编码组"></es-add-button></td>'
+        +						'</tr>'
+        +						'<tr ng-repeat="row in esGroup.rows">'
+        +							'<td class="es-form-group-cell" ng-repeat="group in codeGroups">'
+        +                               '<es-app-lookup es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="{{row.guid}}Lookup" es-value-field="codeNumber"></es-app-lookup>'
+        +                           '</td>'
         +						'</tr>'
         +					'</table>'
         +				'</td>'
@@ -47,6 +59,14 @@ EasyAssess.directives["esFormGroupEdit"]
             $scope.specimens = [
 
             ];
+
+            $scope.codeFields = [
+                {title:"代码", field:"codeNumber", type:"string",searchable:true,default:true},
+                {title:"名称", field:"name", type:"string",searchable:true,default:false},
+                {title:"代码组", field:"groupName", type:"string",searchable:true, cascadeField:"group.name"}
+            ];
+
+            $scope.codeGroups = [];
 
             $scope.getOptions = function(row,specimen){
                 var foundItem = specimen.subjects.find(function(subject){
@@ -98,6 +118,33 @@ EasyAssess.directives["esFormGroupEdit"]
                 };
 
                 $scope.$emit('valueChanged',value);
+            }
+
+            $scope.removeCode = function(idx) {
+                $scope.codeGroups.splice(idx, 1);
+            }
+
+            $scope.addGroup = function() {
+                ngDialog.open({
+                    template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><es-app-lookup es-label="代码组" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup></div>'
+                             +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+                    plain: true,
+                    scope: $scope,
+                    controller: ['$scope', function($dialog) {
+                        $dialog.groupFields = [
+                            {title:"名称", field:"name", type:"string",searchable:true,default:true}
+                        ];
+                        $dialog.$on('$groupLookup_selected', function(e, model){
+                            $dialog.codeGroup = model;
+                        });
+                        $dialog.submit = function(){
+                            if ($dialog.codeGroup) {
+                                $scope.codeGroups.push($dialog.codeGroup);
+                            }
+                            $dialog.closeThisDialog();
+                        }
+                    }]
+                });
             }
         }],
         link: function($scope, ele, attrs, ctrl) {

@@ -36,8 +36,8 @@ EasyAssess.directives["esFormSubmit"]
             };
 
             $scope.save = function(){
-                var url = EasyAssess.activeEnv['assess']() + 'form/values/' + $scope.esForm.id;
-                esRequestService.esPut(url,$scope.answer.values).then(function(res){
+                var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
+                esRequestService.esPut(url, {"values":$scope.answer.values,"codes":[]}).then(function(res){
                 });
             }
 

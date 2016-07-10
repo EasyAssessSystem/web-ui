@@ -13,13 +13,11 @@ EasyAssess.app.AssayCodeController.prototype = EasyAssess.extend({
 		];
 
 		$scope.groupFields = [
-			{title:"名称", field:"name", type:"string",searchable:true,default:true},
-			{title:"状态", field:"status", type:"string",searchable:false}
+			{title:"名称", field:"name", type:"string",searchable:true,default:true}
 		];
 
 		$scope.categoryFields = [
-			{title:"名称", field:"name", type:"string",searchable:true,default:true},
-			{title:"状态", field:"status", type:"string",searchable:false}
+			{title:"名称", field:"name", type:"string",searchable:true,default:true}
 		];
 
 		$scope.validations = {

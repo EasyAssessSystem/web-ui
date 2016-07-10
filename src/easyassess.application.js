@@ -360,6 +360,12 @@ EasyAssess.app.MaintenanceController.prototype = {
 			}
 		});
 
+		$scope.$on('$preLookup', (function(condition){
+		}).bind(this));
+
+		$scope.$on('$postLookup', (function(rows){
+		}).bind(this));
+
     	$scope.$on('$selected', (function(e, model){
 			if (this._preSelect) {
 				if (!this._preSelect(model)) {

@@ -19,6 +19,7 @@ EasyAssess.directives["esAppDatagrid"]
                 + '<td ng-repeat="column in esColumns"><div ng-if="column.template"><span data-btn="1" type="button" class="btn btn-default" ng-click="clickBtn()">{{column.text}}</span></div><span ng-if="!column.template" ng-bind="rec.{{column.field}}"></span></td>'
                 + '</tr>'
                 + '</table>'
+                + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">没有匹配的记录</div>'
                 + '<div ng-show="pagination.length">'
                 + '<ul class="pagination pagination-sm">'
                 + '<li><a ng-click="first()" href="javascript:void(0)"><span class="glyphicon glyphicon-backward"></span></a></li>'
@@ -62,6 +63,7 @@ EasyAssess.directives["esAppDatagrid"]
             $scope.pageNum = 1;
             $scope.jump = function (pageNum) {
                 $scope.pageNum = pageNum;
+                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
                 _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
             };
 
@@ -109,6 +111,7 @@ EasyAssess.directives["esAppDatagrid"]
                 }).then(function (result) {
                     $scope.isLoading = false;
                     if (result.data.content.length > 0) {
+                        $scope.$emit('$' + $scope.esId + 'postLookup', result.data.content);
                         $scope.esData = $scope.esTransfer()(result.data.content);
                         $scope.pagination = [];
                         pageCount = result.data.totalPages;
@@ -143,7 +146,6 @@ EasyAssess.directives["esAppDatagrid"]
                 }).then(function (error) {
                     if (error) {
                         $scope.isLoading = false;
-                        console.log('fetching data error');
                     }
                 });
             }
@@ -166,10 +168,12 @@ EasyAssess.directives["esAppDatagrid"]
             $scope.$on('$onSearch', function (e, condition) {
                 conditions = condition;
                 $scope.pageNum = 1;
+                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
                 _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
             });
 
             $scope.$on('$' + $scope.esId + 'refresh', function () {
+                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
                 _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
             });
 

@@ -7,7 +7,6 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		$scope.fields = [
 			{title:"名称", field:"name", type:"string",searchable:true,default:true},
-			{title:"状态", field:"status", type:"string",searchable:false},
 			{title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
 		];
 

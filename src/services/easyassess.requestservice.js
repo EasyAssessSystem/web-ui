@@ -88,9 +88,9 @@ EasyAssess.services['esRequestSerivce'] =
             return def.promise;
         }
 
-        function deleteRequest(url, data) {
+        function deleteRequest(url) {
             var def = $q.defer();
-            $http.delete(url, data, {withCredentials: true})
+            $http.delete(url, {withCredentials: true})
                 .success(function (data) {
                     if (data.result == "FAILED") {
                         if (data.messages[0].message == "503") {
