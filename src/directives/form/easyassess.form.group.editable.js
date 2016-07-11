@@ -153,21 +153,35 @@ EasyAssess.directives["esFormGroupEdit"]
             // add specimen
             btnAddSpecimen.on("click", function() {
                 ngDialog.open({
-                    template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" placeholder="请输入样本编号" es-ids="txtSpecimenNumber"/></div>'
+                    template: '<div class="es-dialog-content"><div class="es-dialog-form-line" ng-class="error.flag ? \'has-error\' :\'\' "><input class="form-control" placeholder="请输入样本编号" es-ids="txtSpecimenNumber"/><div ng-if="error.flag" style="color: #a94442"><span>{{error.msg}}</span></div></div>'
                     +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
                     plain: true,
                     scope: $scope,
                     controller: ['$scope','esRequestService',function($dialog,esRequestService) {
+                        $scope.error = {
+                            flag:false,
+                            msg:""
+                        };
                         $dialog.submit = function(){
                             var field = $("[es-ids=txtSpecimenNumber]").val();
                             // send the request to backend to get the options map:
-                            var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
-                            esRequestService.esGet(url).then(function(res){
-                                if(res.data.length >0){
-                                    _updateSpecimanList(res.data, field);
-                                }
-                            });
-                            $dialog.closeThisDialog();
+
+                            if(_verifyDuplicateValue(field)){
+                                var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
+                                esRequestService.esGet(url).then(function(res){
+                                    if(res.data.length >0){
+                                        _updateSpecimanList(res.data, field);
+                                        $dialog.closeThisDialog();
+
+                                    }else{
+                                        $scope.error = {
+                                            flag:true,
+                                            msg:"请输入有效的样本码!"
+                                        };
+                                    }
+                                });
+                            }
+
                         }
                     }]
                 });
@@ -186,6 +200,20 @@ EasyAssess.directives["esFormGroupEdit"]
                 });
 
                 $scope.specimens.push(speciman);
+            }
+
+            function  _verifyDuplicateValue(field){
+                var result = true
+                angular.forEach($scope.specimens,function(sepcimen){
+                   if(field == sepcimen.specimenCode){
+                       $scope.error = {
+                           flag:true,
+                           msg:"请勿重复输入!"
+                       };
+                       result = false
+                   }
+                });
+                return result;
             }
 
         }
