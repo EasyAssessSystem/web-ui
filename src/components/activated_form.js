@@ -12,6 +12,10 @@ EasyAssess.app.ActivatedFormController .prototype = EasyAssess.extend({
             {title:"结束时间",field:"securedAssessment.endDate",searchable:false,default:false},
             {title:"考评发起单位", field:"securedAssessment.ownerName", type:"string",searchable:false,default:false}
         ];
+
+        $scope.$on('submitted',function(){
+            $scope.activeModel = null;
+        })
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 

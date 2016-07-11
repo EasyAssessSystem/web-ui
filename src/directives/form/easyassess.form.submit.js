@@ -1,7 +1,7 @@
 var EasyAssess = require('../../easyassess.application');
 
 EasyAssess.directives["esFormSubmit"]
-    = EasyAssess.app.directive("esFormSubmit", function (esRequestService) {
+    = EasyAssess.app.directive("esFormSubmit", function (esRequestService,ngDialog) {
     return {
         restrict: 'E',
         replace: true,
@@ -23,7 +23,7 @@ EasyAssess.directives["esFormSubmit"]
             esForm: "="
         },
 
-        controller: ["$scope", function($scope){
+        controller: ["$scope","ngDialog", function($scope,ngDialog){
             var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.esForm.securedAssessment.templateGuid;
             esRequestService.esGet(url).then(function(data){
                 $scope.template = data.data;
@@ -36,10 +36,20 @@ EasyAssess.directives["esFormSubmit"]
             };
 
             $scope.save = function(){
-                var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
-                esRequestService.esPut(url, {"values":$scope.answer.values,"codes":[]}).then(function(res){
-                });
-            }
+                ngDialog.openConfirm({
+                    template:   '<div class="ngdialog-message">答案一旦提交无法修改,是否确定提交?</div>'
+                    + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                    plain: true
+                }).then(
+                    function(){
+                        var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
+                        esRequestService.esPut(url, {"values":$scope.answer.values,"codes":[]}).then(function(res){
+                            $scope.$emit('submitted');
+                        });
+                    }
+                );
+
+            };
 
             $scope.$on('removeSpecimen',function(e,data){
                 removeFromList(data);
