@@ -32,7 +32,8 @@ EasyAssess.directives["esFormSubmit"]
             $scope.helpData = $scope.esForm.securedAssessment.id;
 
             $scope.answer = {
-                values:[]
+                values:[],
+                codes:[]
             };
 
             $scope.save = function(){
@@ -51,8 +52,22 @@ EasyAssess.directives["esFormSubmit"]
 
             };
 
+
+            $scope.$on('$codeItemLookup_selected',function(e,data){
+                console.log(e.targetScope.esSubjectGuid);
+                console.log(e.targetScope.esCodeGuid);
+                console.log(data);
+
+                //addCodeIntoList(e,data);
+            });
+
             $scope.$on('removeSpecimen',function(e,data){
                 removeFromList(data);
+            });
+
+
+            $scope.$on("$rowguidLookup_selected",function(e,data){
+                console.log(data);
             });
 
             $scope.$on('valueChanged',function(e,data){
@@ -75,6 +90,26 @@ EasyAssess.directives["esFormSubmit"]
                 $scope.answer.values = $scope.answer.values.filter(function(item){
                     return item.specimenCode != data;
                 });
+            }
+
+            function addCodeIntoList(e,data){
+                var codeItem = {
+                    subjectGuid: e.targetScope.esRowGuid,
+                    codeNumber:data.codeNumber,
+                    codeName:data.name,
+                    codeGroupName:data.group.name,
+                    codeGroupId:data.groud.id
+                }
+
+                var updatedItem = $scope.answer.codes.find(function(item){
+                    return (item.subjectGuid  == codeItem.subjectGuid) && (item.codeGroupId == codeItem.codeGroupId)
+                })
+
+                if(updatedItem){
+                    updatedItem = codeItem
+                }else{
+
+                }
             }
         }]
     }

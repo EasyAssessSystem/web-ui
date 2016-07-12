@@ -42,7 +42,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
         +							'<td class="es-form-group-cell" ng-repeat="group in codeGroups">'
-        +                               '<es-app-lookup es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="{{row.guid}}Lookup" es-value-field="codeNumber"></es-app-lookup>'
+        +                               '<es-app-lookup es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject-guid ="{{row.guid}}" es-code-guid="{{Math.random(1000)}}" es-value-field="codeNumber"></es-app-lookup>'
         +                           '</td>'
         +						'</tr>'
         +					'</table>'
@@ -63,10 +63,21 @@ EasyAssess.directives["esFormGroupEdit"]
             $scope.codeFields = [
                 {title:"代码", field:"codeNumber", type:"string",searchable:true,default:true},
                 {title:"名称", field:"name", type:"string",searchable:true,default:false},
-                {title:"代码组", field:"groupName", type:"string",searchable:true, cascadeField:"group.name"}
+                {title:"代码组", field:"groupName", type:"string",searchable:true, default:false,cascadeField:"group.name"}
             ];
 
             $scope.codeGroups = [];
+
+
+            function createCodeGuid(){
+                return EasyAssess.utils.generateGUID()
+            }
+
+            $scope.codeGroups.forEach(function(code) {
+                code.guidCode = createCodeGuid();
+            });
+
+
 
             $scope.getOptions = function(row,specimen){
                 var foundItem = specimen.subjects.find(function(subject){
@@ -140,6 +151,7 @@ EasyAssess.directives["esFormGroupEdit"]
                         $dialog.submit = function(){
                             if ($dialog.codeGroup) {
                                 $scope.codeGroups.push($dialog.codeGroup);
+                                console.log('this is the codeGroups',$scope.codeGroups);
                             }
                             $dialog.closeThisDialog();
                         }
