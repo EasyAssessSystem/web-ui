@@ -243,6 +243,11 @@ EasyAssess.app.MaintenanceController.prototype = {
 			this[params[i]] = arguments[i];
 		}
 
+		this._statusMap = {
+			"A": "有效",
+			"U": "无效"
+		};
+
 		if (this._initialize) {
 			this._initialize.apply(this, arguments);
 		}
@@ -360,10 +365,22 @@ EasyAssess.app.MaintenanceController.prototype = {
 			}
 		});
 
-		$scope.$on('$preLookup', (function(condition){
+		$scope.$on('$preLookup', (function(e, condition){
+			if (this._statusMap && condition.by == "status" && condition.keyword) {
+				for (var key in this._statusMap) {
+					if (this._statusMap[key].indexOf(condition.keyword) == 0) {
+						condition.keyword = key;
+					}
+				}
+			}
 		}).bind(this));
 
-		$scope.$on('$postLookup', (function(rows){
+		$scope.$on('$postLookup', (function(e, rows){
+			rows.map((function(row){
+				if (row.status && this._statusMap) {
+					row.status = this._statusMap[row.status];
+				}
+			}).bind(this));
 		}).bind(this));
 
     	$scope.$on('$selected', (function(e, model){

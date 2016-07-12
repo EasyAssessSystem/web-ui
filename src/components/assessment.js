@@ -13,6 +13,12 @@ EasyAssess.app.AssessmentController .prototype = EasyAssess.extend({
             {title:"状态", field:"status", type:"string",searchable:true,default:false},
             {title:"操作",field:"actions",type:"string",searchable:false,default:false,template:true,text:"完成考评"}
         ];
+
+        this._statusMap = {
+            "A": "进行中",
+            "F": "已完成"
+        };
+
         $scope.data = [300, 500, 100];
         $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
 

@@ -13,6 +13,12 @@ EasyAssess.app.ActivatedFormController .prototype = EasyAssess.extend({
             {title:"考评发起单位", field:"securedAssessment.ownerName", type:"string",searchable:false,default:false}
         ];
 
+        this._statusMap = {
+            "A": "未完成",
+            "C": "评审中",
+            "F": "已公布"
+        };
+
         $scope.$on('submitted',function(){
             $scope.activeModel = null;
         })

@@ -9,10 +9,17 @@ EasyAssess.app.ClosedFormController .prototype = EasyAssess.extend({
         $scope.activeModel = null;
         $scope.fields = [
             {title:"考评名称", field:"formName", type:"string",searchable:true,default:true},
+            {title:"状态",field:"status",type:"string",searchable:false,default:false},
             {title:"提交日期", field:"submitDate", type:"string",searchable:false,default:false},
             {title:"分数", field:"totalScore", type:"string",searchable:false,default:false},
             {title:"考评发起单位", field:"securedAssessment.ownerName", type:"string",searchable:false,default:false},
         ];
+
+        this._statusMap = {
+            "A": "未完成",
+            "C": "评审中",
+            "F": "已公布"
+        };
     },
 
     _postSelect: function(model) {

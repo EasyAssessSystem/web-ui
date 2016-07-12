@@ -15,7 +15,7 @@ EasyAssess.directives["esAppDatagrid"]
                 + '<th ng-repeat="column in esColumns" style="cursor:pointer;"><span ng-bind="column.title"></span></th>'
                 + '</tr></thead>'
                 + '<tr ng-show="isLoading" style="padding:20px 20px 20px 20px;"><td colspan="{{esColumns.length}}"><es-spinner></es-spinner></td></tr>'
-                + '<tr ng-hide="isLoading" ng-click="select(rec,$event)" ng-repeat="rec in esData" style="cursor:pointer;">'
+                + '<tr ng-hide="isLoading" ng-click="select($index, rec, $event)" ng-repeat="rec in esData" style="cursor:pointer;">'
                 + '<td ng-repeat="column in esColumns"><div ng-if="column.template"><span data-btn="1" type="button" class="btn btn-default" ng-click="clickBtn()">{{column.text}}</span></div><span ng-if="!column.template" ng-bind="rec.{{column.field}}"></span></td>'
                 + '</tr>'
                 + '</table>'
@@ -42,10 +42,15 @@ EasyAssess.directives["esAppDatagrid"]
             esQuery: "@",
             esId: "@",
             esService:"@",
+            esFormatters: "=?"
         },
         controller: ["$scope", function ($scope, $element, $attrs) {
             if (!$scope.esPageSize) {
                 $scope.esPageSize = 5;
+            }
+
+            if ($scope.esFormatters) {
+                $scope.esFormatters = {};
             }
 
             if (!$scope.esService) {
@@ -111,8 +116,9 @@ EasyAssess.directives["esAppDatagrid"]
                 }).then(function (result) {
                     $scope.isLoading = false;
                     if (result.data.content.length > 0) {
-                        $scope.$emit('$' + $scope.esId + 'postLookup', result.data.content);
-                        $scope.esData = $scope.esTransfer()(result.data.content);
+                        $scope.esData = angular.copy(result.data, {}).content;
+                        $scope.originalData =  result.data.content;
+                        $scope.$emit('$' + $scope.esId + 'postLookup', $scope.esData);
                         $scope.pagination = [];
                         pageCount = result.data.totalPages;
                         if (!pageCount) pageCount = 1;
@@ -158,11 +164,11 @@ EasyAssess.directives["esAppDatagrid"]
                 $scope.esId = $scope.esId + "_";
             }
 
-            $scope.select = function (rowModel,$event) {
+            $scope.select = function ($index, rowModel, $event) {
                 if($event.target.getAttribute('data-btn') == 1){
                     return false;
                 }
-                $scope.$emit('$' + $scope.esId + 'selected', rowModel);
+                $scope.$emit('$' + $scope.esId + 'selected', $scope.originalData[$index]);
             };
 
             $scope.$on('$onSearch', function (e, condition) {
