@@ -121,13 +121,13 @@ EasyAssess.directives["esFormGroupEdit"]
             };
 
             $scope.valueChanged = function(row,specimen,e){
-                var filed = $(e.target).val();
+                var field = $(e.target).val();
                 var value = {
                     subjectGuid:row.guid,
                     specimenCode:specimen.specimenCode,
-                    value:filed
+                    value:field,
+                    valueType: ($(e.target).attr("type") == "text") ? "V" : "S"
                 };
-
                 $scope.$emit('valueChanged',value);
             }
 
