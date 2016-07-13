@@ -43,8 +43,15 @@ EasyAssess.directives["esFormSubmit"]
                     plain: true
                 }).then(
                     function(){
+
+                        angular.forEach($scope.rawCodeList,function(rawCode){
+                            delete rawCode['codeGuid']
+                        });
+
+                        $scope.answer.codes = $scope.rawCodeList;
+
                         var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
-                        esRequestService.esPut(url, {"values":$scope.answer.values,"codes":[]}).then(function(res){
+                        esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes}).then(function(res){
                             $scope.$emit('submitted');
                         });
                     }
@@ -52,13 +59,12 @@ EasyAssess.directives["esFormSubmit"]
 
             };
 
+            $scope.rawCodeList = [];
+
 
             $scope.$on('$codeItemLookup_selected',function(e,data){
-                console.log(e.targetScope.esSubjectGuid);
-                console.log(e.targetScope.esCodeGuid);
-                console.log(data);
+                addCodeIntoList(e.targetScope,data);
 
-                //addCodeIntoList(e,data);
             });
 
             $scope.$on('removeSpecimen',function(e,data){
@@ -92,23 +98,33 @@ EasyAssess.directives["esFormSubmit"]
                 });
             }
 
-            function addCodeIntoList(e,data){
+            function addCodeIntoList(t,data){
                 var codeItem = {
-                    subjectGuid: e.targetScope.esRowGuid,
+                    subject:{
+                        subject: t.esSubject.item.subject,
+                        unit: t.esSubject.item.unit
+                    },
+                    subjectGuid: t.esSubject.guid,
                     codeNumber:data.codeNumber,
                     codeName:data.name,
                     codeGroupName:data.group.name,
-                    codeGroupId:data.groud.id
-                }
+                    codeGroupId:data.group.id,
+                    codeGuid: t.esLookupGuid
+                };
 
-                var updatedItem = $scope.answer.codes.find(function(item){
-                    return (item.subjectGuid  == codeItem.subjectGuid) && (item.codeGroupId == codeItem.codeGroupId)
-                })
+                var updatedItem = $scope.rawCodeList.find(function(item){
+                    return item.codeGuid  == codeItem.codeGuid
+                });
 
                 if(updatedItem){
-                    updatedItem = codeItem
+                    updatedItem.subject = codeItem.subject;
+                    updatedItem.subjectGuid = codeItem.subjectGuid;
+                    updatedItem.codeNumber = codeItem.codeNumber;
+                    updatedItem.codeName = codeItem.codeName;
+                    updatedItem.codeGroupName = codeItem.codeGroupName;
+                    updatedItem.codeGroupId = codeItem.codeGroupId;
                 }else{
-
+                    $scope.rawCodeList.push(codeItem);
                 }
             }
         }]

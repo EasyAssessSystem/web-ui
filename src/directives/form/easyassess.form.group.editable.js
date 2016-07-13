@@ -42,7 +42,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
         +							'<td class="es-form-group-cell" ng-repeat="group in codeGroups">'
-        +                               '<es-app-lookup es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject-guid ="{{row.guid}}" es-code-guid="{{Math.random(1000)}}" es-value-field="codeNumber"></es-app-lookup>'
+        +                               '<es-app-lookup es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject ="row" es-value-field="codeNumber"></es-app-lookup>'
         +                           '</td>'
         +						'</tr>'
         +					'</table>'
@@ -67,16 +67,6 @@ EasyAssess.directives["esFormGroupEdit"]
             ];
 
             $scope.codeGroups = [];
-
-
-            function createCodeGuid(){
-                return EasyAssess.utils.generateGUID()
-            }
-
-            $scope.codeGroups.forEach(function(code) {
-                code.guidCode = createCodeGuid();
-            });
-
 
 
             $scope.getOptions = function(row,specimen){
