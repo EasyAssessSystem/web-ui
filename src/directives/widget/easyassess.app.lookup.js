@@ -56,10 +56,15 @@ EasyAssess.directives["esAppLookup"]
 			esReadonly:"=",
 			esQuery:"=?",
 			esService:"@",
-			esSubjectGuid:"@?",
-			esCodeGuid:"@?"
+			esSubject:"=?",
+			esLookupGuid:"@?"
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
+
+			if(!$scope.esLookupGuid){
+				$scope.esLookupGuid = EasyAssess.utils.generateGUID();
+			}
+
 			if (!$scope.esWidth) {
 				$scope.esWidth = 200;
 			}
