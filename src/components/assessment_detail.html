@@ -12,7 +12,7 @@
                     {{form.ownerName}}
                 </td>
                 <td>
-                    {{form.status}}
+                    {{form.status == "C" ? "已提交" : "未完成"}}
                 </td>
             </tr>
             </thead>

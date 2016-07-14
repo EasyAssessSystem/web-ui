@@ -16,7 +16,7 @@ EasyAssess.directives["esAppDatagrid"]
                 + '</tr></thead>'
                 + '<tr ng-show="isLoading" style="padding:20px 20px 20px 20px;"><td colspan="{{esColumns.length}}"><es-spinner></es-spinner></td></tr>'
                 + '<tr ng-hide="isLoading" ng-click="select($index, rec, $event)" ng-repeat="rec in esData" style="cursor:pointer;">'
-                + '<td ng-repeat="column in esColumns"><div ng-if="column.template"><span data-btn="1" type="button" class="btn btn-default" ng-click="clickBtn()">{{column.text}}</span></div><span ng-if="!column.template" ng-bind="rec.{{column.field}}"></span></td>'
+                + '<td ng-repeat="column in esColumns"><div ng-if="column.template"><span data-btn="1" type="button" class="btn btn-default" ng-click="clickBtn(rec)">{{column.text}}</span></div><span ng-if="!column.template" ng-bind="rec.{{column.field}}"></span></td>'
                 + '</tr>'
                 + '</table>'
                 + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">没有匹配的记录</div>'
@@ -80,8 +80,8 @@ EasyAssess.directives["esAppDatagrid"]
                 }
             }
 
-            $scope.clickBtn = function(){
-                $scope.$emit('$btnClick');
+            $scope.clickBtn = function(rec){
+                $scope.$emit('$btnClick', rec);
             };
 
             $scope.previous = function () {

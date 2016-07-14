@@ -1,6 +1,6 @@
 <div>
     <div ui-view>
-        <div>
+        <div ng-hide="doFinalize">
             <div class="ds-chart-group">
                 <div class="row" style="padding-bottom: 20px">
                     <div class="col-md-4">
@@ -34,7 +34,45 @@
                 </div>
             </div>
             <div class="ds-data-grid">
-                <es-app-datagrid es-service="assess" es-resource="assessment" es-columns="fields" es-options="options"></es-app-datagrid>
+                <es-app-datagrid es-service="assess" es-resource="assessment" es-columns="fields"
+                                 es-options="options"></es-app-datagrid>
+            </div>
+        </div>
+        <div ng-if="doFinalize">
+            <es-spinner ng-if="!template"></es-spinner>
+            <div ng-if="template">
+                <div><a href="javascript:void(0);" style="text-decoration: underline;padding-left: 5px;cursor: pointer;" ng-click="goback()">返回</a></div>
+                <div class="es-page-section" ng-repeat="group in template.groups">
+                    <div class="es-form-group">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>检测分类</th>
+                                <th>样本</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="es-form-group-cell" valign="middle">
+                                    <div ng-bind="group.name" class="es-form-group-text"></div>
+                                </td>
+                                <td valign="top" class="es-form-group-cell"
+                                    ng-repeat="specimen in group.specimens"><span
+                                        class="es-form-group-title">{{specimen.number}}</span></td>
+                            </tr>
+                            <tr ng-repeat="row in group.rows">
+                                <td class="es-form-group-cell" valign="middle">
+                                    <div>{{row.item.subject}} - {{row.item.unit}}</div>
+                                </td>
+                                <td valign="top" class="es-form-group-cell es-form-statistic-box"
+                                    ng-repeat="specimen in group.specimens">
+                                    <div ng-repeat="statistic in statisticValue(row, specimen)">{{statistic}}</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

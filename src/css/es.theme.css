@@ -80,7 +80,9 @@
 }
 
 .es-form-group-title {
-	font-size:11px;
+	font-size:14px;
+	font-style: italic;
+	font-weight: bold;
 	padding: 0 2px 0 2px;
 }
 
@@ -98,6 +100,9 @@
 	height: 25px;
 }
 
+.es-form-statistic-box {
+	border-bottom: 1px solid lightgray;
+}
 
 .es-dialog-content {
 	padding: 20px 20px 10px 20px;
