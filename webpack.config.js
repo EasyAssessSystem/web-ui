@@ -1,5 +1,4 @@
 var webpack = require('webpack');
-
 module.exports = {
   devtool: 'source-map',
   entry: {
@@ -7,11 +6,6 @@ module.exports = {
      'webpack-dev-server/client?http://localhost:8080',
      'webpack/hot/only-dev-server',
      './src/application.js'
-    ],
-    form:[
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/only-dev-server',
-      './src/formeditor.js'
     ]
   },
   output: {
@@ -30,6 +24,7 @@ module.exports = {
     hot: true
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin() // Wire in the hot loading plugin
+    new webpack.HotModuleReplacementPlugin(), // Wire in the hot loading plugin
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false, drop_console: true},mangle: false,sourceMap: false}),
   ]
 };
