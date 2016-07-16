@@ -1,4 +1,3 @@
-console.log('test webhook');
 var $ = require('jquery');
 window.$ = $;
 
