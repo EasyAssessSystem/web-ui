@@ -1,4 +1,4 @@
-var $ = require('jQuery');
+var $ = require('jquery');
 window.$ = $;
 
 var angular = require('angular');
