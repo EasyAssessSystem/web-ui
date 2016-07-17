@@ -34,6 +34,9 @@
                 </div>
             </div>
             <div class="ds-data-grid">
+                <script type="text/ng-template" id="assessment_button_column.html">
+                    <span style="width:100px;height:30px;" ng-if="getRecordModel(rec).status == 'A'" type="button" class="btn btn-default">完成考评</span>
+                </script>
                 <es-app-datagrid es-service="assess" es-resource="assessment" es-columns="fields"
                                  es-options="options"></es-app-datagrid>
             </div>

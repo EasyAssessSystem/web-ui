@@ -14,12 +14,17 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
             {title: "状态", field: "status", type: "string", searchable: true, default: false},
             {
                 title: "操作",
-                field: "actions",
-                type: "string",
-                searchable: false,
-                default: false,
-                template: true,
-                text: "完成考评"
+                template: "assessment_button_column.html",
+                clickHandler: (function($index, model, $event) {
+                    $scope.template = null;
+                    $scope.doFinalize = true;
+                    $scope.finalizingModel = model;
+                    esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
+                        (function (result) {
+                            $scope.template = result.data;
+                        }).bind(this)
+                    );
+                }).bind(this)
             }
         ];
 
@@ -88,17 +93,6 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                 return ["N/A"];
             }
         }
-
-        $scope.$on('$btnClick', function (e, model) {
-            $scope.template = null;
-            $scope.doFinalize = true;
-            $scope.finalizingModel = model;
-            esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
-                (function (result) {
-                    $scope.template = result.data;
-                }).bind(this)
-            );
-        });
 
         $scope.submit = function() {
             ngDialog.openConfirm({
