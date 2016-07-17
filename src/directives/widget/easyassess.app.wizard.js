@@ -35,7 +35,7 @@ EasyAssess.directives["esAppWizard"]
             }
 
             $scope.finish = function() {
-                if ($scope.pageCount) {
+                if ($scope.pageCount && $scope.pages[$scope.pageCount - 1].esStepValidator) {
                     var result = $scope.pages[$scope.pageCount - 1].esStepValidator();
                     if (typeof result == "string") {
                         $scope.error = result;
