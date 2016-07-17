@@ -90,22 +90,28 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
         }
 
         $scope.$on('$btnClick', function (e, model) {
+            $scope.template = null;
+            $scope.doFinalize = true;
+            $scope.finalizingModel = model;
+            esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
+                (function (result) {
+                    $scope.template = result.data;
+                }).bind(this)
+            );
+        });
+
+        $scope.submit = function() {
             ngDialog.openConfirm({
-                template: '<div class="ngdialog-message">是否确定要结束这次考评</div>'
+                template: '<div class="ngdialog-message">考评提交后将不能修改,请检查确定无误后提交</div>'
                 + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
                 plain: true
             }).then((function () {
-                $scope.template = null;
-                $scope.doFinalize = true;
-                $scope.finalizingModel = model;
-                esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
+                esRequestService.esPost(EasyAssess.activeEnv.assess() + "assessment/finalize/" + $scope.finalizingModel.id).then(
                     (function (result) {
-                        $scope.template = result.data;
                     }).bind(this)
                 );
             }).bind(this));
-        });
-
+        }
     },
     _restrict: function () {
     },
