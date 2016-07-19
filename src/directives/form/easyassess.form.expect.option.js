@@ -143,8 +143,8 @@ EasyAssess.directives["esFormGaussianValueSettings"]
 		transclude: false,
 		template: 	  '<div>'
 					+ 	'<div class="es-dialog-form-line">'
-					+ 		'<es-app-textbox es-label="参数1" es-model="settings.p1"></es-app-textbox>'
-					+ 		'<es-app-textbox es-label="参数2" es-model="settings.p2"></es-app-textbox>'
+					+ 		'<es-app-textbox es-label="平均数μ" es-model="settings.micro"></es-app-textbox>'
+					+ 		'<es-app-textbox es-label="标准差σ" es-model="settings.sigma"></es-app-textbox>'
 					+ 	'</div>'
 					+ '</div>',
 		scope: {
@@ -153,28 +153,29 @@ EasyAssess.directives["esFormGaussianValueSettings"]
 
 		controller: ["$scope", function($scope) {
 			$scope.settings = {
-				p1: 0,
-				p2: 0
+				micro: 0,
+				sigma: 0
 			};
 
 			if ($scope.esOption.parameters && $scope.esOption.parameters.length > 0) {
-				$scope.settings.p1 = Number($scope.esOption.parameters[0].value);
-				$scope.settings.p2 = Number($scope.esOption.parameters[1].value)
+				$scope.settings.micro = Number($scope.esOption.parameters[0].value);
+				$scope.settings.sigma = Number($scope.esOption.parameters[1].value)
 			}
 
 			$scope.$on('$preSubmit', (function(){
-				if ($scope.settings.p1 && $scope.settings.p2) {
+				if ($scope.settings.micro && $scope.settings.sigma) {
 					if (!$scope.esOption.expectedValues) {
 						$scope.esOption.expectedValues = [];
 					}
+
 					$scope.esOption.expectedValues[0] = {
 						"value": "Gaussian_Value_PlaceHolder",
 						"weight": 100
 					};
 
 					$scope.esOption.parameters = [
-						{"name":"p1", "value":Number($scope.settings.p1)},
-						{"name":"p2", "value":Number($scope.settings.p2)}
+						{"name":"micro", "value":Number($scope.settings.micro)},
+						{"name":"sigma", "value":Number($scope.settings.sigma)}
 					];
 				} else {
 					$scope.esOption.expectedValues = [];
