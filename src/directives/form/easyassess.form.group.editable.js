@@ -115,8 +115,7 @@ EasyAssess.directives["esFormGroupEdit"]
                 var value = {
                     subjectGuid:row.guid,
                     specimenCode:specimen.specimenCode,
-                    value:field,
-                    valueType: ($(e.target).attr("type") == "text") ? "V" : "S"
+                    value:field
                 };
                 $scope.$emit('valueChanged',value);
             }
@@ -141,7 +140,6 @@ EasyAssess.directives["esFormGroupEdit"]
                         $dialog.submit = function(){
                             if ($dialog.codeGroup) {
                                 $scope.codeGroups.push($dialog.codeGroup);
-                                console.log('this is the codeGroups',$scope.codeGroups);
                             }
                             $dialog.closeThisDialog();
                         }
