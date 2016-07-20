@@ -7,6 +7,9 @@ EasyAssess.directives["esFormSelectionSettings"]
 		replace: true,
 		transclude: false,
 		template: 	    '<div>'
+					+		'<div class="es-dialog-form-line">'
+					+			'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
+					+		'</div>'
 					+ 		'<div class="es-dialog-form-line">'
 					+ 			'<span>选项值</span><a href="javascript:void(0)" style="padding-left:20px;" ng-click="addOptionValue()">添加</a>'
 					+ 		'</div>'
@@ -30,7 +33,7 @@ EasyAssess.directives["esFormSelectionSettings"]
 
 		controller: ["$scope", function($scope) {
 			$scope.expectedValue = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0 ? $scope.esOption.expectedValues[0].value : ($scope.esOption.optionValues && $scope.esOption.optionValues.length > 0 ? $scope.esOption.optionValues[0].value : null));
-
+			$scope.weight = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) ? $scope.esOption.expectedValues[0].weight : 20;
 			$scope.selectionChange = function (expectedValue) {
 				$scope.expectedValue = expectedValue;
 			}
@@ -70,7 +73,7 @@ EasyAssess.directives["esFormSelectionSettings"]
 					}
 					$scope.esOption.expectedValues[0] = {
 						"value": $scope.expectedValue,
-						"weight": 100
+						"weight": $scope.weight
 					};
 				} else {
 					$scope.esOption.expectedValues = [];
@@ -87,6 +90,9 @@ EasyAssess.directives["esFormTargetValueSettings"]
 		replace: true,
 		transclude: false,
 		template: 	  '<div>'
+					+	'<div class="es-dialog-form-line">'
+					+		'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
+					+	'</div>'
 					+ 	'<div class="es-dialog-form-line">'
 					+ 		'<es-app-textbox es-label="靶值" es-model="settings.targetValue"></es-app-textbox>'
 					+ 		'<es-app-textbox es-label="上偏移(%)" es-model="settings.upPercentage"></es-app-textbox>'
@@ -104,6 +110,8 @@ EasyAssess.directives["esFormTargetValueSettings"]
 				downPercentage: 0
 			};
 
+			$scope.weight = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) ? $scope.esOption.expectedValues[0].weight : 20;
+
 			if ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) {
 				$scope.settings.targetValue = $scope.esOption.expectedValues[0].value;
 			}
@@ -120,7 +128,7 @@ EasyAssess.directives["esFormTargetValueSettings"]
 					}
 					$scope.esOption.expectedValues[0] = {
 						"value": $scope.settings.targetValue,
-						"weight": 100
+						"weight": $scope.weight
 					};
 
 					$scope.esOption.parameters = [
@@ -142,6 +150,9 @@ EasyAssess.directives["esFormGaussianValueSettings"]
 		replace: true,
 		transclude: false,
 		template: 	  '<div>'
+					+	'<div class="es-dialog-form-line">'
+					+		'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
+					+	'</div>'
 					+ 	'<div class="es-dialog-form-line">'
 					+ 		'<es-app-textbox es-label="平均数μ" es-model="settings.micro"></es-app-textbox>'
 					+ 		'<es-app-textbox es-label="标准差σ" es-model="settings.sigma"></es-app-textbox>'
@@ -157,6 +168,8 @@ EasyAssess.directives["esFormGaussianValueSettings"]
 				sigma: 0
 			};
 
+			$scope.weight = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) ? $scope.esOption.expectedValues[0].weight : 20;
+
 			if ($scope.esOption.parameters && $scope.esOption.parameters.length > 0) {
 				$scope.settings.micro = Number($scope.esOption.parameters[0].value);
 				$scope.settings.sigma = Number($scope.esOption.parameters[1].value)
@@ -170,7 +183,7 @@ EasyAssess.directives["esFormGaussianValueSettings"]
 
 					$scope.esOption.expectedValues[0] = {
 						"value": "Gaussian_Value_PlaceHolder",
-						"weight": 100
+						"weight": $scope.weight
 					};
 
 					$scope.esOption.parameters = [
