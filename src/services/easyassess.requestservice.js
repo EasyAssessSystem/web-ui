@@ -17,7 +17,11 @@ EasyAssess.services['esRequestSerivce'] =
         }
 
         function errorMessage(messages) {
-
+            if (messages[0].message.indexOf("Error:") == 0) {
+                EasyAssess.QuickMessage.error("系统发生错误,请尝试重新操作或联系系统管理员");
+            } else {
+                EasyAssess.QuickMessage.error(messages[0].message);
+            }
         }
 
         var service = {
