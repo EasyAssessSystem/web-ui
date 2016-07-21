@@ -112,8 +112,28 @@
 	padding: 5px 5px 5px 5px;
 }
 
+.es-quick-message {
+	z-index: 9999;
+	position: fixed;
+	left: 0;
+	top: 40%;
+	text-align: center;
+	width: 100%;
+}
 
+.es-quick-message span {
+	background-color: #03C440;
+	opacity: 1;
+	padding: 20px 50px;
+	border-radius: 5px;
+	text-align: center;
+	color: #fff;
+	font-size: 20px;
+}
 
+.es-quick-message span.error {
+	background-color: #EAA000;
+}
 
 select {
 	background-color: #ffffff;

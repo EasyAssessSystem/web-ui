@@ -22,6 +22,18 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
         var secondback = function(){
         }
 
+        $scope.getStatusText = function (status) {
+            switch (status) {
+                case "A":
+                    return "未完成";
+                case "C":
+                    return "已提交";
+                case "F":
+                    return "已审核";
+            }
+            return "未知状态";
+        }
+
         $scope.items = [
             {
                 name:'考评记录',
@@ -35,7 +47,8 @@ EasyAssess.app.AssessmentDetailController .prototype = EasyAssess.extend({
 
         var self = this;
         $scope.show = function (form) {
-            $scope.loading = true;
+            if (form.status != "C" && form.status != "F") return;
+             $scope.loading = true;
             self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + form.securedAssessment.templateGuid).then(
                 (function(result) {
                     $scope.loading = false;

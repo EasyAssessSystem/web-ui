@@ -9,7 +9,7 @@ EasyAssess.directives["esFormSubmit"]
         template:'<div>'
                      +'<es-form-page>'
                          +'<div>'
-                            +'<button type="button" class="btn btn-success" ng-click="save()">提交</button>'
+                            +'<button type="button" class="btn btn-primary" ng-click="save()">提交</button>'
                          +'</div>'
                          +'<div class="es-page-section">'
                             +'<es-form-header es-header="template.header" es-editable="false"></es-form-header>'

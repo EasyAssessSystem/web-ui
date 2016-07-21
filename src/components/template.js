@@ -45,6 +45,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 					"groups": $scope.groups
 				})).then(
 					function(response) {
+						EasyAssess.QuickMessage.message("保存成功");
 						$scope.activeModel = response.data;
 					}
 				);
@@ -58,6 +59,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 			}).then(
 				(function(value){
 					esRequestService.esDelete(EasyAssess.activeEnv.assess() + "template/" + $scope.activeModel.id).then(function(){
+						EasyAssess.QuickMessage.message("删除成功");
 						$scope.new();
 					});
 				}).bind(this),

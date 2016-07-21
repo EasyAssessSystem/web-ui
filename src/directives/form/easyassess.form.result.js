@@ -35,6 +35,16 @@ EasyAssess.directives["esFormResult"]
                             +						'</tr>'
                             +					'</table>'
                             +				'</td>'
+                            +				'<td ng-if="group.rows.length > 0">'
+                            +					'<table>'
+                            +						'<tr>'
+                            +							'<td class="es-form-group-cell" ng-repeat="title in getCodeGroupTitles(group)"><span class="es-form-group-title">{{title}}</span></td>'
+                            +						'</tr>'
+                            +						'<tr ng-repeat="row in group.rows">'
+                            +							'<td class="es-form-group-cell" ng-repeat="code in getCodes(row)"><span>{{code.codeName}}</span></td>'
+                            +						'</tr>'
+                            +					'</table>'
+                            +				'</td>'
                             +			'</tr>'
                             +	 	'</tbody></table>'
                             + '</div>'
@@ -48,13 +58,40 @@ EasyAssess.directives["esFormResult"]
 
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.valuesMap = {};
+            $scope.codesMap = {};
 
             $scope.esForm.values.forEach(function(value) {
                 $scope.valuesMap[value.subjectGuid + "+" + value.specimenGuid] = value.value;
             });
 
+            $scope.esForm.codes.forEach(function(code) {
+                if (!$scope.codesMap[code.subjectGuid]) {
+                    $scope.codesMap[code.subjectGuid] = [];
+                }
+                $scope.codesMap[code.subjectGuid].push(code);
+            });
+
             $scope.getValue = function(row, specimen) {
                 return $scope.valuesMap[row.guid + "+" + specimen.guid];
+            }
+
+            $scope.getCodes = function(row) {
+                return $scope.codesMap[row.guid];
+            }
+
+            $scope.getCodeGroupTitles = function(group) {
+                var titles = [];
+
+                if (group.rows.length > 0) {
+                    var codes = $scope.getCodes(group.rows[0]);
+                    if (codes) {
+                        codes.forEach(function(code) {
+                            titles.push(code.codeGroupName);
+                        });
+                    }
+                }
+
+                return titles;
             }
         }]
     }

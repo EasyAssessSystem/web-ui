@@ -22,7 +22,13 @@ EasyAssess.app.ActivatedFormController .prototype = EasyAssess.extend({
         $scope.$on('submitted',function(){
             $scope.activeModel = null;
         })
-    }
+    },
+
+    _select: function(model) {
+        if (model.status == "A") {
+            this.$scope.activeModel = model;
+        }
+    },
 }, EasyAssess.app.MaintenanceController.prototype);
 
 EasyAssess.app.registerController("activated_formController", EasyAssess.app.ActivatedFormController);

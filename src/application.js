@@ -29,10 +29,11 @@ require('./directives/widget/easyassess.app.filter');
 require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
 require('./directives/widget/easyassess.app.wizard');
-require('./directives/form/easyassess.form.textbox');
-require('./directives/form/easyassess.form.group.editable');
 require('./directives/widget/easyassess.app.breadcrumb');
 
+require('./directives/form/easyassess.form.textbox');
+require('./directives/form/easyassess.form.group.editable');
+require('./directives/form/easyassess.form.expect.option');
 require('./directives/form/easyassess.form.addbutton');
 require('./directives/form/easyassess.form.header');
 require('./directives/form/easyassess.form.group');

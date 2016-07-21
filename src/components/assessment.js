@@ -14,12 +14,17 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
             {title: "状态", field: "status", type: "string", searchable: true, default: false},
             {
                 title: "操作",
-                field: "actions",
-                type: "string",
-                searchable: false,
-                default: false,
-                template: true,
-                text: "完成考评"
+                template: "assessment_button_column.html",
+                clickHandler: (function($index, model, $event) {
+                    $scope.template = null;
+                    $scope.doFinalize = true;
+                    $scope.finalizingModel = model;
+                    esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
+                        (function (result) {
+                            $scope.template = result.data;
+                        }).bind(this)
+                    );
+                }).bind(this)
             }
         ];
 
@@ -40,11 +45,6 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
             [65, 59, 80, 81, 56, 55, 40],
             [28, 48, 40, 19, 86, 27, 90]
         ];
-
-        $scope.goback = function () {
-            $scope.activeModel = null;
-            $scope.doFinalize = false;
-        };
 
         $scope.statisticValue = function (row, specimen) {
             var average = [];
@@ -89,23 +89,18 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
             }
         }
 
-        $scope.$on('$btnClick', function (e, model) {
-            ngDialog.openConfirm({
-                template: '<div class="ngdialog-message">是否确定要结束这次考评</div>'
-                + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
-                plain: true
-            }).then((function () {
-                $scope.template = null;
-                $scope.doFinalize = true;
-                $scope.finalizingModel = model;
-                esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
-                    (function (result) {
-                        $scope.template = result.data;
-                    }).bind(this)
-                );
-            }).bind(this));
+        $scope.$on('$wizard_complete', function(e, model){
+            esRequestService.esPost(EasyAssess.activeEnv.assess() + "template", $scope.template).then(
+                (function(response) {
+                    esRequestService.esPost(EasyAssess.activeEnv.assess() + "assessment/finalize/" + $scope.finalizingModel.id).then(
+                        (function (result) {
+                            $scope.activeModel = null;
+                            $scope.doFinalize = false;
+                        }).bind(this)
+                    );
+                }).bind(this)
+            );
         });
-
     },
     _restrict: function () {
     },
