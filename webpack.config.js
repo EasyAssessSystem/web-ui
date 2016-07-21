@@ -8,6 +8,9 @@ var config = {
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
         './src/application.js'
+      ],
+      env:[
+          './deploy/dev.js'
       ]
     },
     output: {
@@ -34,6 +37,9 @@ var config = {
     entry: {
       app:[
         './src/application.js'
+      ],
+      env:[
+        './deploy/prod.js'
       ]
     },
     output: {

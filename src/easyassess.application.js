@@ -46,12 +46,15 @@ EasyAssess.environments = {
 	}
 }
 
-EasyAssess.activeEnv = EasyAssess.environments.dev;
+
+
+EasyAssess.activeEnv = window._activeEnv;
+
 
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-date-picker').name,require('angular-ui-tree'),require('angular-chart.js').name
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-date-picker').name,require('angular-ui-tree'),require('angular-chart.js')
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });
