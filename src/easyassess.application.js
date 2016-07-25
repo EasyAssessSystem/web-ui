@@ -28,27 +28,21 @@ var EasyAssess = {
 
 EasyAssess.session = {};
 
+var env = window._activeEnv;
+
 EasyAssess.environments = {
-	'dev': {
 		pdm: function(domain) {
-			return 'http://localhost:8180/' + (domain ? domain : EasyAssess.session.domain) + '/data/'
+			return env.pdm + (domain ? domain : EasyAssess.session.domain) + '/data/'
 		},
 
 		assess: function(domain) {
-			return 'http://localhost:9190/' + (domain ? domain : EasyAssess.session.domain) + '/assess/'
+			return env.assess + (domain ? domain : EasyAssess.session.domain) + '/assess/'
 		}
-	},
-	'prod':{
-
-	},
-	'test':{
-
-	}
 }
 
 
 
-EasyAssess.activeEnv = window._activeEnv;
+EasyAssess.activeEnv = EasyAssess.environments;
 
 
 /**
