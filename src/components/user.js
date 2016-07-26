@@ -121,19 +121,9 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		 }
 	},
 
-
-	_transfer2RawData: function(model){
-		if(model['status'] == "有效") {
-			model['status'] = 'A';
-		} else {
-			model['status'] = 'U';
-		}
-		return model;
-	},
-
 	_select: function (model) {
 		this.$scope.validateFinalResult = true;
-		this.$scope.activeModel = this._transfer2RawData(model);
+		this.$scope.activeModel = model;
 		this.$scope.confirmedPassword = this.$scope.activeModel.password;
 		if (this.$scope.activeModel.ministries.length > 0) {
 			this.$scope.bindWithMinistry = true;

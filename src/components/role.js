@@ -62,17 +62,8 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 		});
 	},
 
-	_transfer2RawData: function(model){
-		if(model['status'] == "有效") {
-			model['status'] = 'A';
-		} else {
-			model['status'] = 'U';
-		}
-		return model;
-	},
-
 	_select: function(model){
-		this.$scope.activeModel = this._transfer2RawData(model);
+		this.$scope.activeModel = model;
 	},
 
 	_postSelect: function(model) {
