@@ -3,7 +3,7 @@ MAINTAINER Aaron Chen<mail@aaronchen.cn>
 
 
 
-RUN echo 'deb http://cn.archive.ubuntu.com/ubuntu/' >> /etc/apt/sources.list
+RUN sudo echo 'deb http://cn.archive.ubuntu.com/ubuntu/' >> /etc/apt/sources.list
 
 RUN sudo apt-get update && \
     sudo apt-get install -y build-essential libssl-dev libmysqlclient-dev && \
