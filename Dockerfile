@@ -1,5 +1,7 @@
 FROM jolicode/base
-MAINTAINER Aaron Chen  <mail@aaronchen.cn>
+MAINTAINER Aaron Chen<mail@aaronchen.cn>
+
+RUN deb http://cn.archive.ubuntu.com/ubuntu/
 
 RUN sudo apt-get update && \
     sudo apt-get install -y build-essential libssl-dev libmysqlclient-dev && \
@@ -10,6 +12,7 @@ RUN curl --location https://raw.github.com/creationix/nvm/master/install.sh | sh
     sudo /bin/bash -c "echo \"[[ -s \$HOME/.nvm/nvm.sh ]] && . \$HOME/.nvm/nvm.sh\" >> /etc/profile.d/npm.sh" && \
     echo "[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh" >> $HOME/.bashrc
 
+ENV PATH $HOME/.nvm/bin:$PATH
 RUN nvm install 5.9.0
 RUN nvm use 5.9.0
 RUN mkdir -p /app
