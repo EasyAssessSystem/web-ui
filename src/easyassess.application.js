@@ -447,21 +447,26 @@ EasyAssess.app.directive('contenteditable', ['$sce', function($sce) {
 }]);
 
 EasyAssess.QuickMessage = {
-	message: function(message) {
-		var time = 1000;
+
+	_display: function (message, error) {
+		var time = 1500;
 		if ($(".es-quick-message").text().length > 0) {
-			var msg = $("<span class='es-quick-message-span'>" + message + "</span>");
+			var msg = $("<span class='es-quick-message-span " + error + "'>" + message + "</span>");
 			$(".es-quick-message").empty().append(msg);
 		} else {
-			var msg = $("<div class='es-quick-message'><span>" + message + "</span></div>");
+			var msg = $("<div class='es-quick-message'><span class='" + error + "'>" + message + "</span></div>");
 			$("body").append(msg);
 		}
 		$(".es-quick-message").fadeIn(500);
 		setTimeout(function(){$(".es-quick-message").fadeOut(time);}, time);
 	},
 
+	message: function(message) {
+		this._display(message);
+	},
+
 	error: function(message) {
-		this.message(message);
+		this._display(message, "error");
 	}
 };
 
