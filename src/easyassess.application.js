@@ -328,7 +328,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 		}).then(
 			(function(value){
 				if (this.$scope.activeModel.id > 0) {
-					this.esRequestService.esDelete(EasyAssess.activeEnv.pdm() + this.$scope.resource + '/' + this.$scope.activeModel.id,this.$scope.activeModel.activeModel)
+					this.esRequestService.esDelete(EasyAssess.activeEnv.pdm() + this.$scope.resource + '/' + this.$scope.activeModel.id)
 						.then((function(){
 							this.$scope.activeModel = null;
 						}).bind(this));
