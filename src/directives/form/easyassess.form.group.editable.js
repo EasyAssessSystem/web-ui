@@ -10,6 +10,10 @@ EasyAssess.directives["esFormGroupEdit"]
         restrict: 'E',
         replace: true,
         transclude: false,
+        scope: {
+            esGroup:"=",
+            esData:"="
+        },
         template:'<div class="es-form-group">'
         +	 '<table class="table table-striped">'
         + 	'<thead><tr><th style="width:15%;">检测分类</th><th style="width:45%;">样本</th><th style="width:40%;">编码组</th></tr></thead>'
@@ -28,10 +32,10 @@ EasyAssess.directives["esFormGroupEdit"]
         +				'<td>'
         +					'<table  border="0" cellspacing="0" cellpadding="0" style="float:left;">'
         +						'<tr>'
-        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><table><tr><td><span class="es-form-group-title">{{s_col.specimenCode}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col)"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><table><tr><td class="es-add-button" style="min-width: 50px" ng-click="addNewSample(s_col)"><span>{{s_col.specimenCode}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col)"></span></td></tr></table></td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows" style="height: 46px;">'
-        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><div ng-show="{{isInput(row,s_col).show}}"><div ng-show="{{isInput(row,s_col).input}}"><input type="text" class="form-control es-form-group-contorl" ng-blur="valueChanged(row,s_col,$event)" ></div><div ng-show="{{isInput(row,s_col).select}}"><select class="form-control es-form-group-contorl" ng-blur="valueChanged(row,s_col,$event)"><option value=""></option><option ng-repeat="option in getOptions(row,s_col)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="s_col in specimens"><div ng-show="isInput(row,s_col).show ==\'true\'"><div ng-show="isInput(row,s_col).input==\'true\'"><input type="text" class="form-control es-form-group-contorl" ng-blur="valueChanged(row,s_col,$event)" ></div><div ng-show="isInput(row,s_col).select==\'true\'"><select class="form-control es-form-group-contorl" ng-blur="valueChanged(row,s_col,$event)"><option value=""></option><option ng-repeat="option in getOptions(row,s_col)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
         +						'</tr>'
         +					'</table>'
         +				'</td>'
@@ -50,15 +54,18 @@ EasyAssess.directives["esFormGroupEdit"]
         +			'</tr>'
         +	 	'</tbody></table>'
         + '</div>',
-        scope: {
-            esGroup:"=",
-            esData:"="
-        },
 
         controller: ["$scope", function($scope, $element, $attrs){
-            $scope.specimens = [
 
+            $scope.specimens = [
             ];
+            for (each in $scope.esGroup.specimens){
+                var speciman = {
+                    specimenCode:"样品",
+                    subjects:[]
+                };
+                $scope.specimens.push(speciman);
+            }
 
             $scope.codeFields = [
                 {title:"代码", field:"codeNumber", type:"string",searchable:true,default:true},
@@ -87,18 +94,18 @@ EasyAssess.directives["esFormGroupEdit"]
                 });
 
                 var result = {
-                    show:false,
+                    show:'false',
                     input:false,
                     select:false
                 };
 
                 if(answserItem){
-                    result.show = true;
+                    result.show = 'true';
                     if(answserItem.optionValues.length == 0){
-                        result.input = true;
+                        result.input = 'true';
 
                     }else {
-                        result.select = true;
+                        result.select = 'true';
                     }
                 }
 
@@ -106,7 +113,8 @@ EasyAssess.directives["esFormGroupEdit"]
             };
 
             $scope.removeColumn = function(specimen) {
-                $scope.specimens.pop(specimen);
+                specimen.specimenCode = '样品';
+                specimen.subjects = [];
                 $scope.$emit('removeSpecimen',specimen.specimenCode);
             };
 
@@ -146,12 +154,9 @@ EasyAssess.directives["esFormGroupEdit"]
                     }]
                 });
             }
-        }],
-        link: function($scope, ele, attrs, ctrl) {
-            var btnAddSpecimen = $(ele).find('[es-ids=addSpecimen]');
 
             // add specimen
-            btnAddSpecimen.on("click", function() {
+            $scope.addNewSample = function(speciman){
                 ngDialog.open({
                     template: '<div class="es-dialog-content"><div class="es-dialog-form-line" ng-class="error.flag ? \'has-error\' :\'\' "><input class="form-control" placeholder="请输入样本编号" es-ids="txtSpecimenNumber"/><div ng-if="error.flag" style="color: #a94442"><span>{{error.msg}}</span></div></div>'
                     +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
@@ -170,7 +175,7 @@ EasyAssess.directives["esFormGroupEdit"]
                                 var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
                                 esRequestService.esGet(url).then(function(res){
                                     if(res.data.length >0){
-                                        _updateSpecimanList(res.data, field);
+                                        _updateSpecimanList(res.data, field,speciman);
                                         $dialog.closeThisDialog();
 
                                     }else{
@@ -185,37 +190,45 @@ EasyAssess.directives["esFormGroupEdit"]
                         }
                     }]
                 });
-            });
+            };
 
-            function _updateSpecimanList(data,field){
-                var speciman = {
-                    specimenCode:field,
-                    subjects:[]
-                }
+            function _updateSpecimanList(data,field,speciman){
+                //var speciman = {
+                //    specimenCode:field,
+                //    subjects:[]
+                //}
 
+                speciman.specimenCode = field;
                 angular.forEach($scope.esGroup.rows,function(item){
                     if(data in item.optionMap){
                         speciman.subjects.push({guid:item.guid, optionValues:item.optionMap[data].optionValues})
                     }
                 });
 
-                $scope.specimens.push(speciman);
+                console.log(speciman.subjects);
+                console.log('new model',$scope.specimens);
+                //$scope.specimens.push(speciman);
             }
 
             function  _verifyDuplicateValue(field){
                 var result = true
                 angular.forEach($scope.specimens,function(sepcimen){
-                   if(field == sepcimen.specimenCode){
-                       $scope.error = {
-                           flag:true,
-                           msg:"请勿重复输入!"
-                       };
-                       result = false
-                   }
+                    if(field == sepcimen.specimenCode){
+                        $scope.error = {
+                            flag:true,
+                            msg:"请勿重复输入!"
+                        };
+                        result = false
+                    }
                 });
                 return result;
             }
 
+
+
+
+        }],
+        link: function($scope, ele, attrs, ctrl) {
         }
     }
 
