@@ -38,7 +38,7 @@ EasyAssess.directives["esFormResult"]
                             +				'<td ng-if="group.rows.length > 0">'
                             +					'<table>'
                             +						'<tr>'
-                            +							'<td class="es-form-group-cell" ng-repeat="title in getCodeGroupTitles(group)"><span class="es-form-group-title">{{title}}</span></td>'
+                            +							'<td class="es-form-group-cell" ng-repeat="title in getCodeGroupTitles(group) track by $index"><span class="es-form-group-title">{{title}}</span></td>'
                             +						'</tr>'
                             +						'<tr ng-repeat="row in group.rows">'
                             +							'<td class="es-form-group-cell" ng-repeat="code in getCodes(row)"><span>{{code.codeName}}</span></td>'
@@ -86,7 +86,7 @@ EasyAssess.directives["esFormResult"]
                     var codes = $scope.getCodes(group.rows[0]);
                     if (codes) {
                         codes.forEach(function(code) {
-                            titles.push(code.codeGroupName);
+                            titles.push(code.codeGroup.name);
                         });
                     }
                 }

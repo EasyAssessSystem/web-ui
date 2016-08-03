@@ -107,8 +107,10 @@ EasyAssess.directives["esFormSubmit"]
                     subjectGuid: t.esSubject.guid,
                     codeNumber:data.codeNumber,
                     codeName:data.name,
-                    codeGroupName:data.group.name,
-                    codeGroupId:data.group.id,
+                    codeGroup: {
+                        "name":data.group.name,
+                        "id":data.group.id
+                    },
                     codeGuid: t.esLookupGuid
                 };
 
@@ -121,8 +123,10 @@ EasyAssess.directives["esFormSubmit"]
                     updatedItem.subjectGuid = codeItem.subjectGuid;
                     updatedItem.codeNumber = codeItem.codeNumber;
                     updatedItem.codeName = codeItem.codeName;
-                    updatedItem.codeGroupName = codeItem.codeGroupName;
-                    updatedItem.codeGroupId = codeItem.codeGroupId;
+                    updatedItem.codeGroup = {
+                        "name": codeItem.codeGroup.name,
+                        "id": codeItem.codeGroup.id
+                    }
                 }else{
                     $scope.rawCodeList.push(codeItem);
                 }

@@ -55,7 +55,8 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                 if (form.status == "C") {
                     form.values.forEach(function (val) {
                         if (val.subjectGuid == row.guid && val.specimenGuid == specimen.guid) {
-                            if (val.valueType == "V" || val.valueType == "T" || val.valueType == "G") {
+                            var valueType = row.optionMap[val.specimenGuid].type;
+                            if (valueType == "V" || valueType == "T" || valueType == "G") {
                                 average.push(Number(val.value));
                             } else {
                                 counts.total += 1;
