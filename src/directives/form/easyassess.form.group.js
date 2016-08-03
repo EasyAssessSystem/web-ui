@@ -35,10 +35,20 @@ EasyAssess.directives["esFormGroup"]
 		          +						'</tr>'
 		          +					'</table>'
 		          +				'</td>'
+					+  			'<td>'
+					+					'<table>'
+					+						'<tr>'
+					+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codeGroups\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addCode" es-text="编码组" title="添加编码组"></es-add-button></td>'
+					+						'</tr>'
+					+						'<tr ng-repeat="row in esGroup.rows">'
+					+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><div class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
+					+						'</tr>'
+					+					'</table>'
+					+				'</td>'
 		          +			'</tr>'
 		          +			'<tr>'
 		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
-		          +					'<es-add-button es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'		
+		          +					'<es-add-button es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'
 		          +				'</td>'
 		          +			'</tr>'
 		          +	 	'</tbody></table>'
@@ -48,7 +58,6 @@ EasyAssess.directives["esFormGroup"]
 		},
 		
 		controller: ["$scope", function($scope, $element, $attrs){
-			//edit("Hello");
 			if (!$scope.esGroup.guid) {
 				$scope.esGroup.guid = EasyAssess.utils.generateGUID();
 			}
@@ -256,29 +265,33 @@ EasyAssess.directives["esFormGroup"]
 			 
 			 // add code group
 			 btnAddCode.on("click", function() {
+
 				 ngDialog.open({
-		                template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><select es-ids="drpGroup" style="width:100%;"><option ng-repeat="group in groups" value="{{group.value}}">{{group.text}}</option></select></div>'
-		                		 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
-		                plain: true,
-		                controller: ['$scope', function($dialog) {
-		                	$dialog.submit = function(){
-		                		var field = $("[es-ids=drpGroup]").val();
-		                		if (field && !isDuplicated(field, $scope.esGroup.codes)) {
-			                		$scope.esGroup.codes.push({
-			                			"guid": EasyAssess.utils.generateGUID(),
-			                    		"name":$("[es-ids=drpGroup]").find("option:selected").text(),
-			                    		"model":field
-			                    	});
-		                		}
-		                		$dialog.closeThisDialog();
-		                    };
-		                    
-		                    $dialog.groups = EasyAssess.codeGroups;
-		                }],
-		                preCloseCallback: function() {
-		                	
-		                }
-		         });
+					 template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><es-app-lookup es-label="代码组" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup></div>'
+					 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+					 plain: true,
+					 scope: $scope,
+					 controller: ['$scope', function($dialog) {
+						 $dialog.groupFields = [
+							 {title:"名称", field:"name", type:"string",searchable:true,default:true}
+						 ];
+						 $dialog.$on('$groupLookup_selected', function(e, model){
+							 $dialog.codeGroup = model;
+						 });
+						 $dialog.submit = function(){
+							 if ($dialog.codeGroup) {
+								 if (!$scope.esGroup.codeGroups) {
+									 $scope.esGroup.codeGroups = [];
+								 }
+								 $scope.esGroup.codeGroups.push({
+									 "name":$dialog.codeGroup.name,
+									 "id":$dialog.codeGroup.id
+								 });
+							 }
+							 $dialog.closeThisDialog();
+						 }
+					 }]
+				 });
 			 });
 			 
 			 //add item

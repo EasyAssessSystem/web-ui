@@ -77,12 +77,12 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                 });
 
                 average = total / average.length;
-                return ["均值:" + average];
+                return ["均值:" + average.toFixed(2)];
             } else if (Object.getOwnPropertyNames(counts).length > 0){
                 var percentages = [];
                 for (var key in counts) {
                     if (key == "total") continue;
-                    percentages.push(key + ":" + (counts[key]/counts.total) * 100 + "%");
+                    percentages.push(key + ":" + ((counts[key]/counts.total) * 100).toFixed(2) + "%");
                 }
                 return percentages;
             } else {

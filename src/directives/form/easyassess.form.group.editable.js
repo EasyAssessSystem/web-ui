@@ -42,10 +42,10 @@ EasyAssess.directives["esFormGroupEdit"]
         +  			    '<td>'
         +					'<table>'
         +						'<tr>'
-        +							'<td class="es-form-group-cell" ng-repeat="group in codeGroups"><table><tr><td><span class="es-form-group-title">{{group.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeCode($index)"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" ng-click="addGroup()" es-text="编码" title="添加编码组"></es-add-button></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="group in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{group.name}}</span></td><td></td></tr></table></td><td></td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
-        +							'<td class="es-form-group-cell" ng-repeat="group in codeGroups">'
+        +							'<td class="es-form-group-cell" ng-repeat="group in esGroup.codeGroups">'
         +                               '<es-app-lookup es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject ="row" es-value-field="codeNumber"></es-app-lookup>'
         +                           '</td>'
         +						'</tr>'
@@ -74,7 +74,6 @@ EasyAssess.directives["esFormGroupEdit"]
             ];
 
             $scope.codeGroups = [];
-
 
             $scope.getOptions = function(row,specimen){
                 var foundItem = specimen.subjects.find(function(subject){
@@ -128,32 +127,28 @@ EasyAssess.directives["esFormGroupEdit"]
                 $scope.$emit('valueChanged',value);
             }
 
-            $scope.removeCode = function(idx) {
-                $scope.codeGroups.splice(idx, 1);
-            }
-
-            $scope.addGroup = function() {
-                ngDialog.open({
-                    template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><es-app-lookup es-label="代码组" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup></div>'
-                             +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
-                    plain: true,
-                    scope: $scope,
-                    controller: ['$scope', function($dialog) {
-                        $dialog.groupFields = [
-                            {title:"名称", field:"name", type:"string",searchable:true,default:true}
-                        ];
-                        $dialog.$on('$groupLookup_selected', function(e, model){
-                            $dialog.codeGroup = model;
-                        });
-                        $dialog.submit = function(){
-                            if ($dialog.codeGroup) {
-                                $scope.codeGroups.push($dialog.codeGroup);
-                            }
-                            $dialog.closeThisDialog();
-                        }
-                    }]
-                });
-            }
+            // $scope.addGroup = function() {
+            //     ngDialog.open({
+            //         template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><es-app-lookup es-label="代码组" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup></div>'
+            //                  +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+            //         plain: true,
+            //         scope: $scope,
+            //         controller: ['$scope', function($dialog) {
+            //             $dialog.groupFields = [
+            //                 {title:"名称", field:"name", type:"string",searchable:true,default:true}
+            //             ];
+            //             $dialog.$on('$groupLookup_selected', function(e, model){
+            //                 $dialog.codeGroup = model;
+            //             });
+            //             $dialog.submit = function(){
+            //                 if ($dialog.codeGroup) {
+            //                     $scope.codeGroups.push($dialog.codeGroup);
+            //                 }
+            //                 $dialog.closeThisDialog();
+            //             }
+            //         }]
+            //     });
+            // }
 
             // add specimen
             $scope.addNewSample = function(speciman){
@@ -193,21 +188,12 @@ EasyAssess.directives["esFormGroupEdit"]
             };
 
             function _updateSpecimanList(data,field,speciman){
-                //var speciman = {
-                //    specimenCode:field,
-                //    subjects:[]
-                //}
-
                 speciman.specimenCode = field;
                 angular.forEach($scope.esGroup.rows,function(item){
                     if(data in item.optionMap){
                         speciman.subjects.push({guid:item.guid, optionValues:item.optionMap[data].optionValues})
                     }
                 });
-
-                console.log(speciman.subjects);
-                console.log('new model',$scope.specimens);
-                //$scope.specimens.push(speciman);
             }
 
             function  _verifyDuplicateValue(field){

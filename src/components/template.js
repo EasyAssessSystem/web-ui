@@ -22,7 +22,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 				"guid": EasyAssess.utils.generateGUID(),
 				"name": null,
 				"specimens":[],
-				"codes":[],
+				"codeGroups":[],
 				"rows":[]
 			});
 		}
