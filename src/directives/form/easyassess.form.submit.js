@@ -43,7 +43,6 @@ EasyAssess.directives["esFormSubmit"]
                     plain: true
                 }).then(
                     function(){
-
                         angular.forEach($scope.rawCodeList,function(rawCode){
                             delete rawCode['codeGuid']
                         });
@@ -61,19 +60,18 @@ EasyAssess.directives["esFormSubmit"]
 
             $scope.rawCodeList = [];
 
+            $scope.$on('$codeItemLookup_selected',function(e, data, attrs){
+                var subjectGuid = attrs.subjectGuid;
+                var codeGroupGuid = attrs.codeGroupGuid
 
-            $scope.$on('$codeItemLookup_selected',function(e,data){
-                addCodeIntoList(e.targetScope,data);
-
+                addCodeIntoList(e.targetScope, data, subjectGuid, codeGroupGuid);
             });
 
             $scope.$on('removeSpecimen',function(e,data){
                 removeFromList(data);
             });
 
-
             $scope.$on("$rowguidLookup_selected",function(e,data){
-                console.log(data);
             });
 
             $scope.$on('valueChanged',function(e,data){
@@ -98,7 +96,9 @@ EasyAssess.directives["esFormSubmit"]
                 });
             }
 
-            function addCodeIntoList(t,data){
+            function addCodeIntoList(t, data, subjectGuid, codeGroupGuid){
+
+                console.log(angular.toJson($scope.template))
                 var codeItem = {
                     subject:{
                         subject: t.esSubject.item.subject,
@@ -109,7 +109,8 @@ EasyAssess.directives["esFormSubmit"]
                     codeName:data.name,
                     codeGroup: {
                         "name":data.group.name,
-                        "id":data.group.id
+                        "id":data.group.id,
+                        "guid":codeGroupGuid
                     },
                     codeGuid: t.esLookupGuid
                 };
@@ -125,7 +126,8 @@ EasyAssess.directives["esFormSubmit"]
                     updatedItem.codeName = codeItem.codeName;
                     updatedItem.codeGroup = {
                         "name": codeItem.codeGroup.name,
-                        "id": codeItem.codeGroup.id
+                        "id": codeItem.codeGroup.id,
+                        "guid":codeGroupGuid
                     }
                 }else{
                     $scope.rawCodeList.push(codeItem);

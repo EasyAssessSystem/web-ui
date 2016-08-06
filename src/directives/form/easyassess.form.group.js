@@ -71,12 +71,12 @@ EasyAssess.directives["esFormGroup"]
 						break;
 					}
 				}
-				
+
 				//remove column for rows
 				for (var n=0;n<$scope.esGroup.rows.length;n++) {
 					var row = $scope.esGroup.rows[n];
 					var key = (set=="specimens") ? "optionMap" : "codeMap";
-					if (row[key][guid]) {
+					if (row[key] && row[key][guid]) {
 						delete row[key][guid];
 					}
 				}
@@ -265,7 +265,6 @@ EasyAssess.directives["esFormGroup"]
 			 
 			 // add code group
 			 btnAddCode.on("click", function() {
-
 				 ngDialog.open({
 					 template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><es-app-lookup es-label="代码组" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup></div>'
 					 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
@@ -285,7 +284,8 @@ EasyAssess.directives["esFormGroup"]
 								 }
 								 $scope.esGroup.codeGroups.push({
 									 "name":$dialog.codeGroup.name,
-									 "id":$dialog.codeGroup.id
+									 "id":$dialog.codeGroup.id,
+									 "guid": EasyAssess.utils.generateGUID()
 								 });
 							 }
 							 $dialog.closeThisDialog();

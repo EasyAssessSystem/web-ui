@@ -46,7 +46,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
         +							'<td class="es-form-group-cell" ng-repeat="group in esGroup.codeGroups">'
-        +                               '<es-app-lookup es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject ="row" es-value-field="codeNumber"></es-app-lookup>'
+        +                               '<es-app-lookup subject-guid="{{row.guid}}" code-group-guid="{{group.guid}}" es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject="row" es-value-field="codeNumber"></es-app-lookup>'
         +                           '</td>'
         +						'</tr>'
         +					'</table>'

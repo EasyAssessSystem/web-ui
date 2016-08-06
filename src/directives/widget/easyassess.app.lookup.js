@@ -59,7 +59,7 @@ EasyAssess.directives["esAppLookup"]
 			esSubject:"=?",
 			esLookupGuid:"@?"
 		},
-		controller: ["$scope", function($scope, $element, $attrs){
+		controller: ["$scope","$element", "$attrs", function($scope, $element, $attrs){
 
 			if(!$scope.esLookupGuid){
 				$scope.esLookupGuid = EasyAssess.utils.generateGUID();
@@ -97,7 +97,7 @@ EasyAssess.directives["esAppLookup"]
 						$dialog.options = $scope.esOptions;
 						$dialog.service = $scope.esService;
 						$dialog.$on('$selected', function(e, model){
-							$scope.$emit('$' + $scope.esId + '_selected', model);
+							$scope.$emit('$' + $scope.esId + '_selected', model, $attrs);
 
 							if ($scope.esValueField && $scope.esValueField.indexOf(".") != -1) {
 								var val = model;

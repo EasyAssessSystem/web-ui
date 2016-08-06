@@ -38,10 +38,10 @@ EasyAssess.directives["esFormResult"]
                             +				'<td ng-if="group.rows.length > 0">'
                             +					'<table>'
                             +						'<tr>'
-                            +							'<td class="es-form-group-cell" ng-repeat="title in getCodeGroupTitles(group) track by $index"><span class="es-form-group-title">{{title}}</span></td>'
+                            +							'<td class="es-form-group-cell" ng-repeat="codeGroup in group.codeGroups"><span class="es-form-group-title">{{codeGroup.name}}</span></td>'
                             +						'</tr>'
                             +						'<tr ng-repeat="row in group.rows">'
-                            +							'<td class="es-form-group-cell" ng-repeat="code in getCodes(row)"><span>{{code.codeName}}</span></td>'
+                            +							'<td class="es-form-group-cell" ng-repeat="codeGroup in group.codeGroups"><span>{{getCode(row, codeGroup)}}</span></td>'
                             +						'</tr>'
                             +					'</table>'
                             +				'</td>'
@@ -75,23 +75,16 @@ EasyAssess.directives["esFormResult"]
                 return $scope.valuesMap[row.guid + "+" + specimen.guid];
             }
 
-            $scope.getCodes = function(row) {
-                return $scope.codesMap[row.guid];
-            }
-
-            $scope.getCodeGroupTitles = function(group) {
-                var titles = [];
-
-                if (group.rows.length > 0) {
-                    var codes = $scope.getCodes(group.rows[0]);
-                    if (codes) {
-                        codes.forEach(function(code) {
-                            titles.push(code.codeGroup.name);
-                        });
+            $scope.getCode = function(row, group) {
+                var codes = $scope.codesMap[row.guid];
+                if (codes && codes.length) {
+                    for (var i=0;i<codes.length;i++) {
+                        if (codes[i].codeGroup.guid == group.guid) {
+                            return codes[i].codeName;
+                        }
                     }
                 }
-
-                return titles;
+                return "";
             }
         }]
     }
