@@ -12,7 +12,7 @@ EasyAssess.directives["esFormSubmit"]
                             +'<button type="button" class="btn btn-primary" ng-click="save()">提交</button>'
                          +'</div>'
                          +'<div class="es-page-section">'
-                            +'<es-form-header es-header="template.header" es-editable="false"></es-form-header>'
+                            +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
                          +'</div>'
                          +'<div ng-repeat="group in template.groups" class="es-page-section">'
                              +'<es-form-group-edit es-group="group" es-data="helpData"></es-form-group-edit>'
@@ -28,6 +28,10 @@ EasyAssess.directives["esFormSubmit"]
             esRequestService.esGet(url).then(function(data){
                 $scope.template = data.data;
             });
+
+            $scope.formHeader = {
+                name:$scope.esForm.formName
+            }
 
             $scope.helpData = $scope.esForm.securedAssessment.id;
 
@@ -133,6 +137,7 @@ EasyAssess.directives["esFormSubmit"]
                     $scope.rawCodeList.push(codeItem);
                 }
             }
-        }]
+        }],
+
     }
 });

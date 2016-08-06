@@ -7,7 +7,7 @@ EasyAssess.directives["esFormResult"]
         replace: true,
         transclude: false,
         template: '<div>'
-                    + '<div class="es-form-header"><span class="es-form-header-text">{{esTemplate.header.name}}</span></div>'
+                    + '<div class="es-form-header"><span class="es-form-header-text">{{esForm.formName}}</span></div>'
                         + '<div>'
                             + '<div class="es-page-section" ng-repeat="group in esTemplate.groups">'
                             + '<div class="es-form-group">'
