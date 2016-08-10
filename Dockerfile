@@ -7,9 +7,7 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . /app
 
-/usr/share/tomcat6/webapps/ROOT
-
-
+copy /app/dist/* /usr/share/tomcat6/webapps/ROOT
 
 
 RUN npm install
