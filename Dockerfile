@@ -1,7 +1,7 @@
 FROM daocloud.io/node:5.12.0-onbuild
 MAINTAINER Aaron Chen<mail@aaronchen.cn>
 
-
+RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
