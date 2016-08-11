@@ -4,6 +4,7 @@ MAINTAINER Aaron Chen<mail@aaronchen.cn>
 RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:webupd8team/java
+RUN echo "deb http://ppa.launchpad.net/webupd8team/jupiter/ubuntu oneiric main" > /etc/apt/sources.list
 RUN apt-get update
 # automatically accept oracle license
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
