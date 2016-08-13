@@ -34,6 +34,7 @@ require('./directives/widget/easyassess.app.breadcrumb');
 require('./directives/form/easyassess.form.textbox');
 require('./directives/form/easyassess.form.group.editable');
 require('./directives/form/easyassess.form.expect.option');
+require('./directives/form/easyassess.iqcform.expect.option');
 require('./directives/form/easyassess.form.addbutton');
 require('./directives/form/easyassess.form.header');
 require('./directives/form/easyassess.form.group');

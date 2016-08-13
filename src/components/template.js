@@ -11,6 +11,11 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 			{title:"名称", field:"header.name", type:"string",searchable:true,default:true},
 		];
 
+		$scope.groupType = {
+			assess:true,
+			iqc:false
+		};
+
 		$scope.groups = [];
 
 		$scope.header = {

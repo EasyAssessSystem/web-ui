@@ -5,19 +5,27 @@ EasyAssess.app.IQCTemplateController = function($scope, $timeout, ngDialog, esRe
 };
 
 EasyAssess.app.IQCTemplateController.prototype = EasyAssess.extend({
-    initialize: function($scope, $timeout, ngDialog, esRequestService, ngDialog) {
+    initialize: function($scope, $timeout, ngDialog, esRequestService) {
+
+        console.log('this is the iqc controller');
+
+        $scope.groups = [];
+
+
+        $scope.header = {
+            name: null
+        };
 
         $scope.lookupFields = [
             {title:"名称", field:"header.name", type:"string",searchable:true,default:true},
         ];
-
-        $scope.groups = [];
-
-        $scope.header = {
-            name: null
-        }
+        $scope.groupType = {
+            assess:false,
+            iqc:true
+        };
 
         $scope.addGroup = function() {
+            console.log('this is a new iqc group');
             $scope.groups.push({
                 "guid": EasyAssess.utils.generateGUID(),
                 "name": null,
