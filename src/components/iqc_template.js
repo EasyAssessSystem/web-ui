@@ -57,7 +57,7 @@ EasyAssess.app.IQCTemplateController.prototype = EasyAssess.extend({
                     $scope.activeModel = response.data;
                 }
             );
-        }
+        };
 
         $scope.remove = function() {
             ngDialog.openConfirm({

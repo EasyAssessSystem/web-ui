@@ -143,19 +143,19 @@ EasyAssess.directives["esFormGroup"]
 	                		 + '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
 	                plain: true,
 	                controller: ['$scope', function($dialog) {
-	                		
+
 	                	if (!$dialog.type) {
 	                		if (row.optionMap && row.optionMap[col.guid]) {
 	                			$dialog.type = row.optionMap[col.guid].type;
 	                			$dialog.settings = row.optionMap[col.guid];
 	                		} else {
 	                			$dialog.settings = {
-	                				expectedValues: []	
+	                				expectedValues: []
 	                			}
 	                			$dialog.type = "S";
 	                		}
 	                	}
-	                	
+
 	                	$dialog.removeExpectedValue = function(val) {
 	                		for (var i=0;i<$dialog.settings.expectedValues.length;i++) {
 	                			if ($dialog.settings.expectedValues[i].value == val) {
@@ -164,7 +164,7 @@ EasyAssess.directives["esFormGroup"]
 	                			}
 	                		}
 	                	}
-	                	
+
 	                	$dialog.removeOptionValue = function(val) {
 	                		for (var i=0;i<$dialog.settings.optionValues.length;i++) {
 	                			if ($dialog.settings.optionValues[i].value == val) {
@@ -173,7 +173,7 @@ EasyAssess.directives["esFormGroup"]
 	                			}
 	                		}
 	                	}
-	                	
+
 	                	$dialog.submit = function(){
 	                		if ($dialog.type == "S" && !$dialog.settings.optionValues) {
 	                			$dialog.settings.optionValues = [];

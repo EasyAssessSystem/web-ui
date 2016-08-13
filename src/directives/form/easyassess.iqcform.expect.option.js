@@ -103,20 +103,13 @@ EasyAssess.directives["esIqcFormTargetValueSettings"]
 
         controller: ["$scope", function($scope) {
             $scope.settings = {
-                targetValue: 0,
-                upPercentage: 0,
-                downPercentage: 0
+                targetValue: 0
             };
 
             $scope.weight = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) ? $scope.esOption.expectedValues[0].weight : 20;
 
             if ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) {
                 $scope.settings.targetValue = $scope.esOption.expectedValues[0].value;
-            }
-
-            if ($scope.esOption.parameters && $scope.esOption.parameters.length > 0) {
-                $scope.settings.upPercentage = Number($scope.esOption.parameters[0].value);
-                $scope.settings.downPercentage = Number($scope.esOption.parameters[1].value)
             }
 
             $scope.$on('$preSubmit', (function(){
@@ -128,11 +121,6 @@ EasyAssess.directives["esIqcFormTargetValueSettings"]
                         "value": $scope.settings.targetValue,
                         "weight": $scope.weight
                     };
-
-                    $scope.esOption.parameters = [
-                        {"name":"upPercentage", "value":Number($scope.settings.upPercentage)},
-                        {"name":"downPercentage", "value":Number($scope.settings.downPercentage)}
-                    ];
                 } else {
                     $scope.esOption.expectedValues = [];
                 }
@@ -194,7 +182,6 @@ EasyAssess.directives["esIqcFormExpectOption"]
                         $dialog.typeChanged = function() {
                             $dialog.option.expectedValues = [];
                             $dialog.option.optionValues = [];
-                            $dialog.option.parameters = [];
                         }
 
                         $dialog.submit = function () {
