@@ -62,6 +62,16 @@ var MenuTemplate = {
                 link:"closed_form"
               }
           ]
+        }, {
+           text:"质量测控",
+           icon:"glyphicon-list-alt",
+           items:[
+               {
+                text:"制作模板",
+                link:"iqc_template"
+               }
+           ],
+           root:true
         },
         {
             text:"数据统计",

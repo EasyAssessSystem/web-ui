@@ -12,6 +12,7 @@ require("./components/assay_code");
 require("./components/assay_category");
 require("./components/activated_form");
 require("./components/closed_form");
+require("./components/iqc_template");
 
 EasyAssess.app.stateProvider.state('user', {
     url:"/user",
@@ -90,5 +91,11 @@ EasyAssess.app.stateProvider.state('closed_form', {
     url:"/closed",
     templateUrl:  'closed_form.html',
     controller: "closed_formController"
+});
+
+EasyAssess.app.stateProvider.state('iqc_template',{
+    url:"/iqc_template",
+    templateUrl:"iqc_template.html",
+    contorller:"iqc_templateController"
 });
 

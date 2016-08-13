@@ -13,6 +13,8 @@ require('./components/assessment_detail.html');
 require('./components/assessment_new.html');
 require('./components/closed_form.html');
 require('./components/activated_form.html');
+require('./components/iqc_template.html');
+
 
 /**
  * Created by alexli on 2016/4/3.
@@ -37,7 +39,11 @@ EasyAssess.environments = {
 
 		assess: function(domain) {
 			return env.assess + (domain ? domain : EasyAssess.session.domain) + '/assess/'
-		}
+		},
+
+		iqc: function(domain) {
+		return env.iqc + (domain ? domain : EasyAssess.session.domain) + '/iqc/'
+	}
 }
 
 
