@@ -1,6 +1,6 @@
 var EasyAssess = require('../easyassess.application');
 
-EasyAssess.app.IQCTemplateController = function($scope, $timeout, ngDialog, esRequestService, ngDialog) {
+EasyAssess.app.IQCTemplateController = function($scope, $timeout, ngDialog, esRequestService) {
     this.initialize.apply(this, arguments);
 };
 

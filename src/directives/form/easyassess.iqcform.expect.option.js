@@ -7,9 +7,6 @@ EasyAssess.directives["esIqcFormSelectionSettings"]
         replace: true,
         transclude: false,
         template: 	    '<div>'
-        +		'<div class="es-dialog-form-line">'
-        +			'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
-        +		'</div>'
         + 		'<div class="es-dialog-form-line">'
         + 			'<span>选项值</span><a href="javascript:void(0)" style="padding-left:20px;" ng-click="addOptionValue()">添加</a>'
         + 		'</div>'
@@ -21,23 +18,12 @@ EasyAssess.directives["esIqcFormSelectionSettings"]
         + 				'</tbody>'
         + 			'<table>'
         +		'</div>'
-        +		'<div ng-if="false" class="es-dialog-form-line">'
-        +			'<div>正确值</div>'
-        +			'<select ng-change="selectionChange(expectedValue)" ng-model="expectedValue" ng-options="ov.value as ov.value for ov in esOption.optionValues" style="width:100%;">'
-        +			'</select>'
-        +		'</div>'
         +	'</div>',
         scope: {
             esOption: "="
         },
 
         controller: ["$scope", function($scope) {
-            $scope.expectedValue = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0 ? $scope.esOption.expectedValues[0].value : ($scope.esOption.optionValues && $scope.esOption.optionValues.length > 0 ? $scope.esOption.optionValues[0].value : null));
-            $scope.weight = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) ? $scope.esOption.expectedValues[0].weight : 20;
-            $scope.selectionChange = function (expectedValue) {
-                $scope.expectedValue = expectedValue;
-            }
-
             $scope.removeOptionValue = function (val) {
                 for (var i = 0; i < $scope.esOption.optionValues.length; i++) {
                     if ($scope.esOption.optionValues[i].value == val) {
@@ -65,20 +51,6 @@ EasyAssess.directives["esIqcFormSelectionSettings"]
                     }]
                 });
             };
-
-            $scope.$on('$preSubmit', (function(){
-                if ($scope.expectedValue) {
-                    if (!$scope.esOption.expectedValues) {
-                        $scope.esOption.expectedValues = [];
-                    }
-                    $scope.esOption.expectedValues[0] = {
-                        "value": $scope.expectedValue,
-                        "weight": $scope.weight
-                    };
-                } else {
-                    $scope.esOption.expectedValues = [];
-                }
-            }).bind(this));
         }]
     }
 });
@@ -89,42 +61,11 @@ EasyAssess.directives["esIqcFormTargetValueSettings"]
         restrict: 'E',
         replace: true,
         transclude: false,
-        template: 	  '<div>'
-        +	'<div class="es-dialog-form-line">'
-        +		'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
-        +	'</div>'
-        + 	'<div class="es-dialog-form-line">'
-        + 		'<es-app-textbox es-label="正确值" es-model="settings.targetValue"></es-app-textbox>'
-        + 	'</div>'
-        + '</div>',
+        template: 	  '<div></div>',
         scope: {
             esOption: "="
         },
-
         controller: ["$scope", function($scope) {
-            $scope.settings = {
-                targetValue: 0
-            };
-
-            $scope.weight = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) ? $scope.esOption.expectedValues[0].weight : 20;
-
-            if ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) {
-                $scope.settings.targetValue = $scope.esOption.expectedValues[0].value;
-            }
-
-            $scope.$on('$preSubmit', (function(){
-                if ($scope.settings.targetValue) {
-                    if (!$scope.esOption.expectedValues) {
-                        $scope.esOption.expectedValues = [];
-                    }
-                    $scope.esOption.expectedValues[0] = {
-                        "value": $scope.settings.targetValue,
-                        "weight": $scope.weight
-                    };
-                } else {
-                    $scope.esOption.expectedValues = [];
-                }
-            }).bind(this));
         }]
     }
 });
@@ -137,8 +78,8 @@ EasyAssess.directives["esIqcFormExpectOption"]
         replace: true,
         transclude: false,
         template:  '<div class="es-form-option">'
-        +		'<div ng-if="!isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-danger es-expection-button">未设置</div>'
-        + 		'<div ng-if="isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-success es-expection-button">已设置</div>'
+        +		'<div ng-show="!isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-danger es-expection-button">未设置</div>'
+        + 		'<div ng-show="isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-success es-expection-button">已设置</div>'
         + '</div>',
         scope: {
             esGroupRow: "=",
@@ -148,13 +89,12 @@ EasyAssess.directives["esIqcFormExpectOption"]
         controller: ["$scope", function($scope){
             $scope.isSetted = function(row, col) {
                 var cell = row.optionMap[col.guid];
-                if (cell) {
-                    if (cell.expectedValues && cell.expectedValues.length > 0) {
-                        return true;
-                    }
+                if (typeof cell === 'undefined') {
+                    return false;
+                }else{
+                    return true;
                 }
-                return false;
-            }
+            };
 
             $scope.setSpecimenOptions = function(row, col) {
                 ngDialog.open({
@@ -180,12 +120,10 @@ EasyAssess.directives["esIqcFormExpectOption"]
                         $dialog.option = angular.copy(row.optionMap[col.guid], {});
                         $dialog.type = $dialog.option.type ? $dialog.option.type : "S";
                         $dialog.typeChanged = function() {
-                            $dialog.option.expectedValues = [];
                             $dialog.option.optionValues = [];
                         }
 
                         $dialog.submit = function () {
-                            $dialog.$broadcast('$preSubmit');
                             $dialog.option.type = $dialog.type;
                             row.optionMap[col.guid] = $dialog.option;
                             $dialog.closeThisDialog();
