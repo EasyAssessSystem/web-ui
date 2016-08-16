@@ -40,7 +40,8 @@ EasyAssess.app.AssayCodeController.prototype = EasyAssess.extend({
 			"id": -1,
 			"name": "",
 			"codeNumber": "",
-			"status": "A"
+			"status": "A",
+			"categories": []
 		};
 
 		$scope.resource = "code";

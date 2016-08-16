@@ -13,17 +13,17 @@ EasyAssess.directives["esFormSelectionSettings"]
 					+ 		'<div class="es-dialog-form-line">'
 					+ 			'<span>选项值</span><a href="javascript:void(0)" style="padding-left:20px;" ng-click="addOptionValue()">添加</a>'
 					+ 		'</div>'
-					+ 		'<div class="es-dialog-form-line">'
+					+ 		'<div class="es-dialog-form-line" style="max-height:200px;overflow:auto;">'
 					+ 			'<table class="table table-striped">'
 					+ 				'<thead><tr><th>选项</th></tr></thead>'
 					+ 				'<tbody>'
 					+ 					'<tr ng-repeat="ov in esOption.optionValues"><td>{{ov.value}}</td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeOptionValue(ov.value)"></span></td></tr>'
 					+ 				'</tbody>'
-					+ 			'<table>'
+					+ 			'</table>'
 					+		'</div>'
 					+		'<div class="es-dialog-form-line">'
 					+			'<div>正确值</div>'
-					+			'<select ng-change="selectionChange(expectedValue)" ng-model="expectedValue" ng-options="ov.value as ov.value for ov in esOption.optionValues" style="width:100%;">'
+					+			'<select style="max-height:100px;overflow:auto;width: 300px;" multiple="multiple" ng-multiple="true" ng-change="selectionChange(expectedValue)" ng-model="expectedValue" ng-options="ov.value as ov.value for ov in esOption.optionValues" style="width:100%;">'
 					+			'</select>'
 					+		'</div>'
 					+	'</div>',
@@ -32,7 +32,13 @@ EasyAssess.directives["esFormSelectionSettings"]
 		},
 
 		controller: ["$scope", function($scope) {
-			$scope.expectedValue = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0 ? $scope.esOption.expectedValues[0].value : ($scope.esOption.optionValues && $scope.esOption.optionValues.length > 0 ? $scope.esOption.optionValues[0].value : null));
+			//$scope.expectedValue = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0 ? $scope.esOption.expectedValues[0].value : ($scope.esOption.optionValues && $scope.esOption.optionValues.length > 0 ? $scope.esOption.optionValues[0].value : null));
+			$scope.expectedValue =  [];
+			if ($scope.esOption.expectedValues) {
+				$scope.esOption.expectedValues.forEach(function(ev){
+					$scope.expectedValue.push(ev.value);
+				});
+			}
 			$scope.weight = ($scope.esOption.expectedValues && $scope.esOption.expectedValues.length > 0) ? $scope.esOption.expectedValues[0].weight : 20;
 			$scope.selectionChange = function (expectedValue) {
 				$scope.expectedValue = expectedValue;
@@ -68,13 +74,13 @@ EasyAssess.directives["esFormSelectionSettings"]
 
 			$scope.$on('$preSubmit', (function(){
 				if ($scope.expectedValue) {
-					if (!$scope.esOption.expectedValues) {
-						$scope.esOption.expectedValues = [];
-					}
-					$scope.esOption.expectedValues[0] = {
-						"value": $scope.expectedValue,
-						"weight": $scope.weight
-					};
+					$scope.esOption.expectedValues = [];
+					$scope.expectedValue.forEach(function(ev) {
+						$scope.esOption.expectedValues.push({
+							"value": ev,
+							"weight": $scope.weight
+						});
+					});
 				} else {
 					$scope.esOption.expectedValues = [];
 				}
