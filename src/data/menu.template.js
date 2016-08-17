@@ -63,12 +63,16 @@ var MenuTemplate = {
               }
           ]
         }, {
-           text:"质量测控",
+           text:"质控计划",
            icon:"glyphicon-list-alt",
            items:[
                {
                 text:"制作模板",
                 link:"iqc_template"
+               },
+               {
+                text:"质控历史",
+                link:"iqcexam"
                }
            ],
            root:true

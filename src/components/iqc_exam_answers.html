@@ -1,0 +1,18 @@
+<div>
+    <div>
+        <div style="position: relative">
+            <p>选择时间:</p>
+            <div class="input-group" style="width: 200px;">
+                <date-picker ng-hide="hideStart" ng-model="searchOption.startDate" style="position: absolute;top:45px;z-index: 999"
+                             on-date-selected="closeStartPop()"
+                             format-date="formatDate"></date-picker>
+                <input type="text" class="form-control" ng-model="emptyModel.startDate">
+                <span class="input-group-addon" ng-click="openStart()"><span
+                        class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <es-app-datagrid es-service="iqc" es-resource="exam" es-columns="fields" es-options="options"></es-app-datagrid>
+    </div>
+</div>

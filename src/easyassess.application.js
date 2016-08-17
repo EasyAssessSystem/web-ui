@@ -14,6 +14,7 @@ require('./components/assessment_new.html');
 require('./components/closed_form.html');
 require('./components/activated_form.html');
 require('./components/iqc_template.html');
+require('./components/iqc_exam.html');
 
 
 /**
@@ -142,8 +143,13 @@ EasyAssess.codeGroups = [
 ];
 
 EasyAssess.units = [
-  {"value":"mEq/L"},
-  {"value":"μmol/L"}
+	{"value": ""},
+	{"value": "S/CO"},
+	{"value": "IU/mL"},
+	{"value": "mIU/mL"},
+	{"value": "mIU/mL"},
+	{"value": "TCID50"},
+	{"value": "CT"}
 ];
 
 EasyAssess.utils = {

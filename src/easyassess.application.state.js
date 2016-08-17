@@ -13,6 +13,7 @@ require("./components/assay_category");
 require("./components/activated_form");
 require("./components/closed_form");
 require("./components/iqc_template");
+require("./components/iqc_exam");
 
 EasyAssess.app.stateProvider.state('user', {
     url:"/user",
@@ -98,4 +99,12 @@ EasyAssess.app.stateProvider.state('iqc_template',{
     templateUrl:"iqc_template.html",
     controller:"iqc_templateController"
 });
+
+EasyAssess.app.stateProvider.state('iqcexam',{
+    url:"/iqcexam",
+    templateUrl:"iqc_exam.html",
+    controller:"iqcexamController"
+});
+
+
 
