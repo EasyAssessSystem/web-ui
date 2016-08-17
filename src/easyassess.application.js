@@ -143,8 +143,13 @@ EasyAssess.codeGroups = [
 ];
 
 EasyAssess.units = [
-  {"value":"mEq/L"},
-  {"value":"μmol/L"}
+	{"value": ""},
+	{"value": "S/CO"},
+	{"value": "IU/mL"},
+	{"value": "mIU/mL"},
+	{"value": "mIU/mL"},
+	{"value": "TCID50"},
+	{"value": "CT"}
 ];
 
 EasyAssess.utils = {
