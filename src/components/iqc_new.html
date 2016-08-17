@@ -1,0 +1,60 @@
+<div>
+    <es-spinner ng-if="isLoading"></es-spinner>
+    <es-app-wizard ng-if="!isLoading" es-confirm-message="质控计划提交后将无法修改,请仔细核实提交的数据.是否确定提交?">
+        <es-app-wizard-content es-step-validator="validatePageOne()">
+            <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称"
+                            es-label="质控计划名"></es-app-textbox>
+            <es-app-lookup es-service="iqc" es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
+                           es-columns="templateFields" es-id="templateLookup" es-value-field="header.name"></es-app-lookup>
+            <div style="height: 250px">
+                <es-app-textbox es-readonly="readonly" es-model="emptyModel.duration" es-field="name" es-placeholder="请输入质控周期(默认1天)"
+                                es-label="质控周期"></es-app-textbox>
+            </div>
+        </es-app-wizard-content>
+        <es-app-wizard-content es-step-validator="validatePageTwo()">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p>请选择考评机构:</p>
+                </div>
+                <div class="panel-body">
+                    <script type="text/ng-template" id="ministry_renderer_ass.html">
+                        <div ui-tree-handle class="tree-node tree-node-content">
+                            <table style="width: 100%;cursor: pointer;">
+                                <tr>
+                                    <td style="width: 20px;padding: 0px 5px 0px 5px;">
+                            <span ng-if="item.ministries && item.ministries.length > 0" ng-click="toggle(this)"
+                                  class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,
+												   'glyphicon-chevron-down': !collapsed
+												  }" style="color: #333;font-size:12px;">
+                            </span>
+                                    </td>
+                                    <td>
+                                        <input ng-if="item.id != currentMinistryId" type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
+                                    </td>
+                                    <td style="width: 100%;">{{item.name}}</td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <ul ui-tree-nodes ng-model="item.ministries" ng-class="{hidden: collapsed,displayed:!collapsed}">
+                            <li ng-repeat="item in item.ministries" ui-tree-node collapsed="true"
+                                ng-include="'ministry_renderer_ass.html'">
+                            </li>
+                        </ul>
+                    </script>
+                    <div class="row">
+                        <div style="padding: 5px 5px 5px 5px;">
+                            <div ui-tree id="tree-root" data-drag-enabled="false">
+                                <ul ui-tree-nodes ng-model="list">
+                                    <li ng-repeat="item in list" ui-tree-node collapsed="true"
+                                        ng-include="'ministry_renderer_ass.html'"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </es-app-wizard-content>
+    </es-app-wizard>
+</div>
+

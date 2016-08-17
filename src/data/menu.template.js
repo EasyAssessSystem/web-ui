@@ -71,8 +71,12 @@ var MenuTemplate = {
                 link:"iqc_template"
                },
                {
+                text:"发起质控",
+                link:"plan.new"
+               },
+               {
                 text:"质控历史",
-                link:"iqcexam"
+                link:"plan"
                }
            ],
            root:true
