@@ -17,7 +17,6 @@ require('./components/iqc_template.html');
 require('./components/iqc_exam.html');
 require('./components/iqc_new.html');
 
-
 /**
  * Created by alexli on 2016/4/3.
  * Edited by aaronchen on 2016/5/14
@@ -56,7 +55,7 @@ EasyAssess.activeEnv = EasyAssess.environments;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-date-picker').name,require('angular-ui-tree'),require('angular-chart.js')
+EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-date-picker').name,require('angular-ui-tree'),require('angular-chart.js'),require('angular-bootstrap-calendar'), require('angular-ui-bootstrap')
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });

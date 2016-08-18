@@ -2,7 +2,7 @@ var $ = require('jquery');
 window.$ = $;
 
 var angular = require('angular');
-require('../node_modules/angular-cookies/angular-cookies.min')
+require('../node_modules/angular-cookies/angular-cookies.min');
 require('../node_modules/ng-dialog/css/ngDialog.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-default.min.css');
 require('../node_modules/ng-dialog/css/ngDialog-theme-plain.min.css');
@@ -11,6 +11,7 @@ require('../node_modules/angular-ui-tree/dist/angular-ui-tree.min.css');
 require('../node_modules/angular-date-picker/angular-date-picker.css');
 require('./css/es.theme.css');
 require('./css/angular-ui-tree.css');
+require('../node_modules/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css');
 
 var EasyAssess = require('./easyassess.application');
 
