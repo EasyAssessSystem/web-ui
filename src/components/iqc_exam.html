@@ -1,3 +1,11 @@
 <div ui-view>
+    <div class="spike">
+        <mwl-calendar
+                events="events"
+                view="calendarView"
+                view-date="viewDate"
+                slide-box-disabled="true">
+        </mwl-calendar>
+    </div>
     <es-app-datagrid es-service="iqc" es-resource="exam" es-columns="fields" es-options="options"></es-app-datagrid>
 </div>
