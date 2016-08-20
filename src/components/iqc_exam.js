@@ -17,8 +17,8 @@ EasyAssess.app.IQCExamController.prototype = EasyAssess.extend({
             }
         ];
 
-        $scope.calendarView = 'month';
-        $scope.viewDate = new Date();
+        $scope.duration= '2';
+        $scope.dates =[];
 
         $scope.fields = [
             {title: "质控名称", field: "name", type: "string", searchable: true, default: true},
