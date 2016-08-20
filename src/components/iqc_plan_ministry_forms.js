@@ -10,6 +10,7 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
 
 
         var secondback = function(){
+            $scope.items.pop();
             EasyAssess.TaskManager.start('plan.ministry',$state);
         };
 
