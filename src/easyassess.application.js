@@ -69,11 +69,13 @@ EasyAssess.formApp = angular.module("EasyAssessForm",
  * Application config
  */
 EasyAssess.app.config(
-	function($stateProvider, $urlRouterProvider,$httpProvider) {
+	function($stateProvider, $urlRouterProvider,$httpProvider,moment,calendarConfig) {
 		EasyAssess.app.stateProvider = $stateProvider;
 		EasyAssess.app.urlRouterProvider = $urlRouterProvider;
 		$httpProvider.defaults.useXDomain = true;
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
+		moment.locale('zh-cn');
+		calendarConfig.dateFormatter = 'moment';
 	}
 );
 
