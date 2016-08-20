@@ -31,6 +31,7 @@ require('./directives/widget/easyassess.app.datagrid');
 require('./directives/widget/easyassess.app.lookup');
 require('./directives/widget/easyassess.app.wizard');
 require('./directives/widget/easyassess.app.breadcrumb');
+require('./directives/widget/easyassess.app.fullcalendar');
 
 require('./directives/form/easyassess.form.textbox');
 require('./directives/form/easyassess.form.group.editable');
