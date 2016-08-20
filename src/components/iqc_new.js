@@ -11,7 +11,7 @@ EasyAssess.app.PlanNewController.prototype = EasyAssess.extend({
             "templateGuid": "",
             "duration": 1,
             "owner": "",
-            "participants": {},
+            "participants": {}
         };
         $scope.templateFields = [
             {title: "模板", field: "header.name", type: "string", searchable: true, default: true}

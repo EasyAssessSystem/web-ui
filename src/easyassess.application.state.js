@@ -100,13 +100,16 @@ EasyAssess.app.stateProvider.state('closed_form', {
 EasyAssess.app.stateProvider.state('plan',{
     url:"/plan",
     templateUrl:"iqc_plan.html",
-    controller:"iqcplanController"
+    controller:"iqcplanController",
+    data:{detail:{}}
 });
 
 EasyAssess.app.stateProvider.state('plan.ministry',{
     url:"/ministry",
     templateUrl:"iqc_plan_ministry.html",
-    controller:"iqcplan_ministryController"
+    controller:"iqcplan_ministryController",
+    data:{ministry:{}}
+
 });
 EasyAssess.app.stateProvider.state('plan.ministry.forms',{
     url:"/forms",

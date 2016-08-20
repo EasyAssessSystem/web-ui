@@ -6,14 +6,19 @@ EasyAssess.app.IQCPlanMinistryController = function ($scope, esRequestService, $
 EasyAssess.app.IQCPlanMinistryController.prototype = EasyAssess.extend({
     _initialize: function ($scope, esRequestService, $state, ngDialog) {
 
-        //$scope.plan = $state.current.data.detail;
-
-        $scope.plan = {name:"2016陕西质控"};
+        $scope.plan = $state.current.data.detail;
         $scope.planName = $scope.plan.name;
+        console.log($scope.plan);
 
-        $scope.ministryFields =[
-            {title: "机构名称", field: "name", type: "string", searchable: true, default: true}
-        ];
+
+        $scope.health_ministries = [];
+        angular.forEach($scope.plan.participants,function(value,key){
+            var health_item = {
+                "id":key,
+                "name":value
+            };
+            $scope.health_ministries.push(health_item);
+        });
 
         var firstback = function(){
             EasyAssess.TaskManager.start('plan',$state);
@@ -33,13 +38,19 @@ EasyAssess.app.IQCPlanMinistryController.prototype = EasyAssess.extend({
             }
         ];
 
+        $scope.show = function(item){
+            $state.current.data.ministry = item;
+            console.log('this is the state', $state.current.data.ministry)
+            EasyAssess.TaskManager.start('plan.ministry.forms', $state);
+
+
+        }
+
     },
     _restrict: function () {
     },
 
-    _select: function (model) {
-        this.$state.current.data.detail = model;
-        EasyAssess.TaskManager.start('plan.ministry.forms', this.$state);
+    _select: function () {
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 
