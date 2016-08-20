@@ -6,19 +6,10 @@ EasyAssess.app.IQCExamController = function ($scope, esRequestService, $state, n
 EasyAssess.app.IQCExamController.prototype = EasyAssess.extend({
     _initialize: function ($scope, esRequestService, $state, ngDialog) {
         $scope.doFinalize = false;
-        $scope.events = [
-            {
-                title: 'Event 1',
-                startsAt: new Date(2013,5,1,1)
-            },
-            {
-                title: 'Event 2',
-                startsAt: new Date(2014,8,26,15)
-            }
-        ];
 
         $scope.duration= '2';
-        $scope.dates =[];
+        $scope.startDate = '2016-06-01';
+        $scope.dates =[{date:'2016-06-05',formInfo:{id:1}},{date:'2016-06-07',formInfo:{id:2}},{date:'2016-07-05',formInfo:{id:3}},{date:'2016-08-05',formInfo:{id:5}}];
 
         $scope.fields = [
             {title: "质控名称", field: "name", type: "string", searchable: true, default: true},
