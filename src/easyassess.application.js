@@ -14,7 +14,9 @@ require('./components/assessment_new.html');
 require('./components/closed_form.html');
 require('./components/activated_form.html');
 require('./components/iqc_template.html');
-require('./components/iqc_exam.html');
+require('./components/iqc_plan.html');
+require('./components/iqc_plan_ministry.html');
+require('./components/iqc_plan_ministry_forms.html');
 require('./components/iqc_new.html');
 
 /**

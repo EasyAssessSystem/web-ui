@@ -13,7 +13,9 @@ require("./components/assay_category");
 require("./components/activated_form");
 require("./components/closed_form");
 require("./components/iqc_template");
-require("./components/iqc_exam");
+require("./components/iqc_plan");
+require("./components/iqc_plan_ministry");
+require("./components/iqc_plan_ministry_forms");
 require("./components/iqc_new");
 
 EasyAssess.app.stateProvider.state('user', {
@@ -97,8 +99,19 @@ EasyAssess.app.stateProvider.state('closed_form', {
 
 EasyAssess.app.stateProvider.state('plan',{
     url:"/plan",
-    templateUrl:"iqc_exam.html",
-    controller:"iqcexamController"
+    templateUrl:"iqc_plan.html",
+    controller:"iqcplanController"
+});
+
+EasyAssess.app.stateProvider.state('plan.ministry',{
+    url:"/ministry",
+    templateUrl:"iqc_plan_ministry.html",
+    controller:"iqcplan_ministryController"
+});
+EasyAssess.app.stateProvider.state('plan.ministry.forms',{
+    url:"/forms",
+    templateUrl:"iqc_plan_ministry_forms.html",
+    controller:"iqcplan_ministryformsController"
 });
 
 
