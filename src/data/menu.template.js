@@ -77,6 +77,10 @@ var MenuTemplate = {
                {
                 text:"质控历史",
                 link:"plan"
+               },
+               {
+                text:"我的质控",
+                link:"iqc_form"
                }
            ],
            root:true

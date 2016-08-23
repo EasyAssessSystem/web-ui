@@ -18,6 +18,7 @@ require('./components/iqc_plan.html');
 require('./components/iqc_plan_ministry.html');
 require('./components/iqc_plan_ministry_forms.html');
 require('./components/iqc_new.html');
+require('./components/iqc_form.html');
 
 /**
  * Created by alexli on 2016/4/3.

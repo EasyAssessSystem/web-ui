@@ -1,0 +1,9 @@
+<div ui-view>
+    <div ng-hide="activeModel">
+        <es-app-datagrid es-service="iqc" es-resource="forms" es-columns="fields" es-options="options"></es-app-datagrid>
+    </div>
+    <div ng-if="activeModel">
+        <es-app-breadcrumb es-items="items"></es-app-breadcrumb>
+        <es-app-fullcalendar es-duration="{{duration}}" es-start-date="{{startDate}}" es-dates="dates"></es-app-fullcalendar>
+    </div>
+</div>

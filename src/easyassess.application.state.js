@@ -17,6 +17,7 @@ require("./components/iqc_plan");
 require("./components/iqc_plan_ministry");
 require("./components/iqc_plan_ministry_forms");
 require("./components/iqc_new");
+require("./components/iqc_form");
 
 EasyAssess.app.stateProvider.state('user', {
     url:"/user",
@@ -130,6 +131,11 @@ EasyAssess.app.stateProvider.state('plan.new',{
     controller:"iqc_newController"
 });
 
+EasyAssess.app.stateProvider.state('iqc_form',{
+    url:"/iqc_form",
+    templateUrl:"iqc_form.html",
+    controller:"iqcformController"
+});
 
 
 
