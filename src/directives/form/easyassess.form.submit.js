@@ -20,14 +20,20 @@ EasyAssess.directives["esFormSubmit"]
                      +'</es-form-page>'
                  +'</div>',
         scope: {
-            esForm: "="
+            esForm: "=",
+            esType: "@"
         },
 
         controller: ["$scope","ngDialog", function($scope,ngDialog){
-            var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.esForm.securedAssessment.templateGuid;
-            esRequestService.esGet(url).then(function(data){
-                $scope.template = data.data;
-            });
+            if ($scope.esType == 'assess'){
+                var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.esForm.securedAssessment.templateGuid;
+                esRequestService.esGet(url).then(function(data){
+                    $scope.template = data.data;
+                });
+            }else if($scope.esType == 'plan'){
+                $scope.template = $scope.esForm.template;
+            }
+
 
             $scope.formHeader = {
                 name:$scope.esForm.formName
