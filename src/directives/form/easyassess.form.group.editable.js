@@ -12,7 +12,7 @@ EasyAssess.directives["esFormGroupEdit"]
         transclude: false,
         scope: {
             esGroup:"=",
-            esData:"="
+            esData:"=?"
         },
         template:'<div class="es-form-group">'
         +	 '<table class="table table-striped">'
@@ -187,6 +187,26 @@ EasyAssess.directives["esFormGroupEdit"]
                 });
             };
 
+
+            // this function is just for plan
+            function _updateSpecimanListForPlan(field,speciman){
+                speciman.specimenCode = field;
+                var data = '';
+                angular.forEach($scope.esGroup.specimens,function(specimen){
+                    if (specimen['number'] == field){
+                        return data = specimen.guid;
+                    }
+                });
+                console.log(data);
+                angular.forEach($scope.esGroup.rows,function(item){
+                    if(data in item.optionMap){
+                        speciman.subjects.push({guid:item.guid, optionValues:item.optionMap[data].optionValues})
+                    }
+                });
+            }
+
+
+            // this function is for assess
             function _updateSpecimanList(data,field,speciman){
                 speciman.specimenCode = field;
                 angular.forEach($scope.esGroup.rows,function(item){

@@ -1,6 +1,6 @@
 <div ui-view>
     <div ng-hide="activeModel">
-        <es-app-datagrid es-service="iqc" es-resource="forms" es-columns="fields" es-options="options"></es-app-datagrid>
+        <es-app-datagrid es-service="iqc" es-resource="plan" es-item-id="currentMinistryId" es-columns="fields" es-options="options"></es-app-datagrid>
     </div>
     <div ng-if="activeModel">
         <es-app-breadcrumb es-items="items"></es-app-breadcrumb>

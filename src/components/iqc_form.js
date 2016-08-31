@@ -19,6 +19,8 @@ EasyAssess.app.IQCFormController.prototype = EasyAssess.extend({
             "F": "已完成"
         };
 
+        $scope.currentMinistryId = EasyAssess.session.currentUser.ministries[0].id;
+
         var firstback = function(){
             $scope.activeModel = null
         };
@@ -51,9 +53,15 @@ EasyAssess.app.IQCFormController.prototype = EasyAssess.extend({
                 $scope.dates=result;
             });
             $scope.items[1].name = $scope.activeModel.name
-        }
+        };
 
+        $scope.$on('closedAnswer',function(data){
 
+        });
+
+        $scope.$on('activeAnswer',function(data){
+            EasyAssess.TaskManager.start('iqc_form.answer', $state);
+        })
 
     },
     _restrict: function () {

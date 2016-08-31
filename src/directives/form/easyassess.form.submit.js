@@ -39,7 +39,11 @@ EasyAssess.directives["esFormSubmit"]
                 name:$scope.esForm.formName
             }
 
-            $scope.helpData = $scope.esForm.securedAssessment.id;
+
+
+            //$scope.helpData = $scope.esForm.securedAssessment.id ? 1 :$scope.esForm.securedAssessment.id;
+
+            $scope.helpData = null;
 
             $scope.answer = {
                 values:[],
