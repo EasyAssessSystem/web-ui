@@ -8,10 +8,12 @@ EasyAssess.app.PlanNewController.prototype = EasyAssess.extend({
         $scope.emptyModel = {
             "id": -1,
             "name": "",
-            "templateGuid": "",
             "duration": 1,
             "owner": "",
-            "participants": {}
+            "participants": {},
+            "template":{
+                "header":{"name":""}
+            }
         };
         $scope.templateFields = [
             {title: "模板", field: "header.name", type: "string", searchable: true, default: true}
@@ -29,7 +31,7 @@ EasyAssess.app.PlanNewController.prototype = EasyAssess.extend({
 
         $scope.$on('$templateLookup_selected', function(e, model){
             $scope.selectedTemplate = model;
-            $scope.emptyModel.templateGuid = model.id;
+            $scope.emptyModel.template = model;
         });
 
         $scope.$on('$wizard_complete', function(e, model){

@@ -4,7 +4,7 @@
         <es-app-wizard-content es-step-validator="validatePageOne()">
             <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称"
                             es-label="质控计划名"></es-app-textbox>
-            <es-app-lookup es-service="iqc" es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
+            <es-app-lookup es-service="iqc" es-readonly="readonly" es-model="emptyModel.template.header.name" es-label="模板" es-resource="template"
                            es-columns="templateFields" es-id="templateLookup" es-value-field="header.name"></es-app-lookup>
             <div style="height: 250px">
                 <es-app-textbox es-readonly="readonly" es-model="emptyModel.duration" es-field="name" es-placeholder="请输入质控周期(默认1天)"
