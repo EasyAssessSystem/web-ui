@@ -40,10 +40,13 @@ EasyAssess.directives["esFormSubmit"]
             }
 
 
+            if ($scope.esType =='assess'){
+                $scope.helpData =  $scope.esForm.securedAssessment.id;
+            }else{
+                $scope.helpData = null;
+            }
 
-            //$scope.helpData = $scope.esForm.securedAssessment.id ? 1 :$scope.esForm.securedAssessment.id;
 
-            $scope.helpData = null;
 
             $scope.answer = {
                 values:[],
@@ -63,10 +66,17 @@ EasyAssess.directives["esFormSubmit"]
 
                         $scope.answer.codes = $scope.rawCodeList;
 
-                        var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
-                        esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes}).then(function(res){
-                            $scope.$emit('submitted');
-                        });
+
+                        if($scope.esType == 'plan'){
+                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes});
+                        }else{
+                            var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
+                            console.log($scope.answer);
+                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes}).then(function(res){
+                                $scope.$emit('submitted');
+                            });
+                        }
+
                     }
                 );
 

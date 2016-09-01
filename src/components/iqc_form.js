@@ -19,6 +19,7 @@ EasyAssess.app.IQCFormController.prototype = EasyAssess.extend({
             "F": "已完成"
         };
 
+
         $scope.currentMinistryId = EasyAssess.session.currentUser.ministries[0].id;
 
         var firstback = function(){
@@ -40,20 +41,30 @@ EasyAssess.app.IQCFormController.prototype = EasyAssess.extend({
         ];
 
 
-        $scope.duration= '2';
-        $scope.startDate = '2016-06-01';
-        $scope.dates =[{date:'2016-06-05',formInfo:{id:1}},{date:'2016-06-07',formInfo:{id:2}},{date:'2016-07-05',formInfo:{id:3}},{date:'2016-08-05',formInfo:{id:5}}];
+        //$scope.duration= '4';
+        //$scope.startDate = '2016-06-01';
+        //$scope.dates =[{date:'2016-06-05',formInfo:{id:1}},{date:'2016-06-07',formInfo:{id:2}},{date:'2016-07-05',formInfo:{id:3}},{date:'2016-08-05',formInfo:{id:5}}];
 
         $scope.getPlanForms = function(model){
-            console.log('active model', model);
-            $scope.duration= model.duration;
+            $scope.duration= String(model.duration);
             $scope.startDate = model.startDate;
-            var url = '';
-            esRequestService.esGet(url).then(function(result){
-                $scope.dates=result;
+            var url = EasyAssess.activeEnv['iqc']() + 'form/'+ model.id+'/' + $scope.currentMinistryId + '/list';
+            esRequestService.esGet(url).then(function(data){
+                $scope.dates=data.data.content;
+                $scope.activeModel = model;
+                $scope.items[1].name = $scope.activeModel.name;
             });
-            $scope.items[1].name = $scope.activeModel.name
         };
+
+        $scope.$on('clicked_form',function(date){
+            console.log('clicked!')
+        });
+
+        $scope.goToAnswer = function(){
+            $state.current.data.plan = $scope.activeModel;
+            EasyAssess.TaskManager.start('iqc_form.answer', $state);
+        };
+
 
         $scope.$on('closedAnswer',function(data){
 
@@ -68,7 +79,6 @@ EasyAssess.app.IQCFormController.prototype = EasyAssess.extend({
     },
 
     _select: function (model) {
-        this.$scope.activeModel = model;
         this.$scope.getPlanForms(model);
     }
 }, EasyAssess.app.MaintenanceController.prototype);

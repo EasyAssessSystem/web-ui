@@ -11,6 +11,7 @@ EasyAssess.app.PlanNewController.prototype = EasyAssess.extend({
             "duration": 1,
             "owner": "",
             "participants": {},
+            "startDate":new Date().toJSON().slice(0,10),
             "template":{
                 "header":{"name":""}
             }

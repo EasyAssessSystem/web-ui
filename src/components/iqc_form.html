@@ -1,9 +1,16 @@
 <div ui-view>
     <div ng-hide="activeModel">
-        <es-app-datagrid es-service="iqc" es-resource="plan" es-item-id="currentMinistryId" es-columns="fields" es-options="options"></es-app-datagrid>
+        <es-app-datagrid es-service="iqc" es-resource="plan/{{currentMinistryId}}"  es-columns="fields" es-options="options"></es-app-datagrid>
     </div>
     <div ng-if="activeModel">
         <es-app-breadcrumb es-items="items"></es-app-breadcrumb>
-        <es-app-fullcalendar es-duration="{{duration}}" es-start-date="{{startDate}}" es-dates="dates"></es-app-fullcalendar>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button class="btn btn-primary" ng-click="goToAnswer()">提交答案</button>
+            </div>
+            <div class="panel-body">
+                <es-app-fullcalendar es-duration="{{duration}}" es-start-date="{{startDate}}" es-dates="dates"></es-app-fullcalendar>
+            </div>
+        </div>
     </div>
 </div>

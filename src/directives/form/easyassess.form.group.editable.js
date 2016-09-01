@@ -167,19 +167,26 @@ EasyAssess.directives["esFormGroupEdit"]
                             // send the request to backend to get the options map:
 
                             if(_verifyDuplicateValue(field)){
-                                var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
-                                esRequestService.esGet(url).then(function(res){
-                                    if(res.data.length >0){
-                                        _updateSpecimanList(res.data, field,speciman);
-                                        $dialog.closeThisDialog();
+                               if($scope.esData){
+                                   console.log('in the ', $scope.esData);
+                                   var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
+                                   esRequestService.esGet(url).then(function(res){
+                                       if(res.data.length >0){
+                                           _updateSpecimanList(res.data, field,speciman);
+                                           $dialog.closeThisDialog();
 
-                                    }else{
-                                        $scope.error = {
-                                            flag:true,
-                                            msg:"请输入有效的样本码!"
-                                        };
-                                    }
-                                });
+                                       }else{
+                                           $scope.error = {
+                                               flag:true,
+                                               msg:"请输入有效的样本码!"
+                                           };
+                                       }
+                                   });
+                               }else {
+                                   _updateSpecimanListForPlan(field,speciman);
+                                   $dialog.closeThisDialog();
+                               }
+
                             }
 
                         }
