@@ -65,6 +65,10 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
             $scope.$apply();
         });
 
+        $scope.$on('$templateLookup_selected', function(e, model){
+            $scope.activeModel.template = model;
+        });
+
         $scope.chooseItem = function (item) {
             _updateChild(item);
             $scope.activeModel.participants = {};
