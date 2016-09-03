@@ -40,20 +40,12 @@ EasyAssess.app.IQCFormController.prototype = EasyAssess.extend({
             }
         ];
 
-
-        //$scope.duration= '4';
-        //$scope.startDate = '2016-06-01';
-        //$scope.dates =[{date:'2016-06-05',formInfo:{id:1}},{date:'2016-06-07',formInfo:{id:2}},{date:'2016-07-05',formInfo:{id:3}},{date:'2016-08-05',formInfo:{id:5}}];
-
         $scope.getPlanForms = function(model){
             $scope.duration= String(model.duration);
             $scope.startDate = model.startDate;
-            var url = EasyAssess.activeEnv['iqc']() + 'form/'+ model.id+'/' + $scope.currentMinistryId + '/list';
-            esRequestService.esGet(url).then(function(data){
-                $scope.dates=data.data.content;
-                $scope.activeModel = model;
-                $scope.items[1].name = $scope.activeModel.name;
-            });
+            $scope.plan = {planId:model.id,ministryId:$scope.currentMinistryId};
+            $scope.activeModel = model;
+            $scope.items[1].name = $scope.activeModel.name;
         };
 
         $scope.$on('clicked_form',function(date){
