@@ -52,15 +52,16 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
         }
 
         $scope.showHistory = function(ministry){
+            $scope.list = [];
             $state.current.data.ministry = ministry;
-            EasyAssess.TaskManager.start('plan.ministry.forms', $state);
+            EasyAssess.TaskManager.start('plan.forms', $state)
         }
 
         $scope.$on('$es-validated-changed',function(){
             $scope.validateFinalResult = $scope.validations.name.validateResult;
             $scope.$apply();
         });
-
+        
         $scope.chooseItem = function (item) {
             _updateChild(item);
             $scope.activeModel.participants = {};

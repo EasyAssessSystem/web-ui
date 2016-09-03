@@ -8,14 +8,19 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
 
         $scope.ministry = $state.current.data.ministry;
 
+        $scope.items = [
+            {
+                name:'质控记录',
+                bindfunc: backToPlan
+            }
+        ];
 
-        var secondback = function(){
+        var backToPlan = function(){
             $scope.items.pop();
-            EasyAssess.TaskManager.start('plan.ministry',$state);
+            EasyAssess.TaskManager.start('plan',$state);
         };
 
-        console.log($scope.items);
-        $scope.items[1].bindfunc = secondback;
+        $scope.items[0].bindfunc = backToPlan;
 
         $scope.items.push({
             name:$scope.ministry.name,
