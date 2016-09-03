@@ -22,8 +22,6 @@ EasyAssess.app.IqcClosedFormController .prototype = EasyAssess.extend({
                 return eachValue
             });
         }
-
-        debugger;
     }
 
 }, EasyAssess.app.MaintenanceController.prototype);
