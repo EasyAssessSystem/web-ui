@@ -31,7 +31,7 @@ EasyAssess.directives["esAppFullcalendar"]
         +'        </div>'
         +'    </div>'
         +'</div>'
-        + '<div class="row"><mwl-calendar events="events" view="calendarView" view-title="calendarTitle" view-date="viewDate" on-event-click="eventClicked(calendarEvent)" on-event-times-changed="eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd" cell-is-open="isCellOpen" cell-modifier="cellModifier(calendarCell)">'
+        + '<div class="row"><mwl-calendar events="events" view="calendarView" view-title="calendarTitle" view-date="viewDate" on-event-click="eventClicked(calendarEvent)"  cell-is-open="isCellOpen" cell-modifier="cellModifier(calendarCell)">'
         +'</mwl-calendar></div>'
         +'</div>',
         scope: {
@@ -54,6 +54,10 @@ EasyAssess.directives["esAppFullcalendar"]
                 }
             };
 
+            $scope.eventClicked =function(event){
+                $scope.$emit('clicked_form',event.formInfo);
+            };
+
             $scope.updateForms = function(){
                 _setFormsByCurrentMonth();
             };
@@ -67,26 +71,21 @@ EasyAssess.directives["esAppFullcalendar"]
             }
 
             function _eventsCreator(forms){
-                var actions = [{
-                    onClick: function(args) {
-                        $scope.$emit('clicked_form',args.calendarEvent.formInfo);
-                    }
-                }];
-
 
                 var events = forms.map(function(form){
                     var eventTemplate = {
-                        title: 'selected form',
+                        title: '新答案',
                         color: calendarConfig.colorTypes.info,
                         draggable: false,
-                        resizable: false,
-                        actions: actions
+                        resizable: false
                     };
                     eventTemplate.startsAt = moment(form.date).toDate();
-                    eventTemplate.formInfo = form.formInfo;
+                    eventTemplate.formInfo = form;
                     return eventTemplate;
                 });
 
+
+                console.log(events);
                 return events
             }
 
