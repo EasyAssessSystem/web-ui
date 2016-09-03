@@ -5,31 +5,136 @@ EasyAssess.app.IQCPlanController = function ($scope, esRequestService, $state, n
 
 EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
     _initialize: function ($scope, esRequestService, $state, ngDialog) {
-        $scope.doFinalize = false;
-
-        $scope.duration= '2';
-        //$scope.startDate = '2016-06-01';
-        //$scope.dates =[{date:'2016-06-05',formInfo:{id:1}},{date:'2016-06-07',formInfo:{id:2}},{date:'2016-07-05',formInfo:{id:3}},{date:'2016-08-05',formInfo:{id:5}}];
-
+        $scope.resource = "plan";
+        this._service = EasyAssess.activeEnv.iqc();
+        $scope.emptyModel = {
+            "id": -1,
+            "name": "",
+            "duration": 1,
+            "owner": "",
+            "participants": {},
+            "template":{
+                "header":{"name":""}
+            }
+        };
+        $scope.duration= '1';
         $scope.fields = [
             {title: "质控名称", field: "name", type: "string", searchable: true, default: true},
-            {title: "开始日期", field: "startDate", type: "string", searchable: false, default: false},
-            {title: "截止日期", field: "endDate", type: "string", searchable: false, default: false},
-            {title: "发起人", field: "ownerName", type: "string", searchable: true, default: false},
-            {title: "状态", field: "status", type: "string", searchable: true, default: false},
+            {title: "发起人", field: "ownerName", type: "string", searchable: true, default: false}
         ];
-        this._statusMap = {
-            "A": "进行中",
-            "F": "已完成"
+
+        $scope.templateFields = [
+            {title: "模板", field: "header.name", type: "string", searchable: true, default: true}
+        ];
+
+        $scope.validations = {
+            name: {
+                validateMethod: function (value) {
+                    return value && value.length > 0;
+                },
+                validateResult: true,
+                errorMessage: "名称不能为空"
+            },
+            template: {
+                validateMethod: function (value) {
+                    return value && value.length > 0;
+                },
+                validateResult: true,
+                errorMessage: "模版不能为空"
+            },
+            duration: {
+                validateMethod: function (value) {
+                    return Number(value) > 0;
+                },
+                validateResult: true,
+                errorMessage: "周期必须为大于0的整数"
+            }
+        }
+
+        $scope.showHistory = function(ministry){
+            $state.current.data.ministry = ministry;
+            EasyAssess.TaskManager.start('plan.ministry.forms', $state);
+        }
+
+        $scope.$on('$es-validated-changed',function(){
+            $scope.validateFinalResult = $scope.validations.name.validateResult;
+            $scope.$apply();
+        });
+
+        $scope.chooseItem = function (item) {
+            _updateChild(item);
+            $scope.activeModel.participants = {};
+            _updateActiveModel($scope.list);
         };
 
-    },
-    _restrict: function () {
+        function _updateChild(item) {
+            if (item.ministries.length > 0) {
+                var newState = item.selected;
+                angular.forEach(item.ministries, function (eachMinistry) {
+                    eachMinistry.selected = newState;
+                    _updateChild(eachMinistry);
+                })
+            }
+        }
+
+        function _updateActiveModel(nodes) {
+            angular.forEach(nodes, function (node) {
+                if (node.selected) {
+                    $scope.activeModel.participants[node.id] = node.name;
+                }
+                if (node.ministries.length > 0) {
+                    _updateActiveModel(node.ministries)
+                }
+            })
+        }
     },
 
-    _select: function (model) {
-        this.$state.current.data.detail = model;
-        EasyAssess.TaskManager.start('plan.ministry', this.$state);
-    }
+    _createMinistryTree: function(){
+        var self = this;
+        this.$scope.list = [];
+        this.esRequestService.esGet(EasyAssess.activeEnv.pdm() + "ministry/list/affiliated?page=0&size=99").then(
+          (function (response) {
+              this.$scope.isLoading = false;
+              this.$scope.list = response.data.content;
+              function _proceedSelections(items) {
+                  items.forEach(function(item){
+                      if (self.$scope.activeModel.participants[item.id]) {
+                          item.selected = true;
+                      }
+                      if (item.ministries.length > 0) {
+                          _proceedSelections(item.ministries);
+                      }
+                  });
+              }
+
+              _proceedSelections(this.$scope.list);
+          }).bind(this)
+        );
+    },
+
+    _postSelect: function (model) {
+        var self = this;
+        if (this._permission.delete) {
+            $('.es-maint-button-group button[ng-click="delete()"]').show();
+        }
+
+        this.$scope.ministries = [];
+
+        angular.forEach(this.$scope.activeModel.participants, function(value, key){
+            var ministry = {
+                "id": key,
+                "name": value
+            };
+            self.$scope.ministries.push(ministry);
+        });
+
+        this._createMinistryTree();
+    },
+
+    _postAdd: function() {
+        self.$scope.ministries = [];
+        this._createMinistryTree();
+        $('.es-maint-button-group button[ng-click="delete()"]').hide();
+    },
 }, EasyAssess.app.MaintenanceController.prototype);
 EasyAssess.app.registerController("iqcplanController", EasyAssess.app.IQCPlanController);

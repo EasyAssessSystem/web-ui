@@ -263,6 +263,8 @@ EasyAssess.app.MaintenanceController.prototype = {
 			"U": "无效"
 		};
 
+		this._service = EasyAssess.activeEnv.pdm();
+
 		if (this._initialize) {
 			this._initialize.apply(this, arguments);
 		}
@@ -316,11 +318,16 @@ EasyAssess.app.MaintenanceController.prototype = {
 		this.$scope.activeModel = EasyAssess.extend({},this.$scope.emptyModel);
 	},
 
+	_isStringId: function (id) {
+		return typeof (id) === "string" && id.length > 0;
+	},
+
 	_save: function () {
 		var $http = this.$http;
 		var $scope = this.$scope;
-		if (this.$scope.activeModel.id > 0) {
-			this.esRequestService.esPut(EasyAssess.activeEnv.pdm() + $scope.resource + '/' + $scope.activeModel.id,$scope.activeModel)
+
+		if (this.$scope.activeModel.id > 0 || this._isStringId(this.$scope.activeModel.id)) {
+			this.esRequestService.esPut(this._service + $scope.resource + '/' + $scope.activeModel.id,$scope.activeModel)
 				.then((function(result){
 					if (this._postSave) {
 						this._postSave(result.data)
@@ -328,7 +335,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 					$scope.activeModel = null;
 				}).bind(this));
 		} else {
-			this.esRequestService.esPost(EasyAssess.activeEnv.pdm() + $scope.resource,$scope.activeModel)
+			this.esRequestService.esPost(this._service + $scope.resource,$scope.activeModel)
 				.then((function(result){
 					if (this._postSave) {
 						this._postSave(result.data)
@@ -345,8 +352,8 @@ EasyAssess.app.MaintenanceController.prototype = {
 			plain: true
 		}).then(
 			(function(value){
-				if (this.$scope.activeModel.id > 0) {
-					this.esRequestService.esDelete(EasyAssess.activeEnv.pdm() + this.$scope.resource + '/' + this.$scope.activeModel.id)
+				if (this.$scope.activeModel.id > 0 || this._isStringId(this.$scope.activeModel.id)) {
+					this.esRequestService.esDelete(this._service + this.$scope.resource + '/' + this.$scope.activeModel.id)
 						.then((function(){
 							this.$scope.activeModel = null;
 						}).bind(this));
