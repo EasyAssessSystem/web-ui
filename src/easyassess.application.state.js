@@ -103,7 +103,7 @@ EasyAssess.app.stateProvider.state('plan',{
     url:"/plan",
     templateUrl:"iqc_plan.html",
     controller:"iqcplanController",
-    data:{ministry:{}}
+    data:{details:{}}
 });
 
 EasyAssess.app.stateProvider.state('plan.ministry',{

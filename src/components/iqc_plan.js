@@ -53,7 +53,10 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
 
         $scope.showHistory = function(ministry){
             $scope.list = [];
-            $state.current.data.ministry = ministry;
+            $state.current.data.details = {
+                ministry: ministry.id,
+                plan: $scope.activeModel.id
+            };
             EasyAssess.TaskManager.start('plan.forms', $state)
         }
 
@@ -61,7 +64,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
             $scope.validateFinalResult = $scope.validations.name.validateResult;
             $scope.$apply();
         });
-        
+
         $scope.chooseItem = function (item) {
             _updateChild(item);
             $scope.activeModel.participants = {};
@@ -133,7 +136,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
     },
 
     _postAdd: function() {
-        self.$scope.ministries = [];
+        this.$scope.ministries = [];
         this._createMinistryTree();
         $('.es-maint-button-group button[ng-click="delete()"]').hide();
     },

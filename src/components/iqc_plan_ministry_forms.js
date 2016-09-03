@@ -6,7 +6,7 @@ EasyAssess.app.IQCPlanMinistryFormsController = function ($scope, esRequestServi
 EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
     _initialize: function ($scope, esRequestService, $state, ngDialog) {
 
-        $scope.ministry = $state.current.data.ministry;
+        $scope.details = $state.current.data.details;
 
         $scope.items = [
             {
@@ -21,11 +21,6 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
         };
 
         $scope.items[0].bindfunc = backToPlan;
-
-        $scope.items.push({
-            name:$scope.ministry.name,
-            bindfunc:function(){}
-        });
 
 
         $scope.fields = [
