@@ -15,7 +15,7 @@ EasyAssess.directives["esFormSubmit"]
                             +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
                          +'</div>'
                          +'<div ng-repeat="group in template.groups" class="es-page-section">'
-                             +'<es-form-group-edit es-group="group" es-data="helpData"></es-form-group-edit>'
+                             +'<es-form-group-edit es-type="esType" es-group="group" es-data="helpData"></es-form-group-edit>'
                          +'</div>'
                      +'</es-form-page>'
                  +'</div>',
@@ -34,19 +34,15 @@ EasyAssess.directives["esFormSubmit"]
                 $scope.template = $scope.esForm.template;
             }
 
-
             $scope.formHeader = {
                 name:$scope.esForm.formName
             }
-
 
             if ($scope.esType =='assess'){
                 $scope.helpData =  $scope.esForm.securedAssessment.id;
             }else{
                 $scope.helpData = null;
             }
-
-
 
             $scope.answer = {
                 values:[],
@@ -76,7 +72,6 @@ EasyAssess.directives["esFormSubmit"]
                                 $scope.$emit('submitted');
                             });
                         }
-
                     }
                 );
 
@@ -121,8 +116,6 @@ EasyAssess.directives["esFormSubmit"]
             }
 
             function addCodeIntoList(t, data, subjectGuid, codeGroupGuid){
-
-                console.log(angular.toJson($scope.template))
                 var codeItem = {
                     subject:{
                         subject: t.esSubject.item.subject,
