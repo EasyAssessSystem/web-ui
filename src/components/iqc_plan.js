@@ -57,7 +57,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                 plan: $scope.activeModel.id
             };
             EasyAssess.TaskManager.start('plan.forms', $state)
-        }
+        };
 
         $scope.$on('$es-validated-changed',function(){
             $scope.validateFinalResult = $scope.validations.name.validateResult;

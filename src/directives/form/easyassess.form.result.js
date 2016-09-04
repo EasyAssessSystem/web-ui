@@ -73,7 +73,7 @@ EasyAssess.directives["esFormResult"]
 
             $scope.getValue = function(row, specimen) {
                 return $scope.valuesMap[row.guid + "+" + specimen.guid];
-            }
+            };
 
             $scope.getCode = function(row, group) {
                 var codes = $scope.codesMap[row.guid];

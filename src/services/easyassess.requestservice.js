@@ -1,7 +1,7 @@
 var EasyAssess = require('../easyassess.application');
 
 EasyAssess.services['esRequestSerivce'] =
-    EasyAssess.app.factory('esRequestService', function ($http, $q, $window, $cookies ,ngDialog) {
+    EasyAssess.app.factory('esRequestService', function ($http, $q, $window, $cookies, ngDialog) {
         function invalidSession() {
             ngDialog.open({
                 template: '<div class="es-dialog-content"><div align="center" class="es-dialog-form-line">无效的Session,请重新登录</div><div class="es-dialog-form-line" align="center"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
@@ -33,7 +33,6 @@ EasyAssess.services['esRequestSerivce'] =
 
         function getRequest(url, paramsData) {
             var def = $q.defer();
-            // need to be deleted when done.
             $http.get(url, {params: paramsData, withCredentials: true})
                 .success(function (data) {
                     if (data.result == "FAILED") {
