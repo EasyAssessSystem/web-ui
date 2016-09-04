@@ -21,6 +21,7 @@ require('./components/iqc_new.html');
 require('./components/iqc_form.html');
 require('./components/iqc_form_active.html');
 require('./components/iqc_form_closed.html');
+require('./components/iqc_form_detail.html');
 
 /**
  * Created by alexli on 2016/4/3.
@@ -69,7 +70,6 @@ EasyAssess.formApp = angular.module("EasyAssessForm",
 		[require('angular-sanitize'), require('ng-dialog')],function(){
 
 });
-
 /**
  * Application config
  */

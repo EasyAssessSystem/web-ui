@@ -7,7 +7,6 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
     _initialize: function ($scope, esRequestService, $state, ngDialog) {
 
         $scope.details = $state.current.data.details;
-
         $scope.items = [
             {
                 name:'质控记录',
@@ -17,6 +16,7 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
 
         var backToPlan = function(){
             $scope.items.pop();
+
             EasyAssess.TaskManager.start('plan',$state);
         };
 
@@ -28,6 +28,15 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
             {title: "发起人", field: "ownerName", type: "string", searchable: true, default: false},
             {title: "状态", field: "status", type: "string", searchable: true, default: false},
         ];
+
+
+
+
+
+
+
+
+
     },
 
     _select: function (model) {
