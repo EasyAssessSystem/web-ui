@@ -42,8 +42,6 @@ EasyAssess.app.IQCPlanMinistryController.prototype = EasyAssess.extend({
             $state.current.data.ministry = item;
             console.log('this is the state', $state.current.data.ministry)
             EasyAssess.TaskManager.start('plan.ministry.forms', $state);
-
-
         }
 
     },

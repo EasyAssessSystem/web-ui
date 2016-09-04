@@ -16,7 +16,6 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
 
         var backToPlan = function(){
             $scope.items.pop();
-
             EasyAssess.TaskManager.start('plan',$state);
         };
 
@@ -29,18 +28,18 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
             {title: "状态", field: "status", type: "string", searchable: true, default: false},
         ];
 
+        $scope.duration= String($scope.details.plan.duration);
+        $scope.startDate = $scope.details.plan.startDate;
+        $scope.plan = {planId:$scope.details.plan.id,ministryId:$scope.details.ministry};
+        $scope.uri = 'form/' + $scope.details.plan.id +'/'+ $scope.details.ministry + '/list';
 
+        $scope.$on('clicked_form',function(e,data){
+            EasyAssess.TaskManager.start('iqc_form.result',$state,null,{result:data});
+        });
 
-
-
-
-
-
-
-    },
-
-    _select: function (model) {
-        EasyAssess.TaskManager.start('iqc_form.result', this.$state,null,{result:model});
+        $scope.$on('$formlistselected',function(e,data){
+            EasyAssess.TaskManager.start('iqc_form.result',$state,null,{result:data});
+        });
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 
