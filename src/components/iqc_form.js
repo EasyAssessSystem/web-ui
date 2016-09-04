@@ -48,24 +48,16 @@ EasyAssess.app.IQCFormController.prototype = EasyAssess.extend({
             $scope.items[1].name = $scope.activeModel.name;
         };
 
-        $scope.$on('clicked_form',function(date){
-            console.log('clicked!')
-        });
-
         $scope.goToAnswer = function(){
             $state.current.data.plan = $scope.activeModel;
             EasyAssess.TaskManager.start('iqc_form.answer', $state);
         };
 
 
-        $scope.$on('clicked_form',function(e,data){
-            console.log('in the form called!');
+        $scope.$on('clicked_form',function(e, data){
             $state.current.data.result = data;
             EasyAssess.TaskManager.start('iqc_form.result', $state);
-
         });
-
-
     },
     _restrict: function () {
     },

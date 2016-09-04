@@ -112,12 +112,12 @@ EasyAssess.app.stateProvider.state('plan.ministry',{
     templateUrl:"iqc_plan_ministry.html",
     controller:"iqcplan_ministryController",
     data:{ministry:{}}
-
 });
 EasyAssess.app.stateProvider.state('plan.forms',{
     url:"/forms",
     templateUrl:"iqc_plan_ministry_forms.html",
-    controller:"iqcplan_ministryformsController"
+    controller:"iqcplan_ministryformsController",
+    data:{result:{}}
 });
 
 
@@ -147,6 +147,12 @@ EasyAssess.app.stateProvider.state('iqc_form.answer',{
 });
 
 EasyAssess.app.stateProvider.state('iqc_form.result',{
+    url:"/result",
+    templateUrl:"iqc_form_closed.html",
+    controller:"closed_iqcformController"
+});
+
+EasyAssess.app.stateProvider.state('plan.forms.result',{
     url:"/result",
     templateUrl:"iqc_form_closed.html",
     controller:"closed_iqcformController"

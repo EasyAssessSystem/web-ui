@@ -4,9 +4,8 @@ EasyAssess.app.IqcClosedFormController = function($scope,$state, esRequestServic
 };
 
 EasyAssess.app.IqcClosedFormController .prototype = EasyAssess.extend({
-    _initialize: function($scope,$state) {
-
-        formAll = $state.current.data.result;
+    _initialize: function($scope, $state) {
+        var formAll = $state.current.data.result;
 
         $scope.form = {
             values:_proccessValueData(formAll['values']),

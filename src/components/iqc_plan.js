@@ -52,7 +52,6 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
         }
 
         $scope.showHistory = function(ministry){
-            $scope.list = [];
             $state.current.data.details = {
                 ministry: ministry.id,
                 plan: $scope.activeModel.id

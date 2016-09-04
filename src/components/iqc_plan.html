@@ -15,7 +15,24 @@
         </div>
         <div ng-show="activeModel && activeModel.id">
             <es-app-tab-pane>
-                <es-app-tab es-active="true" es-ref="details" es-title="设置">
+                <es-app-tab es-active="true" es-ref="history" es-title="历史">
+                    <div>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>单位</th>
+                            </tr>
+                            <tr style="cursor:pointer;" ng-click="showHistory(health_ministry)"
+                                ng-repeat=" health_ministry in ministries">
+                                <td>
+                                    {{health_ministry.name}}
+                                </td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </es-app-tab>
+                <es-app-tab es-ref="details" es-title="设置">
                     <es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name"
                                     es-field="name" es-placeholder="输入名称" es-label="计划名称"></es-app-textbox>
                     <es-app-lookup es-validate="validations.template" es-service="iqc" es-readonly="readonly"
@@ -71,23 +88,6 @@
                     </div>
                     <es-app-maint-button-group es-validate="validateFinalResult"
                                                es-model="activeModel"></es-app-maint-button-group>
-                </es-app-tab>
-                <es-app-tab es-ref="history" es-title="历史">
-                    <div>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>单位</th>
-                            </tr>
-                            <tr style="cursor:pointer;" ng-click="showHistory(health_ministry)"
-                                ng-repeat=" health_ministry in ministries">
-                                <td>
-                                    {{health_ministry.name}}
-                                </td>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
                 </es-app-tab>
             </es-app-tab-pane>
         </div>
