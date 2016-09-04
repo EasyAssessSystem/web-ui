@@ -149,7 +149,10 @@ EasyAssess.app.stateProvider.state('iqc_form.answer',{
 EasyAssess.app.stateProvider.state('iqc_form.result',{
     url:"/result",
     templateUrl:"iqc_form_closed.html",
-    controller:"closed_iqcformController"
+    controller:"closed_iqcformController",
+    params: {
+        result: null
+    }
 });
 
 EasyAssess.app.stateProvider.state('plan.forms.result',{

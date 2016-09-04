@@ -23,15 +23,15 @@ EasyAssess.app.IQCPlanMinistryFormsController.prototype = EasyAssess.extend({
         $scope.items[0].bindfunc = backToPlan;
 
         $scope.fields = [
-            {title: "质控名称", field: "plan.name", type: "string", searchable: true, default: true},
+            {title: "质控名称", field: "formName", type: "string", searchable: true, default: true},
             {title: "提交时间", field: "submitDate", type: "string", searchable: false, default: false},
-            {title: "发起人", field: "ownerName", type: "string", searchable: true, default: false}
+            {title: "发起人", field: "ownerName", type: "string", searchable: true, default: false},
+            {title: "状态", field: "status", type: "string", searchable: true, default: false},
         ];
     },
 
     _select: function (model) {
-        this.$state.current.data.result = model;
-        EasyAssess.TaskManager.start('plan.forms.result', this.$state);
+        EasyAssess.TaskManager.start('iqc_form.result', this.$state,null,{result:model});
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 

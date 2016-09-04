@@ -1,11 +1,11 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.IqcClosedFormController = function($scope,$state, esRequestService) {
+EasyAssess.app.IqcClosedFormController = function($scope,$state,$stateParams) {
     this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.IqcClosedFormController .prototype = EasyAssess.extend({
-    _initialize: function($scope, $state) {
-        var formAll = $state.current.data.result;
+    _initialize: function($scope,$state,$stateParams) {
+        formAll = $stateParams.result;
 
         $scope.form = {
             values: formAll['values'],
