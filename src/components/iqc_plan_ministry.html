@@ -1,0 +1,19 @@
+<div >
+    <es-app-breadcrumb es-items="items"></es-app-breadcrumb>
+    <div ui-view>
+        <div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>机构</th>
+                </tr>
+                <tr style="cursor:pointer;" ng-click="show(health_ministry)" ng-repeat=" health_ministry in health_ministries">
+                    <td>
+                        {{health_ministry.name}}
+                    </td>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

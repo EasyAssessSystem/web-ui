@@ -71,12 +71,12 @@ var MenuTemplate = {
                 link:"iqc_template"
                },
                {
-                text:"发起质控",
-                link:"plan.new"
+                text:"质控管理",
+                link:"plan"
                },
                {
-                text:"质控历史",
-                link:"plan"
+                text:"我的质控",
+                link:"iqc_form"
                }
            ],
            root:true

@@ -453,3 +453,7 @@ select {
 .selected-cell-calendar{
 	background-color: pink;
 }
+
+.events-list {
+	display: none;
+}

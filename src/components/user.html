@@ -14,6 +14,7 @@
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="姓名" es-validate="validations.name"></es-app-textbox>
 		<es-app-textbox ng-hide="readonly" es-type="password" es-model="activeModel.password" es-field="password" es-placeholder="输入密码" es-label="密码" es-validate="validations.password"></es-app-textbox>
 		<es-app-textbox ng-hide="readonly" es-type="password" es-model="confirmedPassword" es-field="confirmPassword" es-placeholder="再次输入密码" es-label="确认密码" es-validate="validations.comfirmPassword"></es-app-textbox>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.phone" es-field="phone" es-placeholder="输入电话" es-label="电话"></es-app-textbox>
 		<es-app-lookup  es-readonly="readonly" es-model="activeModel.roles[0].name" es-label="用户组" es-resource="role" es-columns="roleFields" es-options="roleOptions" es-id="roleLookup" es-value-field="name"></es-app-lookup>
 		<es-app-checkbox es-readonly="readonly" style="padding-top:5px;" es-model="bindWithMinistry" es-label="卫生机构用户"></es-app-checkbox>
 		<es-app-lookup es-readonly="readonly" ng-if="bindWithMinistry" es-readonly="readonly" es-model="activeModel.ministries[0].name" es-label="所属卫生机构" es-resource="ministry" es-columns="ministriesFields" es-id="ministryLookup" es-value-field="name"></es-app-lookup>

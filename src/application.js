@@ -32,17 +32,20 @@ require('./directives/widget/easyassess.app.lookup');
 require('./directives/widget/easyassess.app.wizard');
 require('./directives/widget/easyassess.app.breadcrumb');
 require('./directives/widget/easyassess.app.fullcalendar');
+require('./directives/widget/easyassess.app.tabs');
 
 require('./directives/form/easyassess.form.textbox');
 require('./directives/form/easyassess.form.group.editable');
 require('./directives/form/easyassess.form.expect.option');
 require('./directives/form/easyassess.iqcform.expect.option');
+require('./directives/form/easyassess.form.group.specimens');
 require('./directives/form/easyassess.form.addbutton');
 require('./directives/form/easyassess.form.header');
 require('./directives/form/easyassess.form.group');
 require('./directives/form/easyassess.form.page');
 require('./directives/form/easyassess.form.result');
 require('./directives/form/easyassess.form.submit');
+require('./directives/form/easyassess.form.switch.list.calender');
 require('./directives/charts/easyassess.chart.doughnut');
 
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);

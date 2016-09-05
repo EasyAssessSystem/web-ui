@@ -42,7 +42,7 @@ EasyAssess.app.IQCTemplateController.prototype = EasyAssess.extend({
                     break;
                 }
             }
-        }
+        };
 
         $scope.save = function() {
             esRequestService.esPost(EasyAssess.activeEnv.iqc() + "template",

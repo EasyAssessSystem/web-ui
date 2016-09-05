@@ -15,25 +15,34 @@ EasyAssess.directives["esFormSubmit"]
                             +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
                          +'</div>'
                          +'<div ng-repeat="group in template.groups" class="es-page-section">'
-                             +'<es-form-group-edit es-group="group" es-data="helpData"></es-form-group-edit>'
+                             +'<es-form-group-edit es-type="esType" es-group="group" es-data="helpData"></es-form-group-edit>'
                          +'</div>'
                      +'</es-form-page>'
                  +'</div>',
         scope: {
-            esForm: "="
+            esForm: "=",
+            esType: "@"
         },
 
         controller: ["$scope","ngDialog", function($scope,ngDialog){
-            var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.esForm.securedAssessment.templateGuid;
-            esRequestService.esGet(url).then(function(data){
-                $scope.template = data.data;
-            });
+            if ($scope.esType == 'assess'){
+                var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.esForm.securedAssessment.templateGuid;
+                esRequestService.esGet(url).then(function(data){
+                    $scope.template = data.data;
+                });
+            }else if($scope.esType == 'plan'){
+                $scope.template = $scope.esForm.template;
+            }
 
             $scope.formHeader = {
                 name:$scope.esForm.formName
             }
 
-            $scope.helpData = $scope.esForm.securedAssessment.id;
+            if ($scope.esType =='assess'){
+                $scope.helpData =  $scope.esForm.securedAssessment.id;
+            }else{
+                $scope.helpData = null;
+            }
 
             $scope.answer = {
                 values:[],
@@ -53,10 +62,16 @@ EasyAssess.directives["esFormSubmit"]
 
                         $scope.answer.codes = $scope.rawCodeList;
 
-                        var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
-                        esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes}).then(function(res){
-                            $scope.$emit('submitted');
-                        });
+
+                        if($scope.esType == 'plan'){
+                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes});
+                        }else{
+                            var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
+                            console.log($scope.answer);
+                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes}).then(function(res){
+                                $scope.$emit('submitted');
+                            });
+                        }
                     }
                 );
 
@@ -101,8 +116,6 @@ EasyAssess.directives["esFormSubmit"]
             }
 
             function addCodeIntoList(t, data, subjectGuid, codeGroupGuid){
-
-                console.log(angular.toJson($scope.template))
                 var codeItem = {
                     subject:{
                         subject: t.esSubject.item.subject,
