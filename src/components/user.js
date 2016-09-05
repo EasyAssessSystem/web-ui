@@ -5,7 +5,7 @@ EasyAssess.app.UserController = function($scope,ngDialog,esRequestService) {
 
 EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
-		 $scope.emptyModel = {"id":-1,"name":"","status":"A","username":"","password":"",confirmedPassword:"","canLaunchAssessment":true,"ministries":[],"roles":[{"id":1,"name":"系统用户","status":"A"}]},
+		 $scope.emptyModel = {"id":-1,"name":"","phone":"","status":"A","username":"","password":"",confirmedPassword:"","canLaunchAssessment":true,"ministries":[],"roles":[{"id":1,"name":"系统用户","status":"A"}]},
 		 $scope.resource = "user";
 		 $scope.newItem = "创建新用户";
 		 $scope.validations = {
