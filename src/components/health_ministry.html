@@ -13,6 +13,9 @@
 	</div>
 	<div ng-show="activeModel && activeModel.id">
 		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.province" es-field="province" es-placeholder="输入省" es-label="省份"></es-app-textbox>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.city" es-field="city" es-placeholder="输入市" es-label="城市"></es-app-textbox>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.district" es-field="district" es-placeholder="输入区" es-label="地区"></es-app-textbox>
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.address" es-field="address" es-placeholder="输入单位地址" es-label="地址"></es-app-textbox>
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.zipcode" es-field="zipcode" es-placeholder="输入单位邮编" es-label="邮编"></es-app-textbox>
 		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="状态"></es-app-select>
