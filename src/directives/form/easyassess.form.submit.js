@@ -11,12 +11,6 @@ EasyAssess.directives["esFormSubmit"]
                          +'<div>'
                             +'<button type="button" class="btn btn-primary" ng-click="save()">提交</button>'
                          +'</div>'
-                        +'<table cellpadding="10" cellspacing="10" style="width: 100%;"><tr>'
-                        +   '<td><input class="es-form-signature-line" ng-model="answer.tester" placeholder="输入检测人" style=""/></td>'
-                        +   '<td><input class="es-form-signature-line" ng-model="answer.reviewer" placeholder="输入复审人" style=""/></td>'
-                        +   '<td><div class="input-group" style="width: 200px; "><date-picker ng-hide="hideDate" ng-model="answer.testDate" style="position: absolute;top:45px;z-index: 999" on-date-selected="closeDate()" format-date="formatDate"></date-picker>'
-                        +   '<input type="text" class="es-form-signature-line" readonly placeholder="输入检测日期" ng-model="answer.testDate" ng-click="openDate()"></span></div></td>'
-                        +'</tr></table>'
                          +'<div class="es-page-section">'
                             +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
                          +'</div>'
@@ -40,25 +34,6 @@ EasyAssess.directives["esFormSubmit"]
                 $scope.template = $scope.esForm.template;
             }
 
-            $scope.formatDate = function (date) {
-                function pad(n) {
-                    return n < 10 ? '0' + n : n;
-                }
-                return date && date.getFullYear()
-                  + '-' + pad(date.getMonth() + 1)
-                  + '-' + pad(date.getDate());
-            };
-
-            $scope.hideDate = true;
-
-            $scope.closeDate = function () {
-                $scope.hideDate = true;
-            };
-
-            $scope.openDate = function () {
-                $scope.hideDate = false;
-            };
-
             $scope.formHeader = {
                 name:$scope.esForm.formName
             }
@@ -71,10 +46,7 @@ EasyAssess.directives["esFormSubmit"]
 
             $scope.answer = {
                 values:[],
-                codes:[],
-                tester:"",
-                testDate:"",
-                reviewer:""
+                codes:[]
             };
 
             $scope.save = function(){
@@ -89,11 +61,14 @@ EasyAssess.directives["esFormSubmit"]
                         });
 
                         $scope.answer.codes = $scope.rawCodeList;
+
+
                         if($scope.esType == 'plan'){
-                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes, "tester":$scope.answer.tester, "reviewer":$scope.answer.reviewer, "testDate": $scope.answer.testDate});
+                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes});
                         }else{
                             var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
-                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes, "tester":$scope.answer.tester, "reviewer":$scope.answer.reviewer, "testDate": $scope.answer.testDate}).then(function(res){
+                            console.log($scope.answer);
+                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes}).then(function(res){
                                 $scope.$emit('submitted');
                             });
                         }

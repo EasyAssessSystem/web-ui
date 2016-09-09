@@ -90,13 +90,6 @@
 	font-size:14px;
 }
 
-.es-form-signature-line {
-	border-top: hidden;
-	border-left: hidden;
-	border-right: hidden;
-	border-bottom: 1px solid #d4d4d4 ;
-}
-
 .es-form-group-cell {
 	padding:0px 5px 0px 5px; 
 	white-space: nowrap;

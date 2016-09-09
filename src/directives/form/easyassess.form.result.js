@@ -8,12 +8,7 @@ EasyAssess.directives["esFormResult"]
         transclude: false,
         template: '<div>'
                     + '<div class="es-form-header"><span class="es-form-header-text">{{esForm.formName}}</span></div>'
-                    +'<div style="padding-top:20px;padding-left:8px;"><table cellpadding="10" cellspacing="10" style="width: 100%;"><tr>'
-                    +   '<td><span class="es-form-signature-line">检测人: {{esForm.tester}}</span></td>'
-                    +   '<td><span class="es-form-signature-line">复审人: {{esForm.reviewer}}</span></td>'
-                    +   '<td><span class="es-form-signature-line">检测日期: {{esForm.testDate}}</span></td>'
-                    +'</tr></table></div>'
-                    + '<div>'
+                        + '<div>'
                             + '<div class="es-page-section" ng-repeat="group in esTemplate.groups">'
                             + '<div class="es-form-group">'
                             +	 '<table class="table table-striped">'
