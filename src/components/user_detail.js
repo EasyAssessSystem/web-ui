@@ -4,28 +4,23 @@ EasyAssess.app.UserDetailController = function($scope,ngDialog,esRequestService)
 };
 
 EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
-    _initialize: function($scope) {
+    _initialize: function($scope, ngDialog ,esRequestService) {
 
-        //send the request to backend to get user detail
-        esRequestService.esGet('url').then(function(data){
-           $scope.activeModel = data;
-        });
+        $scope.validateFinalResult = true;
+        $scope.activeModel = {};
+        angular.extend($scope.activeModel, EasyAssess.session.currentUser);
+        $scope.confirmedPassword = $scope.activeModel.password;
+        $scope.updateProfile = function(){
+            if ($scope.validateFinalResult) {
+                esRequestService.esPut(EasyAssess.activeEnv.pdm() + 'user/profile', $scope.activeModel)
+                  .then((function(result){
+                      EasyAssess.QuickMessage.message("用户信息保存成功");
+                      EasyAssess.session.currentUser = $scope.activeModel;
+                  }).bind(this));
+            }
+        }
 
         $scope.validations = {
-            username:{
-                validateMethod: function(value){
-                    var result = false;
-                    if(typeof value=='string' && value.length >=3 && value.length <=8){
-                        result =  true;
-                    }else {
-                        result =  false;
-                    }
-                    return result;
-                },
-
-                validateResult:true,
-                errorMessage:"请输入有效用户名(长度3到8位的字符)"
-            },
             name:{
                 validateMethod: function(value){
                     var result = false;
@@ -71,15 +66,11 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
 
         $scope.$on('$es-validated-changed',function(){
             $scope.validateFinalResult = $scope.validations.name.validateResult
-                && $scope.validations.username.validateResult
                 && $scope.validations.password.validateResult
                 && $scope.validations.comfirmPassword.validateResult;
             $scope.$apply();
         });
 
-    },
-
-    _select: function (model) {
     }
 }, EasyAssess.app.MaintenanceController.prototype);
 
