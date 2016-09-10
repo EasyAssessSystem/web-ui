@@ -86,6 +86,13 @@
 	padding: 0 2px 0 2px;
 }
 
+.es-form-signature-line {
+	border-top: hidden;
+	border-left: hidden;
+	border-right: hidden;
+	border-bottom: 1px solid #d4d4d4 ;
+}
+
 .es-form-group-text {
 	font-size:14px;
 }
@@ -243,9 +250,14 @@ select {
 .es-app-task-container {
 	margin: 0 auto 4.5em;
     padding: 3em;
+	min-height: 700px;
     border: 1px solid rgba(20,53,80,0.14);
     box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);
 	overflow:visible;
+}
+
+.es-form-page {
+	min-height: 700px;
 }
 
 .animate-show{

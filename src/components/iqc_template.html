@@ -9,7 +9,7 @@
         </div>
         <div class="es-page-section">
             <es-form-header es-header="header"></es-form-header>
-            <div>
+            <div style="width: 100%;overflow-x: auto;">
                 <div class="es-page-section" ng-repeat="group in groups">
                     <div align="right"><span class="glyphicon glyphicon-remove es-delete-button" title="删除检测组" ng-click="removeGroup(group.guid)" style="padding-right:5px;"></span></div>
                     <es-form-group es-group="group" es-type="groupType"></es-form-group>

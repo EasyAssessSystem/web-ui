@@ -34,7 +34,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +					'<es-form-group-specimens-assess ng-if="esType == \'assess\'" es-data="esData" es-group="esGroup"></es-form-group-specimens-assess>'
         +					'<es-form-group-specimens-track ng-if="esType != \'assess\'" es-data="esData" es-group="esGroup"></es-form-group-specimens-track>'
         +				'</td>'
-        +  			    '<td>'
+        +  			'<td>'
         +					'<table>'
         +						'<tr>'
         +							'<td class="es-form-group-cell" ng-repeat="group in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{group.name}}</span></td><td></td></tr></table></td><td></td>'
@@ -46,6 +46,20 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'</tr>'
         +					'</table>'
         +				'</td>'
+        +       '<td>'
+        +          '<table cellpadding="10" cellspacing="10" style="width: 100%;">'
+        +						'<tr>'
+        +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测人</span></td>'
+        +							'<td class="es-form-group-cell"><span class="es-form-group-title">审核人</span></td>'
+        +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测日期</span></td>'
+        +						'</tr>'
+        +            '<tr style="height: 46px;" ng-repeat="row in esGroup.rows">'
+        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'tester\' ,$event)" placeholder="输入检测人"/></td>'
+        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'reviewer\', $event)" placeholder="输入复审人"/></td>'
+        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'testDate\' ,$event)" placeholder="输入年-月-日"/></td>'
+        +            '</tr>'
+        +           '</table>'
+        +       '</td>'
         +			'</tr>'
         +	 	'</tbody></table>'
         + '</div>',
@@ -58,6 +72,34 @@ EasyAssess.directives["esFormGroupEdit"]
             ];
 
             $scope.codeGroups = [];
+
+            $scope.formatDate = function (date) {
+                function pad(n) {
+                    return n < 10 ? '0' + n : n;
+                }
+                return date && date.getFullYear()
+                  + '-' + pad(date.getMonth() + 1)
+                  + '-' + pad(date.getDate());
+            };
+
+            $scope.hideDate = true;
+
+            $scope.closeDate = function () {
+                $scope.hideDate = true;
+            };
+
+            $scope.openDate = function () {
+                $scope.hideDate = false;
+            };
+
+            $scope.detailChanged = function(row, field ,e){
+                var targetValue = $(e.target).val();
+                var value = {
+                    subjectGuid:row.guid,
+                    value:targetValue
+                };
+                $scope.$emit(field + 'Changed',value);
+            };
         }],
         link: function($scope, ele, attrs, ctrl) {
         }

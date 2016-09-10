@@ -14,8 +14,10 @@ EasyAssess.directives["esFormSubmit"]
                          +'<div class="es-page-section">'
                             +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
                          +'</div>'
+                         +'<div style="width: 100%; overflow-x:auto; overflow-y: visible;">'
                          +'<div ng-repeat="group in template.groups" class="es-page-section">'
                              +'<es-form-group-edit es-type="esType" es-group="group" es-data="helpData"></es-form-group-edit>'
+                         + '</div>'
                          +'</div>'
                      +'</es-form-page>'
                  +'</div>',
@@ -46,7 +48,8 @@ EasyAssess.directives["esFormSubmit"]
 
             $scope.answer = {
                 values:[],
-                codes:[]
+                codes:[],
+                details:[]
             };
 
             $scope.save = function(){
@@ -64,11 +67,11 @@ EasyAssess.directives["esFormSubmit"]
 
 
                         if($scope.esType == 'plan'){
-                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes});
+                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes, "details":$scope.answer.details});
                         }else{
                             var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
                             console.log($scope.answer);
-                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes}).then(function(res){
+                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes,"details":$scope.answer.details}).then(function(res){
                                 $scope.$emit('submitted');
                             });
                         }
@@ -96,6 +99,34 @@ EasyAssess.directives["esFormSubmit"]
             $scope.$on('valueChanged',function(e,data){
                 updateTheValueList(data);
             });
+
+            $scope.$on('testerChanged',function(e,data){
+                updateTheDetailList(data, 'tester');
+            });
+
+            $scope.$on('reviewerChanged',function(e,data){
+                updateTheDetailList(data, 'reviewer');
+            });
+
+            $scope.$on('testDateChanged',function(e,data){
+                updateTheDetailList(data, 'testDate');
+            });
+
+            function updateTheDetailList(data, field) {
+                var exists = $scope.answer.details.find(function(detail){
+                   return detail.subjectGuid == data.subjectGuid;
+                });
+
+                if (exists) {
+                    exists[field] = data.value;
+                } else {
+                    var detail = {
+                        'subjectGuid': data.subjectGuid
+                    }
+                    detail[field] = data.value;
+                    $scope.answer.details.push(detail);
+                }
+            }
 
             function updateTheValueList(data){
                 var updateCode = $scope.answer.values.find(function(item){

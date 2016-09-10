@@ -45,6 +45,20 @@ EasyAssess.directives["esFormResult"]
                             +						'</tr>'
                             +					'</table>'
                             +				'</td>'
+                            +       '<td>'
+                            +          '<table cellpadding="10" cellspacing="10" style="width: 100%;">'
+                            +						'<tr>'
+                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测人</span></td>'
+                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">审核人</span></td>'
+                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测日期</span></td>'
+                            +						'</tr>'
+                            +            '<tr style="height: 46px;" ng-repeat="row in group.rows">'
+                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].tester}}</span></td>'
+                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].reviewer}}</span></td>'
+                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].testDate}}</span></td>'
+                            +            '</tr>'
+                            +           '</table>'
+                            +       '</td>'
                             +			'</tr>'
                             +	 	'</tbody></table>'
                             + '</div>'
@@ -59,9 +73,14 @@ EasyAssess.directives["esFormResult"]
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.valuesMap = {};
             $scope.codesMap = {};
+            $scope.detailsMap = {}
 
             $scope.esForm.values.forEach(function(value) {
                 $scope.valuesMap[value.subjectGuid + "+" + value.specimenGuid] = value.value;
+            });
+
+            $scope.esForm.details.forEach(function(detail) {
+                $scope.detailsMap[detail.subjectGuid] = detail;
             });
 
             $scope.esForm.codes.forEach(function(code) {
@@ -86,6 +105,8 @@ EasyAssess.directives["esFormResult"]
                 }
                 return "";
             }
+
+            console.log(angular.toJson($scope.detailsMap))
         }]
     }
 
