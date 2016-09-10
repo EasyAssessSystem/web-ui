@@ -56,7 +56,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +            '<tr style="height: 46px;" ng-repeat="row in esGroup.rows">'
         +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'tester\' ,$event)" placeholder="输入检测人"/></td>'
         +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'reviewer\', $event)" placeholder="输入复审人"/></td>'
-        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'testDate\' ,$event)" placeholder="输入年-月-日"/></td>'
+        +               '<td class="es-form-group-cell"><es-app-calendar es-id="row" es-date="testDate" es-holder="请输入时间"></es-app-calendar></td>'
         +            '</tr>'
         +           '</table>'
         +       '</td>'
@@ -100,6 +100,15 @@ EasyAssess.directives["esFormGroupEdit"]
                 };
                 $scope.$emit(field + 'Changed',value);
             };
+
+            $scope.$on('DateTimeSelected',function(e,data){
+                var value = {
+                    subjectGuid:data["row"].guid,
+                    value:data["value"]
+                };
+                console.log(value);
+                $scope.$emit('testDate' + 'Changed',value);
+            });
         }],
         link: function($scope, ele, attrs, ctrl) {
         }

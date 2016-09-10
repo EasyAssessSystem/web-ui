@@ -47,6 +47,7 @@ require('./directives/form/easyassess.form.result');
 require('./directives/form/easyassess.form.submit');
 require('./directives/form/easyassess.form.switch.list.calender');
 require('./directives/charts/easyassess.chart.doughnut');
+require('./directives/widget/easyassess.app.calendar');
 
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);
 

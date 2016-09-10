@@ -14,10 +14,12 @@ EasyAssess.directives["esFormSubmit"]
                          +'<div class="es-page-section">'
                             +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
                          +'</div>'
+                         +'<div style="position: relative">'
                          +'<div style="width: 100%; overflow-x:auto; overflow-y: visible;">'
                          +'<div ng-repeat="group in template.groups" class="es-page-section">'
                              +'<es-form-group-edit es-type="esType" es-group="group" es-data="helpData"></es-form-group-edit>'
                          + '</div>'
+                         +'</div>'
                          +'</div>'
                      +'</es-form-page>'
                  +'</div>',
