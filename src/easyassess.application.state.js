@@ -2,6 +2,7 @@ var EasyAssess = require('./easyassess.application');
 
 require("./components/assessment");
 require("./components/user");
+require("./components/user_detail");
 require("./components/template");
 require("./components/role");
 require("./components/health_ministry");
@@ -22,11 +23,19 @@ require("./components/iqc_form_active");
 require("./components/iqc_form_closed");
 require("./components/iqc_form_detail");
 
+
 EasyAssess.app.stateProvider.state('user', {
     url:"/user",
     templateUrl: 'user.html',
     controller:  "userController"
 });
+
+EasyAssess.app.stateProvider.state('user.detail', {
+    url:"/detail",
+    templateUrl: 'user_detail.html',
+    controller:  "userDetailController"
+});
+
 
 EasyAssess.app.stateProvider.state('template', {
     url:"/template",
