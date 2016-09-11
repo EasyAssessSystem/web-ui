@@ -21,13 +21,15 @@ EasyAssess.directives["esAppDatagrid"]
                 + '</table>'
                 + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">没有匹配的记录</div>'
                 + '<div ng-show="pagination.length">'
-                + '<ul class="pagination pagination-sm">'
+                + '<div style="float: left;"><ul class="pagination pagination-sm">'
                 + '<li><a ng-click="first()" href="javascript:void(0)"><span class="glyphicon glyphicon-backward"></span></a></li>'
                 + '<li><a ng-click="previous()" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>'
                 + '<li ng-repeat="n in pagination"><a ng-if="n != pageNum"ng-click="jump(n)" href="javascript:void(0)">{{n}}</a><span ng-if="n == pageNum" style="color:black">{{n}}</span></li>'
                 + '<li><a ng-click="next()" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>'
                 + '<li><a ng-click="last()" href="javascript:void(0)"><span class="glyphicon glyphicon-forward"></span></a></li>'
-                + '</ul>'
+                + '</ul></div>'
+                + '<div class="pagination form-group" style="padding-left: 60px;"><span style="float: left;padding:5px 5px 0px 0px;">跳转: </span><input class="form-control" style="width: 50px;height:30px;" type="tel" min=1 ng-keyup="go(pageNum, $event)" ng-model="pageNum"/></div>'
+                + '<div class="pagination form-group" style="padding-left:60px;"><span style="float: left;padding:5px 5px 0px 0px;">每页显示(行): </span><select class="form-control" ng-change="setPageSize(esPageSize)" ng-model="esPageSize" style="width: 50px;height:30px;"><option selected="selected" value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></div>'
                 + '</div>'
                 + '</div>';
             return tpl;
@@ -46,7 +48,7 @@ EasyAssess.directives["esAppDatagrid"]
         },
         controller: ["$scope", function ($scope, $element, $attrs) {
             if (!$scope.esPageSize) {
-                $scope.esPageSize = 5;
+                $scope.esPageSize = "5";
             }
 
             if ($scope.esFormatters) {
@@ -67,6 +69,8 @@ EasyAssess.directives["esAppDatagrid"]
             $scope.pagination = [];
             $scope.pageNum = 1;
             $scope.jump = function (pageNum) {
+                if (!pageNum || isNaN(pageNum) || pageNum < 1) pageNum = 1;
+                if (pageNum > pageCount) pageNum = pageCount;
                 $scope.pageNum = pageNum;
                 $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
                 _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
@@ -98,6 +102,17 @@ EasyAssess.directives["esAppDatagrid"]
 
             $scope.last = function () {
                 $scope.jump(pageCount);
+            }
+
+            $scope.go = function(pageNumber, e) {
+                if (e.key === 'Enter') {
+                    $scope.jump(pageNumber);
+                }
+            }
+
+            $scope.setPageSize = function(size) {
+                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
+                _loadData($scope.esResource, size, $scope.pageNum, conditions.by, conditions.keyword, null);
             }
 
             $scope.getRecordModel = function(rec) {
