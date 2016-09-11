@@ -1,47 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta content="text/html; charset=utf-8">
-	<title>EasyAssess QC System</title>
-	<link href="resource/fav.ico" rel="shortcut icon">
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <meta content="text/html; charset=utf-8">
+    <title>EasyAssess QC System</title>
+    <link href="resource/fav.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-<body ng-app="esApplication" ng-controller="esApplicationController" ng-style="{'background-image': authenticated ? '':'url(resource/bg-noise.jpg)'}">
-	<div ng-if="authenticated">
-		<es-app-banner></es-app-banner>
-		<es-app-menu></es-app-menu>
-		<es-app-component>
-			<div ui-view></div>
-		</es-app-component>
-	</div>
-	<div ng-if="!authenticated" align="center">
-		<div style="position: relative;top:130px;width:600px;heigh:300px;border-radius: 8px 8px 8px 8px;background-color: #5B6A7D;box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);" align="left">
-			<div style="padding: 20px 30px 0px 30px;">
-				<div class="es-app-banner-title">
-					<img src="resource/logo_64.png" width="32" height="32"/>
-					<span>Easy</span><span style="color:#00B312">Assess</span>
-					<img src="resource/stardust.png" style="position: relative; top:0px;left: 180px;" width="220" height="30"/>
-					<div style="color:white;font-size:12px;font-weight:normal;padding-left: 42px;">QC Tracking System</div>
-				</div>
-			</div>
-			<div style="padding: 10px 30px 30px 30px;">
-				<div ng-if="error" style="color:orange;" ng-bind="error"></div>
-				<es-app-textbox es-field="username" es-model="input.username" es-placeholder="Username"></es-app-textbox>
-				<es-app-textbox es-field="password" es-model="input.password" es-type="password" es-placeholder="Password"></es-app-textbox>
-				<button ng-click="logon()" type="button" class="btn btn-success">
-					<span class="glyphicon glyphicon-ok"></span>
-					<span class="es-icon-button-text">OK</span>
-				</button>
-			</div>
-		</div>
-		<div style="position:absolute;bottom: 10px;width: 100%;">
-			<div class="es-sep-line"></div>
-			<div style="color:#aaa;font-size:8px;">
-				Copyright Stardust 2016 | <a  style="color:#aaa;" href="http://www.renaijiance.com" target="_blank">www.renaijiance.com</a>
-			</div>
-		</div>
-	</div>
-	<script src="env.bundle.js" charset="utf-8"></script>
-	<script src="app.bundle.js" charset="utf-8"></script>
+<body ng-app="esApplication" ng-controller="esApplicationController"
+      ng-style="{'background-image': authenticated ? '':'url(resource/bg-noise.jpg)'}">
+<div id="loading-frame" align="center" style="color:#aaa;padding-top: 50px;">正在加载, 请耐心等待...</div>
+<div id="app-frame" style="display: none;">
+    <div ng-if="authenticated">
+        <es-app-banner></es-app-banner>
+        <es-app-menu></es-app-menu>
+        <es-app-component>
+            <div ui-view></div>
+        </es-app-component>
+    </div>
+    <div id="browser-not-support" align="center" style="color:#aaa;padding-top: 50px; display: none;">
+        <div>
+            您使用的浏览器不支持EasyAssess, 请下载并使用:<br>
+            1. &nbsp;<img src="resource/FF.png" width="15" height="15"/><a style="padding-left: 5px;" href="http://www.firefox.com.cn/download/">Firefox(火狐浏览器)</a><br>
+            2. &nbsp;<img src="resource/chrome.png" width="15" height="15"/><a style="padding-left: 5px;" href="http://rj.baidu.com/soft/detail/14744.html?ald">Chrome(谷歌浏览器)</a><br>
+        </div>
+    </div>
+    <div id="login-window" ng-if="!authenticated" align="center" style="display: none;">
+        <div style="position: relative;top:130px;width:600px;heigh:300px;border-radius: 8px 8px 8px 8px;background-color: #5B6A7D;box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);"
+             align="left">
+            <div style="padding: 20px 30px 0px 30px;">
+                <div class="es-app-banner-title">
+                    <img src="resource/logo_64.png" width="32" height="32"/>
+                    <span>Easy</span><span style="color:#00B312">Assess</span>
+                    <img src="resource/stardust.png" style="position: relative; top:0px;left: 180px;" width="220"
+                         height="30"/>
+                    <div style="color:white;font-size:12px;font-weight:normal;padding-left: 42px;">QC Tracking System
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 10px 30px 30px 30px;">
+                <div ng-if="error" style="color:orange;" ng-bind="error"></div>
+                <es-app-textbox es-field="username" es-model="input.username"
+                                es-placeholder="Username"></es-app-textbox>
+                <es-app-textbox es-field="password" es-model="input.password" es-type="password"
+                                es-placeholder="Password"></es-app-textbox>
+                <button ng-click="logon()" type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span class="es-icon-button-text">OK</span>
+                </button>
+            </div>
+        </div>
+        <div style="position:absolute;bottom: 10px;width: 100%;">
+            <div class="es-sep-line"></div>
+            <div style="color:#aaa;font-size:8px;">
+                Copyright Stardust 2016 | <a style="color:#aaa;" href="http://www.renaijiance.com" target="_blank">www.renaijiance.com</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="env.bundle.js" charset="utf-8"></script>
+<script src="app.bundle.js" charset="utf-8"></script>
+<script>
+    $(document).ready(function () {
+        $('#loading-frame').hide();
+        $('#app-frame').show();
+        if (isBrowserSupport()) {
+            $('#login-window').show();
+        } else {
+            $('#browser-not-support').show();
+        }
+
+        function isBrowserSupport() {
+            return /firefox/.test(navigator.userAgent.toLowerCase())
+            || /webkit/.test(navigator.userAgent.toLowerCase())
+            || /safari/.test(navigator.userAgent.toLowerCase())
+        }
+    });
+</script>
 </body>
 </html>
