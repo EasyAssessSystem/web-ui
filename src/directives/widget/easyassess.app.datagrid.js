@@ -21,16 +21,16 @@ EasyAssess.directives["esAppDatagrid"]
                 + '</table>'
                 + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">没有匹配的记录</div>'
                 + '<div ng-show="pagination.length">'
-                + '<div style="float: left;"><ul class="pagination pagination-sm">'
+                + '<table><tr><td><ul class="pagination pagination-sm">'
                 + '<li><a ng-click="first()" href="javascript:void(0)"><span class="glyphicon glyphicon-backward"></span></a></li>'
                 + '<li><a ng-click="previous()" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>'
                 + '<li ng-repeat="n in pagination"><a ng-if="n != pageNum"ng-click="jump(n)" href="javascript:void(0)">{{n}}</a><span ng-if="n == pageNum" style="color:black">{{n}}</span></li>'
                 + '<li><a ng-click="next()" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>'
                 + '<li><a ng-click="last()" href="javascript:void(0)"><span class="glyphicon glyphicon-forward"></span></a></li>'
-                + '</ul></div>'
-                + '<div class="pagination form-group" style="padding-left: 60px;"><span style="float: left;padding:5px 5px 0px 0px;">跳转: </span><input class="form-control" style="width: 50px;height:30px;" type="tel" min=1 ng-keyup="go(pageNum, $event)" ng-model="pageNum"/></div>'
-                + '<div class="pagination form-group" style="padding-left:60px;"><span style="float: left;padding:5px 5px 0px 0px;">每页显示(行): </span><select class="form-control" ng-change="setPageSize(esPageSize)" ng-model="esPageSize" style="width: 50px;height:30px;"><option selected="selected" value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></div>'
-                + '</div>'
+                + '</ul></td>'
+                + '<td><div class="pagination form-group" style="padding-left: 60px;"><span style="float: left;padding:5px 5px 0px 0px;">跳转: </span><input class="form-control" style="width: 50px;height:30px;" type="tel" min=1 ng-keyup="go(pageNum, $event)" ng-model="pageNum"/></div></td>'
+                + '<td><div class="pagination form-group" style="padding-left:60px;"><span style="float: left;padding:5px 5px 0px 0px;">每页显示(行): </span><select class="form-control" ng-change="setPageSize(esPageSize)" ng-model="esPageSize" style="width: 50px;height:30px;"><option selected="selected" value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></div></td>'
+                + '</tr></table>'
                 + '</div>';
             return tpl;
         },
