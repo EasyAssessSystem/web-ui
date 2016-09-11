@@ -28,8 +28,8 @@ EasyAssess.directives["esAppDatagrid"]
                 + '<li><a ng-click="next()" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>'
                 + '<li><a ng-click="last()" href="javascript:void(0)"><span class="glyphicon glyphicon-forward"></span></a></li>'
                 + '</ul></td>'
-                + '<td><div class="pagination form-group" style="padding-left: 60px;"><span style="float: left;padding:5px 5px 0px 0px;">跳转: </span><input class="form-control" style="width: 50px;height:30px;" type="tel" min=1 ng-keyup="go(pageNum, $event)" ng-model="pageNum"/></div></td>'
-                + '<td><div class="pagination form-group" style="padding-left:60px;"><span style="float: left;padding:5px 5px 0px 0px;">每页显示(行): </span><select class="form-control" ng-change="setPageSize(esPageSize)" ng-model="esPageSize" style="width: 50px;height:30px;"><option selected="selected" value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></div></td>'
+                + '<td><div class="pagination form-group" style="padding-left: 50px;"><table><tr><td><span style="float: left;padding:5px 5px 0px 0px;">跳转: </span></td><td><input class="form-control" style="width: 50px;height:30px;" type="tel" min=1 ng-keyup="go(pageNum, $event)" ng-model="pageNum"/></td></tr></table></div></td>'
+                + '<td><div class="pagination form-group" style="padding-left: 50px;"><table><tr><td><span style="float: left;padding:5px 5px 0px 0px;">每页显示(行): </span></td><td><select class="form-control" ng-change="setPageSize(esPageSize)" ng-model="esPageSize" style="width: 60px;height:30px;"><option selected="selected" value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></td></tr></table></div></td>'
                 + '</tr></table>'
                 + '</div>';
             return tpl;
