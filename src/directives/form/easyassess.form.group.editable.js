@@ -73,6 +73,13 @@ EasyAssess.directives["esFormGroupEdit"]
         +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'reviewer\' ,$event)" placeholder="输入审核人"/></td>'
         +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="reviewDate" es-date="reviewDate" es-holder="请输入审核日期"></es-app-calendar></td>'
         +       '</tr>'
+        +       '<tr>'
+        +           '<td style="width: 60%;"></td>'
+        +           '<td colspan="2">'
+        +               '<span class="es-form-group-title" align="left">备注:</span>'
+        +               '<textarea ng-blur="signatureChanged(\'comments\' ,$event)" class="form-control" rows="3"></textarea>'
+        +           '</td>'
+        +       '</tr>'
         +   '</table>'
         + '</div>',
 

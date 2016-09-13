@@ -115,7 +115,6 @@ EasyAssess.directives["esFormSubmit"]
                     $scope.answer.signatures[data.groupGuid] = {};
                 }
                 $scope.answer.signatures[data.groupGuid][data.field] = data.value;
-                console.log($scope.answer.signatures)
             });
 
             function updateTheDetailList(data, field) {
