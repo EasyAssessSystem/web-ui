@@ -49,19 +49,31 @@ EasyAssess.directives["esFormGroupEdit"]
         +       '<td>'
         +          '<table cellpadding="10" cellspacing="10" style="width: 100%;">'
         +						'<tr>'
-        +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测人</span></td>'
-        +							'<td class="es-form-group-cell"><span class="es-form-group-title">审核人</span></td>'
-        +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测日期</span></td>'
+        +							'<td class="es-form-group-cell"><span class="es-form-group-title">试剂批号</span></td>'
+        +							'<td class="es-form-group-cell"><span class="es-form-group-title">试剂有效期</span></td>'
+        //+							'<td class="es-form-group-cell"><span class="es-form-group-title">检测日期</span></td>'
         +						'</tr>'
         +            '<tr style="height: 46px;" ng-repeat="row in esGroup.rows">'
-        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'tester\' ,$event)" placeholder="输入检测人"/></td>'
-        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'reviewer\', $event)" placeholder="输入复审人"/></td>'
-        +               '<td class="es-form-group-cell"><es-app-calendar es-id="row" es-date="testDate" es-holder="请输入时间"></es-app-calendar></td>'
+        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'batchNumber\' ,$event)" placeholder="输入试剂批号"/></td>'
+        +               '<td class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="detailChanged(row, \'expire\', $event)" placeholder="输入有效期"/></td>'
+        // +               '<td class="es-form-group-cell"><es-app-calendar es-id="row" es-date="testDate" es-holder="请输入时间"></es-app-calendar></td>'
         +            '</tr>'
         +           '</table>'
         +       '</td>'
         +			'</tr>'
         +	 	'</tbody></table>'
+        +   '<table style="width: 100%;">'
+        +       '<tr>'
+        +           '<td style="width: 60%;"></td>'
+        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'tester\' ,$event)" placeholder="输入检测人"/></td>'
+        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="testDate" es-date="testDate" es-holder="请输入检测日期"></es-app-calendar></td>'
+        +       '</tr>'
+        +       '<tr>'
+        +           '<td style="width: 60%;"></td>'
+        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'reviewer\' ,$event)" placeholder="输入审核人"/></td>'
+        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="reviewDate" es-date="reviewDate" es-holder="请输入审核日期"></es-app-calendar></td>'
+        +       '</tr>'
+        +   '</table>'
         + '</div>',
 
         controller: ["$scope", function($scope, $element, $attrs){
@@ -101,13 +113,32 @@ EasyAssess.directives["esFormGroupEdit"]
                 $scope.$emit(field + 'Changed',value);
             };
 
-            $scope.$on('DateTimeSelected',function(e,data){
+            $scope.signatureChanged = function(field ,e){
+                var targetValue = $(e.target).val();
                 var value = {
-                    subjectGuid:data["row"].guid,
-                    value:data["value"]
+                    groupGuid: $scope.esGroup.guid,
+                    value: targetValue,
+                    field: field
                 };
-                console.log(value);
-                $scope.$emit('testDate' + 'Changed',value);
+                $scope.$emit('signatureChanged',value);
+            };
+
+            $scope.$on('$testDate_DateTimeSelected',function(e, data){
+                var value = {
+                    groupGuid: $scope.esGroup.guid,
+                    value: data["value"],
+                    field: 'testDate'
+                };
+                $scope.$emit('signatureChanged',value);
+            });
+
+            $scope.$on('$reviewDate_DateTimeSelected',function(e, data){
+                var value = {
+                    groupGuid: $scope.esGroup.guid,
+                    value: data["value"],
+                    field: 'reviewDate'
+                };
+                $scope.$emit('signatureChanged',value);
             });
         }],
         link: function($scope, ele, attrs, ctrl) {

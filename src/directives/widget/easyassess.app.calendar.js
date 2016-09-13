@@ -10,7 +10,7 @@ EasyAssess.directives["esAppCalendar"]
         +'<date-picker ng-hide ="hideView" ng-model="esDate" on-date-selected="closeStartPop()" format-date="formatDate" style="position: absolute;right:15px;z-index: 999"></date-picker><input ng-model="esDate" ng-click="openDatePicker()" placeholder="{{esHolder}}"/>'
         + '</div>',
         scope: {
-            esId:"=?",
+            esId:"@?",
             esHolder:"@"
         },
         controller: ["$scope", function($scope, $element, $attrs){
@@ -19,7 +19,7 @@ EasyAssess.directives["esAppCalendar"]
 
             $scope.closeStartPop = function(){
                 $scope.hideView = true;
-                $scope.$emit('DateTimeSelected',{"row":$scope.esId,"value":$scope.esDate})
+                $scope.$emit('$' + $scope.esId + '_DateTimeSelected',{"value":$scope.esDate})
             };
 
             $scope.openDatePicker = function(){

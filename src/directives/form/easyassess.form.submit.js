@@ -17,7 +17,7 @@ EasyAssess.directives["esFormSubmit"]
                          +'<div style="position: relative">'
                          +'<div style="width: 100%; overflow-x:auto; overflow-y: visible;">'
                          +'<div ng-repeat="group in template.groups" class="es-page-section">'
-                             +'<es-form-group-edit es-type="esType" es-group="group" es-data="helpData"></es-form-group-edit>'
+                             +'<es-form-group-edit es-type="{{esType}}" es-group="group" es-data="helpData"></es-form-group-edit>'
                          + '</div>'
                          +'</div>'
                          +'</div>'
@@ -51,7 +51,8 @@ EasyAssess.directives["esFormSubmit"]
             $scope.answer = {
                 values:[],
                 codes:[],
-                details:[]
+                details:[],
+                signatures: {}
             };
 
             $scope.save = function(){
@@ -69,11 +70,10 @@ EasyAssess.directives["esFormSubmit"]
 
 
                         if($scope.esType == 'plan'){
-                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes, "details":$scope.answer.details});
+                            $scope.$emit('submitted',{"values":$scope.answer.values,"codes":$scope.answer.codes, "details":$scope.answer.details, "signatures":$scope.answer.signatures});
                         }else{
                             var url = EasyAssess.activeEnv['assess']() + 'form/submit/' + $scope.esForm.id;
-                            console.log($scope.answer);
-                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes,"details":$scope.answer.details}).then(function(res){
+                            esRequestService.esPut(url, {"values":$scope.answer.values,"codes":$scope.answer.codes,"details":$scope.answer.details, "signatures":$scope.answer.signatures}).then(function(res){
                                 $scope.$emit('submitted');
                             });
                         }
@@ -102,16 +102,20 @@ EasyAssess.directives["esFormSubmit"]
                 updateTheValueList(data);
             });
 
-            $scope.$on('testerChanged',function(e,data){
-                updateTheDetailList(data, 'tester');
+            $scope.$on('batchNumberChanged',function(e,data){
+                updateTheDetailList(data, 'batchNumber');
             });
 
-            $scope.$on('reviewerChanged',function(e,data){
-                updateTheDetailList(data, 'reviewer');
+            $scope.$on('expireChanged',function(e,data){
+                updateTheDetailList(data, 'expire');
             });
 
-            $scope.$on('testDateChanged',function(e,data){
-                updateTheDetailList(data, 'testDate');
+            $scope.$on('signatureChanged',function(e, data){
+                if (!$scope.answer.signatures[data.groupGuid]) {
+                    $scope.answer.signatures[data.groupGuid] = {};
+                }
+                $scope.answer.signatures[data.groupGuid][data.field] = data.value;
+                console.log($scope.answer.signatures)
             });
 
             function updateTheDetailList(data, field) {

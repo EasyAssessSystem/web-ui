@@ -48,19 +48,29 @@ EasyAssess.directives["esFormResult"]
                             +       '<td>'
                             +          '<table cellpadding="10" cellspacing="10" style="width: 100%;">'
                             +						'<tr>'
-                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测人</span></td>'
-                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">审核人</span></td>'
-                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">检测日期</span></td>'
+                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">试剂批号</span></td>'
+                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">试剂有效期</span></td>'
                             +						'</tr>'
-                            +            '<tr style="height: 46px;" ng-repeat="row in group.rows">'
-                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].tester}}</span></td>'
-                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].reviewer}}</span></td>'
-                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].testDate}}</span></td>'
+                            +            '<tr ng-repeat="row in group.rows">'
+                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].batchNumber}}</span></td>'
+                            +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].expire}}</span></td>'
                             +            '</tr>'
                             +           '</table>'
                             +       '</td>'
                             +			'</tr>'
                             +	 	'</tbody></table>'
+                            +   '<table style="width: 100%;">'
+                            +       '<tr>'
+                            +           '<td style="width: 60%;"></td>'
+                            +           '<td align="right" class="es-form-group-cell"><span>检测人: {{signatures[group.guid]["tester"]}}</span></td>'
+                            +           '<td align="center" class="es-form-group-cell"><span>检测日期: {{signatures[group.guid]["testDate"]}}</span></td>'
+                            +       '</tr>'
+                            +       '<tr>'
+                            +           '<td style="width: 60%;"></td>'
+                            +           '<td align="right" class="es-form-group-cell"><span>审核人: {{signatures[group.guid]["reviewer"]}}</span></td>'
+                            +           '<td align="center" class="es-form-group-cell"><span>审核日期: {{signatures[group.guid]["reviewDate"]}}</span></td>'
+                            +       '</tr>'
+                            +   '</table>'
                             + '</div>'
                         + '</div>'
                     + '</div>'
@@ -73,22 +83,38 @@ EasyAssess.directives["esFormResult"]
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.valuesMap = {};
             $scope.codesMap = {};
-            $scope.detailsMap = {}
+            $scope.detailsMap = {};
+            $scope.signatures = {};
 
-            $scope.esForm.values.forEach(function(value) {
-                $scope.valuesMap[value.subjectGuid + "+" + value.specimenGuid] = value.value;
-            });
+            if ($scope.esForm.signatures) {
+                $scope.esTemplate.groups.forEach(function(group){
+                    if ($scope.esForm.signatures[group.guid]) {
+                        $scope.signatures[group.guid] = $scope.esForm.signatures[group.guid];
+                    } else {
+                        $scope.signatures[group.guid] = {};
+                    }
+                });
+            }
 
-            $scope.esForm.details.forEach(function(detail) {
-                $scope.detailsMap[detail.subjectGuid] = detail;
-            });
+            if ($scope.esForm.values) {
+                $scope.esForm.values.forEach(function(value) {
+                    $scope.valuesMap[value.subjectGuid + "+" + value.specimenGuid] = value.value;
+                });
+            }
 
-            $scope.esForm.codes.forEach(function(code) {
-                if (!$scope.codesMap[code.subjectGuid]) {
-                    $scope.codesMap[code.subjectGuid] = [];
-                }
-                $scope.codesMap[code.subjectGuid].push(code);
-            });
+            if ($scope.esForm.details) {
+                $scope.esForm.details.forEach(function(detail) {
+                    $scope.detailsMap[detail.subjectGuid] = detail;
+                });
+            }
+            if ($scope.esForm.codes) {
+                $scope.esForm.codes.forEach(function(code) {
+                    if (!$scope.codesMap[code.subjectGuid]) {
+                        $scope.codesMap[code.subjectGuid] = [];
+                    }
+                    $scope.codesMap[code.subjectGuid].push(code);
+                });
+            }
 
             $scope.getValue = function(row, specimen) {
                 return $scope.valuesMap[row.guid + "+" + specimen.guid];
@@ -105,8 +131,6 @@ EasyAssess.directives["esFormResult"]
                 }
                 return "";
             }
-
-            console.log(angular.toJson($scope.detailsMap))
         }]
     }
 
