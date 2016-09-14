@@ -19,10 +19,6 @@ EasyAssess.app.IQCTemplateController.prototype = EasyAssess.extend({
         $scope.lookupFields = [
             {title:"名称", field:"header.name", type:"string",searchable:true,default:true},
         ];
-        $scope.groupType = {
-            assess:false,
-            iqc:true
-        };
 
         $scope.addGroup = function() {
             console.log('this is a new iqc group');
