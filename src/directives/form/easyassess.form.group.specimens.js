@@ -26,7 +26,6 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
 
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.specimens = [];
-
             for (var key in $scope.esGroup.specimens){
                 var speciman = {
                     specimenCode:"样品",
@@ -38,11 +37,13 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
             $scope.removeColumn = function(specimen) {
                 specimen.specimenCode = '样品';
                 specimen.subjects = [];
+                specimen.guid = null;
                 $scope.$emit('removeSpecimen',specimen.specimenCode);
             };
 
             function _updateSpecimanList(data,field,speciman){
                 speciman.specimenCode = field;
+                speciman.guid = data;
                 angular.forEach($scope.esGroup.rows,function(item){
                     if(data in item.optionMap){
                         speciman.subjects.push({guid:item.guid, optionValues:item.optionMap[data].optionValues})
@@ -88,8 +89,9 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
             $scope.valueChanged = function(row, specimen, e){
                 var field = $(e.target).val();
                 var value = {
-                    subjectGuid:row.guid,
-                    specimenCode:specimen.specimenCode,
+                    subjectGuid: row.guid,
+                    specimenCode: specimen.specimenCode,
+                    specimenGuid: specimen.guid,
                     value:field
                 };
                 $scope.$emit('valueChanged',value);
@@ -98,8 +100,17 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
             // add specimen
             $scope.addNewSample = function(speciman){
                 ngDialog.open({
-                    template: '<div class="es-dialog-content"><div class="es-dialog-form-line" ng-class="error.flag ? \'has-error\' :\'\' "><input class="form-control" placeholder="请输入样本编号" es-ids="txtSpecimenNumber"/><div ng-if="error.flag" style="color: #a94442"><span>{{error.msg}}</span></div></div>'
-                    +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+                    template: '<div class="es-dialog-content">'
+                    +'<div ng-repeat="input in inputs" class="es-dialog-form-line">'
+                    +	'样本组成-{{$index+1}}:<input class="form-control es-specimen-input" placeholder="请输入样本编号"/>'
+                    +'</div>'
+                    +'<div class="es-dialog-form-line" align="right">'
+                    +	'<es-add-button ng-click="addSubSpecimen()" es-text="添加混合样本号"></es-add-button>'
+                    +'</div>'
+                    +'<div class="es-dialog-form-line" align="right">'
+                    +	'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
+                    +'</div>'
+                    +'</div>',
                     plain: true,
                     scope: $scope,
                     controller: ['$scope','esRequestService',function($dialog,esRequestService) {
@@ -107,22 +118,33 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                             flag:false,
                             msg:""
                         };
+
+                        $dialog.inputs = [0];
+
+                        $dialog.addSubSpecimen = function() {
+                            $dialog.inputs.push($dialog.inputs.length);
+                        }
+
                         $dialog.submit = function(){
-                            var field = $("[es-ids=txtSpecimenNumber]").val();
+                            var inputs = $(".es-specimen-input");
+                            var number = '';
+                            inputs.each(function(){
+                                if (number) {
+                                    number += "+" + $(this).val();
+                                } else {
+                                    number = $(this).val();
+                                }
+                            });
                             // send the request to backend to get the options map:
-                            if(_verifyDuplicateValue(field)){
+                            if(_verifyDuplicateValue(number)){
                                 if($scope.esData){
-                                    var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +field;
+                                    var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +number;
                                     esRequestService.esGet(url).then(function(res){
                                         if(res.data.length >0){
-                                            _updateSpecimanList(res.data, field,speciman);
+                                            _updateSpecimanList(res.data, number, speciman);
                                             $dialog.closeThisDialog();
-
                                         }else{
-                                            $scope.error = {
-                                                flag:true,
-                                                msg:"请输入有效的样本码!"
-                                            };
+                                            EasyAssess.QuickMessage.error("无效的样本码");
                                         }
                                     });
                                 }

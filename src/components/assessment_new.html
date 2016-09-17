@@ -79,16 +79,32 @@
             <div>
                 <div ng-if="!selectedTemplate">没有选择测试模版</div>
                 <div ng-if="selectedTemplate">
-                    <table ng-repeat="group in selectedTemplate.groups" class="table table-striped">
+                    <!--<table ng-repeat="group in selectedTemplate.groups" class="table table-striped">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th><span>样本代码</span></th>-->
+                            <!--<th><span>操作</span></th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tr ng-repeat="specimen in group.specimens" style="cursor:pointer;">-->
+                            <!--<td>{{specimen.number}}</td>-->
+                            <!--<td><button ng-click="setSpecimenCodes(specimen)" class="btn" ng-class="getSetButtonClass(specimen)">设置盲样码</button></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                    <table class="table table-striped">
                         <thead>
                         <tr>
                             <th><span>样本代码</span></th>
                             <th><span>操作</span></th>
                         </tr>
                         </thead>
-                        <tr ng-repeat="specimen in group.specimens" style="cursor:pointer;">
-                            <td>{{specimen.number}}</td>
-                            <td><button ng-click="setSpecimenCodes(specimen)" class="btn" ng-class="getSetButtonClass(specimen)">设置盲样码</button></td>
+                        <tr ng-repeat="number in getSpecimens()" style="cursor:pointer;">
+                            <td>{{number}}</td>
+                            <td>
+                                <button ng-click="setSpecimenCodes(number)" class="btn"
+                                        ng-class="getSetButtonClass(number)">设置盲样码
+                                </button>
+                            </td>
                         </tr>
                     </table>
                 </div>

@@ -49,6 +49,40 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                 + '-' + pad(date.getDate());
         };
 
+        $scope.getSpecimens = function() {
+            var specimenNumberMap = {};
+            var results = [];
+            function hasAppended(number) {
+                if (!specimenNumberMap[number]) {
+                    specimenNumberMap[number] = true;
+                    return false;
+                }
+                return true;
+            }
+
+            function appendGroupSpecimens (group) {
+                 group.specimens.forEach(function(specimen){
+                    if (specimen.number.indexOf('+') != -1) {
+                       var subNumbers =  specimen.number.split('+');
+                        subNumbers.forEach(function (number) {
+                           if (!hasAppended(number)) {
+                               results.push(number);
+                           }
+                        });
+                    } else {
+                        if (!hasAppended(specimen.number)) {
+                            results.push(specimen.number);
+                        }
+                    }
+                });
+            }
+
+            $scope.selectedTemplate.groups.forEach(function (group) {
+                appendGroupSpecimens(group);
+            });
+
+            return results;
+        }
 
         $scope.chooseItem = function (item) {
             _updateChild(item);
@@ -150,14 +184,14 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             }
         );
 
-        $scope.getSetButtonClass = function(specimen) {
-            if ($scope.emptyModel.specimenCodes[specimen.number]) {
+        $scope.getSetButtonClass = function(number) {
+            if ($scope.emptyModel.specimenCodes[number]) {
                 return "btn-success";
             }
             return "btn-danger";
         }
 
-        $scope.setSpecimenCodes = function (specimen) {
+        $scope.setSpecimenCodes = function (number) {
             ngDialog.open({
                 template: '<div class="es-dialog-content">'
                           + '<div>盲样码</div>'
@@ -168,7 +202,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                     $dialog.submit = function () {
                         if ($dialog.codes) {
                             var codes = $dialog.codes.indexOf("\r\n") != -1 ? $dialog.codes.split("\r\n") : $dialog.codes.split("\n");
-                            $scope.emptyModel.specimenCodes[specimen.number] = codes;
+                            $scope.emptyModel.specimenCodes[number] = codes;
                         }
                         $dialog.closeThisDialog();
                     }

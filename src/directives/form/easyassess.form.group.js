@@ -242,17 +242,41 @@ EasyAssess.directives["esFormGroup"]
 			 // add specimen
 			 btnAddSpecimen.on("click", function() {
 				 ngDialog.open({
-		                template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" placeholder="请输入样本编号" es-ids="txtSpecimenNumber"/></div>'
-		                		 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+		                template: '<div class="es-dialog-content">'
+					 							       +'<div ng-repeat="input in inputs" class="es-dialog-form-line">'
+										           +	'样本组成-{{$index+1}}:<input class="form-control es-specimen-input" placeholder="请输入样本编号"/>'
+					  									 +'</div>'
+															 +'<div class="es-dialog-form-line" align="right">'
+															 +	'<es-add-button ng-click="addSubSpecimen()" es-text="添加混合样本号"></es-add-button>'
+															 +'</div>'
+		                		 			 +'<div class="es-dialog-form-line" align="right">'
+										           +	'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
+					 										 +'</div>'
+					 										 +'</div>',
 		                plain: true,
 		                scope: $scope,
 		                controller: ['$scope', function($dialog) {
+											$dialog.inputs = [0];
+
+											$dialog.addSubSpecimen = function() {
+												$dialog.inputs.push($dialog.inputs.length);
+											}
+
 		                	$dialog.submit = function(){
-		                		var field = $("[es-ids=txtSpecimenNumber]").val();
-		                		if (field && !isDuplicated(field, $scope.esGroup.specimens)) {
+												var inputs = $(".es-specimen-input");
+												var number = '';
+												inputs.each(function(){
+													if (number) {
+														number += "+" + $(this).val();
+													} else {
+														number = $(this).val();
+													}
+												});
+
+		                		if (number && !isDuplicated(number, $scope.esGroup.specimens)) {
 		                			$scope.esGroup.specimens.push({
 		                				"guid": EasyAssess.utils.generateGUID(),
-			                    		"number": field
+			                    		"number": number
 			                    	});
 		                		}
 		                    	$dialog.closeThisDialog();
