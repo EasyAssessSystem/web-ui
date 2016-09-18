@@ -5,6 +5,7 @@ EasyAssess.app.AssessmentController = function ($scope, esRequestService, $state
 
 EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
     _initialize: function ($scope, esRequestService, $state, ngDialog) {
+        $scope.canDelete = this._permission.delete;
         $scope.doFinalize = false;
         $scope.fields = [
             {title: "考评名称", field: "name", type: "string", searchable: true, default: true},
@@ -16,14 +17,29 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                 title: "操作",
                 template: "assessment_button_column.html",
                 clickHandler: (function($index, model, $event) {
-                    $scope.template = null;
-                    $scope.doFinalize = true;
-                    $scope.finalizingModel = model;
-                    esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
-                        (function (result) {
-                            $scope.template = result.data;
-                        }).bind(this)
-                    );
+                    if ($($event.target).attr('es-id') == 'close') {
+                        $scope.template = null;
+                        $scope.doFinalize = true;
+                        $scope.finalizingModel = model;
+                        esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
+                          (function (result) {
+                              $scope.template = result.data;
+                          }).bind(this)
+                        );
+                    } else {
+                        ngDialog.openConfirm({
+                            template:   '<div class="ngdialog-message">删除操作会清空所有本次考评的提交结果,是否确定要删除?</div>'
+                            + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                            plain: true
+                        }).then(
+                          (function(){
+                              esRequestService.esDelete(EasyAssess.activeEnv.assess() + 'assessment/' + model.id)
+                                .then((function(){
+                                    $scope.$broadcast('$refresh');
+                                }).bind(this));
+                          }).bind(this)
+                        );
+                    }
                 }).bind(this)
             }
         ];

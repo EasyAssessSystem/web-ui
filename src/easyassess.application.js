@@ -267,13 +267,13 @@ EasyAssess.app.MaintenanceController.prototype = {
 
 		this._service = EasyAssess.activeEnv.pdm();
 
+		this._permission = EasyAssess.TaskManager.current().permissions;
+
 		if (this._initialize) {
 			this._initialize.apply(this, arguments);
 		}
 
 		this.__default.apply(this, arguments);
-
-		this._permission = EasyAssess.TaskManager.current().permissions;
 
 		this._postInitialize();
 	},
