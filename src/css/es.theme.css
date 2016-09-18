@@ -120,7 +120,7 @@
 }
 
 .es-quick-message {
-	z-index: 9999;
+	z-index: 99999;
 	position: fixed;
 	left: 0;
 	top: 40%;
