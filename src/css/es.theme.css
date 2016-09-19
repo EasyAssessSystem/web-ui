@@ -473,3 +473,7 @@ select {
 .ngdialog.ngdialog-theme-default .ngdialog-content {
 	min-width: 680px;
 }
+
+.table-striped>tbody>tr:hover, .table-striped>tbody>tr:nth-of-type(odd):hover {
+	background-color: #f2f2f2;
+}

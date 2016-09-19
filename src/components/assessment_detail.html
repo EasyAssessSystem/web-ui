@@ -7,6 +7,8 @@
                 <th>机构</th>
                 <th>状态</th>
             </tr>
+            </thead>
+            <tbody>
             <tr style="cursor:pointer;" ng-click="show(form)" ng-repeat="form in assessment.forms">
                 <td>
                     {{form.ownerName}}
@@ -15,7 +17,7 @@
                     {{getStatusText(form.status)}}
                 </td>
             </tr>
-            </thead>
+            </tbody>
         </table>
     </div>
     <div ng-if="activeModel">

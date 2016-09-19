@@ -29,9 +29,11 @@ EasyAssess.directives["esFormResult"]
                             +					'<table>'
                             +						'<tr>'
                             +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span class="es-form-group-title">{{specimen.number}}</span></td>'
+                            +             '<td align="right" class="es-form-group-cell" ng-if="esForm.status==\'F\'"><span class="es-form-group-title">分数</span></td>'
                             +						'</tr>'
                             +						'<tr ng-repeat="row in group.rows">'
                             +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span ng-bind="getValue(row, specimen)"></span></td>'
+                            +             '<td align="right" class="es-form-group-cell" ng-if="esForm.status==\'F\'"><a title="{{scoreMap[row.guid].details}}" href="javascript:void(0);" >{{scoreMap[row.guid].total}}</a></td>'
                             +						'</tr>'
                             +					'</table>'
                             +				'</td>'
@@ -92,6 +94,7 @@ EasyAssess.directives["esFormResult"]
             $scope.codesMap = {};
             $scope.detailsMap = {};
             $scope.signatures = {};
+            $scope.scoreMap = {};
 
             if ($scope.esForm.signatures) {
                 $scope.esTemplate.groups.forEach(function(group){
@@ -106,6 +109,17 @@ EasyAssess.directives["esFormResult"]
             if ($scope.esForm.values) {
                 $scope.esForm.values.forEach(function(value) {
                     $scope.valuesMap[value.subjectGuid + "+" + value.specimenGuid] = value.value;
+                    if ($scope.esForm.status == 'F') {
+                        if (!$scope.scoreMap[value.subjectGuid]) {
+                            $scope.scoreMap[value.subjectGuid] = {
+                                total:0,
+                                details:''
+                            };
+                        }
+                        $scope.scoreMap[value.subjectGuid][value.specimenGuid] = value.score;
+                        $scope.scoreMap[value.subjectGuid].total += Number(value.score);
+                        $scope.scoreMap[value.subjectGuid].details += '样本:' + value.specimenNumber + '(' + value.specimenCode + ') 得 ' + value.score + '分\n';
+                    }
                 });
             }
 
