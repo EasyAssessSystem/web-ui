@@ -138,7 +138,7 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                             // send the request to backend to get the options map:
                             if(_verifyDuplicateValue(number)){
                                 if($scope.esData){
-                                    var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/specimen/guid/' +number;
+                                    var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/group/' + $scope.esGroup.guid + '/specimen/guid/' +number;
                                     esRequestService.esGet(url).then(function(res){
                                         if(res.data.length >0){
                                             _updateSpecimanList(res.data, number, speciman);
