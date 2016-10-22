@@ -86,8 +86,8 @@ EasyAssess.directives["esFormGroupEdit"]
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.codeFields = [
                 {title:"代码", field:"codeNumber", type:"string",searchable:true,default:false},
-                {title:"名称", field:"name", type:"string",searchable:true,default:false},
-                {title:"代码组", field:"groupName", type:"string",searchable:true, default:true,cascadeField:"group.name"}
+                {title:"名称", field:"name", type:"string",searchable:true,default:true},
+                {title:"代码组", field:"groupName", type:"string",searchable:true, default:false,cascadeField:"group.name"}
             ];
 
             $scope.codeGroups = [];
