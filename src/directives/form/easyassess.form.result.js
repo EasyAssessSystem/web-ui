@@ -28,7 +28,7 @@ EasyAssess.directives["esFormResult"]
                             +				'<td>'
                             +					'<table>'
                             +						'<tr>'
-                            +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span class="es-form-group-title">{{specimen.number}}</span></td>'
+                            +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span class="es-form-group-title">{{specimen.number}} ({{getSpecimenCode(specimen.guid)}})</span></td>'
                             +             '<td align="right" class="es-form-group-cell" ng-if="esForm.status==\'F\'"><span class="es-form-group-title">分数</span></td>'
                             +						'</tr>'
                             +						'<tr ng-repeat="row in group.rows">'
@@ -151,7 +151,17 @@ EasyAssess.directives["esFormResult"]
                     }
                 }
                 return "";
-            }
+            };
+
+            $scope.getSpecimenCode = function(specimenGuid) {
+                var value = $scope.esForm.values.find(function(value) {
+                    return value.specimenGuid == specimenGuid;
+                });
+                if (value) {
+                    return value.specimenCode;
+                }
+                return "";
+            };
         }]
     }
 
