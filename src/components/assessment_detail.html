@@ -6,15 +6,19 @@
             <tr>
                 <th>机构</th>
                 <th>状态</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr style="cursor:pointer;" ng-click="show(form)" ng-repeat="form in assessment.forms">
-                <td>
+            <tr style="cursor:pointer;" ng-repeat="form in assessment.forms">
+                <td ng-click="show(form)" >
                     {{form.ownerName}}
                 </td>
-                <td>
+                <td ng-click="show(form)" >
                     {{getStatusText(form.status)}}
+                </td>
+                <td>
+                    <span ng-if="form.status=='C'"><a ng-click="reject(form)" href="javascript:void(0)">打回</a></span>
                 </td>
             </tr>
             </tbody>
