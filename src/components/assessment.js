@@ -26,6 +26,8 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                               $scope.template = result.data;
                           }).bind(this)
                         );
+                    } else if ($($event.target).attr('es-id') == 'export') {
+                        window.open(EasyAssess.activeEnv.assess() + "assessment/excel/" + model.id)
                     } else {
                         ngDialog.openConfirm({
                             template:   '<div class="ngdialog-message">删除操作会清空所有本次考评的提交结果,是否确定要删除?</div>'
