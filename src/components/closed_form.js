@@ -13,6 +13,15 @@ EasyAssess.app.ClosedFormController .prototype = EasyAssess.extend({
             {title:"提交日期", field:"submitDate", type:"string",searchable:false,default:false},
             {title:"分数", field:"totalScore", type:"string",searchable:false,default:false},
             {title:"考评发起单位", field:"securedAssessment.ownerName", type:"string",searchable:false,default:false},
+            {
+                title: "操作",
+                template: "form_action_column.html",
+                clickHandler: (function ($index, model, $event) {
+                    if ($($event.target).attr('es-id') == 'export') {
+                        window.open(EasyAssess.activeEnv.assess() + "form/excel/" + model.id)
+                    }
+                }).bind(this)
+            }
         ];
 
         this._statusMap = {

@@ -1,5 +1,8 @@
 <div>
     <div ng-if="!activeModel" class="ds-data-grid">
+        <script type="text/ng-template" id="form_action_column.html">
+            <a href="javascript:void(0)" es-id="export" style="width:100px;height:30px;" title="导出Excel">导出</a>
+        </script>
         <es-app-datagrid es-service="assess" es-resource="form/closed" es-columns="fields" es-options="options"></es-app-datagrid>
     </div>
     <div ng-if="activeModel" class="ds-data-grid">
