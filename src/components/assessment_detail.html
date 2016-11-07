@@ -6,6 +6,7 @@
             <tr>
                 <th>机构</th>
                 <th>状态</th>
+                <th>分数</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -16,6 +17,9 @@
                 </td>
                 <td ng-click="show(form)" >
                     {{getStatusText(form.status)}}
+                </td>
+                <td>
+                    {{form.totalScore}}
                 </td>
                 <td>
                     <span ng-if="form.status=='C' || form.status=='F'"><a ng-click="export(form)" href="javascript:void(0)">导出</a></span>
