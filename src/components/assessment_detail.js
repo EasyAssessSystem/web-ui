@@ -20,6 +20,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
     };
 
     var secondback = function () {
+      $scope.activeModel = null;
     }
 
     $scope.getStatusText = function (status) {

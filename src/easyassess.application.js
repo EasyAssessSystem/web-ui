@@ -173,11 +173,38 @@ EasyAssess.utils = {
 EasyAssess.session = {};
 EasyAssess.TaskManager = {
 	_loaded:false,
-	
-	start: function(module, state, options, statePrams) {
+
+	_history: [],
+
+	getHistory: function() {
+		return this._history;
+	},
+
+	back: function() {
+		this._history.pop();
+		var item = this._history.pop();
+		if (item) {
+			this.start(item.module, item.state, item.options, item.statePrams);
+		}
+	},
+
+	start: function(module, state, options, statePrams, ignoreHistory) {
 		if(!this._loaded){
 			require('./easyassess.application.state');
 			this._loaded = true;
+		}
+
+		if (!ignoreHistory) {
+			if (this._history.length >= 6) {
+				this._history.shift();
+			}
+
+			this._history.push({
+				"module": module,
+				"state": state,
+				"options": options,
+				"statePrams": statePrams
+			});
 		}
 
 		if (!statePrams) {
