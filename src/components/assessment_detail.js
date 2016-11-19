@@ -5,6 +5,7 @@ EasyAssess.app.AssessmentDetailController = function ($scope, $state, $statePara
 
 EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
   _initialize: function ($scope, $state, $stateParams, esRequestService, ngDialog) {
+    var self = this;
     $scope.assessment = $state.current.data.detail;
     $scope.activeModel = null;
     $scope.loading = false;
@@ -15,6 +16,11 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
       {title: "分数", field: "scores", type: "string", searchable: false, default: false}
     ];
 
+    $scope.ministriesFields = [
+      {title:"名称", field:"name", type:"string",searchable:true,default:true},
+      {title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
+    ];
+
     var firstback = function () {
       EasyAssess.TaskManager.start('assessment', $state);
     };
@@ -22,6 +28,19 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
     var secondback = function () {
       $scope.activeModel = null;
     }
+
+    $scope.isAdmin = function() {
+      return EasyAssess.session.currentUser.ministries.length == 0;
+    }
+
+    $scope.$on('$ministryLookup_selected', function(e, model){
+      self.esRequestService.esPut(EasyAssess.activeEnv.assess() + "assessment/" + $scope.assessment.id + "/participant", {"participant":model.id, "participantName": model.name}).then(
+        (function (result) {
+          $scope.assessment.participants[model.id] = model.name
+          $scope.assessment.forms.push(result.data);
+        }).bind(this)
+      );
+    });
 
     $scope.getStatusText = function (status) {
       switch (status) {
@@ -46,7 +65,6 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
       }
     ];
 
-    var self = this;
     $scope.show = function (form) {
       if (form.status != "C" && form.status != "F") return;
       $scope.loading = true;

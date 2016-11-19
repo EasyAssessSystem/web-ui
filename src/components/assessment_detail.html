@@ -1,5 +1,6 @@
 <div>
     <es-app-breadcrumb es-items="items"></es-app-breadcrumb>
+    <es-app-lookup es-provider="link" ng-if="!readonly" es-label="添加机构" es-columns="ministriesFields" es-id="ministryLookup" es-resource="ministry/list/"></es-app-lookup>
     <div ng-if="!activeModel">
         <table class="table table-striped">
             <thead>
