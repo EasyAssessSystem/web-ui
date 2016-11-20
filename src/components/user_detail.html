@@ -10,7 +10,7 @@
             <es-app-textbox es-model="activeModel.phone" es-field="phone" es-placeholder="输入电话"
                             es-label="电话"></es-app-textbox>
         </es-app-tab>
-        <es-app-tab es-ref="ministryinfo" es-title="机构信息">
+        <es-app-tab es-ref="ministryinfo" es-title="机构信息" ng-if="false">
             <es-app-lookup es-readonly="readonly"  es-readonly="readonly" es-model="activeModel.ministries[0].name" es-label="所属卫生机构" es-resource="ministry" es-columns="ministriesFields" es-id="ministryLookup" es-value-field="name"></es-app-lookup>
         </es-app-tab>
     </es-app-tab-pane>
