@@ -10,13 +10,12 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
         $scope.activeModel = {};
         angular.extend($scope.activeModel, EasyAssess.session.currentUser);
         $scope.readonly = !EasyAssess.session.componentPermissionMap['health_ministry'].put;
-        console.log($scope.activeModel);
         $scope.confirmedPassword = $scope.activeModel.password;
         $scope.updateProfile = function(){
             if ($scope.validateFinalResult) {
                 esRequestService.esPut(EasyAssess.activeEnv.pdm() + 'user/profile', $scope.activeModel)
                   .then(function(){
-                      esRequestService.esPut(EasyAssess.activeEnv.pdm() + 'ministry/'+ $scope.activeModel.ministries[0].id,$scope.activeModel.ministries[0])
+                      return esRequestService.esPut(EasyAssess.activeEnv.pdm() + 'ministry/myministry',$scope.activeModel.ministries[0])
                   }).then(function(){
                       EasyAssess.QuickMessage.message("用户信息保存成功");
                       EasyAssess.session.currentUser = $scope.activeModel;
@@ -24,7 +23,7 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
                     console.log(err);
                 });
             }
-        }
+        };
 
         $scope.validations = {
             name:{
