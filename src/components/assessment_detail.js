@@ -100,7 +100,30 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
           );
         }).bind(this)
       );
+    }
 
+    $scope.remove = function (form, idx) {
+      ngDialog.openConfirm({
+        template: '<div class="ngdialog-message">是否确定删除操作?</div>'
+        + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+        plain: true
+      }).then(
+        (function () {
+          if (form.status == "F") return;
+          $scope.loading = true;
+          self.esRequestService.esDelete(EasyAssess.activeEnv.assess() + "assessment/" + $scope.assessment.id + "/participant/" + form.owner).then(
+            (function (result) {
+              for (var i=0;$scope.assessment.forms.length;i++) {
+                if ($scope.assessment.forms[i].id == form.id) {
+                  $scope.assessment.forms.splice(i, 1);
+                  break;
+                }
+              }
+              EasyAssess.QuickMessage.message("操作成功");
+            }).bind(this)
+          );
+        }).bind(this)
+      );
     }
   }
 }, EasyAssess.app.MaintenanceController.prototype);
