@@ -23,7 +23,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +				'<td>'
         +					'<table  border="0" cellspacing="0" cellpadding="0" style="float:left;">'
         +						'<tr>'
-        +							'<td class="es-form-group-cell" valign="middle"></td>'
+        +							'<td class="es-form-group-cell" valign="middle">{{esGroup.name}}</td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows" style="height: 46px;">'
         +							'<td class="es-form-group-cell" valign="middle"><div>{{row.item.subject}} - {{row.item.unit}} </div></td>'
