@@ -1,12 +1,24 @@
 <div>
-    <es-app-textbox es-model="activeModel.name" es-field="name" es-placeholder="输入姓名"
-                    es-label="姓名" es-validate="validations.name"></es-app-textbox>
-    <es-app-textbox es-type="password" es-model="activeModel.password" es-field="password"
-                    es-placeholder="输入密码" es-label="密码" es-validate="validations.password"></es-app-textbox>
-    <es-app-textbox es-type="password" es-model="confirmedPassword" es-field="confirmPassword"
-                    es-placeholder="再次输入密码" es-label="确认密码" es-validate="validations.comfirmPassword"></es-app-textbox>
-    <es-app-textbox es-model="activeModel.phone" es-field="phone" es-placeholder="输入电话"
-                    es-label="电话"></es-app-textbox>
+    <es-app-tab-pane>
+        <es-app-tab es-active="true" es-ref="userinfo" es-title="用户信息">
+            <es-app-textbox es-model="activeModel.name" es-field="name" es-placeholder="输入姓名"
+                            es-label="姓名" es-validate="validations.name"></es-app-textbox>
+            <es-app-textbox es-type="password" es-model="activeModel.password" es-field="password"
+                            es-placeholder="输入密码" es-label="密码" es-validate="validations.password"></es-app-textbox>
+            <es-app-textbox es-type="password" es-model="confirmedPassword" es-field="confirmPassword"
+                            es-placeholder="再次输入密码" es-label="确认密码" es-validate="validations.comfirmPassword"></es-app-textbox>
+            <es-app-textbox es-model="activeModel.phone" es-field="phone" es-placeholder="输入电话"
+                            es-label="电话"></es-app-textbox>
+        </es-app-tab>
+        <es-app-tab es-ref="ministryinfo" es-title="机构信息">
+            <es-app-textbox es-validate="validations.ministryName" es-model="activeModel.ministries[0].name" es-field="name" es-placeholder="输入单位名称" es-label="单位名称"></es-app-textbox>
+            <es-app-textbox  es-model="activeModel.ministries[0].province" es-field="province" es-placeholder="输入省" es-label="省份"></es-app-textbox>
+            <es-app-textbox  es-model="activeModel.ministries[0].city" es-field="city" es-placeholder="输入市" es-label="城市"></es-app-textbox>
+            <es-app-textbox  es-model="activeModel.ministries[0].district" es-field="district" es-placeholder="输入区" es-label="地区"></es-app-textbox>
+            <es-app-textbox  es-model="activeModel.ministries[0].address" es-field="address" es-placeholder="输入单位地址" es-label="地址"></es-app-textbox>
+            <es-app-textbox  es-model="activeModel.ministries[0].zipcode" es-field="zipcode" es-placeholder="输入单位邮编" es-label="邮编"></es-app-textbox>
+        </es-app-tab>
+    </es-app-tab-pane>
     <div class="es-maint-button-group">
         <button ng-click="updateProfile()" type="button" class="btn btn-primary" ng-class="{disabled:!validateFinalResult}">
             <span class="glyphicon glyphicon-ok"></span>
