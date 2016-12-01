@@ -28,7 +28,7 @@ EasyAssess.directives["esFormGroup"]
 		          +				'<td>'
 		          +					'<table>'
 		          +						'<tr>'
-		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><table><tr><td><span class="es-form-group-title">{{s_col.number}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'specimens\')"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
+		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><table><tr><td><es-text-box es-content="{{s_col.number}}" es-change-callback="specimenNumberChange(val, s_col)" class="es-form-group-title" es-placeholder=""></es-text-box></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'specimens\')"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
 		          +						'</tr>'
 		          +						'<tr ng-repeat="row in esGroup.rows">'
 		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><es-form-expect-option ng-if="esType == \'assess\'" es-group-row="row" es-specimen-column="s_col"></es-form-expect-option><es-iqc-form-expect-option ng-if="esType.iqc" es-group-row="row" es-specimen-column="s_col"></es-iqc-form-expect-option></td>'
@@ -62,7 +62,11 @@ EasyAssess.directives["esFormGroup"]
 			if (!$scope.esGroup.guid) {
 				$scope.esGroup.guid = EasyAssess.utils.generateGUID();
 			}
-			
+
+			$scope.specimenNumberChange = function(val, specimen) {
+				specimen.number = val;
+			}
+
 			$scope.removeColumn = function(guid, set) {
 				// remove columns
 				var columns = $scope.esGroup[set];
