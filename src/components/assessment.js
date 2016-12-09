@@ -28,6 +28,19 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                         );
                     } else if ($($event.target).attr('es-id') == 'export') {
                         window.open(EasyAssess.activeEnv.assess() + "assessment/excel/" + model.id)
+                    } else if ($($event.target).attr('es-id') == 'reopen') {
+                        ngDialog.openConfirm({
+                            template:   '<div class="ngdialog-message">是否确定要重置考评?</div>'
+                            + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                            plain: true
+                        }).then(
+                          (function(){
+                              esRequestService.esGet(EasyAssess.activeEnv.assess() + 'assessment/' + model.id + '/reopen')
+                                .then((function(){
+                                    $scope.$broadcast('$refresh');
+                                }).bind(this));
+                          }).bind(this)
+                        );
                     } else {
                         ngDialog.openConfirm({
                             template:   '<div class="ngdialog-message">删除操作会清空所有本次考评的提交结果,是否确定要删除?</div>'
