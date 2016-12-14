@@ -361,7 +361,11 @@ EasyAssess.app.MaintenanceController.prototype = {
 					if (this._postSave) {
 						this._postSave(result.data)
 					}
-					$scope.activeModel = null;
+					if (this._showSaveMessage) {
+						EasyAssess.QuickMessage.message("保存成功");
+					} else {
+						$scope.activeModel = null;
+					}
 				}).bind(this));
 		} else {
 			this.esRequestService.esPost(this._service + $scope.resource,$scope.activeModel)
@@ -369,7 +373,11 @@ EasyAssess.app.MaintenanceController.prototype = {
 					if (this._postSave) {
 						this._postSave(result.data)
 					}
-					$scope.activeModel = null;
+					if (this._showSaveMessage) {
+						EasyAssess.QuickMessage.message("保存成功");
+					} else {
+						$scope.activeModel = null;
+					}
 				}).bind(this));
 		}
 	},

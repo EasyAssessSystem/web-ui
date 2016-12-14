@@ -11,6 +11,7 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
 
     $scope.resource = "template";
 
+    this._showSaveMessage = true;
     this._service = EasyAssess.activeEnv.iqc();
 
     $scope.new = function() {
@@ -21,25 +22,11 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
     }
 
     $scope.remove = this._delete.bind(this);
-    
+
+    $scope.save = this._save.bind(this);
+
     $scope.back = function() {
       $scope.activeModel = null;
-    }
-
-    $scope.save = function () {
-      if ($scope.activeModel.id) {
-        esRequestService.esPut(EasyAssess.activeEnv.iqc() + "template" + '/' + $scope.activeModel.id, $scope.activeModel)
-          .then((function(response){
-            EasyAssess.QuickMessage.message("保存成功");
-            $scope.activeModel = response.data;
-          }));
-      } else {
-        esRequestService.esPost(EasyAssess.activeEnv.iqc() + "template", $scope.activeModel)
-          .then((function(response){
-            EasyAssess.QuickMessage.message("保存成功");
-            $scope.activeModel = response.data;
-          }));
-      }
     }
   }
 }, EasyAssess.app.MaintenanceController.prototype);
