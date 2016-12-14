@@ -6,7 +6,8 @@ EasyAssess.app.IQCPlanTemplateController = function ($scope, esRequestService, $
 EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
   _initialize: function ($scope, esRequestService) {
     $scope.fields = [
-      {title:"名称", field:"name", type:"string", searchable:true, default:true}
+      {title:"名称", field:"name", type:"string", searchable:true, default:true},
+      {title:"创建人", field:"owner.name", type:"string", searchable:true, default:false}
     ];
 
     $scope.resource = "template";
