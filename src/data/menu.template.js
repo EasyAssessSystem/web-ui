@@ -67,7 +67,7 @@ var MenuTemplate = {
            icon:"glyphicon-list-alt",
            items:[
                {
-                text:"制作模板",
+                text:"质控模板",
                 link:"iqc_template"
                },
                {

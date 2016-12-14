@@ -434,22 +434,22 @@ EasyAssess.app.MaintenanceController.prototype = {
 			}).bind(this));
 		}).bind(this));
 
-    	$scope.$on('$selected', (function(e, model){
-			if (this._preSelect) {
-				if (!this._preSelect(model)) {
-					return;
+			$scope.$on('$selected', (function (e, model) {
+				if (this._preSelect) {
+					if (!this._preSelect(model)) {
+						return;
+					}
 				}
-			}
-    		this._select(model);
-			this.$scope.validateFinalResult = true;
-			if(this._postSelect) {
-				this._postSelect(model);
-			}
-        }).bind(this));
+				this._select(model);
+				this.$scope.validateFinalResult = true;
+				if (this._postSelect) {
+					this._postSelect(model);
+				}
+			}).bind(this));
 
-    	$scope.$on('$cancel', (function(e){
-    		this._cancel();
-        }).bind(this));
+			$scope.$on('$cancel', (function (e) {
+				this._cancel();
+			}).bind(this));
 
 		$scope.$on('$delete', (function(e){
 			this._delete();
