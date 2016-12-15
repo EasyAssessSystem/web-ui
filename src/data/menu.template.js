@@ -63,7 +63,7 @@ var MenuTemplate = {
               }
           ]
         }, {
-           text:"质控计划",
+           text:"质控管理",
            icon:"glyphicon-list-alt",
            items:[
                {
@@ -71,11 +71,11 @@ var MenuTemplate = {
                 link:"iqc_template"
                },
                {
-                text:"质控管理",
+                text:"质控计划",
                 link:"plan"
                },
                {
-                text:"我的质控",
+                text:"质控监督",
                 link:"iqc_form"
                }
            ],
