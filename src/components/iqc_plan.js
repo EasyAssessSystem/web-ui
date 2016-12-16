@@ -26,6 +26,8 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                     } else if ($($event.target).attr('es-id') == 'delete') {
                         $scope.activeModel = model;
                         this._delete();
+                    } else if ($($event.target).attr('es-id') == 'input') {
+                        $scope.inputRecord(model);
                     }
                 }).bind(this)
             }
@@ -50,6 +52,46 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
             $scope.planModel = null;
         }
 
+        $scope.inputRecord = function (model) {
+
+            var todayRecord = null;
+            esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/record")
+              .then((function(response){
+                  todayRecord = response.data;
+
+                  ngDialog.open({
+                      template: '<div class="es-dialog-content">'
+                      + '<div style="height: 400px; overflow-y: auto; overflow-x:visible;"><es-iqc-editor es-record="record"></es-iqc-editor></div>'
+                      + '<div align="right"><button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">提交</span></button></div>'
+                      +'</div>',
+                      plain: true,
+                      className: 'ngdialog-theme-default es-large-dialog',
+                      controller: ['$scope', function ($dialog) {
+                          if (!todayRecord) {
+                              $dialog.record = {
+                                  name: model.name,
+                                  owner: model.owner,
+                                  plan: model,
+                                  items: model.items.map(function(item) {
+                                      return angular.copy(item, {});
+                                  })
+                              };
+                          } else {
+                              $dialog.record = todayRecord;
+                          }
+
+                          $dialog.save = function () {
+                              esRequestService.esPost(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/record", $dialog.record)
+                                .then((function(){
+                                    EasyAssess.QuickMessage.message("保存成功");
+                                    $dialog.closeThisDialog();
+                                }).bind(this));
+                          }
+                      }]
+                  });
+              }).bind(this));
+        }
+        
         $scope.$on('$templateLookup_selected', (function(e, model){
             ngDialog.openConfirm({
                 template:'<div class="ngdialog-message">是否从模版复制创建质控计划?</div>'

@@ -474,6 +474,11 @@ select {
 	min-width: 680px;
 }
 
+.ngdialog.ngdialog-theme-default.es-large-dialog .ngdialog-content {
+	width: 80%;
+	overflow: auto;
+}
+
 .table-striped>tbody>tr:hover, .table-striped>tbody>tr:nth-of-type(odd):hover {
 	background-color: #f2f2f2;
 }

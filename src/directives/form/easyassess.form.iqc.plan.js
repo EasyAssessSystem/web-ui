@@ -85,7 +85,7 @@ EasyAssess.directives["esIqcPlan"]
 		          + 	'<thead><tr><th style="width:15%;">检测项目</th><th style="width:45%;">样本</th></tr></thead>'
 		          +   '<tbody>'
 		          +			'<tr ng-repeat="item in esTemplate.items">'
-							+				'<td class="es-form-group-cell"><div style="vertical-align: middle;">{{item.subject}} - {{item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeItem(item)"></span></div></td>'
+							+				'<td class="es-form-group-cell" style="vertical-align: middle;"><div>{{item.subject}} - {{item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeItem(item)"></span></div></td>'
 							+				'<td>'
 							+					'<table>'
 							+						'<tr>'
