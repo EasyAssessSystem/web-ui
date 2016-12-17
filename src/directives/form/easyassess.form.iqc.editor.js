@@ -32,9 +32,7 @@ EasyAssess.directives["esIqcEditor"]
 		scope: {
 			esRecord: "="
 		},
-		
 		controller: ["$scope", function($scope, $element, $attrs){
-			console.log($scope.esRecord)
 		}]
 	}
 });

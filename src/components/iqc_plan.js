@@ -28,6 +28,8 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                         this._delete();
                     } else if ($($event.target).attr('es-id') == 'input') {
                         $scope.inputRecord(model);
+                    } else if ($($event.target).attr('es-id') == 'view') {
+                        $scope.viewRecords(model);
                     }
                 }).bind(this)
             }
@@ -52,6 +54,22 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
             $scope.planModel = null;
         }
 
+        $scope.viewRecords = function (model) {
+            esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records")
+              .then((function(response){
+                  ngDialog.open({
+                      template: '<div class="es-dialog-content">'
+                      + '<div style="height: 500px; overflow-y: auto; overflow-x:visible;"><es-iqc-viewer es-records="records"></es-iqc-viewer></div>'
+                      +'</div>',
+                      plain: true,
+                      className: 'ngdialog-theme-default es-large-dialog',
+                      controller: ['$scope', function ($dialog) {
+                          $dialog.records = response.data;
+                      }]
+                  });
+              }).bind(this));
+        }
+        
         $scope.inputRecord = function (model) {
 
             var todayRecord = null;
@@ -61,7 +79,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
 
                   ngDialog.open({
                       template: '<div class="es-dialog-content">'
-                      + '<div style="height: 400px; overflow-y: auto; overflow-x:visible;"><es-iqc-editor es-record="record"></es-iqc-editor></div>'
+                      + '<div style="height: 500px; overflow-y: auto; overflow-x:visible;"><es-iqc-editor es-record="record"></es-iqc-editor></div>'
                       + '<div align="right"><button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">提交</span></button></div>'
                       +'</div>',
                       plain: true,

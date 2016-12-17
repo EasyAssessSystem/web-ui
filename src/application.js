@@ -51,6 +51,8 @@ require('./directives/widget/easyassess.app.calendar');
 require('./directives/widget/easyassess.app.history.buttons');
 require('./directives/form/easyassess.form.iqc.plan');
 require('./directives/form/easyassess.form.iqc.editor');
+require('./directives/form/easyassess.form.iqc.viewer');
+require('./directives/form/easyassess.form.iqc.chart');
 
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);
 
