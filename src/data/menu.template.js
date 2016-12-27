@@ -67,11 +67,11 @@ var MenuTemplate = {
            icon:"glyphicon-list-alt",
            items:[
                {
-                text:"质控模板",
+                text:"质控计划",
                 link:"iqc_template"
                },
                {
-                text:"质控计划",
+                text:"室内质控",
                 link:"plan"
                },
                {
