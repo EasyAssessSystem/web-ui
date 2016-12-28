@@ -260,11 +260,6 @@ EasyAssess.directives["esIqcPlan"]
 							+					'</table>'
 							+				'</td>'
 		          +			'</tr>'
-		          +			'<tr>'
-		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
-		          +					'<es-add-button ng-click="addSubject()" es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'
-		          +				'</td>'
-		          +			'</tr>'
 		          +	 	'</tbody></table>'
 		          + '</div>',
 		scope: {
