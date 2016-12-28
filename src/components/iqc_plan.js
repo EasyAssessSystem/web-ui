@@ -112,7 +112,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
         
         $scope.$on('$templateLookup_selected', (function(e, model){
             ngDialog.openConfirm({
-                template:'<div class="ngdialog-message">是否从模版复制创建质控计划?</div>'
+                template:'<div class="ngdialog-message">是否加入该质控计划?</div>'
                 + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
                 plain: true
             }).then(
@@ -122,6 +122,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                   plan.owner = null;
                   plan.name = model.name;
                   plan.items = model.items;
+                  plan.template = model;
                   plan.records = [];
 
                   esRequestService.esPost(EasyAssess.activeEnv.iqc() + "plan", plan)

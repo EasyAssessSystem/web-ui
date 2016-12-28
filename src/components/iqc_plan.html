@@ -5,11 +5,11 @@
                 <div class="panel-heading">
                     <table>
                         <tr>
+                            <!--<td style="width: 100px;">-->
+                                <!--<div style="padding-bottom:10px;" ng-click="new()"><span class="glyphicon glyphicon-file"></span><a style="text-decoration: underline;padding-left: 5px;cursor: pointer;">创建计划</a></div>-->
+                            <!--</td>-->
                             <td style="width: 100px;">
-                                <div style="padding-bottom:10px;" ng-click="new()"><span class="glyphicon glyphicon-file"></span><a style="text-decoration: underline;padding-left: 5px;cursor: pointer;">创建计划</a></div>
-                            </td>
-                            <td style="width: 100px;">
-                                <es-app-lookup es-service="iqc" es-provider="link" ng-if="!readonly" es-label="从模版创建" es-columns="templateFields" es-id="templateLookup" es-resource="template/list/available"></es-app-lookup>
+                                <es-app-lookup es-service="iqc" es-provider="link" ng-if="!readonly" es-label="加入计划" es-columns="templateFields" es-id="templateLookup" es-resource="template/list/available"></es-app-lookup>
                             </td>
                         </tr>
                     </table>

@@ -73,39 +73,39 @@ EasyAssess.directives["esIqcSpecimenTargetValueSettings"]
 	}
 });
 
-EasyAssess.directives["esIqcPlan"]
-	= EasyAssess.app.directive("esIqcPlan", function(ngDialog) {
+EasyAssess.directives["esIqcPlanDesigner"]
+	= EasyAssess.app.directive("esIqcPlanDesigner", function(ngDialog) {
 	return {
 		restrict: 'E',
 		replace: true,
 		transclude: false,
 		template:  '<div class="es-form-group">'
-							+	 '<div class="es-form-header"><es-text-box es-content="{{esTemplate.name}}" es-change-callback="nameChanged(val)" class="es-form-header-text" es-content-align="center" es-placeholder="输入标题..."></es-text-box></div>'
-				  	  +	 '<table class="table table-striped">'
-		          + 	'<thead><tr><th style="width:15%;">检测项目</th><th style="width:45%;">样本</th></tr></thead>'
-		          +   '<tbody>'
-		          +			'<tr ng-repeat="item in esTemplate.items">'
-							+				'<td class="es-form-group-cell" style="vertical-align: middle;"><div>{{item.subject}} - {{item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeItem(item)"></span></div></td>'
-							+				'<td>'
-							+					'<table>'
-							+						'<tr>'
-							+							'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeSpecimen(item, specimen)"></span></td></tr></table></td>'
-							+							'<td><es-add-button ng-click="addSpecimen(item)" style="min-width:50px;" es-text="样本" title="添加样本"></es-add-button></td>'
-							+						'</tr>'
-							+					'</table>'
-							+				'</td>'
-		          +			'</tr>'
-		          +			'<tr>'
-		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
-		          +					'<es-add-button ng-click="addSubject()" es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'
-		          +				'</td>'
-		          +			'</tr>'
-		          +	 	'</tbody></table>'
-		          + '</div>',
+		+	 '<div class="es-form-header"><es-text-box es-content="{{esTemplate.name}}" es-change-callback="nameChanged(val)" class="es-form-header-text" es-content-align="center" es-placeholder="输入标题..."></es-text-box></div>'
+		+	 '<table class="table table-striped">'
+		+ 	'<thead><tr><th style="width:15%;">检测项目</th><th style="width:45%;">样本</th></tr></thead>'
+		+   '<tbody>'
+		+			'<tr ng-repeat="item in esTemplate.items">'
+		+				'<td class="es-form-group-cell" style="vertical-align: middle;"><div>{{item.subject}} - {{item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeItem(item)"></span></div></td>'
+		+				'<td>'
+		+					'<table>'
+		+						'<tr>'
+		+							'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeSpecimen(item, specimen)"></span></td></tr></table></td>'
+		+							'<td><es-add-button ng-click="addSpecimen(item)" style="min-width:50px;" es-text="样本" title="添加样本"></es-add-button></td>'
+		+						'</tr>'
+		+					'</table>'
+		+				'</td>'
+		+			'</tr>'
+		+			'<tr>'
+		+				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
+		+					'<es-add-button ng-click="addSubject()" es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'
+		+				'</td>'
+		+			'</tr>'
+		+	 	'</tbody></table>'
+		+ '</div>',
 		scope: {
 			esTemplate:"="
 		},
-		
+
 		controller: ["$scope", function($scope, $element, $attrs){
 
 			$scope.nameChanged = function(val) {
@@ -202,6 +202,76 @@ EasyAssess.directives["esIqcPlan"]
 				});
 			}
 
+			$scope.setSpecimenOptions = function(specimen) {
+				ngDialog.open({
+					template: '<div class="es-dialog-content">'
+					+ 	'<div class="es-dialog-form-line">'
+					+ 		'<select ng-model="specimen.type" es-ids="drpType" style="width:100%;" ng-model="type">'
+					+			'<option value="S">定性</option>'
+					+			'<option value="T">定量-靶值(%)</option>'
+					+			'<option value="P">定量-靶值(n)</option>'
+					+		'</select>'
+					+ 	'</div>'
+					+   '<div ng-if="specimen.type==\'S\'">'
+					+			'<es-iqc-specimen-selection-settings es-specimen="specimen"></es-iqc-specimen-selection-settings>'
+					+		'</div>'
+					+   '<div ng-if="specimen.type==\'P\'">'
+					+			'<es-iqc-specimen-target-value-settings es-specimen="specimen" es-type="T"></es-iqc-specimen-target-value-settings>'
+					+		'</div>'
+					+   '<div ng-if="specimen.type==\'T\'">'
+					+			'<es-iqc-specimen-target-value-settings es-specimen="specimen" es-type="P"></es-iqc-specimen-target-value-settings>'
+					+		'</div>'
+					+ 	'<div class="es-dialog-form-line" align="right">'
+					+			'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
+					+		'</div>'
+					+'</div>',
+					plain: true,
+					controller: ['$scope', function ($dialog) {
+						$dialog.specimen = angular.copy(specimen, {});
+						$dialog.submit = function () {
+							angular.copy($dialog.specimen, specimen);
+							$dialog.closeThisDialog();
+						}
+					}]
+				});
+			}
+		}]
+	}
+});
+
+EasyAssess.directives["esIqcPlan"]
+	= EasyAssess.app.directive("esIqcPlan", function(ngDialog) {
+	return {
+		restrict: 'E',
+		replace: true,
+		transclude: false,
+		template:  '<div class="es-form-group">'
+							+	 '<div class="es-form-header"><span class="es-form-header-text">{{esTemplate.name}}"</span></div>'
+				  	  +	 '<table class="table table-striped">'
+		          + 	'<thead><tr><th style="width:15%;">检测项目</th><th style="width:45%;">样本</th></tr></thead>'
+		          +   '<tbody>'
+		          +			'<tr ng-repeat="item in esTemplate.items">'
+							+				'<td class="es-form-group-cell" style="vertical-align: middle;"><div>{{item.subject}} - {{item.unit}}</div></td>'
+							+				'<td>'
+							+					'<table>'
+							+						'<tr>'
+							+							'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td></td></tr></table></td>'
+							+						'</tr>'
+							+					'</table>'
+							+				'</td>'
+		          +			'</tr>'
+		          +			'<tr>'
+		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
+		          +					'<es-add-button ng-click="addSubject()" es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'
+		          +				'</td>'
+		          +			'</tr>'
+		          +	 	'</tbody></table>'
+		          + '</div>',
+		scope: {
+			esTemplate:"="
+		},
+		
+		controller: ["$scope", function($scope, $element, $attrs){
 			$scope.setSpecimenOptions = function(specimen) {
 				ngDialog.open({
 					template: '<div class="es-dialog-content">'

@@ -73,10 +73,6 @@ var MenuTemplate = {
                {
                 text:"室内质控",
                 link:"plan"
-               },
-               {
-                text:"质控监督",
-                link:"iqc_form"
                }
            ],
            root:true
