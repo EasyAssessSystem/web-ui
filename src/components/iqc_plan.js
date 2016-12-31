@@ -80,17 +80,23 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                   ngDialog.open({
                       template: '<div class="es-dialog-content">'
                       + '<div style="height: 500px; overflow-y: auto; overflow-x:visible;"><es-iqc-editor es-record="record"></es-iqc-editor></div>'
-                      + '<div align="right"><button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">提交</span></button></div>'
+                      + '<div align="right"><button class="btn btn-primary" ng-click="reload()"><span class="glyphicon glyphicon-refresh"></span><span class="es-icon-button-text">重置</span></button><button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">提交</span></button></div>'
                       +'</div>',
                       plain: true,
                       className: 'ngdialog-theme-default es-large-dialog',
                       controller: ['$scope', function ($dialog) {
                           if (!todayRecord) {
+                              $dialog.record = createNewRecord();
+                          } else {
+                              $dialog.record = todayRecord;
+                          }
+
+                          function createNewRecord() {
                               var additionalData = {};
                               model.additionalData.forEach(function (name) {
                                   additionalData[name] = '';
                               })
-                              $dialog.record = {
+                              return {
                                   name: model.name,
                                   owner: model.owner,
                                   plan: model,
@@ -99,8 +105,6 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                                   }),
                                   additionalData: additionalData
                               };
-                          } else {
-                              $dialog.record = todayRecord;
                           }
 
                           $dialog.save = function () {
@@ -109,6 +113,22 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                                     EasyAssess.QuickMessage.message("保存成功");
                                     $dialog.closeThisDialog();
                                 }).bind(this));
+                          }
+
+                          $dialog.reload = function () {
+                              ngDialog.openConfirm({
+                                  template: '<div class="ngdialog-message">重置操作会重新读取计划模版,是否确定?</div>'
+                                  + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                                  plain: true
+                              }).then(
+                                (function(value){
+                                    $dialog.record = createNewRecord();
+                                }).bind(this),
+                                function(reason){
+                                }
+                              );
+
+
                           }
                       }]
                   });
