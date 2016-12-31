@@ -64,7 +64,8 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
     $scope.new = function() {
       $scope.model = {
         items: [],
-        name: "新建计划"
+        name: "新建计划",
+        additionalData: []
       };
     }
 

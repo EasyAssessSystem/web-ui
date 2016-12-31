@@ -86,13 +86,18 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                       className: 'ngdialog-theme-default es-large-dialog',
                       controller: ['$scope', function ($dialog) {
                           if (!todayRecord) {
+                              var additionalData = {};
+                              model.additionalData.forEach(function (name) {
+                                  additionalData[name] = '';
+                              })
                               $dialog.record = {
                                   name: model.name,
                                   owner: model.owner,
                                   plan: model,
                                   items: model.items.map(function(item) {
                                       return angular.copy(item, {});
-                                  })
+                                  }),
+                                  additionalData: additionalData
                               };
                           } else {
                               $dialog.record = todayRecord;

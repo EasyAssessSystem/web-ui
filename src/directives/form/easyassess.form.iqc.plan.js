@@ -100,6 +100,23 @@ EasyAssess.directives["esIqcPlanDesigner"]
 		+					'<es-add-button ng-click="addSubject()" es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'
 		+				'</td>'
 		+			'</tr>'
+		+			'<tr>'
+		+				'<td colspan="3">'
+		+					'<table>'
+		+						'<tr style="height: 30px;" ng-repeat="def in esTemplate.additionalData">'
+		+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
+		+							'<td>:</td>'
+		+							'<td style="padding:0px 10px 0px 10px;"><span style="width: 200px; height: 20px; display: block;" class="es-form-signature-line"></span></td>'
+		+							'<td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeAdditionalData($index)"></span></td>'
+		+						'</tr>'
+		+					'</table>'
+		+				'</td>'
+		+			'</tr>'
+		+			'<tr>'
+		+				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
+		+					'<es-add-button ng-click="addAdditionalData()" es-ids="addAdditionalData" es-text="添加辅助信息" title="添加辅助信息"></es-add-button>'
+		+				'</td>'
+		+			'</tr>'
 		+	 	'</tbody></table>'
 		+ '</div>',
 		scope: {
@@ -235,6 +252,21 @@ EasyAssess.directives["esIqcPlanDesigner"]
 					}]
 				});
 			}
+
+			$scope.addAdditionalData = function() {
+				if (!$scope.esTemplate.additionalData) {
+					$scope.esTemplate.additionalData = [];
+				}
+				$scope.esTemplate.additionalData.push('新建辅助信息 ' + ($scope.esTemplate.additionalData.length + 1));
+			}
+
+			$scope.updateAdditionalData = function(index, value) {
+				$scope.esTemplate.additionalData[index] = value;
+			}
+
+			$scope.removeAdditionalData = function(index) {
+				$scope.esTemplate.additionalData.splice(index, 1);
+			}
 		}]
 	}
 });
@@ -246,7 +278,7 @@ EasyAssess.directives["esIqcPlan"]
 		replace: true,
 		transclude: false,
 		template:  '<div class="es-form-group">'
-							+	 '<div class="es-form-header"><span class="es-form-header-text">{{esTemplate.name}}"</span></div>'
+							+	 '<div class="es-form-header"><span class="es-form-header-text">{{esTemplate.name}}</span></div>'
 				  	  +	 '<table class="table table-striped">'
 		          + 	'<thead><tr><th style="width:15%;">检测项目</th><th style="width:45%;">样本</th></tr></thead>'
 		          +   '<tbody>'
@@ -260,6 +292,23 @@ EasyAssess.directives["esIqcPlan"]
 							+					'</table>'
 							+				'</td>'
 		          +			'</tr>'
+							+			'<tr>'
+							+				'<td colspan="3">'
+							+					'<table>'
+							+						'<tr style="height: 30px;" ng-repeat="def in esTemplate.additionalData">'
+							+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
+							+							'<td>:</td>'
+							+							'<td style="padding:0px 10px 0px 10px;"><span style="width: 200px; height: 20px; display: block;" class="es-form-signature-line"></span></td>'
+							+							'<td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeAdditionalData($index)"></span></td>'
+							+						'</tr>'
+							+					'</table>'
+							+				'</td>'
+							+			'</tr>'
+							+			'<tr>'
+							+				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
+							+					'<es-add-button ng-click="addAdditionalData()" es-ids="addAdditionalData" es-text="添加辅助信息" title="添加辅助信息"></es-add-button>'
+							+				'</td>'
+							+			'</tr>'
 		          +	 	'</tbody></table>'
 		          + '</div>',
 		scope: {
@@ -267,6 +316,21 @@ EasyAssess.directives["esIqcPlan"]
 		},
 		
 		controller: ["$scope", function($scope, $element, $attrs){
+			$scope.addAdditionalData = function() {
+				if (!$scope.esTemplate.additionalData) {
+					$scope.esTemplate.additionalData = [];
+				}
+				$scope.esTemplate.additionalData.push('新建辅助信息 ' + ($scope.esTemplate.additionalData.length + 1));
+			}
+
+			$scope.updateAdditionalData = function(index, value) {
+				$scope.esTemplate.additionalData[index] = value;
+			}
+
+			$scope.removeAdditionalData = function(index) {
+				$scope.esTemplate.additionalData.splice(index, 1);
+			}
+
 			$scope.setSpecimenOptions = function(specimen) {
 				ngDialog.open({
 					template: '<div class="es-dialog-content">'

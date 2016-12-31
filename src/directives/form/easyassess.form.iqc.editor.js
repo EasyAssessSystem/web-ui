@@ -27,12 +27,27 @@ EasyAssess.directives["esIqcEditor"]
 							+					'</table>'
 							+				'</td>'
 		          +			'</tr>'
+							+			'<tr>'
+							+				'<td colspan="2">'
+							+				'<table>'
+							+						'<tr style="height: 30px;" ng-repeat="(name,value) in esRecord.additionalData">'
+							+							'<td>{{name}}:</td>'
+							+							'<td style="padding:0px 10px 0px 10px;">'
+							+								'<input value="{{value}}" class="es-form-signature-line" ng-blur="additionalDataChanged(name, $event)" placeholder="请输入辅助信息"/>'
+							+							'</td>'
+							+						'</tr>'
+							+					'</table>'
+							+				'</td>'
+							+			'</tr>'
 		          +	 	'</tbody></table>'
 		          + '</div>',
 		scope: {
 			esRecord: "="
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
+			$scope.additionalDataChanged = function (name, event) {
+				$scope.esRecord.additionalData[name] = $(event.target).val();
+			}
 		}]
 	}
 });
