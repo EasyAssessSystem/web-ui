@@ -104,7 +104,8 @@ EasyAssess.directives["esIqcPlanDesigner"]
 		+				'<td colspan="3">'
 		+					'<table>'
 		+						'<tr style="height: 30px;" ng-repeat="def in esTemplate.additionalData track by $index">'
-		+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
+		//+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
+		+							'<td><input ng-model="esTemplate.additionalData[$index]" ></td>'
 		+							'<td>:</td>'
 		+							'<td style="padding:0px 10px 0px 10px;"><span style="width: 200px; height: 20px; display: block;" class="es-form-signature-line"></span></td>'
 		+							'<td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeAdditionalData($index)"></span></td>'
@@ -261,6 +262,7 @@ EasyAssess.directives["esIqcPlanDesigner"]
 			}
 
 			$scope.updateAdditionalData = function(index, value) {
+				console.log(arguments);
 				$scope.esTemplate.additionalData[index] = value;
 			}
 
@@ -296,7 +298,8 @@ EasyAssess.directives["esIqcPlan"]
 							+				'<td colspan="3">'
 							+					'<table>'
 							+						'<tr style="height: 30px;" ng-repeat="def in esTemplate.additionalData track by $index">'
-							+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
+							//+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
+							+ 							'<td><input ng-model="esTemplate.additionalData[$index]" ></td>'
 							+							'<td>:</td>'
 							+							'<td style="padding:0px 10px 0px 10px;"><span style="width: 200px; height: 20px; display: block;" class="es-form-signature-line"></span></td>'
 							+							'<td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeAdditionalData($index)"></span></td>'
@@ -324,6 +327,7 @@ EasyAssess.directives["esIqcPlan"]
 			}
 
 			$scope.updateAdditionalData = function(index, value) {
+				console.log(arguments);
 				$scope.esTemplate.additionalData[index] = value;
 			}
 
