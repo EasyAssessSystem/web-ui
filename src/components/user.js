@@ -97,7 +97,11 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 				&& $scope.validations.username.validateResult
 				&& $scope.validations.password.validateResult
 				&& $scope.validations.comfirmPassword.validateResult;
+<<<<<<< HEAD
 			 //$scope.$$phase || $scope.$apply();
+=======
+			$scope.$apply();
+>>>>>>> parent of 0259b82... Patch: safe
 		 });
 
 		 $scope.$on('$ministryLookup_selected', function(e, model){
