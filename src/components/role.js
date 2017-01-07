@@ -58,7 +58,7 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 
 		$scope.$on('$es-validated-changed',function(){
 			$scope.validateFinalResult = $scope.validations.name.validateResult;
-			$scope.$$phase || $scope.$apply();
+			//$scope.$$phase || $scope.$apply();
 		});
 	},
 
