@@ -36,11 +36,7 @@ EasyAssess.app.AssayCategoryController.prototype = EasyAssess.extend({
 
 		$scope.$on('$es-validated-changed',function(){
 			$scope.validateFinalResult = $scope.validations.name.validateResult;
-<<<<<<< HEAD
 			//$scope.$$phase || $scope.$apply();
-=======
-			$scope.$apply();
->>>>>>> parent of 0259b82... Patch: safe
 		});
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
