@@ -1,22 +1,35 @@
 var EasyAssess = require('../../easyassess.application');
 
-EasyAssess.directives["esAppIqcgrid"]
-    = EasyAssess.app.directive("esAppDatagrid", function ($http, esRequestService) {
+EasyAssess.directives["esAppIqcHistoryGrid"]
+    = EasyAssess.app.directive("esAppIqcHistoryGrid", function ($http, esRequestService) {
 
     return {
         restrict: 'E',
         replace: true,
         transclude: true,
-        template: function ($element, $attr) {
+        template: function () {
             var tpl = '<div>'
-                + '<es-app-filter es-search-options="esOptions"></es-app-filter>'
                 + '<table class="table table-striped">'
-                + '<thead><tr>'
-                + '<th ng-repeat="column in esColumns" style="cursor:pointer;"><span ng-bind="column.title"></span></th>'
-                + '</tr></thead>'
                 + '<tr ng-show="isLoading" style="padding:20px 20px 20px 20px;"><td colspan="{{esColumns.length}}"><es-spinner></es-spinner></td></tr>'
-                + '<tr ng-hide="isLoading" ng-repeat="rec in esData" style="cursor:pointer;">'
-                + '<td ng-repeat="column in esColumns" ng-click="column.clickHandler ? column.clickHandler($index, getRecordModel(rec), $event) : select($index, getRecordModel(rec), $event)"><div ng-if="column.template" ng-include="column.template"></div><span ng-if="!column.template" ng-bind="rec.{{column.field}}"></span></td>'
+                + '<tr ng-hide="isLoading" ng-repeat="plan in esData" style="cursor:pointer;">'
+                + '<td>'
+                + '<table class="table table-striped"><tr><td></td><td ng-repeat="record in plan.targetRecords"><span>{{record.date}}</span></td></tr>'
+                + '<tr><td style="width: 150px;">{{plan.owner.name}}</td><td ng-repeat="record in plan.targetRecords">'
+                + '<table class="table table-striped">'
+                +   '<tr ng-repeat="item in record.items">'
+                +       '<td>{{item.subject}}</td>'
+                +       '<td ng-repeat="specimen in item.specimens">{{specimen.number}}: {{specimen.value}}</td>'
+                +   '</tr>'
+                + '</table>'
+                + '<table class="table table-striped">'
+                +   '<tr ng-repeat="(name, value) in record.additionalData">'
+                +       '<td>{{name}}</td>'
+                +       '<td>{{value}}</td>'
+                +   '</tr>'
+                + '</table>'
+                + '</td></tr>'
+                + '</table>'
+                + '</td>'
                 + '</tr>'
                 + '</table>'
                 + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">没有匹配的记录</div>'
@@ -35,35 +48,15 @@ EasyAssess.directives["esAppIqcgrid"]
             return tpl;
         },
         scope: {
-            esColumns: "=",
-            esResource: "@",
             esPageSize: "@",
-            esTransfer: "&?",
-            esOptions: "=?",
-            esItemId:"=?",
-            esQuery: "@",
-            esId: "@",
-            esService:"@",
-            esFormatters: "=?"
+            esTemplateId: "@",
+            esData: "=?"
         },
         controller: ["$scope", function ($scope, $element, $attrs) {
-            $scope.parent = $scope.$parent;
+
             if (!$scope.esPageSize) {
                 $scope.esPageSize = "5";
             }
-
-            if ($scope.esFormatters) {
-                $scope.esFormatters = {};
-            }
-
-            if (!$scope.esService) {
-                $scope.esService = "pdm";
-            }
-
-            var conditions = {
-                by: null,
-                keyword: null
-            };
 
             var pageCount = 1;
 
@@ -73,17 +66,8 @@ EasyAssess.directives["esAppIqcgrid"]
                 if (!pageNum || isNaN(pageNum) || pageNum < 1) pageNum = 1;
                 if (pageNum > pageCount) pageNum = pageCount;
                 $scope.pageNum = pageNum;
-                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
-                _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
+                _loadData($scope.esPageSize, $scope.pageNum, null, null, null);
             };
-
-            if (!$scope.esTransfer) {
-                $scope.esTransfer = function (rawData) {
-                    return function (rawData) {
-                        return rawData;
-                    };
-                }
-            }
 
             $scope.previous = function () {
                 if ($scope.pageNum > 1) {
@@ -112,17 +96,12 @@ EasyAssess.directives["esAppIqcgrid"]
             }
 
             $scope.setPageSize = function(size) {
-                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
-                _loadData($scope.esResource, size, $scope.pageNum, conditions.by, conditions.keyword, null);
+                _loadData($scope.esPageSize, $scope.pageNum, null, null, null);
             }
 
-            $scope.getRecordModel = function(rec) {
-                return $scope.originalData[rec.index];
-            }
-
-            function _loadData(resource, pageSize, pageNum, filterBy, filterValue, sortBy) {
+            function _loadData(pageSize, pageNum, filterBy, filterValue, sortBy) {
                 $scope.isLoading = true;
-                esRequestService.esGet(EasyAssess.activeEnv[$scope.esService]() + resource + ($scope.esItemId ? "/"+ $scope.esItemId : ($scope.esResource.indexOf("/list") != -1 ? "" : "/list")) + ($scope.esQuery ? "?" + $scope.esQuery : ""), {
+                esRequestService.esGet(EasyAssess.activeEnv.iqc() + "template/" + $scope.esTemplateId + "/record/list", {
                     size: pageSize,
                     page: pageNum - 1,
                     sortBy: sortBy,
@@ -136,7 +115,6 @@ EasyAssess.directives["esAppIqcgrid"]
                             rec.index = index;
                         });
                         $scope.originalData =  result.data.content;
-                        $scope.$emit('$' + $scope.esId + 'postLookup', $scope.esData);
                         $scope.pagination = [];
                         pageCount = result.data.totalPages;
                         if (!pageCount) pageCount = 1;
@@ -176,29 +154,7 @@ EasyAssess.directives["esAppIqcgrid"]
 
             $scope.isLoading = true;
 
-            if (!$scope.esId) {
-                $scope.esId = "";
-            } else {
-                $scope.esId = $scope.esId + "_";
-            }
-
-            $scope.select = function ($index, rowModel, $event) {
-                $scope.$emit('$' + $scope.esId + 'selected', rowModel);
-            };
-
-            $scope.$on('$onSearch', function (e, condition) {
-                conditions = condition;
-                $scope.pageNum = 1;
-                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
-                _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
-            });
-
-            $scope.$on('$' + $scope.esId + 'refresh', function () {
-                $scope.$emit('$' + $scope.esId + 'preLookup', conditions);
-                _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, conditions.by, conditions.keyword, null);
-            });
-
-            _loadData($scope.esResource, $scope.esPageSize, $scope.pageNum, null, null, null);
+            _loadData($scope.esPageSize, $scope.pageNum, null, null, null);
         }]
     };
 });
