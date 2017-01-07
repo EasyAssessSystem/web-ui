@@ -97,7 +97,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 				&& $scope.validations.username.validateResult
 				&& $scope.validations.password.validateResult
 				&& $scope.validations.comfirmPassword.validateResult;
-			 //$scope.$$phase || $scope.$apply();
+			 $scope.$$phase || $scope.$apply();
 		 });
 
 		 $scope.$on('$ministryLookup_selected', function(e, model){
