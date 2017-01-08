@@ -2,7 +2,8 @@
     <es-app-breadcrumb es-items="items"></es-app-breadcrumb>
     <es-app-lookup es-provider="link" ng-if="!readonly" es-label="添加机构" es-columns="ministriesFields" es-id="ministryLookup" es-resource="ministry/list/"></es-app-lookup>
     <div ng-if="!activeModel">
-        <table class="table table-striped">
+        <es-spinner ng-if="loading"></es-spinner>
+        <table ng-if="!loading" class="table table-striped">
             <thead>
             <tr>
                 <th>机构</th>

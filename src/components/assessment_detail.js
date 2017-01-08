@@ -8,7 +8,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
     var self = this;
     $scope.assessment = $state.current.data.detail;
     $scope.loading = true;
-    self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "assessment/" + $scope.assessment.id).then(
+    self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "assessment/" + $scope.assessment.id + "/forms").then(
       (function (result) {
         $scope.loading = false;
         $scope.assessment.forms = result.data.forms;
@@ -75,15 +75,22 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
     $scope.show = function (form) {
       if (form.status != "C" && form.status != "F") return;
       $scope.loading = true;
-      self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + form.securedAssessment.templateGuid).then(
+      self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "form/" + form.id).then(
         (function (result) {
-          $scope.loading = false;
-          $scope.activeModel = {
-            "template": result.data,
-            "form": form
-          }
+          form = result.data.form;
+          self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + form.securedAssessment.templateGuid).then(
+            (function (result) {
+              $scope.loading = false;
+              $scope.activeModel = {
+                "template": result.data,
+                "form": form
+              }
+            }).bind(this)
+          );
         }).bind(this)
       );
+
+
     }
 
     $scope.export = function (form) {
