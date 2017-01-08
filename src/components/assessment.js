@@ -20,12 +20,17 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                     if ($($event.target).attr('es-id') == 'close') {
                         $scope.template = null;
                         $scope.doFinalize = true;
-                        $scope.finalizingModel = model;
-                        esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
+                        esRequestService.esGet(EasyAssess.activeEnv.assess() + "assessment/" + model.id).then(
                           (function (result) {
-                              $scope.template = result.data;
+                              $scope.finalizingModel = result.data;
+                              esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + model.templateGuid).then(
+                                (function (result) {
+                                    $scope.template = result.data;
+                                }).bind(this)
+                              );
                           }).bind(this)
                         );
+
                     } else if ($($event.target).attr('es-id') == 'export') {
                         window.open(EasyAssess.activeEnv.assess() + "assessment/excel/" + model.id)
                     } else if ($($event.target).attr('es-id') == 'reopen') {

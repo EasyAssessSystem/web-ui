@@ -7,6 +7,13 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
   _initialize: function ($scope, $state, $stateParams, esRequestService, ngDialog) {
     var self = this;
     $scope.assessment = $state.current.data.detail;
+    $scope.loading = true;
+    self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "assessment/" + $scope.assessment.id).then(
+      (function (result) {
+        $scope.loading = false;
+        $scope.assessment.forms = result.data.forms;
+      }).bind(this)
+    );
     $scope.activeModel = null;
     $scope.loading = false;
     $scope.assessname = $scope.assessment.name;
