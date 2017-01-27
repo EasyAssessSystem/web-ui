@@ -5,11 +5,11 @@ import os
 
 class ESDockerDepolier:
     def __init__(self):
-        self.aliyun_docker_repo = os.environ['ALIYUN_DOCKER_REPO']
-        self.aliyun_docker_username = os.environ['ALIYUN_DOCKER_USER']
-        self.aliyun_docker_password = os.environ['ALIYUN_DOCKER_PASSWORD']
-        self.destination_docker_base_url = os.environ['DOCKER_BASE_URL']
-        self.app_name = os.environ['APP_NAME']
+        self.aliyun_docker_repo = os.environ['bamboo_ALIYUN_DOCKER_REPO']
+        self.aliyun_docker_username = os.environ['bamboo_ALIYUN_DOCKER_USER']
+        self.aliyun_docker_password = os.environ['bamboo_ALIYUN_DOCKER_PASSWORD']
+        self.destination_docker_base_url = os.environ['bamboo_DOCKER_BASE_URL']
+        self.app_name = os.environ['bamboo_APP_NAME']
         self.client = docker.DockerClient(base_url=self.destination_docker_base_url)
         self.image_name = self.aliyun_docker_repo + '/' + self.app_name
 
