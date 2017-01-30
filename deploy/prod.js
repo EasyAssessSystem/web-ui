@@ -1,7 +1,7 @@
 var prod = {
-    pdm:'http://www.thethirdqc.com:8180/',
-    assess:'http://www.thethirdqc.com:9190/',
-    iqc:'http://www.thethirdqc.com:9290/'
+    pdm:'http://59.110.152.96/',
+    assess:'http://59.110.152.96/',
+    iqc:'http://59.110.152.96/'
 };
 
 window._activeEnv = prod;
