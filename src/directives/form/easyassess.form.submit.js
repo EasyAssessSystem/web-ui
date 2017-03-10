@@ -11,16 +11,23 @@ EasyAssess.directives["esFormSubmit"]
                          +'<div>'
                             +'<button type="button" class="btn btn-primary" ng-click="save()">提交</button>'
                          +'</div>'
-                         +'<div class="es-page-section">'
+                         +'<es-app-tab-pane>'
+                         + '<es-app-tab es-active="true" es-ref="formView" es-title="表单">'
+                            +'<div class="es-page-section">'
                             +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
-                         +'</div>'
-                         +'<div style="position: relative">'
-                         +'<div style="width: 100%; overflow-x:auto; overflow-y: visible;">'
-                         +'<div ng-repeat="group in template.groups" class="es-page-section">'
-                             +'<es-form-group-edit es-type="{{esType}}" es-group="group" es-data="helpData"></es-form-group-edit>'
-                         + '</div>'
-                         +'</div>'
-                         +'</div>'
+                            +'</div>'
+                            +'<div style="position: relative">'
+                            +'<div style="width: 100%; overflow-x:auto; overflow-y: visible;">'
+                            +'<div ng-repeat="group in template.groups" class="es-page-section">'
+                            +'<es-form-group-edit es-type="{{esType}}" es-group="group" es-data="helpData"></es-form-group-edit>'
+                            + '</div>'
+                            +'</div>'
+                            +'</div>'
+                         + '</es-app-tab>'
+                         + '<es-app-tab es-ref="preView" es-title="预览">'
+                         +    '<es-form-result ng-if="template && previewModel" es-form="previewModel" es-template="template"></es-form-result>'
+                         + '</es-app-tab>'
+                        +'</es-app-tab-pane>'
                      +'</es-form-page>'
                  +'</div>',
         scope: {
@@ -40,8 +47,8 @@ EasyAssess.directives["esFormSubmit"]
 
             $scope.formHeader = {
                 name:$scope.esForm.formName
-            }
-
+            };
+            
             if ($scope.esType =='assess'){
                 $scope.helpData =  $scope.esForm.securedAssessment.id;
             }else{
@@ -89,6 +96,19 @@ EasyAssess.directives["esFormSubmit"]
                 var codeGroupGuid = attrs.codeGroupGuid
 
                 addCodeIntoList(e.targetScope, data, subjectGuid, codeGroupGuid);
+            });
+
+            $scope.$on('$tabSelected',function(e, ref, attrs){
+                if (ref=="preView") {
+                    $scope.previewModel = {
+                        values:$scope.answer.values,
+                        codes:$scope.rawCodeList,
+                        details:$scope.answer.details,
+                        signatures: $scope.answer.signatures
+                    };
+                } else {
+                    $scope.previewModel = null;
+                }
             });
 
             $scope.$on('removeSpecimen',function(e,data){

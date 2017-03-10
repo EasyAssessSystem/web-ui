@@ -28,7 +28,7 @@ EasyAssess.directives["esFormResult"]
                             +				'<td>'
                             +					'<table>'
                             +						'<tr>'
-                            +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span class="es-form-group-title">{{specimen.number}} ({{getSpecimenCode(specimen.guid)}})</span></td>'
+                            +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span class="es-form-group-title" ng-if="esForm.status==\'F\'">{{specimen.number}} </span><span class="es-form-group-title">{{getSpecimenCode(specimen.guid)}}</span></td>'
                             +             '<td align="right" class="es-form-group-cell" ng-if="esForm.status==\'F\'"><span class="es-form-group-title">分数</span></td>'
                             +						'</tr>'
                             +						'<tr ng-repeat="row in group.rows">'
@@ -95,6 +95,21 @@ EasyAssess.directives["esFormResult"]
             $scope.detailsMap = {};
             $scope.signatures = {};
             $scope.scoreMap = {};
+            if ($scope.esForm.status != "F") {
+                $scope.esTemplate.groups.forEach(function(group) {
+                    group.specimens = shuffle(group.specimens);
+                });
+            }
+            console.log($scope.esForm);
+            function shuffle(array) {
+                for (var i = array.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+                return array;
+            }
 
             if ($scope.esForm.signatures) {
                 $scope.esTemplate.groups.forEach(function(group){
@@ -158,7 +173,7 @@ EasyAssess.directives["esFormResult"]
                     return value.specimenGuid == specimenGuid;
                 });
                 if (value) {
-                    return value.specimenCode;
+                    return "(" + value.specimenCode + ")";
                 }
                 return "";
             };

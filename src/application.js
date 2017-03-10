@@ -70,7 +70,6 @@ app.controller("esApplicationController", function ($scope, $http, $cookies,$sta
                     EasyAssess.session = response.data;
                     buildSession();
                     $scope.authenticated = true;
-                    // EasyAssess.TaskManager.start("assessment", $state);
                 } else if (response.messages.length > 0) {
                     $scope.error = response.messages[0].message;
                 }

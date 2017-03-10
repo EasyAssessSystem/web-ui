@@ -26,6 +26,7 @@ EasyAssess.directives["esAppTabPane"]
 				});
 
 				tab.selected = true;
+				$scope.$emit('$tabSelected', tab.esRef);
 			}
 		}]
 	}
