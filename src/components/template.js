@@ -17,6 +17,10 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 			name: null
 		}
 
+		$scope.footer = {
+			content: null
+		}
+
 		$scope.addGroup = function() {
 			$scope.groups.push({
 				"guid": EasyAssess.utils.generateGUID(),
@@ -42,6 +46,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 					"id": $scope.activeModel ? $scope.id : null,
 					"guid": $scope.activeModel? $scope.activeModel.guid:EasyAssess.utils.generateGUID(),
 					"header": $scope.header,
+					"footer": $scope.footer,
 					"groups": $scope.groups
 				})).then(
 					function(response) {
@@ -70,6 +75,9 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 
 		$scope.$on('$templateLookup_selected', function(e, model){
 			$scope.activeModel = model;
+			if (!$scope.activeModel.footer) {
+				$scope.activeModel.footer = {content:null};
+			}
 			$timeout(function(){
 				$scope.$apply(function () {
 					for (var key in model) {
@@ -84,6 +92,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 				$scope.$apply(function () {
 					$scope.activeModel = null;
 					$scope.header = {name:null};
+					$scope.footer = {content:null};
 					$scope.groups = [];
 				});
 			},100)

@@ -41,6 +41,7 @@ require('./directives/form/easyassess.iqcform.expect.option');
 require('./directives/form/easyassess.form.group.specimens');
 require('./directives/form/easyassess.form.addbutton');
 require('./directives/form/easyassess.form.header');
+require('./directives/form/easyassess.form.footer');
 require('./directives/form/easyassess.form.group');
 require('./directives/form/easyassess.form.page');
 require('./directives/form/easyassess.form.result');

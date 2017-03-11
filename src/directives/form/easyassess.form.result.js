@@ -83,6 +83,10 @@ EasyAssess.directives["esFormResult"]
                             + '</div>'
                         + '</div>'
                     + '</div>'
+                    +   '<div style="padding: 10px 0px 10px 0px;">'
+                    +      '<span class="es-form-group-title">填报说明:</span>'
+                    +      '<es-form-footer es-editable="false" es-footer="esTemplate.footer"></es-form-footer>'
+                    +   '</div>'
                 + '</div>',
         scope: {
             esForm: "=",
