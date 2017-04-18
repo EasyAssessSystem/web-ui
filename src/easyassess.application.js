@@ -61,7 +61,7 @@ EasyAssess.environments = {
 		iqc: function(domain) {
 			return env().iqc + (domain ? domain : EasyAssess.session.domain) + '/iqc/'
 		}
-}
+};
 
 
 
@@ -71,7 +71,18 @@ EasyAssess.activeEnv = EasyAssess.environments;
 /**
  * Define application
  */
-EasyAssess.app = angular.module("EasyAssessApp",[require('angular-ui-router'),require('angular-animate'),require('angular-sanitize'),require('ng-dialog'),require('angular-ui-bootstrap/src/dropdown'),require('angular-date-picker').name,require('angular-ui-tree'),require('angular-chart.js'),require('angular-bootstrap-calendar'), require('angular-ui-bootstrap')
+EasyAssess.app = angular.module("EasyAssessApp",[
+	require('angular-ui-router'),
+	require('angular-animate'),
+	require('angular-sanitize'),
+	require('ng-dialog'),
+	require('angular-ui-bootstrap/src/dropdown'),
+	require('angular-date-picker').name,
+	require('angular-ui-tree'),
+	require('angular-chart.js'),
+	require('angular-bootstrap-calendar'),
+	require('angular-ui-bootstrap'),
+	require('ng-file-upload')
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });

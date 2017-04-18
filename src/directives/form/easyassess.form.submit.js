@@ -1,7 +1,7 @@
 var EasyAssess = require('../../easyassess.application');
 
 EasyAssess.directives["esFormSubmit"]
-    = EasyAssess.app.directive("esFormSubmit", function (esRequestService,ngDialog) {
+    = EasyAssess.app.directive("esFormSubmit", function (esRequestService,ngDialog,Upload) {
     return {
         restrict: 'E',
         replace: true,
@@ -9,7 +9,9 @@ EasyAssess.directives["esFormSubmit"]
         template:'<div>'
                      +'<es-form-page>'
                          +'<div>'
-                            +'<button type="button" class="btn btn-primary" ng-click="save()">提交</button>'
+                            +'<button type="button" class="btn btn-primary" ng-click="submit()">提交</button>'
+                            +'<button type="button" class="btn btn-primary" ng-click="manageAttachment()">上传附件</button>'
+                            //+'<button ng-if="esType!=\'plan\'" type="button" class="btn btn-primary" ng-click="save()">保存</button>'
                          +'</div>'
                          +'<es-app-tab-pane>'
                          + '<es-app-tab es-active="true" es-ref="formView" es-title="表单">'
@@ -59,6 +61,40 @@ EasyAssess.directives["esFormSubmit"]
                 $scope.helpData = null;
             }
 
+            $scope.manageAttachment = function () {
+                ngDialog.open({
+                    template: '<div>'
+                             + '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="20MB" ngf-min-height="100">选择文件</a>'
+                             + '<button type="submit" ng-click="submit()">上传</button>'
+                             + '</div>',
+                    plain: true,
+                    controller: ['$scope', function ($dialogScope) {
+                        $dialogScope.submit = function () {
+                            if (!$dialogScope.file) {
+                                EasyAssess.QuickMessage.error("请选择文件");
+                            } else {
+                                $dialogScope.upload($dialogScope.file);
+                            }
+                        };
+
+                        $dialogScope.upload = function (file) {
+                            $dialogScope.fileInfo = file;
+                            Upload.upload({
+                                url: EasyAssess.activeEnv['assess']() + 'form/' + $scope.esForm.id + "/attachment",
+                                data: {
+                                    'attachment': file
+                                },
+                                withCredentials: true
+                            }).success(function (data, status, headers, config) {
+                                EasyAssess.QuickMessage.message("上传成功");
+                            }).error(function (data, status, headers, config) {
+                                EasyAssess.QuickMessage.error("上传失败");
+                            });
+                        };
+                    }]
+                });
+            };
+            
             $scope.answer = {
                 values:[],
                 codes:[],
@@ -67,6 +103,26 @@ EasyAssess.directives["esFormSubmit"]
             };
 
             $scope.save = function(){
+                if($scope.esType != 'plan'){
+                    angular.forEach($scope.rawCodeList,function(rawCode){
+                        delete rawCode['codeGuid']
+                    });
+                    $scope.answer.codes = $scope.rawCodeList;
+
+                    var url = EasyAssess.activeEnv['assess']() + 'form/' + $scope.esForm.id;
+                    $scope.esForm.status = "S";
+                    $scope.esForm.values = $scope.answer.values;
+                    $scope.esForm.codes = $scope.answer.codes;
+                    $scope.esForm.details = $scope.answer.details;
+                    $scope.esForm.signatures = $scope.answer.signatures;
+
+                    esRequestService.esPut(url, $scope.esForm).then(function(res){
+                        EasyAssess.QuickMessage.message("保存成功");
+                    });
+                }
+            };
+
+            $scope.submit = function(){
                 ngDialog.openConfirm({
                     template:   '<div class="ngdialog-message">答案一旦提交无法修改,是否确定提交?</div>'
                     + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
