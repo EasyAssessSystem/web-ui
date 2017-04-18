@@ -27,6 +27,7 @@
                     <span ng-if="form.status=='C' || form.status=='F'"><a ng-click="export(form)" href="javascript:void(0)">导出</a></span>
                     <span ng-if="form.status=='C'"><a ng-click="reject(form)" href="javascript:void(0)">打回</a></span>
                     <span ng-if="form.status!='F'"><a ng-click="remove(form, $index)" href="javascript:void(0)">删除</a></span>
+                    <a ng-if="form.attachment" href="{{form.attachment}}">附件</a>
                 </td>
             </tr>
             </tbody>

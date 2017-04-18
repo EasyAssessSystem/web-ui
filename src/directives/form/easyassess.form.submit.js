@@ -63,9 +63,16 @@ EasyAssess.directives["esFormSubmit"]
 
             $scope.manageAttachment = function () {
                 ngDialog.open({
-                    template: '<div>'
-                             + '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="20MB" ngf-min-height="100">选择文件</a>'
-                             + '<button type="submit" ng-click="submit()">上传</button>'
+                    template: '<div style="padding: 10px 10px 10px 10px;">'
+                            +	'<div class="es-dialog-form-line">'
+                            +  '<span style="color: #9d261d;">注意: 每个表单只能上传一个附件，重复上传会相互覆盖</span>'
+                            +  '</div>'
+                             +	'<div class="es-dialog-form-line">'
+                             +      '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="20MB" ngf-min-height="100">选择文件</a>'
+                             +  '</div>'
+                             +	'<div class="es-dialog-form-line">'
+                             +      '<button type="submit" class="btn btn-primary" ng-click="submit()">上传</button>'
+                             +  '</div>'
                              + '</div>',
                     plain: true,
                     controller: ['$scope', function ($dialogScope) {
@@ -87,6 +94,7 @@ EasyAssess.directives["esFormSubmit"]
                                 withCredentials: true
                             }).success(function (data, status, headers, config) {
                                 EasyAssess.QuickMessage.message("上传成功");
+                                $dialogScope.closeThisDialog();
                             }).error(function (data, status, headers, config) {
                                 EasyAssess.QuickMessage.error("上传失败");
                             });

@@ -15,6 +15,7 @@ EasyAssess.app.ActivatedFormController .prototype = EasyAssess.extend({
 
         this._statusMap = {
             "A": "未完成",
+            "S": "草稿",
             "C": "评审中",
             "F": "已公布"
         };
