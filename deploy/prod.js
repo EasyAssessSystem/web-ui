@@ -1,7 +1,7 @@
 var prod = {
-    pdm:'http://www.thethirdqc.com/',
-    assess:'http://www.thethirdqc.com/',
-    iqc:'http://www.thethirdqc.com/'
+    pdm:'${host}',
+    assess:'${host}',
+    iqc:'${host}'
 };
 
 window._activeEnv = prod;

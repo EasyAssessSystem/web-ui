@@ -38,20 +38,29 @@ var EasyAssess = {
 
 EasyAssess.session = {};
 
-var env = window._activeEnv;
+var env = function() {
+	var options = {};
+	angular.extend(options,  window._activeEnv);
+	for (var k in options) {
+		if (options[k].indexOf("${host}") != -1) {
+			options[k] = options[k].replace("${host}", window.location.origin + "/");
+		}
+	}
+	return options;
+}
 
 EasyAssess.environments = {
 		pdm: function(domain) {
-			return env.pdm + (domain ? domain : EasyAssess.session.domain) + '/data/'
+			return env().pdm + (domain ? domain : EasyAssess.session.domain) + '/data/'
 		},
 
 		assess: function(domain) {
-			return env.assess + (domain ? domain : EasyAssess.session.domain) + '/assess/'
+			return env().assess + (domain ? domain : EasyAssess.session.domain) + '/assess/'
 		},
 
 		iqc: function(domain) {
-		return env.iqc + (domain ? domain : EasyAssess.session.domain) + '/iqc/'
-	}
+			return env().iqc + (domain ? domain : EasyAssess.session.domain) + '/iqc/'
+		}
 }
 
 
