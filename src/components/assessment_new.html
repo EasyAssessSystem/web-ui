@@ -37,28 +37,27 @@
                     <p>请选择考评机构:</p>
                 </div>
                 <div class="panel-body">
-                    <script type="text/ng-template" id="ministry_renderer_ass.html">
-                        <div ui-tree-handle class="tree-node tree-node-content">
+                    <script type="text/ng-template" id="ministry_renderer_ass_creation.html">
+                        <div ui-tree-handle class="tree-node tree-node-content" ng-click="selectRow(item, $event)">
                             <table style="width: 100%;cursor: pointer;">
                                 <tr>
                                     <td style="width: 20px;padding: 0px 5px 0px 5px;">
-                            <span ng-if="item.ministries && item.ministries.length > 0" ng-click="toggle(this)"
-                                  class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,
-												   'glyphicon-chevron-down': !collapsed
-												  }" style="color: #333;font-size:12px;">
-                            </span>
+                                        <span ng-if="item.ministries && item.ministries.length > 0" ng-click="toggle(this)"
+                                                     class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,
+                                                               'glyphicon-chevron-down': !collapsed
+                                                              }" style="color: #333;font-size:12px;">
+                                        </span>
                                     </td>
                                     <td>
                                         <input ng-if="item.id != currentMinistryId" type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
                                     </td>
                                     <td style="width: 100%;">{{item.name}}</td>
-                                    </td>
                                 </tr>
                             </table>
                         </div>
                         <ul ui-tree-nodes ng-model="item.ministries" ng-class="{hidden: collapsed,displayed:!collapsed}">
                             <li ng-repeat="item in item.ministries" ui-tree-node collapsed="true"
-                                ng-include="'ministry_renderer_ass.html'">
+                                ng-include="'ministry_renderer_ass_creation.html'">
                             </li>
                         </ul>
                     </script>
@@ -67,7 +66,7 @@
                             <div ui-tree id="tree-root" data-drag-enabled="false">
                                 <ul ui-tree-nodes ng-model="list">
                                     <li ng-repeat="item in list" ui-tree-node collapsed="true"
-                                        ng-include="'ministry_renderer_ass.html'"></li>
+                                        ng-include="'ministry_renderer_ass_creation.html'"></li>
                                 </ul>
                             </div>
                         </div>

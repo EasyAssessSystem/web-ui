@@ -84,6 +84,15 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             return results;
         }
 
+        $scope.selectRow = function (item, event) {
+            if (event.target
+                && event.target.type != "checkbox"
+                && !$(event.target).hasClass("glyphicon")) {
+                item.selected = !item.selected;
+                $scope.chooseItem(item);
+            }
+        };
+
         $scope.chooseItem = function (item) {
             _updateChild(item);
             $scope.emptyModel.participants = {};
@@ -164,7 +173,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
         function _updateEmptyModel(nodes) {
             angular.forEach(nodes, function (node) {
-                if (node.selected) {
+                if (node.selected && node.id != $scope.currentMinistryId) {
                     $scope.emptyModel.participants[node.id] = node.name;
                 } else {
 
