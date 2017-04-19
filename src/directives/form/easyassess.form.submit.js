@@ -78,9 +78,7 @@ EasyAssess.directives["esFormSubmit"]
                              + '</div>',
                     plain: true,
                     controller: ['$scope', function ($dialogScope) {
-                        if (!$dialogScope.attachment) {
-                            $dialogScope.attachment = $scope.esForm.attachment;
-                        }
+                        $dialogScope.attachment = $scope.esForm.attachment;
                         $dialogScope.submit = function () {
                             if (!$dialogScope.file) {
                                 EasyAssess.QuickMessage.error("请选择文件");
@@ -98,6 +96,7 @@ EasyAssess.directives["esFormSubmit"]
                                 },
                                 withCredentials: true
                             }).success(function (data, status, headers, config) {
+                                $scope.esForm.attachment = data.data;
                                 EasyAssess.QuickMessage.message("上传成功");
                                 $dialogScope.closeThisDialog();
                             }).error(function (data, status, headers, config) {
