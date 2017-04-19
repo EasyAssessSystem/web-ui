@@ -69,13 +69,16 @@ EasyAssess.directives["esFormSubmit"]
                             +  '</div>'
                              +	'<div class="es-dialog-form-line">'
                              +      '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="20MB" ngf-min-height="100">选择文件</a>'
+                             +      '<a ng-if="attachment" href="attachment" style="padding-left: 20px;">查看附件</a>'
                              +  '</div>'
+
                              +	'<div class="es-dialog-form-line">'
                              +      '<button type="submit" class="btn btn-primary" ng-click="submit()">上传</button>'
                              +  '</div>'
                              + '</div>',
                     plain: true,
                     controller: ['$scope', function ($dialogScope) {
+                        $dialogScope.attachment = $scope.esForm.attachment;
                         $dialogScope.submit = function () {
                             if (!$dialogScope.file) {
                                 EasyAssess.QuickMessage.error("请选择文件");
