@@ -69,7 +69,7 @@ EasyAssess.directives["esFormSubmit"]
                             +  '</div>'
                              +	'<div class="es-dialog-form-line">'
                              +      '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="20MB" ngf-min-height="100">选择文件</a>'
-                             +      '<a ng-if="attachment" href="attachment" style="padding-left: 20px;">查看附件</a>'
+                             +      '<a ng-if="attachment" href="{{attachment}}" style="padding-left: 20px;">查看附件</a>'
                              +  '</div>'
 
                              +	'<div class="es-dialog-form-line">'
@@ -97,6 +97,7 @@ EasyAssess.directives["esFormSubmit"]
                                 withCredentials: true
                             }).success(function (data, status, headers, config) {
                                 $scope.esForm.attachment = data.data;
+                                $dialogScope.attachment = data.data;
                                 EasyAssess.QuickMessage.message("上传成功");
                                 $dialogScope.closeThisDialog();
                             }).error(function (data, status, headers, config) {
