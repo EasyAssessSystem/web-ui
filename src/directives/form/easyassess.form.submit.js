@@ -65,11 +65,11 @@ EasyAssess.directives["esFormSubmit"]
                 ngDialog.open({
                     template: '<div style="padding: 10px 10px 10px 10px;">'
                             +	'<div class="es-dialog-form-line">'
-                            +  '<span style="color: #9d261d;">注意: 每个表单只能上传一个附件，重复上传会相互覆盖.且文件大小不能大于20MB</span>'
+                            +  '<span style="color: #9d261d;">注意: 每个表单只能上传一个附件，重复上传会相互覆盖.且文件大小不能大于50MB</span>'
                             +  '</div>'
                             +  '<es-spinner ng-if="loading"></es-spinner>'
                             +	'<div class="es-dialog-form-line">'
-                             +      '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="20MB" ngf-min-height="100">选择文件</a>'
+                             +      '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="50MB" ngf-min-height="100">选择文件</a>'
                              +      '<a ng-if="attachment" href="{{attachment}}" style="padding-left: 20px;">查看附件</a>'
                              +  '</div>'
 
