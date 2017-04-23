@@ -203,11 +203,28 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         $scope.setSpecimenCodes = function (number) {
             ngDialog.open({
                 template: '<div class="es-dialog-content">'
-                          + '<div>盲样码</div>'
-                          + '<div><textarea class="form-control" style="height:300px;padding-bottom: 10px;" ng-model="codes"></textarea></div>'
+                          + '<div>'
+                          + '双盲样码: <input type="radio" checked name="codeType" ng-click="normalCodeSelected()"/>'
+                          + '单盲样码: <input type="radio" name="codeType" ng-click="plainCodeSelected()"/>'
+                          + '</div>'
+                          + '<div><textarea ng-hide="plainCode" class="form-control" style="height:300px;padding-bottom: 10px;" ng-model="codes"></textarea></div>'
                           + '<div><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
                 plain: true,
                 controller: ['$scope', function ($dialog) {
+                    $dialog.plainCode = false;
+
+                    $dialog.normalCodeSelected = function () {
+                        $dialog.plainCode = false;
+                        if ($dialog.codes === number) {
+                            $dialog.codes = "";
+                        }
+                    };
+
+                    $dialog.plainCodeSelected = function () {
+                        $dialog.plainCode = true;
+                        $dialog.codes=number;
+                    };
+
                     $dialog.submit = function () {
                         if ($dialog.codes) {
                             var codes = $dialog.codes.indexOf("\r\n") != -1 ? $dialog.codes.split("\r\n") : $dialog.codes.split("\n");

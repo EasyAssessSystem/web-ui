@@ -26,12 +26,27 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
 
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.specimens = [];
+
+            function getPlainSpecimen(code, specimen) {
+                var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/group/' + $scope.esGroup.guid + '/specimen/guid/' + code;
+                esRequestService.esGet(url).then(function(res){
+                    if(res.data.length >0){
+                        _updateSpecimanList(res.data, code, specimen);
+                    }
+                });
+            }
+
             for (var key in $scope.esGroup.specimens){
-                var speciman = {
-                    specimenCode:"样品",
+                var groupSpecimen = $scope.esGroup.specimens[key];
+                var specimen = {
+                    specimenCode: groupSpecimen.isPlainNumber ? groupSpecimen.number : "样品",
                     subjects:[]
                 };
-                $scope.specimens.push(speciman);
+                if (groupSpecimen.isPlainNumber && $scope.esData) {
+                    getPlainSpecimen(groupSpecimen.number, specimen);
+                }
+
+                $scope.specimens.push(specimen);
             }
 
             $scope.removeColumn = function(specimen) {

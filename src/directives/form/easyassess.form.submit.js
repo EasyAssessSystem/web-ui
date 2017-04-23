@@ -45,6 +45,16 @@ EasyAssess.directives["esFormSubmit"]
             if ($scope.esType == 'assess'){
                 var url = EasyAssess.activeEnv['assess']() + 'template/' + $scope.esForm.securedAssessment.templateGuid;
                 esRequestService.esGet(url).then(function(data){
+                    for (var code in $scope.esForm.securedAssessment.specimenCodes) {
+                        data.data.groups.forEach(function (group) {
+                            group.specimens.forEach(function (specimen) {
+                               if (specimen.number === code) {
+                                   specimen.isPlainNumber = true;
+                                   break;
+                               }
+                            });
+                        })
+                    }
                     $scope.template = data.data;
                 });
             }else if($scope.esType == 'plan'){
