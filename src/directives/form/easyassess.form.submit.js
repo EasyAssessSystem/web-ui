@@ -50,7 +50,6 @@ EasyAssess.directives["esFormSubmit"]
                             group.specimens.forEach(function (specimen) {
                                if (specimen.number === code) {
                                    specimen.isPlainNumber = true;
-                                   break;
                                }
                             });
                         })
