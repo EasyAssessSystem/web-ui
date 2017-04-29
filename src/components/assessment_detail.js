@@ -131,12 +131,14 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
         var el = $($event.target);
         el.attr('readonly', true);
         el.addClass('es-transparent-input');
-        form.additionalScore = Number(el.val());
-        self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score/" + form.additionalScore).then(
-            (function (result) {
-              EasyAssess.QuickMessage.message("操作成功");
-            }).bind(this)
-        );
+        if (form.additionalScore != Number(el.val())) {
+          form.additionalScore = Number(el.val());
+          self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score/" + form.additionalScore).then(
+              (function (result) {
+                EasyAssess.QuickMessage.message("操作成功");
+              }).bind(this)
+          );
+        }
       }
     }
 
