@@ -118,19 +118,20 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
     }
 
     $scope.editAdditionalScore = function (form, $event) {
+      if ($scope.assessment.status == "F") return;
       var el = $($event.target);
       el.attr('readonly', false);
       el.removeClass('es-transparent-input');
     }
 
     $scope.updateAdditionalScore = function (form, $event) {
+      if ($scope.assessment.status == "F") return;
       var keycode = window.event ? $event.keyCode : $event.which;
       if(keycode==13 || !keycode) {
         var el = $($event.target);
         el.attr('readonly', true);
         el.addClass('es-transparent-input');
         form.additionalScore = Number(el.val());
-
         self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score/" + form.additionalScore).then(
             (function (result) {
               EasyAssess.QuickMessage.message("操作成功");
