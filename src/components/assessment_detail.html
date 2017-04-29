@@ -8,7 +8,9 @@
             <tr>
                 <th>机构</th>
                 <th>状态</th>
-                <th>分数</th>
+                <th>考评得分</th>
+                <th>附加分</th>
+                <th>总分</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -22,6 +24,16 @@
                 </td>
                 <td>
                     {{form.totalScore}}
+                </td>
+                <td>
+                    <input class="es-transparent-input"
+                           readonly="true" type="number" value="{{form.additionalScore}}"
+                           ng-blur="updateAdditionalScore(form, $event)"
+                           ng-keyup="updateAdditionalScore(form, $event)"
+                           ng-dblclick="editAdditionalScore(form, $event)"/>
+                </td>
+                <td>
+                    {{form.additionalScore + form.totalScore}}
                 </td>
                 <td>
                     <span ng-if="form.status=='C' || form.status=='F'"><a ng-click="export(form)" href="javascript:void(0)">导出</a></span>

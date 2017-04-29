@@ -52,6 +52,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
     $scope.getStatusText = function (status) {
       switch (status) {
         case "A":
+        case "S":
           return "未完成";
         case "C":
           return "已提交";
@@ -114,6 +115,28 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
           );
         }).bind(this)
       );
+    }
+
+    $scope.editAdditionalScore = function (form, $event) {
+      var el = $($event.target);
+      el.attr('readonly', false);
+      el.removeClass('es-transparent-input');
+    }
+
+    $scope.updateAdditionalScore = function (form, $event) {
+      var keycode = window.event ? $event.keyCode : $event.which;
+      if(keycode==13 || !keycode) {
+        var el = $($event.target);
+        el.attr('readonly', true);
+        el.addClass('es-transparent-input');
+        form.additionalScore = Number(el.val());
+
+        self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score/" + form.additionalScore).then(
+            (function (result) {
+              EasyAssess.QuickMessage.message("操作成功");
+            }).bind(this)
+        );
+      }
     }
 
     $scope.remove = function (form, idx) {

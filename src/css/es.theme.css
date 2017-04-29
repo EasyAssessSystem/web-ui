@@ -29,6 +29,11 @@
     content:none;
 }
 
+.es-transparent-input {
+	background-color: transparent;
+	border: none;
+}
+
 /** ES add button **/
 .es-add-button {
 	border:1px dashed rgb(195,195,195);
