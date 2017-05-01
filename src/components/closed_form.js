@@ -11,7 +11,9 @@ EasyAssess.app.ClosedFormController .prototype = EasyAssess.extend({
             {title:"考评名称", field:"formName", type:"string",searchable:true,default:true},
             {title:"状态",field:"status",type:"string",searchable:false,default:false},
             {title:"提交日期", field:"submitDate", type:"string",searchable:false,default:false},
-            {title:"分数", field:"totalScore", type:"string",searchable:false,default:false},
+            {title:"分数", field:"totalScore", type:"number",searchable:false,default:false},
+            {title:"附加分", field:"additionalScore", type:"number",searchable:false,default:false},
+            {title:"总分", field:"totalScore+additionalScore", type:"number",searchable:false,default:false},
             {title:"考评发起单位", field:"securedAssessment.ownerName", type:"string",searchable:false,default:false},
             {
                 title: "操作",

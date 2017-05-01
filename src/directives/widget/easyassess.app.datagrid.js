@@ -16,7 +16,7 @@ EasyAssess.directives["esAppDatagrid"]
                 + '</tr></thead>'
                 + '<tr ng-show="isLoading" style="padding:20px 20px 20px 20px;"><td colspan="{{esColumns.length}}"><es-spinner></es-spinner></td></tr>'
                 + '<tr ng-hide="isLoading" ng-repeat="rec in esData" style="cursor:pointer;">'
-                + '<td ng-repeat="column in esColumns" ng-click="column.clickHandler ? column.clickHandler($index, getRecordModel(rec), $event) : select($index, getRecordModel(rec), $event)"><div ng-if="column.template" ng-include="column.template"></div><span ng-if="!column.template" ng-bind="rec.{{column.field}}"></span></td>'
+                + '<td ng-repeat="column in esColumns" ng-click="column.clickHandler ? column.clickHandler($index, getRecordModel(rec), $event) : select($index, getRecordModel(rec), $event)"><div ng-if="column.template" ng-include="column.template"></div><span ng-if="!column.template" ng-bind="getColumnContent(rec, column)"></span></td>'
                 + '</tr>'
                 + '</table>'
                 + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">没有匹配的记录</div>'
@@ -65,6 +65,24 @@ EasyAssess.directives["esAppDatagrid"]
                 keyword: null
             };
 
+            $scope.getColumnContent = function (row, column) {
+                if (column.field.indexOf("+") != -1) {
+                    var result = column.type == "number" ? 0 : "";
+                    column.field.split("+").forEach(function (v) {
+                        result+=row[v];
+                    });
+                    return result;
+                } else if (column.field.indexOf(".")){
+                    var result = row;
+                    column.field.split(".").forEach(function (v) {
+                        result=result[v];
+                    });
+                    return result;
+                } else {
+                    return row[column.field];
+                }
+            };
+            
             var pageCount = 1;
 
             $scope.pagination = [];
