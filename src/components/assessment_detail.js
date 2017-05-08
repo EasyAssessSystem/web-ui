@@ -119,27 +119,48 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
 
     $scope.editAdditionalScore = function (form, $event) {
       if ($scope.assessment.status == "F") return;
-      var el = $($event.target);
-      el.attr('readonly', false);
-      el.removeClass('es-transparent-input');
+      // var el = $($event.target);
+      // el.attr('readonly', false);
+      // el.removeClass('es-transparent-input');
+      ngDialog.open({
+        template: '<div class="es-dialog-content">'
+                 +  '<div class="es-dialog-form-line">附加分: <input class="form-control" ng-model="score" style="width:300px;" placeholder="输入分数"/></div>'
+                 +  '<div class="es-dialog-form-line">说明: <textarea class="form-control" ng-model="desc" style="width:300px;" placeholder="附加分说明"></textarea></div>'
+                 +  '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div>'
+                 +'</div>',
+        plain: true,
+        controller: ['$scope', function ($dlgScope) {
+          $dlgScope.score = form.additionalScore;
+          $dlgScope.desc = form.additationScoreDesc;
+          $dlgScope.submit = function () {
+            form.additionalScore = $dlgScope.score;
+            form.additationScoreDesc = $dlgScope.desc;
+            self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score?score=" + form.additionalScore + "&desc=" + form.additationScoreDesc).then(
+                (function () {
+                  EasyAssess.QuickMessage.message("操作成功");
+                }).bind(this));
+            $dlgScope.closeThisDialog();
+          }
+        }]
+      });
     }
 
     $scope.updateAdditionalScore = function (form, $event) {
       if ($scope.assessment.status == "F") return;
-      var keycode = window.event ? $event.keyCode : $event.which;
-      if(keycode==13 || !keycode) {
-        var el = $($event.target);
-        el.attr('readonly', true);
-        el.addClass('es-transparent-input');
-        if (form.additionalScore != Number(el.val())) {
-          form.additionalScore = Number(el.val());
-          self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score/" + form.additionalScore).then(
-              (function (result) {
-                EasyAssess.QuickMessage.message("操作成功");
-              }).bind(this)
-          );
-        }
-      }
+      // var keycode = window.event ? $event.keyCode : $event.which;
+      // if(keycode==13 || !keycode) {
+      //   var el = $($event.target);
+      //   el.attr('readonly', true);
+      //   el.addClass('es-transparent-input');
+      //   if (form.additionalScore != Number(el.val())) {
+      //     form.additionalScore = Number(el.val());
+      //     self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score/" + form.additionalScore).then(
+      //         (function (result) {
+      //           EasyAssess.QuickMessage.message("操作成功");
+      //         }).bind(this)
+      //     );
+      //   }
+      // }
     }
 
     $scope.remove = function (form, idx) {
