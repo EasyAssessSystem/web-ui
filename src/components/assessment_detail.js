@@ -133,7 +133,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
           $dlgScope.score = form.additionalScore;
           $dlgScope.desc = form.additationScoreDesc;
           $dlgScope.submit = function () {
-            form.additionalScore = $dlgScope.score;
+            form.additionalScore = Number($dlgScope.score);
             form.additationScoreDesc = $dlgScope.desc;
             self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score", {
                 score: form.additionalScore,
