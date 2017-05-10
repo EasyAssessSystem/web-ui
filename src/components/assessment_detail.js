@@ -135,7 +135,10 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
           $dlgScope.submit = function () {
             form.additionalScore = $dlgScope.score;
             form.additationScoreDesc = $dlgScope.desc;
-            self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score?score=" + form.additionalScore + "&desc=" + form.additationScoreDesc).then(
+            self.esRequestService.esPost(EasyAssess.activeEnv.assess() + "form/" + form.id + "/score", {
+                score: form.additionalScore,
+                desc: form.additationScoreDesc
+            }).then(
                 (function () {
                   EasyAssess.QuickMessage.message("操作成功");
                 }).bind(this));
