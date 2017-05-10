@@ -69,7 +69,7 @@ EasyAssess.directives["esAppDatagrid"]
                 if (column.field.indexOf("+") != -1) {
                     var result = column.type == "number" ? 0 : "";
                     column.field.split("+").forEach(function (v) {
-                        result+=row[v];
+                        column.type == "number" ? result+=row[v] : result+=Number(row[v]);
                     });
                     return result;
                 } else if (column.field.indexOf(".")){
