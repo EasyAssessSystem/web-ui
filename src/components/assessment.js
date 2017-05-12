@@ -10,7 +10,7 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
         $scope.fields = [
             {title: "考评名称", field: "name", type: "string", searchable: true, default: true},
             {title: "开始日期", field: "startDate", type: "string", searchable: false, default: false},
-            {title: "截止日期", field: "startDate", type: "string", searchable: false, default: false},
+            {title: "截止日期", field: "endDate", type: "string", searchable: false, default: false},
             {title: "发起人", field: "ownerName", type: "string", searchable: true, default: false},
             {title: "状态", field: "status", type: "string", searchable: true, default: false},
             {
