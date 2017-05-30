@@ -1,10 +1,10 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.IQCPlanController = function ($scope, esRequestService, $state, ngDialog) {
+EasyAssess.app.IQCPlanController = function ($scope, esRequestService, $state, ngDialog, $cookies) {
     this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
-    _initialize: function ($scope, esRequestService, $state, ngDialog) {
+    _initialize: function ($scope, esRequestService, $state, ngDialog, $cookies) {
         $scope.templateFields = [
             {title:"名称", field:"name", type:"string", searchable:true, default:true},
             {title:"创建人", field:"owner.name", type:"string", searchable:true, default:false}
@@ -14,7 +14,6 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
 
         this._showSaveMessage = true;
         this._service = EasyAssess.activeEnv.iqc();
-
         $scope.fields = [
             {title:"计划", field:"name", type:"string", searchable:true, default:true},
             {
@@ -86,7 +85,8 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                       className: 'ngdialog-theme-default es-large-dialog',
                       controller: ['$scope', function ($dialog) {
                           if (!todayRecord) {
-                              $dialog.record = createNewRecord();
+                              var cookieStorage = $cookies.get("IQCRecord");
+                              cookieStorage ? $dialog.record = JSON.parse(cookieStorage) : $dialog.record = createNewRecord();
                           } else {
                               todayRecord.plan = model;
                               $dialog.record = todayRecord;
@@ -111,6 +111,9 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                           $dialog.save = function () {
                               esRequestService.esPost(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/record", $dialog.record)
                                 .then((function(){
+                                    var expires = new Date()
+                                    expires.setMonth(expires.getMonth()+1);
+                                    $cookies.put("IQCRecord", JSON.stringify($dialog.record), {expires: expires});
                                     EasyAssess.QuickMessage.message("保存成功");
                                     $dialog.closeThisDialog();
                                 }).bind(this));
@@ -128,8 +131,6 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                                 function(reason){
                                 }
                               );
-
-
                           }
                       }]
                   });
