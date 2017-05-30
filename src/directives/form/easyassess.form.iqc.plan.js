@@ -103,19 +103,18 @@ EasyAssess.directives["esIqcPlanDesigner"]
 		+			'<tr>'
 		+				'<td colspan="3">'
 		+					'<table>'
-		+						'<tr style="height: 30px;" ng-repeat="def in esTemplate.additionalData track by $index">'
-		//+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
-		+							'<td><input ng-model="esTemplate.additionalData[$index]" ></td>'
+		+						'<tr style="height: 30px; cursor: pointer;" ng-repeat="def in esTemplate.additionalItems track by $index">'
+		+							'<td><div ng-bind="esTemplate.additionalItems[$index].name" ng-dblclick="editAdditionalItem(esTemplate.additionalItems[$index])"></div></td>'
 		+							'<td>:</td>'
 		+							'<td style="padding:0px 10px 0px 10px;"><span style="width: 200px; height: 20px; display: block;" class="es-form-signature-line"></span></td>'
-		+							'<td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeAdditionalData($index)"></span></td>'
+		+							'<td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeAdditionalItem($index)"></span></td>'
 		+						'</tr>'
 		+					'</table>'
 		+				'</td>'
 		+			'</tr>'
 		+			'<tr>'
 		+				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
-		+					'<es-add-button ng-click="addAdditionalData()" es-ids="addAdditionalData" es-text="添加辅助信息" title="添加辅助信息"></es-add-button>'
+		+					'<es-add-button ng-click="editAdditionalItem()" es-ids="addAdditionalItem" es-text="添加辅助信息" title="添加辅助信息"></es-add-button>'
 		+				'</td>'
 		+			'</tr>'
 		+	 	'</tbody></table>'
@@ -125,6 +124,10 @@ EasyAssess.directives["esIqcPlanDesigner"]
 		},
 
 		controller: ["$scope", function($scope, $element, $attrs){
+
+			if (!$scope.esTemplate.editAdditionalItems) {
+				$scope.esTemplate.editAdditionalItems = [];
+			}
 
 			$scope.nameChanged = function(val) {
 				$scope.esTemplate.name = val;
@@ -254,20 +257,78 @@ EasyAssess.directives["esIqcPlanDesigner"]
 				});
 			}
 
-			$scope.addAdditionalData = function() {
-				if (!$scope.esTemplate.additionalData) {
-					$scope.esTemplate.additionalData = [];
-				}
-				$scope.esTemplate.additionalData.push('新建辅助信息 ' + ($scope.esTemplate.additionalData.length + 1));
+			$scope.editAdditionalItem = function (item) {
+				ngDialog.open({
+					template: '<div class="es-dialog-content">'
+					+ 	'<div class="es-dialog-form-line" align="right">'
+					+		'名称:<input ng-model="item.name" class="form-control es-specimen-input" placeholder="请输入辅助信息名称"/>'
+					+	'</div>'
+					+ 	'<div class="es-dialog-form-line">'
+					+ 		'<select ng-model="item.type" es-ids="drpType" style="width:100%;height: 30px;" ng-model="type">'
+					+			'<option value="STRING">文本</option>'
+					+			'<option value="DATE">日期</option>'
+					+			'<option value="LISTING">列表</option>'
+					+		'</select>'
+					+ 	'</div>'
+					+   '<div ng-if="item.type==\'LISTING\'">'
+					+ 		'<div class="es-dialog-form-line">'
+					+ 			'<a href="javascript:void(0)" style="padding-left:20px;" ng-click="addListingValue()">添加</a>'
+					+ 		'</div>'
+					+ 		'<div class="es-dialog-form-line" style="max-height:200px;overflow:auto;">'
+					+ 			'<table class="table table-striped">'
+					+ 				'<thead><tr><th>选项值</th></tr></thead>'
+					+ 				'<tbody>'
+					+ 					'<tr ng-repeat="def in item.values track by $index"><td>{{item.values[$index]}}</td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeListingValue($index)"></span></td></tr>'
+					+ 				'</tbody>'
+					+ 			'</table>'
+					+		'</div>'
+					+	'</div>'
+					+ 	'<div class="es-dialog-form-line" align="right">'
+					+		'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
+					+	'</div>'
+					+'</div>',
+					plain: true,
+					controller: ['$scope', function ($dialog) {
+						if (item) {
+							$dialog.item = item;
+						} else {
+							$dialog.item = {
+								type: "STRING",
+								name: "新建辅助信息",
+								values: []
+							}
+						}
+
+						$dialog.submit = function () {
+							if (!item) {
+								$scope.esTemplate.additionalItems.push($dialog.item);
+							}
+							$dialog.closeThisDialog();
+						}
+
+						$dialog.removeListingValue = function (idx) {
+							$dialog.item.values.splice(idx, 1);
+						}
+
+						$dialog.addListingValue = function () {
+							ngDialog.open({
+								template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" style="width:300px;" placeholder="输入选项值" es-ids="txtValue"/></div>'
+								+ '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+								plain: true,
+								controller: ['$scope', function ($digListingValue) {
+									$digListingValue.submit = function () {
+										$dialog.item.values.push($('[es-ids=txtValue]').val());
+										$digListingValue.closeThisDialog();
+									}
+								}]
+							});
+						};
+					}]
+				});
 			}
 
-			$scope.updateAdditionalData = function(index, value) {
-				console.log(arguments);
-				$scope.esTemplate.additionalData[index] = value;
-			}
-
-			$scope.removeAdditionalData = function(index) {
-				$scope.esTemplate.additionalData.splice(index, 1);
+			$scope.removeAdditionalItem = function(index) {
+				$scope.esTemplate.additionalItems.splice(index, 1);
 			}
 		}]
 	}
@@ -285,33 +346,26 @@ EasyAssess.directives["esIqcPlan"]
 		          + 	'<thead><tr><th style="width:15%;">检测项目</th><th style="width:45%;">样本</th></tr></thead>'
 		          +   '<tbody>'
 		          +			'<tr ng-repeat="item in esTemplate.items">'
-							+				'<td class="es-form-group-cell" style="vertical-align: middle;"><div>{{item.subject}} - {{item.unit}}</div></td>'
-							+				'<td>'
-							+					'<table>'
-							+						'<tr>'
-							+							'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td></td></tr></table></td>'
-							+						'</tr>'
-							+					'</table>'
-							+				'</td>'
-		          +			'</tr>'
+							+	'<td class="es-form-group-cell" style="vertical-align: middle;"><div>{{item.subject}} - {{item.unit}}</div></td>'
+							+	'<td>'
+							+		'<table>'
 							+			'<tr>'
-							+				'<td colspan="3">'
-							+					'<table>'
-							+						'<tr style="height: 30px;" ng-repeat="def in esTemplate.additionalData track by $index">'
-							//+							'<td><es-text-box es-content="{{def}}" es-change-callback="updateAdditionalData($index, val)" es-content-align="left" es-placeholder="输入名称..."></td>'
-							+ 							'<td><input ng-model="esTemplate.additionalData[$index]" ></td>'
-							+							'<td>:</td>'
-							+							'<td style="padding:0px 10px 0px 10px;"><span style="width: 200px; height: 20px; display: block;" class="es-form-signature-line"></span></td>'
-							+							'<td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeAdditionalData($index)"></span></td>'
-							+						'</tr>'
-							+					'</table>'
-							+				'</td>'
+							+				'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td></td></tr></table></td>'
 							+			'</tr>'
-							+			'<tr>'
-							+				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
-							+					'<es-add-button ng-click="addAdditionalData()" es-ids="addAdditionalData" es-text="添加辅助信息" title="添加辅助信息"></es-add-button>'
-							+				'</td>'
+							+		'</table>'
+							+	'</td>'
+		          			+'</tr>'
+							+'<tr>'
+							+	'<td colspan="3">'
+							+		'<table>'
+							+			'<tr style="height: 30px;" ng-repeat="def in esTemplate.additionalItems track by $index">'
+							+				'<td><div ng-bind="esTemplate.additionalItems[$index].name"></div></td>'
+							+				'<td>:</td>'
+							+				'<td style="padding:0px 10px 0px 10px;"><span style="width: 200px; height: 20px; display: block;" class="es-form-signature-line"></span></td>'
 							+			'</tr>'
+							+		'</table>'
+							+	'</td>'
+							+'</tr>'
 		          +	 	'</tbody></table>'
 		          + '</div>',
 		scope: {
@@ -319,22 +373,6 @@ EasyAssess.directives["esIqcPlan"]
 		},
 		
 		controller: ["$scope", function($scope, $element, $attrs){
-			$scope.addAdditionalData = function() {
-				if (!$scope.esTemplate.additionalData) {
-					$scope.esTemplate.additionalData = [];
-				}
-				$scope.esTemplate.additionalData.push('新建辅助信息 ' + ($scope.esTemplate.additionalData.length + 1));
-			}
-
-			$scope.updateAdditionalData = function(index, value) {
-				console.log(arguments);
-				$scope.esTemplate.additionalData[index] = value;
-			}
-
-			$scope.removeAdditionalData = function(index) {
-				$scope.esTemplate.additionalData.splice(index, 1);
-			}
-
 			$scope.setSpecimenOptions = function(specimen) {
 				ngDialog.open({
 					template: '<div class="es-dialog-content">'

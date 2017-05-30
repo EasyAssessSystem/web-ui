@@ -88,13 +88,14 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                           if (!todayRecord) {
                               $dialog.record = createNewRecord();
                           } else {
+                              todayRecord.plan = model;
                               $dialog.record = todayRecord;
                           }
 
                           function createNewRecord() {
                               var additionalData = {};
-                              model.additionalData.forEach(function (name) {
-                                  additionalData[name] = '';
+                              model.additionalItems.forEach(function (item) {
+                                  additionalData[item.name] = '';
                               })
                               return {
                                   name: model.name,
