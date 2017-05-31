@@ -85,7 +85,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                       className: 'ngdialog-theme-default es-large-dialog',
                       controller: ['$scope', function ($dialog) {
                           if (!todayRecord) {
-                              var cookieStorage = $cookies.get("IQCRecord");
+                              var cookieStorage = $cookies.get("IQCRecord" + model.id);
                               cookieStorage ? $dialog.record = JSON.parse(cookieStorage) : $dialog.record = createNewRecord();
                           } else {
                               todayRecord.plan = model;
@@ -112,8 +112,8 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                               esRequestService.esPost(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/record", $dialog.record)
                                 .then((function(){
                                     var expires = new Date()
-                                    expires.setMonth(expires.getMonth()+1);
-                                    $cookies.put("IQCRecord", JSON.stringify($dialog.record), {expires: expires});
+                                    expires.setMonth(expires.getMonth() + 1);
+                                    $cookies.put("IQCRecord" + model.id, JSON.stringify($dialog.record), {expires: expires});
                                     EasyAssess.QuickMessage.message("保存成功");
                                     $dialog.closeThisDialog();
                                 }).bind(this));
