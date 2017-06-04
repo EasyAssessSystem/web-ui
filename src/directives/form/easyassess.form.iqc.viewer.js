@@ -14,7 +14,7 @@ EasyAssess.directives["esIqcViewer"]
 					+				'<es-iqc-plan-summary es-plan="esPlan"></es-iqc-plan-summary>'
 					+			'</div>'
 					+		'</es-app-tab>'
-					+		'<es-app-tab es-ref="chartView" es-title="图表">'
+					+		'<es-app-tab es-ref="chartView" es-title="室内质控">'
 					+			'<div style="padding-top: 10px;">'
 					+ 			'<es-iqc-chart ng-repeat="(name, data) in dataModel.items" es-data="data"></es-iqc-chart>'
 					+			'</div>'

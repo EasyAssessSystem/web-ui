@@ -7,14 +7,19 @@ EasyAssess.directives["esIqcPlanSummary"]
 		replace: true,
 		transclude: false,
 		template:  '<div>'
-						+'<div class="panel panel-default">'
-						+	'<div class="panel-heading">IQC统计</div>'
-						+		'<div class="panel-body">'
-						+			'<div ng-repeat="(itemName, itemDataSet) in model.base.items">'
+						+'<div ng-repeat="(itemName, itemDataSet) in model.base.items">'
+						+	'<es-app-tab-pane>'
+						+		'<es-app-tab es-active="true" es-ref="chartView" es-title="图表">'
+						+			'<div style="padding-top: 10px;">'
 						+				'<es-iqc-statistic-comparison-chart es-item-name="{{itemName}}" es-base-data="itemDataSet" es-target-data="model.target.items[itemName]"></es-iqc-statistic-comparison-chart>'
 						+			'</div>'
-						+		'</div>'
-						+ 	'</div>'
+						+		'</es-app-tab>'
+						+		'<es-app-tab es-ref="gridView" es-title="表格">'
+						+			'<div style="padding-top: 10px;">'
+						+				'<es-iqc-statistic-comparison-grid es-item-name="{{itemName}}" es-base-data="itemDataSet" es-target-data="model.target.items[itemName]"></es-iqc-statistic-comparison-grid>'
+						+			'</div>'
+						+		'</es-app-tab>'
+						+	'</es-app-tab-pane>'
 						+'</div>'
 				+ '</div>',
 		scope: {
