@@ -17,6 +17,8 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
             this._delete();
           } else if ($($event.target).attr('es-id') == 'view') {
             $scope.view(model);
+          } else if ($($event.target).attr('es-id') == 'edit') {
+            $scope.model = model;
           }
         }).bind(this)
       }
