@@ -41,7 +41,7 @@ EasyAssess.directives["esIqcStatisticComparisonGrid"]
 			$scope.getStatisticPlainText = function (data) {
 				if (!data) return "0";
 				if (data.averageValue) {
-					return data.averageValue;
+					return data.averageValue.toFixed(2);
 				} else if (data.valueCountMap) {
 					var total=0;
 					for (var value in data.valueCountMap) {
@@ -49,7 +49,7 @@ EasyAssess.directives["esIqcStatisticComparisonGrid"]
 					}
 					var results = "";
 					for (var value in data.valueCountMap) {
-						results += value + ": " + (data.valueCountMap[value]/total) * 100 + "% ";
+						results += value + ": " + ((data.valueCountMap[value]/total) * 100).toFixed(2) + "% ";
 					}
 					return results;
 				}

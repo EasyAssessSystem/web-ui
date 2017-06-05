@@ -6,9 +6,9 @@ EasyAssess.directives["esIqcRadarChart"]
 		restrict: 'E',
 		replace: true,
 		transclude: false,
-		template:  '<div>'
+		template:  '<div >'
 				+ 		'<canvas id="base" class="chart-radar" chart-colors="colors"'
-				+			'chart-data="data" chart-labels="labels" chart-series="series">'
+				+			'chart-data="data" height="120" chart-labels="labels" chart-series="series">'
 				+		'</canvas>'
 				+   '</div>',
 		scope: {
@@ -25,8 +25,8 @@ EasyAssess.directives["esIqcRadarChart"]
 				var targetData = $scope.esTargetData.data[index];
 				if (baseData.averageValue) {
 					$scope.labels.push("样本:" + index);
-					$scope.data[0].push(baseData.averageValue);
-					$scope.data[1].push(targetData ? targetData.averageValue : 0);
+					$scope.data[0].push(baseData.averageValue.toFixed(2));
+					$scope.data[1].push(targetData ? targetData.averageValue.toFixed(2) : 0);
 				} else if (baseData.valueCountMap){
 					var baseTotal = 0;
 					var targetTotal = 0;
@@ -39,9 +39,9 @@ EasyAssess.directives["esIqcRadarChart"]
 
 					for (var value in baseData.valueCountMap) {
 						$scope.labels.push("样本:" + index + ", 选项:" + value + " (%)");
-						$scope.data[0].push((baseData.valueCountMap[value]/baseTotal) * 100);
+						$scope.data[0].push(((baseData.valueCountMap[value]/baseTotal) * 100).toFixed(2));
 						if (targetData && targetData.valueCountMap[value]) {
-							$scope.data[1].push((targetData.valueCountMap[value]/targetTotal) * 100);
+							$scope.data[1].push(((targetData.valueCountMap[value]/targetTotal) * 100).toFixed(2));
 						} else {
 							$scope.data[1].push(0);
 						}
