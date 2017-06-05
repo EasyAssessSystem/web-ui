@@ -54,6 +54,7 @@ EasyAssess.directives["esIqcChart"]
 				}
 
 				$scope.esData.history[date].forEach(function(data, index) {
+					if (!$scope.data[index]) $scope.data[index]=[];
 					if (data.type == "S") {
 						$scope.data[index].push(data.enumValues[data.value]);
 					} else {
