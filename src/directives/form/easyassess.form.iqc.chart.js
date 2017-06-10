@@ -7,16 +7,16 @@ EasyAssess.directives["esIqcChart"]
 		replace: true,
 		transclude: false,
 		template:  '<div>'
-							+	'<div class="panel panel-default">'
-							+		'<div class="panel-heading">{{esData.name}}</div>'
-							+		'<div class="panel-body">'
-							+ 		'<canvas id="base" class="chart-bar"'
-							+				'chart-data="data" chart-labels="labels" chart-colors="colors"'
-							+				'chart-dataset-override="datasetOverride">'
-							+			'</canvas>'
-							+ 	'</div>'
-							+	'</div>'
-							+ '</div>',
+					+	'<div class="panel panel-default">'
+					+		'<div class="panel-heading">{{esData.name}}</div>'
+					+		'<div class="panel-body">'
+					+ 		'<canvas id="base" class="chart-bar"'
+					+				'chart-data="data" chart-labels="labels" chart-colors="colors"'
+					+				'chart-dataset-override="datasetOverride">'
+					+			'</canvas>'
+					+ 	'</div>'
+					+	'</div>'
+					+ '</div>',
 		scope: {
 			esData: "="
 		},
@@ -62,8 +62,6 @@ EasyAssess.directives["esIqcChart"]
 					}
 				});
 			}
-
-			console.log($scope.data);
 		}]
 	}
 });
