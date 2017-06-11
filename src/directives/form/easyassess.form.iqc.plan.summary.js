@@ -17,11 +17,12 @@ EasyAssess.directives["esIqcPlanSummary"]
 						+				'<td style="padding:0px 10px 0px 10px;">'
 						+					'<input ng-if="esPlan.additionalItems[$index].type==\'STRING\'" class="es-form-signature-line" ng-blur="filterChanged(esPlan.additionalItems[$index].name, $event)"/>'
 						+					'<div ng-if="esPlan.additionalItems[$index].type==\'DATE\'">'
-						+						'<div class="input-group" style="width: 200px;">'
-						+							'<span ng-click="openDatePicker()" style="width: 200px; height: 20px; display: block; cursor: pointer;" class="es-form-signature-line"></span>'
-						+							'<span class="input-group-addon" ng-click="openDatePicker()" style="padding: 0px 0px 0px 0px;cursor: pointer;"><span class="glyphicon glyphicon-calendar"></span></span>'
-						+							'<date-picker ng-model="filters[esPlan.additionalItems[$index].name]" ng-hide="hideDatePicker" ng-model="filters[esPlan.additionalItems[$index].name]" style="position: absolute;top:45px;z-index: 999" on-date-selected="dateSelected()" format-date="formatDate"></date-picker>'
-						+						'</div>'
+						// +						'<div class="input-group" style="width: 200px;">'
+						// +							'<span ng-click="openDatePicker()" style="width: 200px; height: 20px; display: block; cursor: pointer;" class="es-form-signature-line"></span>'
+						// +							'<span class="input-group-addon" ng-click="openDatePicker()" style="padding: 0px 0px 0px 0px;cursor: pointer;"><span class="glyphicon glyphicon-calendar"></span></span>'
+						// +							'<date-picker ng-model="filters[esPlan.additionalItems[$index].name]" ng-hide="hideDatePicker" ng-model="filters[esPlan.additionalItems[$index].name]" style="position: absolute;top:45px;z-index: 999" on-date-selected="dateSelected()" format-date="formatDate"></date-picker>'
+						// +						'</div>'
+						+						'<es-date-picker es-model="filters[esPlan.additionalItems[$index].name]"></es-date-picker>'
 						+					'</div>'
 						+					'<div ng-if="esPlan.additionalItems[$index].type==\'LISTING\'">'
 						+						'<select class="form-control es-form-group-contorl" ng-blur="filterChanged(esPlan.additionalItems[$index].name, $event)"><option value=""></option><option ng-repeat="val in esPlan.additionalItems[$index].values" value="{{val}}">{{val}}</option></select>'
@@ -59,26 +60,7 @@ EasyAssess.directives["esIqcPlanSummary"]
 			$scope.filters = {
 
 			};
-
-			$scope.hideDatePicker = true;
-
-			$scope.formatDate = function (date) {
-				function pad(n) {
-					return n < 10 ? '0' + n : n;
-				}
-				return date && date.getFullYear()
-					+ '-' + pad(date.getMonth() + 1)
-					+ '-' + pad(date.getDate());
-			};
-
-			$scope.dateSelected = function () {
-				$scope.hideDatePicker = true;
-			};
-
-			$scope.openDatePicker = function () {
-				$scope.hideDatePicker = false;
-			};
-
+			
 			$scope.filterChanged = function (name, event) {
 				$scope.filters[name] = $(event.target).val();
 			};

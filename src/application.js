@@ -50,6 +50,7 @@ require('./directives/form/easyassess.form.switch.list.calender');
 require('./directives/charts/easyassess.chart.doughnut');
 require('./directives/widget/easyassess.app.calendar');
 require('./directives/widget/easyassess.app.history.buttons');
+require('./directives/widget/easyassess.app.datepicker');
 require('./directives/form/easyassess.form.iqc.plan');
 require('./directives/form/easyassess.form.iqc.editor');
 require('./directives/form/easyassess.form.iqc.viewer');

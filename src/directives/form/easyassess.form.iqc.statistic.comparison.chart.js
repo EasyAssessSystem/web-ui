@@ -16,10 +16,19 @@ EasyAssess.directives["esIqcRadarChart"]
 			esTargetData: "="
 		},
 		controller: ["$scope", function($scope){
+			if (!$scope.esTargetData) {
+				$scope.esTargetData = {data: {}};
+			}
+
+			if (!$scope.esTargetData) {
+				$scope.esBaseData = {data: {}};
+			}
+
 			$scope.labels = [];
 			$scope.data = [[],[]];
 			$scope.colors = ['#45b7cd', '#ff6384'];
 			$scope.series = ['平均数据', '你的数据'];
+
 			for (var index in $scope.esBaseData.data) {
 				var baseData = $scope.esBaseData.data[index];
 				var targetData = $scope.esTargetData.data[index];
@@ -50,9 +59,11 @@ EasyAssess.directives["esIqcRadarChart"]
 			}
 
 			if ($scope.labels.length < 3) {
-				$scope.labels.push("");
-				$scope.data[0].push(0);
-				$scope.data[1].push(0);
+				for (var i=0;i<3-$scope.labels.length; i++) {
+					$scope.labels.push("");
+					$scope.data[0].push(0);
+					$scope.data[1].push(0);
+				}
 			}
 		}]
 	}

@@ -36,11 +36,12 @@ EasyAssess.directives["esIqcEditor"]
 							+						'<td style="padding:0px 10px 0px 10px;">'
 							+							'<input ng-if="esRecord.plan.additionalItems[$index].type==\'STRING\'" value="{{esRecord.additionalData[esRecord.plan.additionalItems[$index].name]}}" class="es-form-signature-line" ng-blur="additionalDataChanged(esRecord.plan.additionalItems[$index].name, $event)" placeholder="请输入辅助信息"/>'
 							+							'<div ng-if="esRecord.plan.additionalItems[$index].type==\'DATE\'">'
-							+								'<div class="input-group" style="width: 200px;">'
-							+									'<span ng-click="openDatePicker()" style="width: 200px; height: 20px; display: block; cursor: pointer;" ng-bind="esRecord.additionalData[esRecord.plan.additionalItems[$index].name]" class="es-form-signature-line"></span>'
-							+									'<span class="input-group-addon" ng-click="openDatePicker()" style="padding: 0px 0px 0px 0px;cursor: pointer;"><span class="glyphicon glyphicon-calendar"></span></span>'
-							+									'<date-picker ng-hide="hideDatePicker" ng-model="esRecord.additionalData[esRecord.plan.additionalItems[$index].name]" style="position: absolute;top:45px;z-index: 999" on-date-selected="dateSelected()" format-date="formatDate"></date-picker>'
-							+								'</div>'
+							// +								'<div class="input-group" style="width: 200px;">'
+							// +									'<span ng-click="openDatePicker()" style="width: 200px; height: 20px; display: block; cursor: pointer;" ng-bind="esRecord.additionalData[esRecord.plan.additionalItems[$index].name]" class="es-form-signature-line"></span>'
+							// +									'<span class="input-group-addon" ng-click="openDatePicker()" style="padding: 0px 0px 0px 0px;cursor: pointer;"><span class="glyphicon glyphicon-calendar"></span></span>'
+							// +									'<date-picker ng-hide="hideDatePicker" ng-model="esRecord.additionalData[esRecord.plan.additionalItems[$index].name]" style="position: absolute;top:45px;z-index: 999" on-date-selected="dateSelected()" format-date="formatDate"></date-picker>'
+							// +								'</div>'
+							+								'<es-date-picker es-model="esRecord.additionalData[esRecord.plan.additionalItems[$index].name]"></es-date-picker>'
 							+							'</div>'
 							+							'<div ng-if="esRecord.plan.additionalItems[$index].type==\'LISTING\'">'
 							+								'<select ng-model="esRecord.additionalData[esRecord.plan.additionalItems[$index].name]" class="form-control es-form-group-contorl" ng-blur="additionalDataChanged(esRecord.plan.additionalItems[$index].name, $event)"><option value=""></option><option ng-repeat="val in esRecord.plan.additionalItems[$index].values" value="{{val}}">{{val}}</option></select>'
@@ -56,25 +57,6 @@ EasyAssess.directives["esIqcEditor"]
 			esRecord: "="
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
-			$scope.hideDatePicker = true;
-
-			$scope.formatDate = function (date) {
-				function pad(n) {
-					return n < 10 ? '0' + n : n;
-				}
-				return date && date.getFullYear()
-					+ '-' + pad(date.getMonth() + 1)
-					+ '-' + pad(date.getDate());
-			};
-
-			$scope.dateSelected = function () {
-				$scope.hideDatePicker = true;
-			};
-
-			$scope.openDatePicker = function () {
-				$scope.hideDatePicker = false;
-			};
-
 			$scope.additionalDataChanged = function (name, event) {
 				$scope.esRecord.additionalData[name] = $(event.target).val();
 			}
