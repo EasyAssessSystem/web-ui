@@ -36,6 +36,7 @@ EasyAssess.directives["esIqcPlanSummary"]
 						+		'</button>'
 						+	'</div>'
 						+'</div>'
+						+'<es-spinner ng-if="isLoading"></es-spinner>'
 						+'<div ng-if="model" ng-repeat="(itemName, itemDataSet) in model.base.items">'
 						+	'<es-app-tab-pane>'
 						+		'<es-app-tab es-active="true" es-ref="chartView" es-title="图表">'
@@ -60,15 +61,19 @@ EasyAssess.directives["esIqcPlanSummary"]
 			$scope.filters = {
 
 			};
-			
+
+			$scope.isLoading = false;
+
 			$scope.filterChanged = function (name, event) {
 				$scope.filters[name] = $(event.target).val();
 			};
 
 			$scope.doStatistic = function () {
+				$scope.isLoading = true;
 				$scope.model = null;
 				esRequestService.esPost(EasyAssess.activeEnv.iqc() + "plan/" + $scope.esPlan.id + "/statistic", $scope.filters)
 					.then((function(response){
+						$scope.isLoading = false;
 						if (response.data) {
 							$scope.model = response.data;
 						}
