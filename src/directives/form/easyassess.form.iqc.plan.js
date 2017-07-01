@@ -18,7 +18,14 @@ EasyAssess.directives["esIqcSpecimenSelectionSettings"]
 		+ 					'<tr ng-repeat="(value,weight) in esSpecimen.enumValues"><td>{{value}}</td><td>{{weight}}</td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeOptionValue(value)"></span></td></tr>'
 		+ 				'</tbody>'
 		+ 			'</table>'
-		+			'</div>'
+		+		'</div>'
+		+ 		'<div class="es-dialog-form-line">'
+		+ 			'<span>靶值:</span>'
+		+			'<select es-id="targetValue" ng-model="esSpecimen.targetValue" convert-to-number class="form-control es-form-group-contorl" style="width: 300px;"><option ng-repeat="(value,weight) in esSpecimen.enumValues" value="{{weight}}">{{value}} ({{weight}})</option></select>'
+		+ 		'</div>'
+		+ 		'<div class="es-dialog-form-line">'
+		+ 			'<span>上下浮动范围(±)<span ng-if="esType==\'T\'">n</span>):</span><input type="number" class="form-control" style="width:300px;" ng-model="esSpecimen.floatValue" placeholder="输入上下浮动值"/></span>'
+		+ 		'</div>'
 		+	'</div>',
 		scope: {
 			esSpecimen: "="

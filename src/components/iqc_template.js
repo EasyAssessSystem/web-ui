@@ -19,10 +19,83 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
             $scope.view(model);
           } else if ($($event.target).attr('es-id') == 'edit') {
             $scope.model = model;
+          } else if ($($event.target).attr('es-id') == 'statistic') {
+            $scope.generateReport(model)
           }
         }).bind(this)
       }
     ];
+
+    $scope.generateReport = function (model) {
+      ngDialog.open({
+        template: 
+            '<div class="es-dialog-content">'
+            +	'<div class="panel panel-default">'
+            +		'<div class="panel-heading">报表参数</div>'
+            +		'<div class="panel-body ">'
+            +	      '<div class="es-dialog-form-line" style="height: 30px;">'
+            +	      		'<div style="float: left;width:150px;">报表类型: </div><div style="float: left"><select ng-blur="updateUrl()" ng-model="reportType" class="form-control es-form-group-contorl" style="width: 300px;"><option value="gather">汇总统计</option><option value="units">分组统计</option></select></div>'
+            +         '</div>'
+            +	      '<div class="es-dialog-form-line" style="height: 30px;">'
+            +	      		'<div style="float: left;width:150px;">截止日期: </div>'
+            +               '<div style="float: left"><es-date-picker es-model="targetDates.endDate"></es-date-picker></div>'
+            +         '</div>'
+            +	      '<div class="es-dialog-form-line" style="height: 30px;">'
+            +	      		'<div style="float: left;width:150px;">追溯天数: </div>'
+            +               '<div style="float: left"><input type="number" ng-model="targetDates.count"/></div>'
+            +         '</div>'
+            +       '</div>'
+            +   '</div>'
+            +	'<div class="panel panel-default">'
+            +		'<div class="panel-heading">筛选条件</div>'
+            +		'<div class="panel-body">'
+            +	      '<div class="es-dialog-form-line" style="height: 30px;" ng-repeat="def in template.additionalItems track by $index">'
+            +             '<div ng-bind="template.additionalItems[$index].name" style="float: left;width: 150px;"></div>'
+            +	      	'<input ng-if="template.additionalItems[$index].type==\'STRING\'" class="es-form-signature-line" placeholder="请输入辅助信息" ng-blur="additionalDataChanged(template.additionalItems[$index].name, $event)"/>'
+            +	      	'<div ng-if="template.additionalItems[$index].type==\'DATE\'" style="float: left">'
+            +	      		'<es-date-picker es-model="params[template.additionalItems[$index].name]"></es-date-picker>'
+            +	      	'</div>'
+            +	      	'<div ng-if="template.additionalItems[$index].type==\'LISTING\'" style="float: left">'
+            +	      		'<select class="form-control es-form-group-contorl" style="width: 300px;" ng-blur="additionalDataChanged(template.additionalItems[$index].name, $event)"><option value=""></option><option ng-repeat="val in template.additionalItems[$index].values" value="{{val}}">{{val}}</option></select>'
+            +	      	'</div>'
+            +	      '</div>'
+            +         '<es-app-ajax-downloader es-button-text="生成报表" es-filename="统计报表.xls" es-file-type="xls" es-url="{{url}}" es-data="params" es-method="post"></es-app-ajax-downloader>'
+            +       '</div>'
+            +   '</div>'
+            +'</div>',
+        plain: true,
+        controller: ['$scope', function($dialog) {
+          $dialog.template = model;
+          $dialog.reportType = "gather";
+          $dialog.url = getUrl();
+          $dialog.params = {};
+          $dialog.targetDates = {
+            count: 30
+          };
+          $dialog.$watch('targetDates.endDate+targetDates.count',function(){
+            if ($dialog.targetDates.endDate && $dialog.targetDates.count) {
+              $dialog.url = getUrl() + "?targetDate=" + $dialog.targetDates.endDate + '&count=' + $dialog.targetDates.count;
+            }
+          });
+
+          function getUrl() {
+            if ($dialog.reportType == "gather") {
+              return EasyAssess.activeEnv.iqc() + "template/" + model.id + "/statistic";
+            } else {
+              return EasyAssess.activeEnv.iqc() + "template/" + model.id + "/statistic/units";
+            }
+          }
+
+          $dialog.updateUrl = function () {
+            $dialog.url = getUrl();
+          }
+
+          $dialog.additionalDataChanged = function (name, event) {
+            $dialog.params[name] = $(event.target).val();
+          }
+        }]
+      });
+    };
 
     $scope.planOptions = [];
 
