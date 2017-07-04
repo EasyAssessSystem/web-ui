@@ -7,7 +7,7 @@ EasyAssess.directives["esAppAjaxDownloader"]
         replace: true,
         transclude: false,
         template:   '<div>'
-                    +   '<button class="btn btn-info" ng-click="ajaxDownload()">'
+                    +   '<button class="btn btn-primary" ng-click="ajaxDownload()">'
                     +     '{{esButtonText}}'
                     +   '</button>'
                     + '</div>',

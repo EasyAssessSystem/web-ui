@@ -7,6 +7,19 @@ EasyAssess.directives["esIqcPlanSummary"]
 		replace: true,
 		transclude: false,
 		template:  '<div>'
+						+	'<div class="panel panel-default">'
+						+		'<div class="panel-heading">报表参数</div>'
+						+		'<div class="panel-body ">'
+						+	      '<div class="es-dialog-form-line" style="height: 30px;">'
+						+	      		'<div style="float: left;width:150px;">截止日期: </div>'
+						+               '<div style="float: left"><es-date-picker es-model="targetDates.endDate"></es-date-picker></div>'
+						+         '</div>'
+						+	      '<div class="es-dialog-form-line" style="height: 30px;">'
+						+	      		'<div style="float: left;width:150px;">追溯天数: </div>'
+						+               '<div style="float: left"><input type="number" ng-model="targetDates.count"/></div>'
+						+         '</div>'
+						+       '</div>'
+						+   '</div>'
 						+'<div class="panel panel-default">'
 						+	'<div class="panel-heading">统计条件</div>'
 						+	'<div class="panel-body">'
@@ -34,6 +47,7 @@ EasyAssess.directives["esIqcPlanSummary"]
 						+			'<span class="glyphicon glyphicon-search"></span>'
 						+			'<span class="es-icon-button-text">统计</span>'
 						+		'</button>'
+						+		'<div style="float: left;"><es-app-ajax-downloader es-button-text="导出" es-filename="统计报表.xls" es-file-type="xls" es-url="{{exportUrl}}" es-data="filters" es-method="post"></es-app-ajax-downloader></div>'
 						+	'</div>'
 						+'</div>'
 						+'<es-spinner ng-if="isLoading"></es-spinner>'
@@ -62,6 +76,18 @@ EasyAssess.directives["esIqcPlanSummary"]
 
 			};
 
+			$scope.exportUrl = EasyAssess.activeEnv.iqc() + "plan/" + $scope.esPlan.id + "/statistic/excel";
+
+			$scope.$watch('targetDates.endDate+targetDates.count',function(){
+				if ($scope.targetDates.endDate && $scope.targetDates.count) {
+					$scope.exportUrl = $scope.exportUrl + "?targetDate=" + $scope.targetDates.endDate + '&count=' + $scope.targetDates.count;
+				}
+			});
+
+			$scope.targetDates = {
+				count: 30
+			};
+
 			$scope.isLoading = false;
 
 			$scope.filterChanged = function (name, event) {
@@ -71,7 +97,11 @@ EasyAssess.directives["esIqcPlanSummary"]
 			$scope.doStatistic = function () {
 				$scope.isLoading = true;
 				$scope.model = null;
-				esRequestService.esPost(EasyAssess.activeEnv.iqc() + "plan/" + $scope.esPlan.id + "/statistic", $scope.filters)
+				var url = EasyAssess.activeEnv.iqc() + "plan/" + $scope.esPlan.id + "/statistic";
+				if ($scope.targetDates.endDate && $scope.targetDates.count) {
+					url = url + "?targetDate=" + $scope.targetDates.endDate + '&count=' + $scope.targetDates.count;
+				}
+				esRequestService.esPost(url, $scope.filters)
 					.then((function(response){
 						$scope.isLoading = false;
 						if (response.data) {
