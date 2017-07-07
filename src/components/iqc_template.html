@@ -39,7 +39,7 @@
         <es-spinner ng-if="isLoading"></es-spinner>
         <es-form-page ng-if="!isLoading">
             <a ng-click="back()" href="#">返回</a>
-            <es-app-wizard ng-if="!isLoading" es-confirm-message="提交后将无法修改,请仔细核实提交的数据.是否确定提交?">
+            <es-app-wizard ng-if="!isLoading" es-confirm-message="是否确定提交?">
                 <es-app-wizard-content es-step-validator="validatePageOne()">
                     <div class="panel panel-default">
                         <div class="panel-heading">
