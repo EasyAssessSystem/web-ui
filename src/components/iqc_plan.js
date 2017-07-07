@@ -115,6 +115,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                                   name: model.name,
                                   owner: model.owner,
                                   plan: model,
+                                  version: model.version,
                                   items: model.items.map(function(item) {
                                       return angular.copy(item, {});
                                   }),
