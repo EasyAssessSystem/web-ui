@@ -1,5 +1,5 @@
 var EasyAssess = require('../easyassess.application');
-EasyAssess.app.HealthMinistryController = function($scope, $timeout, ngDialog,esRequestService) {
+EasyAssess.app.HealthMinistryController = function($scope, $timeout, ngDialog, esRequestService, Upload) {
 	this.initialize.apply(this, arguments);
 };
 
@@ -57,6 +57,28 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			$scope.validateFinalResult = $scope.validations.name.validateResult;
 			$scope.$$phase || $scope.$apply();
 		});
+
+		$scope.uploading = false;
+
+		$scope.$watch('logo', (function() {
+			if (!$scope.logo) return;
+			$scope.uploading = true;
+			this.Upload.upload({
+				url: EasyAssess.activeEnv['pdm']() + 'ministry/' + $scope.activeModel.id + "/logo",
+				data: {
+					'logo': $scope.logo
+				},
+				withCredentials: true
+			}).success(function (data, status, headers, config) {
+				EasyAssess.QuickMessage.message("上传成功");
+				$scope.uploading = false;
+				$scope.activeModel.logo = data.data;
+				$scope.logoUrl = $scope.activeModel.logo;
+			}).error(function (data, status, headers, config) {
+				EasyAssess.QuickMessage.error("上传失败");
+				$scope.uploading = false;
+			});
+		}).bind(this));
 	},
 
 	_preSelect: function() {
@@ -64,6 +86,14 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			this.$scope.$broadcast('angular-ui-tree:collapse-all');
 		}).bind(this), 100);
 		return true;
+	},
+
+	_postSelect: function () {
+		if (this.$scope.activeModel && !this.$scope.activeModel.logo) {
+			this.$scope.logoUrl = 'resource/add_image.png';
+		} else {
+			this.$scope.logoUrl = this.$scope.activeModel.logo;
+		}
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
 
