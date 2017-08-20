@@ -248,6 +248,22 @@ select {
 	padding:4px 0px 4px 0px;
 }
 
+.es-ministry-bar-wrapper {
+	padding: 15px 10px 10px 15px;
+}
+
+.es-ministry-bar-el {
+	float: left;
+	padding: 5px 5px 5px 5px;
+	font-style: italic;
+	font-size: 14px;
+}
+
+.es-ministry-bar-logo {
+	width: 20px;
+	height: 20px;
+}
+
 .es-app-menu-group:hover, .es-app-menu-item:hover {
 	background-color: #e2e4e7;
 }

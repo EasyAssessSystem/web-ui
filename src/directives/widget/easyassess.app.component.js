@@ -7,7 +7,7 @@ EasyAssess.directives["esAppComponent"]
 		replace: true,
 		transclude: true,
 		template: '<div class="es-app-component-wrapper">'
-			     + '<div class="es-app-seperator-line"></div>'
+			     + '<div class="es-app-seperator-line"><es-app-ministry-bar></es-app-ministry-bar></div>'
 			     + '<div style="padding:30px 30px 30px 15px;"><div class="es-app-task-container" ng-transclude></div></div>'
 			     + '</div>',
 		scope: {

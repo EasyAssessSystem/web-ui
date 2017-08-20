@@ -22,6 +22,7 @@ require('./directives/widget/easyassess.app.banner');
 require('./directives/widget/easyassess.app.menu');
 require('./directives/widget/easyassess.app.addbutton');
 require('./directives/widget/easyassess.app.component');
+require('./directives/widget/easyassess.app.ministry.bar');
 require('./directives/control/easyassess.app.textbox');
 require('./directives/control/easyassess.app.select');
 require('./directives/control/easyassess.app.checkbox');
