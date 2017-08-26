@@ -35,16 +35,16 @@ EasyAssess.directives["esFormGroup"]
 		          +						'</tr>'
 		          +					'</table>'
 		          +				'</td>'
-					+  			'<td>'
-					+					'<table>'
-					+						'<tr>'
-					+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codeGroups\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addCode" es-text="编码组" title="添加编码组"></es-add-button></td>'
-					+						'</tr>'
-					+						'<tr ng-repeat="row in esGroup.rows">'
-					+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><div class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
-					+						'</tr>'
-					+					'</table>'
-					+				'</td>'
+							+  			'<td>'
+							+					'<table>'
+							+						'<tr>'
+							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codeGroups\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addCode" es-text="编码组" title="添加编码组"></es-add-button></td>'
+							+						'</tr>'
+							+						'<tr ng-repeat="row in esGroup.rows">'
+							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><div class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
+							+						'</tr>'
+							+					'</table>'
+							+				'</td>'
 		          +			'</tr>'
 		          +			'<tr>'
 		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
@@ -242,7 +242,7 @@ EasyAssess.directives["esFormGroup"]
 				}
 				return false;
 			 }
-			 
+
 			 // add specimen
 			 btnAddSpecimen.on("click", function() {
 				 ngDialog.open({
@@ -253,6 +253,12 @@ EasyAssess.directives["esFormGroup"]
 															 +'<div class="es-dialog-form-line" align="right">'
 															 +	'<es-add-button ng-click="addSubSpecimen()" es-text="添加混合样本号"></es-add-button>'
 															 +'</div>'
+															 +'<div class="es-dialog-form-line" align="left">'
+															 +	'<es-app-checkbox style="padding-top:5px;" es-model="copyFromOther" es-label="从其他样本复制"></es-app-checkbox>'
+															 +  '<div ng-if="copyFromOther">'
+										           +		'<select es-ids="sourceSpecimen" class="form-control es-form-group-contorl"><option ng-repeat="option in specimens" value="{{option.guid}}">{{option.number}}</option></select>'
+															 +  '</div>'
+															 +'</div>'
 		                		 			 +'<div class="es-dialog-form-line" align="right">'
 										           +	'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
 					 										 +'</div>'
@@ -261,12 +267,14 @@ EasyAssess.directives["esFormGroup"]
 		                scope: $scope,
 		                controller: ['$scope', function($dialog) {
 											$dialog.inputs = [0];
+											$dialog.specimens = $scope.esGroup.specimens;
+											$dialog.copyFromOther = false;
 
 											$dialog.addSubSpecimen = function() {
 												$dialog.inputs.push($dialog.inputs.length);
 											}
 
-		                	$dialog.submit = function(){
+		                	$dialog.submit = function() {
 												var inputs = $(".es-specimen-input");
 												var number = '';
 												inputs.each(function(){
@@ -278,13 +286,25 @@ EasyAssess.directives["esFormGroup"]
 												});
 
 		                		if (number && !isDuplicated(number, $scope.esGroup.specimens)) {
-		                			$scope.esGroup.specimens.push({
-		                				"guid": EasyAssess.utils.generateGUID(),
-			                    		"number": number
-			                    	});
+													var newSpecimen = {
+														"guid": EasyAssess.utils.generateGUID(),
+														"number": number
+													};
+
+													$scope.esGroup.specimens.push(newSpecimen);
+
+													if ($dialog.copyFromOther) {
+														var sourceSpecimenGuid = $('[es-ids=sourceSpecimen]').val();
+														$scope.esGroup.rows.forEach(function (item) {
+															var settings = item.optionMap[sourceSpecimenGuid];
+															if (settings) {
+																item.optionMap[newSpecimen.guid] = angular.extend({}, settings);
+															}
+														});
+													}
 		                		}
-		                    	$dialog.closeThisDialog();
-		                    }
+												$dialog.closeThisDialog();
+											}
 		                }],
 		                preCloseCallback: function() {
 		                	
@@ -322,7 +342,7 @@ EasyAssess.directives["esFormGroup"]
 					 }]
 				 });
 			 });
-			 
+			
 			 //add item
 			 btnAddItem.on("click", function() {
 				 ngDialog.open({
