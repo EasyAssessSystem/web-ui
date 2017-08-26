@@ -44,7 +44,7 @@
 	font-size: 11px;
 }
 
-.es-delete-button {
+.es-icon-button, .es-delete-button {
 	cursor:pointer;
 	color:rgb(180,180,180);
 	font-size:12px;

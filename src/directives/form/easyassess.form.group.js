@@ -21,7 +21,7 @@ EasyAssess.directives["esFormGroup"]
 		          +							'<td class="es-form-group-cell" valign="middle"><es-text-box es-content="{{esGroup.name}}" es-change-callback="nameChanged(val)" class="es-form-group-text" es-placeholder="请输入分组名"></es-text-box></td>'
 		          +						'</tr>'
 		          +						'<tr ng-repeat="row in esGroup.rows">'
-		          +							'<td class="es-form-group-cell" valign="middle"><div>{{row.item.subject}} - {{row.item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeRow(row.guid)"></span></div></td>'
+		          +							'<td class="es-form-group-cell" valign="middle"><div>{{row.item.subject}} - {{row.item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeRow(row.guid)"></span><span class="glyphicon glyphicon-arrow-up es-icon-button" ng-click="movePosition(row.guid, \'up\')"></span><span class="glyphicon glyphicon-arrow-down es-icon-button" ng-click="movePosition(row.guid, \'down\')"></span></div></td>'
 		          +						'</tr>'
 		          +					'</table>'
 		          +				'</td>'
@@ -41,7 +41,7 @@ EasyAssess.directives["esFormGroup"]
 							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codeGroups\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addCode" es-text="编码组" title="添加编码组"></es-add-button></td>'
 							+						'</tr>'
 							+						'<tr ng-repeat="row in esGroup.rows">'
-							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><div class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
+							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><div ng-if="!row.disableCodeGroup" class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
 							+						'</tr>'
 							+					'</table>'
 							+				'</td>'
@@ -98,6 +98,23 @@ EasyAssess.directives["esFormGroup"]
 			
 			$scope.nameChanged = function(val) {
 				$scope.esGroup.name = val;
+			}
+			
+			$scope.movePosition = function (rowGuid, direction) {
+				function swapItems (arr, index1, index2) {
+					arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+					return arr;
+				};
+
+				$scope.esGroup.rows.find(function (row, index) {
+					if (row.guid == rowGuid) {
+						if (direction === "up" && index != 0) {
+							swapItems($scope.esGroup.rows, index, index-1);
+						} else if (direction === "down" && index != $scope.esGroup.rows.length - 1) {
+							swapItems($scope.esGroup.rows, index, index+1);
+						}
+					}
+				})
 			}
 			
 			$scope.isSetted = function(row, col) {
@@ -349,21 +366,25 @@ EasyAssess.directives["esFormGroup"]
 		                template: '<div class="es-dialog-content">'
 						         +'<div class="es-dialog-form-line"><es-app-lookup es-value-field="name" es-label="检测项" es-columns="categoryFields" es-id="categoryLookup" es-resource="category"></es-app-lookup></div>'
 		                		 +'<div class="es-dialog-form-line"><select es-ids="drpUnits" style="width:100%;height:30px;"><option ng-repeat="unit in units" value="{{unit.value}}">{{unit.value}}</option></select></div>'
-		                		 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+		                		 +'<div class="es-dialog-form-line"><es-app-checkbox style="padding-top:5px;" es-model="disableCodeGroup" es-label="禁用代码组"></es-app-checkbox></div>'
+												 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
 		                plain: true,
 		                controller: ['$scope', function($dialog) {
-							$dialog.categoryFields = [
-								{title:"名称", field:"name", type:"string",searchable:true,default:true}
-							];
+											$dialog.disableCodeGroup = false;
 
-							$dialog.$on('$categoryLookup_selected', function(e, model){
-								$dialog.activeModel = model;
-							});
+											$dialog.categoryFields = [
+												{title:"名称", field:"name", type:"string",searchable:true,default:true}
+											];
+
+											$dialog.$on('$categoryLookup_selected', function(e, model){
+												$dialog.activeModel = model;
+											});
 
 		                	$dialog.submit = function(){
 		                		var unit = $("[es-ids=drpUnits]").val();
 		                		$scope.esGroup.rows.push({
 		                			"guid": EasyAssess.utils.generateGUID(),
+													"disableCodeGroup": $dialog.disableCodeGroup,
 		                			"item": {
 			                			"subject": $dialog.activeModel.name,
 										//"code":$dialog.activeModel.code,
