@@ -10,6 +10,13 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			{title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
 		];
 
+		$scope.levels = [
+			{text: "", value: ""},
+			{text: "一级", value: "一级"},
+			{text: "二级", value: "二级"},
+			{text: "三级", value: "三级"}
+		];
+
 		$scope.validations = {
 			name: {
 				validateMethod: function (value) {
@@ -33,7 +40,9 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			"ministries":[],
 			"type": "C",
 			"address":"",
-			"zipcode":""
+			"zipcode":"",
+			"level": "",
+			"category": "",
 		};
 
 		$scope.resource = "ministry";

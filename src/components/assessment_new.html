@@ -51,7 +51,7 @@
                                     <td>
                                         <input ng-if="item.id != currentMinistryId" type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>
                                     </td>
-                                    <td style="width: 100%;">{{item.name}}</td>
+                                    <td style="width: 100%;">{{item.name}}<span ng-if="item.level || item.category">({{item.category}} {{item.level}})</span></td>
                                 </tr>
                             </table>
                         </div>

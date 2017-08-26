@@ -18,6 +18,8 @@
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.district" es-field="district" es-placeholder="输入区" es-label="地区"></es-app-textbox>
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.address" es-field="address" es-placeholder="输入单位地址" es-label="地址"></es-app-textbox>
 		<es-app-textbox es-readonly="readonly" es-model="activeModel.zipcode" es-field="zipcode" es-placeholder="输入单位邮编" es-label="邮编"></es-app-textbox>
+		<es-app-select es-readonly="readonly" es-model="activeModel.level" es-field="level" es-options="levels" es-label="医院等级"></es-app-select>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.category" es-field="category" es-placeholder="输入机构性质" es-label="机构性质"></es-app-textbox>
 		<div class="form-group">
 			<label class="control-label">图标(不超过5M)</label>
 			<div>
@@ -52,7 +54,7 @@
 										  style="color: #333;font-size:12px;">
 									</span>
 									</td>
-									<td style="width: 100%;">{{ministry.name}}</td>
+									<td style="width: 100%;">{{ministry.name}}<span ng-if="ministry.level || ministry.category">({{ministry.category}} {{ministry.level}})</span></td>
 									<td style="width: 10px;"><span ng-if="(ministry.supervisorId == activeModel.id) && !readonly" class="glyphicon glyphicon-remove" data-nodrag ng-click="removeMinistry(ministry)" style="color: darkred;font-size:12px;"></span></a></td>
 								</tr>
 							</table>
