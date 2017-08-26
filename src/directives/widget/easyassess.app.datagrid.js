@@ -75,7 +75,9 @@ EasyAssess.directives["esAppDatagrid"]
                 } else if (column.field.indexOf(".")){
                     var result = row;
                     column.field.split(".").forEach(function (v) {
-                        result=result[v];
+                        if (v) {
+                            result=result[v];
+                        }
                     });
                     return result;
                 } else {
