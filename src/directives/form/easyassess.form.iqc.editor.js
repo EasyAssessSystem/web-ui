@@ -20,7 +20,7 @@ EasyAssess.directives["esIqcEditor"]
 							+						'</tr>'
 							+						'<tr>'
 							+							'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens">'
-							+								'<div ng-if="specimen.type == \'P\' || specimen.type == \'T\'"><input ng-model="specimen.value"/></div>'
+							+								'<div ng-if="specimen.type == \'P\' || specimen.type == \'T\'"><input type="number" ng-model="specimen.value"/></div>'
 							+								'<div ng-if="specimen.type == \'S\'"><select style="min-width: 100px;" ng-model="specimen.value"><option ng-repeat="(value, weight) in specimen.enumValues" value="{{value}}">{{value}}</option></select></div>'
 							+							'</td>'
 							+						'</tr>'
