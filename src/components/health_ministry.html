@@ -30,6 +30,18 @@
 			</div>
 		</div>
 		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="状态"></es-app-select>
+		<div style="overflow: visible;height: auto;">
+			<fieldset>
+				<legend style="font-size:14px;font-weight: 700;margin-bottom: 0px;">用户列表</legend>
+				<div>
+					<table class="table table-striped">
+						<tbody>
+							<tr ng-repeat="user in activeModel.formattedUsers"><td>{{user}}</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</fieldset>
+		</div>
 		<div style="overflow: auto;height:300px;">
 			<fieldset>
 				<legend style="font-size:14px;font-weight: 700;margin-bottom: 0px;">下属机构</legend>

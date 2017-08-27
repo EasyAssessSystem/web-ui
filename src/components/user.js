@@ -65,12 +65,13 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 			 }
 		 };
 
-         $scope.fields = [
-              {title:"用户名", field:"username", type:"string",searchable:true,default:true},
-              {title:"姓名", field:"name", type:"string",searchable:true,default:false},
-              {title:"状态", field:"status", type:"string",searchable:false,default:false},
-			  {title:"角色", field:"roles[0].name", type:"string",searchable:false,default:false}
-         ];
+		$scope.fields = [
+			{title: "用户名", field: "username", type: "string", searchable: true, default: true},
+			{title: "姓名", field: "name", type: "string", searchable: true, default: false},
+			{title: "状态", field: "status", type: "string", searchable: false, default: false},
+			{title: "角色", field: "roles[0].name", type: "string", searchable: false, default: false},
+			{title: "机构", field: "ministries[0].name", type: "string", searchable: false, default: false}
+		];
 
 		 $scope.roleFields = [
 			{title:"姓名", field:"name", type:"string", searchable:true, default:true}

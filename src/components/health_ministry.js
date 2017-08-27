@@ -42,7 +42,7 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			"address":"",
 			"zipcode":"",
 			"level": "",
-			"category": "",
+			"category": ""
 		};
 
 		$scope.resource = "ministry";
