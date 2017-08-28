@@ -260,8 +260,10 @@ select {
 }
 
 .es-ministry-bar-logo {
-	width: 20px;
-	height: 20px;
+	width: 35px;
+	height: 35px;
+	position: relative;
+	bottom: 10px;
 }
 
 .es-app-menu-group:hover, .es-app-menu-item:hover {
