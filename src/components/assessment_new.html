@@ -6,7 +6,7 @@
                             es-label="考评名"></es-app-textbox>
             <es-app-lookup es-service="assess" es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
                            es-columns="templateFields" es-id="templateLookup" es-value-field="header.name"></es-app-lookup>
-            <div style="height: 250px">
+            <div style="height: 140px">
                 <div style="position: relative">
                     <p>开始时间:</p>
                     <div class="input-group" style="width: 200px;">
@@ -29,6 +29,24 @@
                         <span class="input-group-addon" ng-click="openEnd()"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                 </div>
+            </div>
+            <es-app-checkbox style="padding-top:5px;" es-model="emptyModel.enableCert" es-label="启用证书"></es-app-checkbox>
+            <div ng-if="emptyModel.enableCert" style="padding-bottom:5px;">
+                <es-app-textbox es-model="emptyModel.passScore" es-field="passScore" es-placeholder="设置合格分数"
+                                es-label="合格分数"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certIssuer" es-field="certIssuer" es-placeholder="输入证书颁发者名称"
+                                es-label="证书颁发者"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certTitle" es-field="certTitle" es-placeholder="输入证书标题"
+                                es-label="证书标题"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certSubTitle" es-field="certSubTitle" es-placeholder="输入证书子标题"
+                                es-label="证书子标题"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certContent" es-field="certContent" es-placeholder="输入证书内容"
+                                es-label="证书内容"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certCommentLabel" es-field="certCommentLabel" es-placeholder="输入证书备注标题"
+                                es-label="证书备注标题"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certCommentContent" es-field="certCommentContent" es-placeholder="输入证书备注"
+                                es-label="证书备注"></es-app-textbox>
+                <a ng-click="previewCert()" href="javascript:void(0);">预览证书</a>
             </div>
         </es-app-wizard-content>
         <es-app-wizard-content es-step-validator="validatePageTwo()">

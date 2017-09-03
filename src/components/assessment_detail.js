@@ -98,6 +98,10 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
       window.open(EasyAssess.activeEnv.assess() + "form/excel/" + form.id)
     }
 
+    $scope.getCertUrl = function (form) {
+      window.open(EasyAssess.activeEnv.assess() + "form/" + form.id + "/certification");
+    }
+
     $scope.reject = function (form) {
       ngDialog.openConfirm({
         template: '<div class="ngdialog-message">是否确定打回操作?</div>'

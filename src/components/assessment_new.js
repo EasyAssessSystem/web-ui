@@ -12,8 +12,16 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             "startDate": "",
             "endDate": "",
             "owner": "",
+            "enableCert": false,
+            "certContent": "",
+            "certCommentLabel": "",
+            "certCommentContent": "",
+            "certTitle": "",
+            "certSubTitle": "",
+            "certIssuer": "",
             "participants": {},
-            "specimenCodes": {}
+            "specimenCodes": {},
+            "passScore": 60
         };
         $scope.templateFields = [
             {title: "模板", field: "header.name", type: "string", searchable: true, default: true}
@@ -119,6 +127,23 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                 || !$scope.emptyModel.endDate) {
                 return "所有字段必须填写";
             }
+
+            if ($scope.emptyModel.enableCert) {
+                if (!$scope.emptyModel.certTitle
+                    || !$scope.emptyModel.certSubTitle
+                    || !$scope.emptyModel.certContent
+                    || !$scope.emptyModel.certCommentLabel
+                    || !$scope.emptyModel.certCommentContent
+                    || !$scope.emptyModel.certIssuer) {
+                    return "证书字段不能为空";
+                }
+                if (isNaN($scope.emptyModel.passScore)
+                    || Number($scope.emptyModel.passScore) > 100
+                    || Number($scope.emptyModel.passScore) < 1) {
+                    return "请输入合法的合格分数";
+                }
+            }
+
             return true;
         }
 
@@ -132,6 +157,16 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                 return "请输入盲样码";
             }
             return true;
+        }
+
+        $scope.previewCert = function () {
+            var params = "?preview=true";
+            for (var key in $scope.emptyModel) {
+                if (key.indexOf("cert") == 0) {
+                    params+="&" + key + "=" + $scope.emptyModel[key];
+                }
+            }
+            window.open(EasyAssess.activeEnv.assess() + "assessment/certification" + params);
         }
 
         function _updateChild(item) {
