@@ -88,6 +88,26 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 				$scope.uploading = false;
 			});
 		}).bind(this));
+
+		$scope.$watch('signature', (function() {
+			if (!$scope.signature) return;
+			$scope.uploading = true;
+			this.Upload.upload({
+				url: EasyAssess.activeEnv['pdm']() + 'ministry/' + $scope.activeModel.id + "/signature",
+				data: {
+					'signature': $scope.signature
+				},
+				withCredentials: true
+			}).success(function (data, status, headers, config) {
+				EasyAssess.QuickMessage.message("上传成功");
+				$scope.uploading = false;
+				$scope.activeModel.signature = data.data;
+				$scope.signatureUrl = $scope.activeModel.signature;
+			}).error(function (data, status, headers, config) {
+				EasyAssess.QuickMessage.error("上传失败");
+				$scope.uploading = false;
+			});
+		}).bind(this));
 	},
 
 	_preSelect: function() {
@@ -98,10 +118,17 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 	},
 
 	_postSelect: function () {
-		if (this.$scope.activeModel && !this.$scope.activeModel.logo) {
-			this.$scope.logoUrl = 'resource/add_image.png';
-		} else {
-			this.$scope.logoUrl = this.$scope.activeModel.logo;
+		if (this.$scope.activeModel) {
+			if (!this.$scope.activeModel.logo) {
+				this.$scope.logoUrl = 'resource/add_image.png';
+			} else {
+				this.$scope.logoUrl = this.$scope.activeModel.logo;
+			}
+			if (!this.$scope.activeModel.signature) {
+				this.$scope.signatureUrl = 'resource/add_image.png';
+			} else {
+				this.$scope.signatureUrl = this.$scope.activeModel.signature;
+			}
 		}
 	}
 }, EasyAssess.app.MaintenanceController.prototype);
