@@ -21,6 +21,8 @@ EasyAssess.app.ClosedFormController .prototype = EasyAssess.extend({
                 clickHandler: (function ($index, model, $event) {
                     if ($($event.target).attr('es-id') == 'export') {
                         window.open(EasyAssess.activeEnv.assess() + "form/excel/" + model.id)
+                    } else {
+                        window.open(EasyAssess.activeEnv.assess() + "form/" + model.id + "/certification");
                     }
                 }).bind(this)
             }
