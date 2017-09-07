@@ -27,15 +27,17 @@
 				<img src="{{logoUrl}}" href="javascript:void(0)" class="button" ngf-select ngf-pattern="'image/*'"
 				   ngf-accept="'image/*'" ngf-min-height="100"
 				   ngf-resize="{width: 100, height: 100}" ng-model="logo" name="file" ngf-max-size="5MB" style="height: 100px;width: 100px; cursor: pointer;"/>
+				<a ng-if="activeModel.logo" href="javascript:void(0)" ng-click="removeLogo()">删除</a>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label">公章(不超过5M)</label>
+			<label class="control-label">公章(不超过5M,尺寸200x200,PNG格式)</label>
 			<div>
 				<es-spinner ng-if="uploading"></es-spinner>
 				<img src="{{signatureUrl}}" href="javascript:void(0)" class="button" ngf-select ngf-pattern="'image/png'"
 					 ngf-accept="'image/png'" ngf-min-height="200"
 					 ngf-resize="{width: 200, height: 200}" ng-model="signature" name="file" ngf-max-size="5MB" style="height: 200px;width: 200px; cursor: pointer;"/>
+				<!--<a href="javascript:void(0)" ng-click="removeSignature()">删除</a>-->
 			</div>
 		</div>
 		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="状态"></es-app-select>

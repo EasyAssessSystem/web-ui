@@ -89,6 +89,17 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 			});
 		}).bind(this));
 
+		$scope.removeLogo = function () {
+			$scope.logo = null;
+			$scope.logoUrl = 'resource/add_image.png';
+			$scope.activeModel.logo = null;
+		};
+
+		$scope.removeSignature = function () {
+			$scope.signatureUrl = null;
+			$scope.activeModel.signature = null;
+		};
+
 		$scope.$watch('signature', (function() {
 			if (!$scope.signature) return;
 			$scope.uploading = true;
