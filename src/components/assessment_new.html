@@ -36,6 +36,16 @@
                                 es-label="合格分数"></es-app-textbox>
                 <es-app-textbox es-model="emptyModel.certIssuer" es-field="certIssuer" es-placeholder="输入证书颁发者名称"
                                 es-label="证书颁发者"></es-app-textbox>
+                <div style="position: relative">
+                    <p>颁发日期:</p>
+                    <div class="input-group" style="width: 200px;">
+                        <date-picker ng-hide="hideIssueDate" ng-model="emptyModel.certIssueDate" style="position: absolute;top:45px;z-index: 999"
+                                     on-date-selected="closeIssueDate()"
+                                     format-date="formatDate"></date-picker>
+                        <input type="text" class="form-control" ng-model="emptyModel.certIssueDate">
+                        <span class="input-group-addon" ng-click="openIssueDate()"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
                 <es-app-textbox es-model="emptyModel.certTitle" es-field="certTitle" es-placeholder="输入证书标题"
                                 es-label="证书标题"></es-app-textbox>
                 <es-app-textbox es-model="emptyModel.certSubTitle" es-field="certSubTitle" es-placeholder="输入证书子标题"

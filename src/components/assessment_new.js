@@ -18,6 +18,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             "certCommentContent": "",
             "certTitle": "",
             "certSubTitle": "",
+            "certIssueDate": "",
             "certIssuer": "",
             "participants": {},
             "specimenCodes": {},
@@ -30,6 +31,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
         $scope.emptyModel.endDate = null;
         $scope.hideStart = true;
         $scope.hideEnd = true;
+        $scope.hideIssueDate = true;
         $scope.currentMinistryId = EasyAssess.session.currentUser.ministries.length > 0
                                             ? EasyAssess.session.currentUser.ministries[0].id : -1;
         $scope.closeStartPop = function () {
@@ -46,6 +48,14 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
         $scope.closeEndPop = function () {
             $scope.hideEnd = true;
+        };
+
+        $scope.openIssueDate = function () {
+            $scope.hideIssueDate = false;
+        };
+
+        $scope.closeIssueDate = function () {
+            $scope.hideIssueDate = true;
         };
 
         $scope.formatDate = function (date) {
