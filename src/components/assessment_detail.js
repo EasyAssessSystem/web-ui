@@ -75,6 +75,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
 
     $scope.show = function (form) {
       if (form.status != "C" && form.status != "F") return;
+      $scope.lastSelected = form;
       $scope.loading = true;
       self.esRequestService.esGet(EasyAssess.activeEnv.assess() + "form/" + form.id).then(
         (function (result) {

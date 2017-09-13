@@ -229,6 +229,10 @@ select {
 	height:100px;
 }
 
+.es_form_activated {
+	background-color: beige !important;
+}
+
 .es-app-menu-group {
 	height: 50px;
 	padding: 10px 10px 10px 10px;

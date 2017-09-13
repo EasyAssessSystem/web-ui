@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr style="cursor:pointer;" ng-repeat="form in assessment.forms">
+            <tr style="cursor:pointer;" ng-class="{es_form_activated: form.id==lastSelected.id}" ng-repeat="form in assessment.forms">
                 <td ng-click="show(form)" >
                     {{form.ownerName}}
                 </td>
