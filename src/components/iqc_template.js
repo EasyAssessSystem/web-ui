@@ -26,6 +26,10 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
       }
     ];
 
+    $scope.onOwnerSelected = function (ownerId) {
+      $scope.selectedOwner = ownerId;
+    };
+
     $scope.generateReport = function (model) {
       ngDialog.open({
         template: 
@@ -183,9 +187,13 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
     }).bind(this));
 
     $scope.back = function() {
-      $scope.model = null;
-      $scope.viewModel = null;
-    }
+      if ($scope.selectedOwner) {
+        $scope.selectedOwner = null;
+      } else {
+        $scope.model = null;
+        $scope.viewModel = null;
+      }
+    };
 
     $scope.chooseItem = function (item) {
       _updateChild(item);

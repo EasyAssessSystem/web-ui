@@ -19,20 +19,36 @@
         <a ng-click="back()" href="#">返回</a>
         <es-app-tab-pane>
             <es-app-tab es-active="true" es-ref="listView" es-title="列表视图">
-                <div style="padding-top: 10px;">
+                <div ng-if="!selectedOwner" style="padding-top: 10px;">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>机构</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-click="onOwnerSelected(ownerId)" style="cursor:pointer;" ng-repeat="(ownerId, ownerName) in viewModel.participants">
+                            <td>
+                                {{ownerName}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-if="selectedOwner" style="padding-top: 10px;">
                     <script type="text/ng-template" id="plan_actions.html">
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="查看"><span es-id="view" class="glyphicon glyphicon-stats"></span></a>
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="删除"><span es-id="delete" class="glyphicon glyphicon-trash"></span></a>
                     </script>
-                    <es-app-datagrid es-service="iqc" es-resource="template/{{viewModel.id}}/plan/list" es-columns="planFields" es-options="planOptions"></es-app-datagrid>
+                    <es-app-datagrid es-service="iqc" es-resource="template/{{viewModel.id}}/plan/{{selectedOwner}}/list" es-columns="planFields" es-options="planOptions"></es-app-datagrid>
                 </div>
             </es-app-tab>
-            <es-app-tab es-ref="gridView" es-title="汇总视图">
-                <div style="padding-top: 10px;">
-                    <!--<es-app-datagrid es-service="iqc" es-resource="template/{{viewModel.id}}/record/list" es-columns="planFields" es-options="planOptions"></es-app-datagrid>-->
-                    <es-app-iqc-history-grid es-template-id="{{viewModel.id}}"></es-app-iqc-history-grid>
-                </div>
-            </es-app-tab>
+            <!--<es-app-tab es-ref="gridView" es-title="汇总视图">-->
+                <!--<div style="padding-top: 10px;">-->
+                    <!--&lt;!&ndash;<es-app-datagrid es-service="iqc" es-resource="template/{{viewModel.id}}/record/list" es-columns="planFields" es-options="planOptions"></es-app-datagrid>&ndash;&gt;-->
+                    <!--<es-app-iqc-history-grid es-template-id="{{viewModel.id}}"></es-app-iqc-history-grid>-->
+                <!--</div>-->
+            <!--</es-app-tab>-->
         </es-app-tab-pane>
     </div>
     <div ng-if="model && !viewModel">
