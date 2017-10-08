@@ -15,8 +15,6 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
           if ($($event.target).attr('es-id') == 'delete') {
             $scope.activeModel = model;
             this._delete();
-          } else if ($($event.target).attr('es-id') == 'view') {
-            $scope.view(model);
           } else if ($($event.target).attr('es-id') == 'edit') {
             $scope.model = model;
           } else if ($($event.target).attr('es-id') == 'statistic') {
@@ -103,6 +101,8 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
 
     $scope.planOptions = [];
 
+    $scope.groupOptions = [];
+
     $scope.removePlan = function(model) {
       ngDialog.openConfirm({
         template: '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
@@ -121,7 +121,7 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
     }
 
     $scope.planFields = [
-      {title:"单位名称", field:"owner.name", type:"string", searchable:true, default:true},
+      {title:"记录集名称", field:"name", type:"string", searchable:true, default:true},
       {
         title: "操作",
         template: "plan_actions.html",
@@ -130,6 +130,18 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
             $scope.removePlan(model);
           } else if ($($event.target).attr('es-id') == 'view') {
             $scope.viewRecords(model);
+          }
+        }).bind(this)
+      }
+    ];
+
+    $scope.groupFields = [
+      {title:"单位名称", field:"owner.name", type:"string", searchable:true, default:true},
+      {
+        title: "操作",
+        template: "group_actions.html",
+        clickHandler: (function($index, model, $event) {
+          if ($($event.target).attr('es-id') == 'delete') {
           }
         }).bind(this)
       }
@@ -165,6 +177,14 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
         }).bind(this));
     }
 
+    $scope.$on('$planTemplatesselected', (function (e, model) {
+      $scope.viewModel = model;
+    }).bind(this));
+
+    $scope.$on('$planGroupsselected', (function (e, model) {
+      $scope.selectedGroup = model;
+    }).bind(this));
+
     $scope.view = function(model) {
       $scope.viewModel = model;
     }
@@ -187,8 +207,8 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
     }).bind(this));
 
     $scope.back = function() {
-      if ($scope.selectedOwner) {
-        $scope.selectedOwner = null;
+      if ($scope.selectedGroup) {
+        $scope.selectedGroup = null;
       } else {
         $scope.model = null;
         $scope.viewModel = null;

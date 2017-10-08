@@ -6,41 +6,30 @@
             </div>
             <div class="panel-body">
                 <script type="text/ng-template" id="iqc_button_column.html">
-                    <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="查看"><span es-id="view" class="glyphicon glyphicon glyphicon-list-alt"></span></a>
                     <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="统计"><span es-id="statistic" class="glyphicon glyphicon-stats"></span></a>
                     <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="编辑"><span es-id="edit" class="glyphicon glyphicon-cog"></span></a>
                     <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="删除计划"><span es-id="delete" class="glyphicon glyphicon-trash"></span></a>
                 </script>
-                <es-app-datagrid es-service="iqc" es-resource="template" es-columns="fields" es-options="options"></es-app-datagrid>
+                <es-app-datagrid es-id="planTemplates" es-service="iqc" es-resource="template" es-columns="fields" es-options="options"></es-app-datagrid>
             </div>
         </div>
     </div>
-    <div ng-if="viewModel">
+    <div ng-if="viewModel || selectedGroup">
         <a ng-click="back()" href="#">返回</a>
         <es-app-tab-pane>
             <es-app-tab es-active="true" es-ref="listView" es-title="列表视图">
-                <div ng-if="!selectedOwner" style="padding-top: 10px;">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>机构</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-click="onOwnerSelected(ownerId)" style="cursor:pointer;" ng-repeat="(ownerId, ownerName) in viewModel.participants">
-                            <td>
-                                {{ownerName}}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div ng-if="!selectedGroup" style="padding-top: 10px;">
+                    <script type="text/ng-template" id="group_actions.html">
+                        <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="删除"><span es-id="delete" class="glyphicon glyphicon-trash"></span></a>
+                    </script>
+                    <es-app-datagrid es-id="planGroups" es-service="iqc" es-resource="template/{{viewModel.id}}/group/list" es-columns="groupFields" es-options="groupOptions"></es-app-datagrid>
                 </div>
-                <div ng-if="selectedOwner" style="padding-top: 10px;">
+                <div ng-if="selectedGroup" style="padding-top: 10px;">
                     <script type="text/ng-template" id="plan_actions.html">
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="查看"><span es-id="view" class="glyphicon glyphicon-stats"></span></a>
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="删除"><span es-id="delete" class="glyphicon glyphicon-trash"></span></a>
                     </script>
-                    <es-app-datagrid es-service="iqc" es-resource="template/{{viewModel.id}}/plan/{{selectedOwner}}/list" es-columns="planFields" es-options="planOptions"></es-app-datagrid>
+                    <es-app-datagrid es-id="plans" es-service="iqc" es-resource="group/{{selectedGroup.id}}/plan/list" es-columns="planFields" es-options="planOptions"></es-app-datagrid>
                 </div>
             </es-app-tab>
             <!--<es-app-tab es-ref="gridView" es-title="汇总视图">-->

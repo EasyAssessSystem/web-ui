@@ -13,6 +13,11 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
 
         this._showSaveMessage = true;
         this._service = EasyAssess.activeEnv.iqc();
+
+        $scope.groupFields = [
+            {title:"计划", field:"template.name", type:"string", searchable:true, default:true}
+        ];
+
         $scope.fields = [
             {title:"计划", field:"name", type:"string", searchable:true, default:true},
             {
@@ -33,6 +38,37 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
             }
         ];
 
+        $scope.$on('$groupLookupselected', (function (e, model) {
+            $scope.selectedGroup = model;
+        }).bind(this));
+
+        $scope.createPlan = function () {
+            ngDialog.open({
+                template: '<div class="es-dialog-content">'
+                +       '<div style="height: 150px; overflow-y: auto; overflow-x:visible;">'
+                +           '<label>记录集名称:</label><input ng-model="name" class="form-control"/>'
+                +           '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" class="btn btn-primary">确定</button></div>'
+                +       '</div>'
+                +'</div>',
+                plain: true,
+                className: 'ngdialog-theme-default es-large-dialog',
+                controller: ['$scope', function ($dialog) {
+                    $dialog.submit = function () {
+                        if ($dialog.name) {
+                            esRequestService.esPost(EasyAssess.activeEnv.iqc() + "group/" + $scope.selectedGroup.id + "/plan?name=" + $dialog.name, {})
+                              .then(function(){
+                                  EasyAssess.QuickMessage.message("保存成功");
+                                  $scope.$broadcast('$refresh');
+                                  $dialog.closeThisDialog();
+                              });
+                        } else {
+                            EasyAssess.QuickMessage.error("请输入记录集名称");
+                        }
+                    }
+                }]
+            });
+        };
+        
         $scope.new = function() {
             $scope.planModel = {
                 id: null,
@@ -49,7 +85,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
         }).bind(this);
 
         $scope.back = function() {
-            $scope.planModel = null;
+            $scope.selectedGroup = null;
         }
 
         $scope.viewRecords = function (model) {
@@ -159,16 +195,12 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                 plain: true
             }).then(
               (function(){
-                  var plan = {};
-                  plan.id = null;
-                  plan.owner = null;
-                  plan.name = model.name;
-                  plan.items = model.items;
-                  plan.template = model;
-                  plan.records = [];
-                  plan.additionalItems = model.additionalItems;
+                  var group = {};
+                  group.id = null;
+                  group.owner = null;
+                  group.template = model;
 
-                  esRequestService.esPost(EasyAssess.activeEnv.iqc() + "plan", plan)
+                  esRequestService.esPost(EasyAssess.activeEnv.iqc() + "group", group)
                     .then(function(){
                         EasyAssess.QuickMessage.message("保存成功");
                         $scope.$broadcast('$refresh');

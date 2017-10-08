@@ -9,19 +9,26 @@
                                 <!--<div style="padding-bottom:10px;" ng-click="new()"><span class="glyphicon glyphicon-file"></span><a style="text-decoration: underline;padding-left: 5px;cursor: pointer;">创建计划</a></div>-->
                             <!--</td>-->
                             <td style="width: 100px;">
-                                <es-app-lookup es-service="iqc" es-provider="link" ng-if="!readonly" es-label="加入计划" es-columns="templateFields" es-id="templateLookup" es-resource="template/list/available"></es-app-lookup>
+                                <es-app-lookup ng-if="!selectedGroup" es-service="iqc" es-provider="link" ng-if="!readonly" es-label="加入计划" es-columns="templateFields" es-id="templateLookup" es-resource="template/list/available"></es-app-lookup>
+                                <a ng-click="createPlan()" ng-if="selectedGroup" style="text-decoration: underline;padding-left: 5px;cursor: pointer;">
+                                    创建记录集
+                                </a>
                             </td>
                         </tr>
                     </table>
                 </div>
-                <div class="panel-body">
+                <div ng-if="!selectedGroup" class="panel-body">
+                    <es-app-datagrid es-id="groupLookup" es-service="iqc" es-resource="group" es-columns="groupFields" es-options="options"></es-app-datagrid>
+                </div>
+                <div ng-if="selectedGroup" class="panel-body">
+                    <a ng-click="back()" href="#">返回</a>
                     <script type="text/ng-template" id="plan_button_column.html">
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="录入"><span es-id="input" class="glyphicon glyphicon-pencil"></span></a>
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="查看"><span es-id="view" class="glyphicon glyphicon-stats"></span></a>
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="修改计划"><span es-id="edit" class="glyphicon glyphicon-cog"></span></a>
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="删除计划"><span es-id="delete" class="glyphicon glyphicon-trash"></span></a>
                     </script>
-                    <es-app-datagrid es-service="iqc" es-resource="plan" es-columns="fields" es-options="options"></es-app-datagrid>
+                    <es-app-datagrid es-service="iqc" es-resource="group/{{selectedGroup.id}}/plan/list" es-columns="fields" es-options="options"></es-app-datagrid>
                 </div>
             </div>
         </div>
