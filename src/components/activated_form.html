@@ -2,7 +2,11 @@
     <div ng-if="!activeModel">
         <es-app-datagrid es-service="assess" es-resource="form/activated" es-columns="fields" es-options="options"></es-app-datagrid>
     </div>
-    <div ng-if="activeModel">
+    <div ng-if="activeModel && activeModel.status == 'A'">
         <es-form-submit es-form="activeModel" es-type="assess"></es-form-submit>
+    </div>
+    <div ng-if="activeModel && activeModel.status == 'C' && template">
+        <a ng-click="back()" href="#">返回</a>
+        <es-form-result es-form="activeModel" es-template="template"></es-form-result>
     </div>
 </div>
