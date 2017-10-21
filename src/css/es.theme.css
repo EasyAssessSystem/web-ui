@@ -96,6 +96,7 @@
 	border-left: hidden;
 	border-right: hidden;
 	border-bottom: 1px solid #d4d4d4 ;
+	background: transparent;
 }
 
 .es-form-group-text {

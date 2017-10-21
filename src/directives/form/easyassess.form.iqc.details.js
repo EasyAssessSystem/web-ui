@@ -10,7 +10,7 @@ EasyAssess.directives["esIqcDetails"]
 						+'<div class="panel panel-default">'
 						+	'<div class="panel-heading">IQC 历史</div>'
 						+		'<div class="panel-body">'
-						+ 			'<table class="table table-striped"><tr><td ng-repeat="record in esData"><span>{{record.date}}</span></td></tr>'
+						+ 			'<table class="table table-striped"><tr><td ng-repeat="record in esData"><span>{{record.date}} {{record.tags}}</span></td></tr>'
 						+ 				'<tr><td ng-repeat="record in esData">'
 						+ 					'<table class="table table-striped">'
 						+   					'<tr ng-repeat="item in record.items">'

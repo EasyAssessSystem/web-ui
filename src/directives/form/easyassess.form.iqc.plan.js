@@ -124,6 +124,12 @@ EasyAssess.directives["esIqcPlanDesigner"]
 		+					'<es-add-button ng-click="editAdditionalItem()" es-ids="addAdditionalItem" es-text="添加辅助信息" title="添加辅助信息"></es-add-button>'
 		+				'</td>'
 		+			'</tr>'
+		+			'<tr>'
+		+				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
+		+					'<span class="es-form-group-title">填报说明:</span>'
+		+					'<div class="es-form-footer"><es-text-box es-content="{{esTemplate.comment}}" es-change-callback="contentChange(val)" es-editable="true" class="es-form-footer-text" es-placeholder="输入说明内容..."></es-text-box></div>'
+		+				'</td>'
+		+			'</tr>'
 		+	 	'</tbody></table>'
 		+ '</div>',
 		scope: {
@@ -131,6 +137,10 @@ EasyAssess.directives["esIqcPlanDesigner"]
 		},
 
 		controller: ["$scope", function($scope, $element, $attrs){
+
+			$scope.contentChange = function (val) {
+				$scope.esTemplate.comment = val;
+			}
 
 			if (!$scope.esTemplate.editAdditionalItems) {
 				$scope.esTemplate.editAdditionalItems = [];

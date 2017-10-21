@@ -108,54 +108,86 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                   });
               }).bind(this));
         }
-        
+
         $scope.inputRecord = function (model) {
 
             ngDialog.open({
                 template: '<div class="es-dialog-content">'
-                + '<div style="height: 500px; overflow-y: auto; overflow-x:visible;">'
+                + '<div style="height: 530px; overflow-y: auto; overflow-x:visible;">'
                 +     '<div>检测时间: <es-date-picker es-model="targetDate"/></div>'
-                +     '<es-iqc-editor ng-if="record" es-record="record"></es-iqc-editor></div>'
-                +     '<div ng-if="record" align="right"><button class="btn btn-primary" ng-click="reload()"><span class="glyphicon glyphicon-refresh"></span><span class="es-icon-button-text">重置</span></button><button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">提交</span></button></div>'
+                +     '<div style="margin-top: 20px;" ng-if="record">记录标签: <div><input ng-model="record.tags"class="es-form-signature-line"/></div></div>'
+                +     '<es-iqc-editor ng-if="record" es-record="record"></es-iqc-editor>'
+                +     '<a style="display:block;padding: 10px;" ng-if="!record && records" ng-click="create()">创建新记录</a>'
+                +     '<table ng-if="records && !record" class="table table-striped">'
+                +         '<thead>'
+                +           '<tr>'
+                +             '<th>标签</th>'
+                +           '</tr>'
+                +         '</thead>'
+                +         '<tbody>'
+                +           '<tr ng-click="recordSelected(r)" ng-repeat="r in records"><td>{{getRecordText(r)}}</td></tr>'
+                +         '</tbody>'
+                +      '</table>'
+                +     '<div ng-if="record" align="right"><button class="btn btn-primary" ng-click="back()"><span class="glyphicon glyphicon-cancel"></span><span class="es-icon-button-text">取消</span><button class="btn btn-primary" ng-click="reload()"><span class="glyphicon glyphicon-refresh"></span><span class="es-icon-button-text">重置</span></button><button class="btn btn-primary" ng-click="save()"><span class="glyphicon glyphicon-floppy-disk"></span><span class="es-icon-button-text">提交</span></button></div>'
                 +'</div>',
                 plain: true,
                 className: 'ngdialog-theme-default es-large-dialog',
                 controller: ['$scope', function ($dialog) {
+                    $dialog.getRecordText = function (r) {
+                      return r.name + (r.tags ? " - " + r.tags:"");
+                    }
+                    $dialog.back = function () {
+                      $dialog.record = null;
+                    };
+                    $dialog.create = function () {
+                      $dialog.records = [];
+                      var preStorage = localStorage.get("IQCRecord" + model.id);
+                      var newRecord = preStorage ? JSON.parse(preStorage) : createNewRecord();
+                      newRecord.id = null;
+                      newRecord.date = $dialog.targetDate;
+                      $dialog.records.push(newRecord);
+                      $dialog.record = newRecord;
+                      if (newRecord.version != model.version) {
+                        ngDialog.openConfirm({
+                          template: '<div class="ngdialog-message"><span style="color:darkred;font-weight: bold;">警告: 计划发起者已经修改了计划，您需要重载计划并重新配置你的样本，是否现在重载？</span>?</div>'
+                          + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                          plain: true
+                        }).then(
+                          (function(){
+                            var targetDate = $dialog.record.date;
+                            newRecord = createNewRecord();
+                            newRecord.id = null;
+                            newRecord.date = targetDate;
+                          }).bind(this),
+                          function(reason){
+                          }
+                        );
+                      }
+                    };
+                    $dialog.recordSelected = function (record) {
+                      record.plan = model;
+                      $dialog.record = record;
+                    }
                     $dialog.$watch('targetDate', function () {
                         if ($dialog.targetDate) {
+                            $dialog.records = null;
                             esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/record/" + $dialog.targetDate)
                               .then((function(response){
-                                  var recordForDate = response.data;
-                                  if (recordForDate) {
-                                      recordForDate.plan = model;
-                                      $dialog.record = recordForDate;
+                                  var recordsForDate = response.data;
+                                  if (recordsForDate && recordsForDate.length > 0) {
+                                      // if (recordsForDate.length == 1) {
+                                      //   recordsForDate[0].plan = model;
+                                      //   $dialog.record = recordsForDate[0];
+                                      // }
+                                      $dialog.records = recordsForDate;
                                   } else {
                                       ngDialog.openConfirm({
                                           template: '<div class="ngdialog-message"><span style="color:darkred;font-weight: bold;">' + $dialog.targetDate + ' 没有录入记录</span>?</div>'
-                                          + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">创建纪录</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                                          + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">创建新记录</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
                                           plain: true
                                       }).then(
                                         (function(){
-                                            var preStorage = localStorage.get("IQCRecord" + model.id);
-                                            preStorage ? $dialog.record = JSON.parse(preStorage) : $dialog.record = createNewRecord();
-                                            $dialog.record.id = null;
-                                            $dialog.record.date = $dialog.targetDate;
-                                            if ($dialog.record.version != model.version) {
-                                                ngDialog.openConfirm({
-                                                    template: '<div class="ngdialog-message"><span style="color:darkred;font-weight: bold;">警告: 计划发起者已经修改了计划，您需要重载计划并重新配置你的样本，是否现在重载？</span>?</div>'
-                                                    + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
-                                                    plain: true
-                                                }).then(
-                                                  (function(){
-                                                      var targetDate = $dialog.record.date;
-                                                      $dialog.record = createNewRecord();
-                                                      $dialog.record.id = null;
-                                                      $dialog.record.date = targetDate;
-                                                  }).bind(this),
-                                                  function(reason){
-                                                  }
-                                                );
-                                            }
+                                          $dialog.create();
                                         }).bind(this),
                                         function(reason){
                                         }
@@ -198,7 +230,8 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                                   expires.setMonth(expires.getMonth() + 1);
                                   localStorage.set("IQCRecord" + model.id, JSON.stringify($dialog.record), {expires: expires});
                                   EasyAssess.QuickMessage.message("保存成功");
-                                  $dialog.closeThisDialog();
+                                  //$dialog.closeThisDialog();
+                                  $dialog.back();
                               }).bind(this));
                         }
                     }

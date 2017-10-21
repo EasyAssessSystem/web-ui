@@ -51,6 +51,10 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
             +	'<div class="panel panel-default">'
             +		'<div class="panel-heading">筛选条件</div>'
             +		'<div class="panel-body">'
+            +       '<div class="es-dialog-form-line" style="height: 30px;">'
+            +         '<div style="float: left;width: 150px;">记录标签</div>'
+            +	        '<input class="es-form-signature-line" placeholder="请输入记录标签" ng-blur="additionalDataChanged(\'tags\', $event)"/>'
+            +       '</div>'
             +	      '<div class="es-dialog-form-line" style="height: 30px;" ng-repeat="def in template.additionalItems track by $index">'
             +             '<div ng-bind="template.additionalItems[$index].name" style="float: left;width: 150px;"></div>'
             +	      	'<input ng-if="template.additionalItems[$index].type==\'STRING\'" class="es-form-signature-line" placeholder="请输入辅助信息" ng-blur="additionalDataChanged(template.additionalItems[$index].name, $event)"/>'
@@ -103,6 +107,14 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
 
     $scope.groupOptions = [];
 
+    $scope.$on('$templateLookup_selected', (function(e, model){
+      $scope.model = {
+        items: model.items,
+        name: model.name,
+        additionalItems: model.additionalItems
+      };
+    }).bind(this));
+
     $scope.removePlan = function(model) {
       ngDialog.openConfirm({
         template: '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
@@ -119,6 +131,11 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
         }
       );
     }
+
+    $scope.templateFields = [
+      {title:"名称", field:"name", type:"string", searchable:true, default:true},
+      {title:"创建人", field:"owner.name", type:"string", searchable:true, default:false}
+    ];
 
     $scope.planFields = [
       {title:"记录集名称", field:"name", type:"string", searchable:true, default:true},

@@ -54,6 +54,8 @@ EasyAssess.directives["esIqcEditor"]
 							+				'</tr>'
 		          +	 		'</tbody></table>'
 							+		'</div>'
+						  +   '<div>填报说明:</div>'
+			        +   '<div>{{esRecord.plan.comment}}</div>'
 		          + '</div>',
 		scope: {
 			esRecord: "="
