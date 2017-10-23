@@ -182,7 +182,7 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
         .then((function(response){
           ngDialog.open({
             template: '<div class="es-dialog-content">'
-            + '<div style="height: 800px; overflow-y: auto; overflow-x:visible;"><es-iqc-viewer es-records="records" es-plan="plan"></es-iqc-viewer></div>'
+            + '<div style="height: 800px; overflow-y: auto; overflow-x:visible;"><es-iqc-viewer es-records="records" es-enable-comment="true" es-plan="plan"></es-iqc-viewer></div>'
             +'</div>',
             plain: true,
             className: 'ngdialog-theme-default es-large-dialog',

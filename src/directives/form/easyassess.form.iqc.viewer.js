@@ -21,14 +21,15 @@ EasyAssess.directives["esIqcViewer"]
 					+		'</es-app-tab>'
 					+		'<es-app-tab es-ref="detailsView" es-title="详细">'
 					+			'<div style="padding-top: 10px;">'
-					+				'<es-iqc-details es-data="esRecords"></es-iqc-details>'
+					+				'<es-iqc-details es-enable-comment="{{esEnableComment}}" es-data="esRecords"></es-iqc-details>'
 					+			'</div>'
 					+		'</es-app-tab>'
 					+	  '</es-app-tab-pane>'
 					+ '</div>',
 		scope: {
 			esRecords: "=",
-			esPlan: "="
+			esPlan: "=",
+			esEnableComment: "@"
 		},
 		
 		controller: ["$scope", function($scope, $element, $attrs){

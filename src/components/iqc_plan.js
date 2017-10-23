@@ -15,7 +15,8 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
         this._service = EasyAssess.activeEnv.iqc();
 
         $scope.groupFields = [
-            {title:"计划", field:"template.name", type:"string", searchable:true, default:true}
+            {title:"计划", field:"template.name", type:"string", searchable:true, default:true},
+            {title:"创建人", field:"template.owner.name", type:"string", searchable:true, default:true}
         ];
 
         $scope.fields = [
@@ -145,6 +146,9 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                       var newRecord = preStorage ? JSON.parse(preStorage) : createNewRecord();
                       newRecord.id = null;
                       newRecord.date = $dialog.targetDate;
+                      newRecord.comments = null;
+                      newRecord.createdAt = null;
+                      newRecord.lastModified = null;
                       $dialog.records.push(newRecord);
                       $dialog.record = newRecord;
                       if (newRecord.version != model.version) {
