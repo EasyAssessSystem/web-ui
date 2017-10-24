@@ -27,11 +27,11 @@ EasyAssess.directives["esIqcChart"]
 			$scope.labels = [];
 			$scope.data = [];
 			$scope.datasetOverride = [];
-
-			for (var date in $scope.esData.history) {
-				$scope.labels.push(date);
+			console.log($scope.esData.history);
+			for (var id in $scope.esData.history) {
+				$scope.labels.push($scope.esData.history[id].label);
 				if ($scope.datasetOverride.length == 0) {
-					$scope.esData.history[date].forEach(function(data) {
+					$scope.esData.history[id].forEach(function(data) {
 						$scope.data.push([]);
 						if (data.type == "S") {
 							$scope.datasetOverride.push({
@@ -53,7 +53,7 @@ EasyAssess.directives["esIqcChart"]
 					});
 				}
 
-				$scope.esData.history[date].forEach(function(data, index) {
+				$scope.esData.history[id].forEach(function(data, index) {
 					if (!$scope.data[index]) $scope.data[index]=[];
 					if (data.type == "S") {
 						$scope.data[index].push(data.enumValues[data.value]);
