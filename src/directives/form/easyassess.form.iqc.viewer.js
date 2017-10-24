@@ -49,7 +49,8 @@ EasyAssess.directives["esIqcViewer"]
 							history: {}
 						};
 					}
-					$scope.dataModel.items[item.subject].history[record.date] = item.specimens;
+					var idx = record.tags ? record.date + "-" + record.tags : record.date;
+					$scope.dataModel.items[item.subject].history[idx] = item.specimens;
 				});
 			});
 		}]
