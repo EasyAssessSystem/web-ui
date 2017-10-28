@@ -19,6 +19,8 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
             $scope.model = model;
           } else if ($($event.target).attr('es-id') == 'statistic') {
             $scope.generateReport(model)
+          } else if ($($event.target).attr('es-id') == 'add') {
+            $scope.addParticipants(model);
           }
         }).bind(this)
       }
@@ -26,6 +28,126 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
 
     $scope.onOwnerSelected = function (ownerId) {
       $scope.selectedOwner = ownerId;
+    };
+
+    $scope.addParticipants = function (model) {
+      ngDialog.open({
+        template:
+        '<div class="es-dialog-content">'
+        +	'<div class="panel panel-default">'
+        +		'<div class="panel-heading">选择卫生机构</div>'
+        +		'<div class="panel-body ">'
+        +     '<script type="text/ng-template" id="ministry_renderer_plan_creation.html">'
+        +       '<div ui-tree-handle class="tree-node tree-node-content" ng-click="selectRow(item, $event)">'
+        +         '<table style="width: 100%;cursor: pointer;">'
+        +           '<tr>'
+        +             '<td style="width: 20px;padding: 0px 5px 0px 5px;">'
+        +               '<span ng-if="item.ministries && item.ministries.length > 0" ng-click="toggle(this)" class="glyphicon" ng-class="{\'glyphicon-chevron-right\': collapsed,\'glyphicon-chevron-down\': !collapsed }" style="color: #333;font-size:12px;"></span>'
+        +             '</td>'
+        +             '<td>'
+        +               '<input ng-if="item.id != currentMinistryId && !existings[item.id]" type="checkbox" ng-change="chooseItem(item)" ng-model="item.selected"/>'
+        +             '</td>'
+        +             '<td style="width: 100%;">{{item.name}}<span ng-if="item.level || item.category">({{item.category}} {{item.level}})</span></td>'
+        +            '</tr>'
+        +         '</table>'
+        +        '</div>'
+        +        '<ul ui-tree-nodes ng-model="item.ministries" ng-class="{hidden: collapsed,displayed:!collapsed}">'
+        +           '<li ng-repeat="item in item.ministries" ui-tree-node collapsed="true"'
+        +             'ng-include="\'ministry_renderer_plan_creation.html\'">'
+        +           '</li>'
+        +        '</ul>'
+        +      '</script>'
+        +      '<div class="row">'
+        +         '<div style="padding: 5px 5px 5px 5px;">'
+        +           '<div ui-tree id="tree-root" data-drag-enabled="false">'
+        +             '<ul ui-tree-nodes ng-model="list">'
+        +               '<li ng-repeat="item in list" ui-tree-node collapsed="true"'
+        +                    'ng-include="\'ministry_renderer_plan_creation.html\'"></li>'
+        +             '</ul>'
+        +           '</div>'
+        +         '</div>'
+        +     '</div>'
+        +     '<div align="right"><button ng-click="submit()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>'
+        +   '</div>'
+        +'</div>',
+        plain: true,
+        controller: ['$scope', function($dialog) {
+          $dialog.isLoading = true;
+          $dialog.existings = model.participants;
+          $dialog.submit = function () {
+            var url = EasyAssess.activeEnv.iqc() + "template/" + model.id + "/participants";
+            esRequestService.esPost(url, $dialog.participants).then(
+              function (response) {
+                EasyAssess.QuickMessage.message("添加成功");
+                $dialog.closeThisDialog();
+              }
+            );
+          }
+          esRequestService.esGet(EasyAssess.activeEnv.pdm() + "ministry/list/affiliated?page=0&size=99").then(
+            function (response) {
+              $dialog.isLoading = false;
+              $dialog.list = response.data.content;
+              $dialog.currentMinistryId = EasyAssess.session.currentUser.ministries.length > 0
+                ? EasyAssess.session.currentUser.ministries[0].id : -1;
+              $dialog.chooseItem = function (item) {
+                _updateChild(item);
+                $dialog.participants = {};
+                _updateEmptyModel($dialog.list);
+              };
+
+              function _updateChild(item) {
+                if (item.ministries.length > 0) {
+                  var newState = item.selected;
+                  angular.forEach(item.ministries, function (eachMinistry) {
+                    eachMinistry.selected = newState;
+                    _updateChild(eachMinistry);
+                  })
+                }
+              }
+
+              function _updateParent(item) {
+                if (item.supervisorId > 0) {
+                  var parentMinistry = _searchParent(item.supervisorId, $dialog.list);
+                  var parentState = false;
+                  angular.forEach(parentMinistry.ministries, function (eachMinistry) {
+                    parentState = eachMinistry || parentMinistry;
+                  });
+                  parentMinistry.selected = parentState;
+                  _updateParent(parentMinistry);
+                }
+              }
+
+              function _searchParent(id, nodes) {
+                var parent;
+                angular.forEach(nodes, function (each) {
+                  if (!parent) {
+                    if (each.id == id) {
+                      return parent = each;
+                    } else {
+                      parent = _searchParent(id, each.ministries)
+                    }
+                  } else {
+                  }
+                });
+                return parent;
+              }
+
+              function _updateEmptyModel(nodes) {
+                angular.forEach(nodes, function (node) {
+                  if (node.selected && node.id != $dialog.currentMinistryId) {
+                    $dialog.participants[node.id] = node.name;
+                  } else {
+
+                  }
+                  if (node.ministries.length > 0) {
+                    _updateEmptyModel(node.ministries)
+                  }
+                })
+              }
+            }
+          );
+        }]
+      });
     };
 
     $scope.generateReport = function (model) {
