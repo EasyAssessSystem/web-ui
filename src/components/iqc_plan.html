@@ -18,6 +18,9 @@
                     </table>
                 </div>
                 <div ng-if="!selectedGroup" class="panel-body">
+                    <script type="text/ng-template" id="group_button_column.html">
+                        <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="删除"><span es-id="delete" class="glyphicon glyphicon-trash"></span></a>
+                    </script>
                     <es-app-datagrid es-id="groupLookup" es-service="iqc" es-resource="group" es-columns="groupFields" es-options="options"></es-app-datagrid>
                 </div>
                 <div ng-if="selectedGroup" class="panel-body">

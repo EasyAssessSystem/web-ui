@@ -16,8 +16,34 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
 
         $scope.groupFields = [
             {title:"计划", field:"template.name", type:"string", searchable:true, default:true},
-            {title:"创建人", field:"template.owner.name", type:"string", searchable:true, default:true}
+            {title:"创建人", field:"template.owner.name", type:"string", searchable:true, default:true},
+            {
+              title: "操作",
+              template: "group_button_column.html",
+              clickHandler: (function($index, model, $event) {
+                if ($($event.target).attr('es-id') == 'delete') {
+                  $scope.removeGroup(model);
+                }
+              }).bind(this)
+            }
         ];
+
+        $scope.removeGroup = function(model) {
+          ngDialog.openConfirm({
+            template: '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
+            + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+            plain: true
+          }).then(
+            (function(value){
+              esRequestService.esDelete(EasyAssess.activeEnv.iqc() + "group/" + model.id)
+                .then((function(){
+                  $scope.$broadcast('$groupLookup_refresh');
+                }).bind(this));
+            }).bind(this),
+            function(reason){
+            }
+          );
+        };
 
         $scope.fields = [
             {title:"计划", field:"name", type:"string", searchable:true, default:true},
