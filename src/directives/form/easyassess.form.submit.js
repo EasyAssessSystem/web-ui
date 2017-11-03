@@ -185,6 +185,8 @@ EasyAssess.directives["esFormSubmit"]
             $scope.$on('$tabSelected',function(e, ref, attrs){
                 if (ref=="preView") {
                     $scope.previewModel = {
+                        formName: $scope.esForm.formName,
+                        ownerName: $scope.esForm.ownerName,
                         values:$scope.answer.values,
                         codes:$scope.rawCodeList,
                         details:$scope.answer.details,
