@@ -179,7 +179,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                       $dialog.record = newRecord;
                       if (newRecord.version != model.version) {
                         ngDialog.openConfirm({
-                          template: '<div class="ngdialog-message"><span style="color:darkred;font-weight: bold;">警告: 计划发起者已经修改了计划，您需要重载计划并重新配置你的样本，是否现在重载？</span>?</div>'
+                          template: '<div class="ngdialog-message"><span style="color:darkred;font-weight: bold;">警告: 计划已经更行，您需要重载计划并重新配置你的样本，否则可能会导致不正确的统计，是否现在重载？</span>?</div>'
                           + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
                           plain: true
                         }).then(
