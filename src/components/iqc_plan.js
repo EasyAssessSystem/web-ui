@@ -188,6 +188,9 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                             newRecord = createNewRecord();
                             newRecord.id = null;
                             newRecord.date = targetDate;
+                            $dialog.records = [];
+                            $dialog.records.push(newRecord);
+                            $dialog.record = newRecord;
                           }).bind(this),
                           function(reason){
                           }
