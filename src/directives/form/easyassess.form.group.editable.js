@@ -17,7 +17,7 @@ EasyAssess.directives["esFormGroupEdit"]
         },
         template:'<div class="es-form-group">'
         +	 '<table class="table table-striped">'
-        + 	'<thead><tr><th style="width:15%;">检测分类</th><th style="width:45%;">样本</th><th style="width:40%;">编码组</th></tr></thead>'
+        + 	'<thead><tr><th style="width:15%;">' + EasyAssess.lang.forms.group.categoryText + '</th><th style="width:45%;">' + EasyAssess.lang.forms.group.specimenText + '</th><th style="width:40%;">' + EasyAssess.lang.forms.group.codeGroupText + '</th></tr></thead>'
         +     '<tbody>'
         +			'<tr>'
         +				'<td>'
@@ -49,13 +49,13 @@ EasyAssess.directives["esFormGroupEdit"]
         +       '<td>'
         +          '<table cellpadding="10" cellspacing="10" style="width: 100%;">'
         +						'<tr>'
-        +							'<td class="es-form-group-cell"><span ng-if="!row.disableCodeGroup" class="es-form-group-title">试剂批号</span></td>'
-        +							'<td class="es-form-group-cell"><span ng-if="!row.disableCodeGroup" class="es-form-group-title">试剂有效期</span></td>'
+        +							'<td class="es-form-group-cell"><span ng-if="!row.disableCodeGroup" class="es-form-group-title">' + EasyAssess.lang.forms.group.batchCodeText + '</span></td>'
+        +							'<td class="es-form-group-cell"><span ng-if="!row.disableCodeGroup" class="es-form-group-title">' + EasyAssess.lang.forms.group.expireDateText + '</span></td>'
         //+							'<td class="es-form-group-cell"><span class="es-form-group-title">检测日期</span></td>'
         +						'</tr>'
         +            '<tr style="height: 46px;" ng-repeat="row in esGroup.rows">'
-        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" ng-blur="detailChanged(row, \'batchNumber\' ,$event)" placeholder="输入试剂批号"/></td>'
-        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" ng-blur="detailChanged(row, \'expire\', $event)" placeholder="输入有效期"/></td>'
+        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" ng-blur="detailChanged(row, \'batchNumber\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputBatchCodeText + '"/></td>'
+        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" ng-blur="detailChanged(row, \'expire\', $event)" placeholder="' + EasyAssess.lang.forms.group.inputExpireDateText + '"/></td>'
         // +               '<td class="es-form-group-cell"><es-app-calendar es-id="row" es-date="testDate" es-holder="请输入时间"></es-app-calendar></td>'
         +            '</tr>'
         +           '</table>'
@@ -65,18 +65,18 @@ EasyAssess.directives["esFormGroupEdit"]
         +   '<table style="width: 100%;">'
         +       '<tr>'
         +           '<td style="width: 60%;"></td>'
-        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'tester\' ,$event)" placeholder="输入检测人"/></td>'
-        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="testDate" es-date="testDate" es-holder="请输入检测日期"></es-app-calendar></td>'
+        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'tester\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputTesterText + '"/></td>'
+        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="testDate" es-date="testDate" es-holder="' + EasyAssess.lang.forms.group.inputTestDateText + '"></es-app-calendar></td>'
         +       '</tr>'
         +       '<tr>'
         +           '<td style="width: 60%;"></td>'
-        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'reviewer\' ,$event)" placeholder="输入审核人"/></td>'
-        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="reviewDate" es-date="reviewDate" es-holder="请输入审核日期"></es-app-calendar></td>'
+        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'reviewer\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputReviewerText + '"/></td>'
+        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="reviewDate" es-date="reviewDate" es-holder="' + EasyAssess.lang.forms.group.inputReviewDateText + '"></es-app-calendar></td>'
         +       '</tr>'
         +       '<tr>'
         +           '<td style="width: 60%;"></td>'
         +           '<td colspan="2">'
-        +               '<span class="es-form-group-title" align="left">备注:</span>'
+        +               '<span class="es-form-group-title" align="left">' + EasyAssess.lang.forms.group.commentText + ':</span>'
         +               '<textarea ng-blur="signatureChanged(\'comments\' ,$event)" class="form-control" rows="3"></textarea>'
         +           '</td>'
         +       '</tr>'
@@ -85,9 +85,9 @@ EasyAssess.directives["esFormGroupEdit"]
 
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.codeFields = [
-                {title:"代码", field:"codeNumber", type:"string",searchable:true,default:false},
-                {title:"名称", field:"name", type:"string",searchable:true,default:true},
-                {title:"代码组", field:"groupName", type:"string",searchable:true, default:false,cascadeField:"group.name"}
+                {title:EasyAssess.lang.forms.group.codeText, field:"codeNumber", type:"string",searchable:true,default:false},
+                {title:EasyAssess.lang.forms.group.nameText, field:"name", type:"string",searchable:true,default:true},
+                {title:EasyAssess.lang.forms.group.codeGroupText, field:"groupName", type:"string",searchable:true, default:false,cascadeField:"group.name"}
             ];
 
             $scope.codeGroups = [];

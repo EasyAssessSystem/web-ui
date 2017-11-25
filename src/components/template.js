@@ -7,8 +7,10 @@ EasyAssess.app.TemplateController = function($scope, $timeout, ngDialog, esReque
 EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 	initialize: function($scope, $timeout, ngDialog, esRequestService, ngDialog) {
 
+		$scope.lang = EasyAssess.lang;
+
 		$scope.lookupFields = [
-			{title:"名称", field:"header.name", type:"string",searchable:true,default:true},
+			{title: EasyAssess.lang.pages.assessmentTemplate.nameText, field:"header.name", type:"string",searchable:true,default:true},
 		];
 
 		$scope.groups = [];
@@ -50,7 +52,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 					"groups": $scope.groups
 				})).then(
 					function(response) {
-						EasyAssess.QuickMessage.message("保存成功");
+						EasyAssess.QuickMessage.message(EasyAssess.lang.pages.assessmentTemplate.msgSaveSuccessText);
 						$scope.activeModel = response.data;
 					}
 				);
@@ -58,13 +60,13 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 
 		$scope.remove = function() {
 			ngDialog.openConfirm({
-				template:   '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
-				+ '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+				template:   '<div class="ngdialog-message">'+ EasyAssess.lang.pages.assessmentTemplate.msgDeleteConfirmText + '?</div>'
+				+ '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.assessmentTemplate.okButtonText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.assessmentTemplate.cancelButtonText + '</button></div>',
 				plain: true
 			}).then(
 				(function(value){
 					esRequestService.esDelete(EasyAssess.activeEnv.assess() + "template/" + $scope.activeModel.id).then(function(){
-						EasyAssess.QuickMessage.message("删除成功");
+						EasyAssess.QuickMessage.message(EasyAssess.lang.pages.assessmentTemplate.msgDeleteSuccessText);
 						$scope.new();
 					});
 				}).bind(this),

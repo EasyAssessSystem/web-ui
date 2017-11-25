@@ -12,13 +12,13 @@ EasyAssess.directives["esFormGroup"]
 		transclude: false,
 		template:  '<div class="es-form-group">' 
 				  +	 '<table class="table table-striped">'
-		          + 	'<thead><tr><th style="width:15%;">检测分类</th><th style="width:45%;">样本</th><!--th style="width:40%;">编码组</th>--></tr></thead>'
+		          + 	'<thead><tr><th style="width:15%;">' + EasyAssess.lang.forms.group.categoryText + '</th><th style="width:45%;">' + EasyAssess.lang.forms.group.specimenText + '</th><!--th style="width:40%;">编码组</th>--></tr></thead>'
 		          +     '<tbody>'
 		          +			'<tr>'
 		          +				'<td>'
 		          +					'<table>'
 		          +						'<tr>'
-		          +							'<td class="es-form-group-cell" valign="middle"><es-text-box es-content="{{esGroup.name}}" es-change-callback="nameChanged(val)" class="es-form-group-text" es-placeholder="请输入分组名"></es-text-box></td>'
+		          +							'<td class="es-form-group-cell" valign="middle"><es-text-box es-content="{{esGroup.name}}" es-change-callback="nameChanged(val)" class="es-form-group-text" es-placeholder="' + EasyAssess.lang.forms.group.inputGroupNameText + '"></es-text-box></td>'
 		          +						'</tr>'
 		          +						'<tr ng-repeat="row in esGroup.rows">'
 		          +							'<td class="es-form-group-cell" valign="middle"><div>{{row.item.subject}} - {{row.item.unit}} <span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeRow(row.guid)"></span><span class="glyphicon glyphicon-arrow-up es-icon-button" ng-click="movePosition(row.guid, \'up\')"></span><span class="glyphicon glyphicon-arrow-down es-icon-button" ng-click="movePosition(row.guid, \'down\')"></span></div></td>'
@@ -28,7 +28,7 @@ EasyAssess.directives["esFormGroup"]
 		          +				'<td>'
 		          +					'<table>'
 		          +						'<tr>'
-		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><table><tr><td><es-text-box es-content="{{s_col.number}}" es-change-callback="specimenNumberChange(val, s_col)" class="es-form-group-title" es-placeholder=""></es-text-box></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'specimens\')"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="样本" title="添加样本"></es-add-button></td>'
+		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><table><tr><td><es-text-box es-content="{{s_col.number}}" es-change-callback="specimenNumberChange(val, s_col)" class="es-form-group-title" es-placeholder=""></es-text-box></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'specimens\')"></span></td></tr></table></td><td><es-add-button style="min-width:50px;" es-ids="addSpecimen" es-text="' + EasyAssess.lang.forms.group.specimenText + '" title="' + EasyAssess.lang.forms.group.addSpecimenText + '"></es-add-button></td>'
 		          +						'</tr>'
 		          +						'<tr ng-repeat="row in esGroup.rows">'
 		          +							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.specimens"><es-form-expect-option ng-if="esType == \'assess\'" es-group-row="row" es-specimen-column="s_col"></es-form-expect-option><es-iqc-form-expect-option ng-if="esType.iqc" es-group-row="row" es-specimen-column="s_col"></es-iqc-form-expect-option></td>'
@@ -38,7 +38,7 @@ EasyAssess.directives["esFormGroup"]
 							+  			'<td>'
 							+					'<table>'
 							+						'<tr>'
-							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codeGroups\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addCode" es-text="编码组" title="添加编码组"></es-add-button></td>'
+							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><table><tr><td><span class="es-form-group-title">{{s_col.name}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(s_col.guid,\'codeGroups\')"></span></td></tr></table></td><td><es-add-button style="min-width:80px;" es-ids="addCode" es-text="' + EasyAssess.lang.forms.group.codeGroupText + '" title="' + EasyAssess.lang.forms.group.addCodeGroupText + '"></es-add-button></td>'
 							+						'</tr>'
 							+						'<tr ng-repeat="row in esGroup.rows">'
 							+							'<td class="es-form-group-cell" ng-repeat="s_col in esGroup.codeGroups"><div ng-if="!row.disableCodeGroup" class="input-group span6"><span class="form-control" style="width:20px;"></span><span class="input-group-addon" style="width:20px;"><span class="glyphicon glyphicon-search"></span></span></div></td>'
@@ -48,7 +48,7 @@ EasyAssess.directives["esFormGroup"]
 		          +			'</tr>'
 		          +			'<tr>'
 		          +				'<td colspan="3" style="padding:5px 0px 5px 0px;">'
-		          +					'<es-add-button es-ids="addItem" es-text="添加新项目" title="添加新项目"></es-add-button>'
+		          +					'<es-add-button es-ids="addItem" es-text="' + EasyAssess.lang.forms.group.addTestItemText + '" title="' + EasyAssess.lang.forms.group.addTestItemText + '"></es-add-button>'
 		          +				'</td>'
 		          +			'</tr>'
 		          +	 	'</tbody></table>'
@@ -265,19 +265,19 @@ EasyAssess.directives["esFormGroup"]
 				 ngDialog.open({
 		                template: '<div class="es-dialog-content">'
 					 							       +'<div ng-repeat="input in inputs" class="es-dialog-form-line">'
-										           +	'样本组成-{{$index+1}}:<input class="form-control es-specimen-input" placeholder="请输入样本编号"/>'
+										           +	EasyAssess.lang.forms.group.mixedSpecimenNumberText + '-{{$index+1}}:<input class="form-control es-specimen-input" placeholder="' + EasyAssess.lang.forms.group.inputSpecimenNumberText + '"/>'
 					  									 +'</div>'
 															 +'<div class="es-dialog-form-line" align="right">'
-															 +	'<es-add-button ng-click="addSubSpecimen()" es-text="添加混合样本号"></es-add-button>'
+															 +	'<es-add-button ng-click="addSubSpecimen()" es-text="' + EasyAssess.lang.forms.group.addMixedSpecimenNumberText + '"></es-add-button>'
 															 +'</div>'
 															 +'<div class="es-dialog-form-line" align="left">'
-															 +	'<es-app-checkbox style="padding-top:5px;" es-model="copyFromOther" es-label="从其他样本复制"></es-app-checkbox>'
+															 +	'<es-app-checkbox style="padding-top:5px;" es-model="copyFromOther" es-label="' + EasyAssess.lang.forms.group.copyFromExistingSpecimenText + '"></es-app-checkbox>'
 															 +  '<div ng-if="copyFromOther">'
 										           +		'<select es-ids="sourceSpecimen" class="form-control es-form-group-contorl"><option ng-repeat="option in specimens" value="{{option.guid}}">{{option.number}}</option></select>'
 															 +  '</div>'
 															 +'</div>'
 		                		 			 +'<div class="es-dialog-form-line" align="right">'
-										           +	'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
+										           +	'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.forms.group.okButtonText + '</button>'
 					 										 +'</div>'
 					 										 +'</div>',
 		                plain: true,
@@ -332,13 +332,13 @@ EasyAssess.directives["esFormGroup"]
 			 // add code group
 			 btnAddCode.on("click", function() {
 				 ngDialog.open({
-					 template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><es-app-lookup es-label="代码组" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup></div>'
-					 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+					 template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><es-app-lookup es-label="' + EasyAssess.lang.forms.group.codeGroupText + '" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup></div>'
+					 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.forms.group.okButtonText + '</button></div></div>',
 					 plain: true,
 					 scope: $scope,
 					 controller: ['$scope', function($dialog) {
 						 $dialog.groupFields = [
-							 {title:"名称", field:"name", type:"string",searchable:true,default:true}
+							 {title: EasyAssess.lang.forms.group.nameText, field:"name", type:"string",searchable:true,default:true}
 						 ];
 						 $dialog.$on('$groupLookup_selected', function(e, model){
 							 $dialog.codeGroup = model;
@@ -364,16 +364,16 @@ EasyAssess.directives["esFormGroup"]
 			 btnAddItem.on("click", function() {
 				 ngDialog.open({
 		                template: '<div class="es-dialog-content">'
-						         +'<div class="es-dialog-form-line"><es-app-lookup es-value-field="name" es-label="检测项" es-columns="categoryFields" es-id="categoryLookup" es-resource="category"></es-app-lookup></div>'
+						         +'<div class="es-dialog-form-line"><es-app-lookup es-value-field="name" es-label="' + EasyAssess.lang.forms.group.testItemText + '" es-columns="categoryFields" es-id="categoryLookup" es-resource="category"></es-app-lookup></div>'
 		                		 +'<div class="es-dialog-form-line"><select es-ids="drpUnits" style="width:100%;height:30px;"><option ng-repeat="unit in units" value="{{unit.value}}">{{unit.value}}</option></select></div>'
-		                		 +'<div class="es-dialog-form-line"><es-app-checkbox style="padding-top:5px;" es-model="disableCodeGroup" es-label="禁用代码组"></es-app-checkbox></div>'
-												 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+		                		 +'<div class="es-dialog-form-line"><es-app-checkbox style="padding-top:5px;" es-model="disableCodeGroup" es-label="' + EasyAssess.lang.forms.group.disableCodeGroupText + '"></es-app-checkbox></div>'
+												 +'<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.forms.group.okButtonText + '</button></div></div>',
 		                plain: true,
 		                controller: ['$scope', function($dialog) {
 											$dialog.disableCodeGroup = false;
 
 											$dialog.categoryFields = [
-												{title:"名称", field:"name", type:"string",searchable:true,default:true}
+												{title:EasyAssess.lang.forms.group.nameText, field:"name", type:"string",searchable:true,default:true}
 											];
 
 											$dialog.$on('$categoryLookup_selected', function(e, model){

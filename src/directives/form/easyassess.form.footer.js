@@ -7,7 +7,7 @@ EasyAssess.directives["esFormFooter"]
         restrict: 'E',
         replace: true,
         transclude: false,
-        template: '<div class="es-form-footer"><es-text-box es-content="{{esFooter.content}}" es-change-callback="contentChange(val)" es-editable="{{esEditable}}" class="es-form-footer-text" es-placeholder="输入说明内容..."></es-text-box></div>',
+        template: '<div class="es-form-footer"><es-text-box es-content="{{esFooter.content}}" es-change-callback="contentChange(val)" es-editable="{{esEditable}}" class="es-form-footer-text" es-placeholder="' + EasyAssess.lang.forms.footer.inputStatementText + '..."></es-text-box></div>',
         scope: {
             esFooter:"=",
             esEditable:"@?"

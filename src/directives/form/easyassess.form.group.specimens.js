@@ -39,7 +39,7 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
             for (var key in $scope.esGroup.specimens){
                 var groupSpecimen = $scope.esGroup.specimens[key];
                 var specimen = {
-                    specimenCode: groupSpecimen.isPlainNumber ? groupSpecimen.number : "样品",
+                    specimenCode: groupSpecimen.isPlainNumber ? groupSpecimen.number : EasyAssess.lang.forms.group.specimenText,
                     subjects:[]
                 };
                 if (groupSpecimen.isPlainNumber && $scope.esData) {
@@ -50,7 +50,7 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
             }
 
             $scope.removeColumn = function(specimen) {
-                specimen.specimenCode = '样品';
+                specimen.specimenCode = EasyAssess.lang.forms.group.specimenText;
                 specimen.subjects = [];
                 specimen.guid = null;
                 $scope.$emit('removeSpecimen',specimen.specimenCode);
@@ -117,13 +117,13 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                 ngDialog.open({
                     template: '<div class="es-dialog-content">'
                     +'<div ng-repeat="input in inputs" class="es-dialog-form-line">'
-                    +	'样本组成-{{$index+1}}:<input class="form-control es-specimen-input" placeholder="请输入样本编号"/>'
+                    + EasyAssess.lang.forms.group.mixedSpecimenNumberText	+ '-{{$index+1}}:<input class="form-control es-specimen-input" placeholder="' + EasyAssess.lang.forms.group.inputSpecimenNumberText + '"/>'
                     +'</div>'
                     +'<div class="es-dialog-form-line" align="right">'
-                    +	'<es-add-button ng-click="addSubSpecimen()" es-text="添加混合样本号"></es-add-button>'
+                    +	'<es-add-button ng-click="addSubSpecimen()" es-text="' + EasyAssess.lang.forms.group.addMixedSpecimenNumberText + '"></es-add-button>'
                     +'</div>'
                     +'<div class="es-dialog-form-line" align="right">'
-                    +	'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
+                    +	'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.forms.group.okButtonText + '</button>'
                     +'</div>'
                     +'</div>',
                     plain: true,
@@ -159,7 +159,7 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                                             _updateSpecimanList(res.data, number, speciman);
                                             $dialog.closeThisDialog();
                                         }else{
-                                            EasyAssess.QuickMessage.error("无效的样本码");
+                                            EasyAssess.QuickMessage.error(EasyAssess.lang.forms.group.msgInvalidSpecimenError);
                                         }
                                     });
                                 }
@@ -176,7 +176,7 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                     if(field == sepcimen.specimenCode){
                         $scope.error = {
                             flag:true,
-                            msg:"请勿重复输入!"
+                            msg: EasyAssess.lang.forms.group.msgDuplicatedSpecimenError
                         };
                         result = false
                     }

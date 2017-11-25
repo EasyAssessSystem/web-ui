@@ -8,21 +8,21 @@ EasyAssess.directives["esFormSelectionSettings"]
 		transclude: false,
 		template: 	    '<div>'
 					+		'<div class="es-dialog-form-line">'
-					+			'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
+					+			'<span>' + EasyAssess.lang.forms.expectOptions.scoreWeightText + '</span><input class="form-control" placeholder="' + EasyAssess.lang.forms.expectOptions.inputScoreWeightText + '" ng-model="weight"/>'
 					+		'</div>'
 					+ 		'<div class="es-dialog-form-line">'
-					+ 			'<span>选项值</span><a href="javascript:void(0)" style="padding-left:20px;" ng-click="addOptionValue()">添加</a>'
+					+ 			'<span>' + EasyAssess.lang.forms.expectOptions.optionValueText + '</span><a href="javascript:void(0)" style="padding-left:20px;" ng-click="addOptionValue()">' + EasyAssess.lang.forms.expectOptions.addText + '</a>'
 					+ 		'</div>'
 					+ 		'<div class="es-dialog-form-line" style="max-height:200px;overflow:auto;">'
 					+ 			'<table class="table table-striped">'
-					+ 				'<thead><tr><th>选项</th></tr></thead>'
+					+ 				'<thead><tr><th>' + EasyAssess.lang.forms.expectOptions.optionText + '</th></tr></thead>'
 					+ 				'<tbody>'
 					+ 					'<tr ng-repeat="ov in esOption.optionValues"><td>{{ov.value}}</td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeOptionValue(ov.value)"></span></td></tr>'
 					+ 				'</tbody>'
 					+ 			'</table>'
 					+		'</div>'
 					+		'<div class="es-dialog-form-line">'
-					+			'<div>正确值</div>'
+					+			'<div>' + EasyAssess.lang.forms.expectOptions.targetValue + '</div>'
 					+			'<select style="max-height:100px;overflow:auto;width: 300px;" multiple="multiple" ng-multiple="true" ng-change="selectionChange(expectedValue)" ng-model="expectedValue" ng-options="ov.value as ov.value for ov in esOption.optionValues" style="width:100%;">'
 					+			'</select>'
 					+		'</div>'
@@ -55,8 +55,8 @@ EasyAssess.directives["esFormSelectionSettings"]
 
 			$scope.addOptionValue = function () {
 				ngDialog.open({
-					template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" style="width:300px;" placeholder="输入选项值" es-ids="txtValue"/></div>'
-					+ '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+					template: '<div class="es-dialog-content"><div class="es-dialog-form-line"><input class="form-control" style="width:300px;" placeholder="' + EasyAssess.lang.forms.expectOptions.inputOptionText + '" es-ids="txtValue"/></div>'
+					+ '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.forms.expectOptions.okButtonText + '</button></div></div>',
 					plain: true,
 					controller: ['$scope', function ($digOptionValue) {
 						$digOptionValue.submit = function () {
@@ -97,12 +97,12 @@ EasyAssess.directives["esFormTargetValueSettings"]
 		transclude: false,
 		template: 	  '<div>'
 					+	'<div class="es-dialog-form-line">'
-					+		'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
+					+		'<span>' + EasyAssess.lang.forms.expectOptions.scoreWeightText + '</span><input class="form-control" placeholder="' + EasyAssess.lang.forms.expectOptions.inputScoreWeightText + '" ng-model="weight"/>'
 					+	'</div>'
 					+ 	'<div class="es-dialog-form-line">'
-					+ 		'<es-app-textbox es-label="靶值" es-model="settings.targetValue"></es-app-textbox>'
-					+ 		'<es-app-textbox es-label="上偏移(%)" es-model="settings.upPercentage"></es-app-textbox>'
-					+ 		'<es-app-textbox es-label="下偏移(%)" es-model="settings.downPercentage"></es-app-textbox>'
+					+ 		'<es-app-textbox es-label="' + EasyAssess.lang.forms.expectOptions.targetValue + '" es-model="settings.targetValue"></es-app-textbox>'
+					+ 		'<es-app-textbox es-label="' + EasyAssess.lang.forms.expectOptions.upOffsetText + '(%)" es-model="settings.upPercentage"></es-app-textbox>'
+					+ 		'<es-app-textbox es-label="' + EasyAssess.lang.forms.expectOptions.downOffsetText + '(%)" es-model="settings.downPercentage"></es-app-textbox>'
 					+ 	'</div>'
 					+ '</div>',
 		scope: {
@@ -157,11 +157,11 @@ EasyAssess.directives["esFormGaussianValueSettings"]
 		transclude: false,
 		template: 	  '<div>'
 					+	'<div class="es-dialog-form-line">'
-					+		'<span>分数</span><input class="form-control" placeholder="输入分值" ng-model="weight"/>'
+					+		'<span>' + EasyAssess.lang.forms.expectOptions.scoreWeightText + '</span><input class="form-control" placeholder="' + EasyAssess.lang.forms.expectOptions.inputScoreWeightText + '" ng-model="weight"/>'
 					+	'</div>'
 					+ 	'<div class="es-dialog-form-line">'
-					+ 		'<es-app-textbox es-label="平均数μ" es-model="settings.micro"></es-app-textbox>'
-					+ 		'<es-app-textbox es-label="标准差σ" es-model="settings.sigma"></es-app-textbox>'
+					+ 		'<es-app-textbox es-label="' + EasyAssess.lang.forms.expectOptions.averageValueText + 'μ" es-model="settings.micro"></es-app-textbox>'
+					+ 		'<es-app-textbox es-label="' + EasyAssess.lang.forms.expectOptions.standardDValueText + 'σ" es-model="settings.sigma"></es-app-textbox>'
 					+ 	'</div>'
 					+ '</div>',
 		scope: {
@@ -212,8 +212,8 @@ EasyAssess.directives["esFormExpectOption"]
 		replace: true,
 		transclude: false,
 		template:  '<div class="es-form-option">'
-				 +		'<div ng-if="!isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-danger es-expection-button">未设置</div>'
-				 + 		'<div ng-if="isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-success es-expection-button">已设置</div>'
+				 +		'<div ng-if="!isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-danger es-expection-button">' + EasyAssess.lang.forms.expectOptions.customizeText + '</div>'
+				 + 		'<div ng-if="isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-success es-expection-button">'+ EasyAssess.lang.forms.expectOptions.nonCustomizeText +'</div>'
 		         + '</div>',
 		scope: {
 			esGroupRow: "=",
@@ -236,9 +236,9 @@ EasyAssess.directives["esFormExpectOption"]
 					template: '<div class="es-dialog-content">'
 							+ 	'<div class="es-dialog-form-line">'
 							+ 		'<select es-ids="drpType" ng-change="typeChanged()" style="width:100%;" ng-model="type">'
-							+			'<option value="S">定性</option>'
-							+			'<option value="T">定量-靶值</option>'
-							+			'<option value="G">定量-正态分布</option>'
+							+			'<option value="S">' + EasyAssess.lang.forms.expectOptions.qualitativeText + '</option>'
+							+			'<option value="T">' + EasyAssess.lang.forms.expectOptions.quantitativeText + '-' + EasyAssess.lang.forms.expectOptions.targetValue + '</option>'
+							+			'<option value="G">' + EasyAssess.lang.forms.expectOptions.quantitativeText + '-' + EasyAssess.lang.forms.expectOptions.gaussianDistributionText + '</option>'
 							+		'</select>'
 							+ 	'</div>'
 							+   '<div ng-if="type==\'S\'">'
@@ -251,7 +251,7 @@ EasyAssess.directives["esFormExpectOption"]
 							+		'<es-form-gaussian-value-settings es-option="option"></es-form-gaussian-value-settings>'
 							+	'</div>'
 					        + 	'<div class="es-dialog-form-line" align="right">'
-							+		'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button>'
+							+		'<button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.forms.expectOptions.okButtonText + '</button>'
 							+	'</div>'
 					        +'</div>',
 					plain: true,
