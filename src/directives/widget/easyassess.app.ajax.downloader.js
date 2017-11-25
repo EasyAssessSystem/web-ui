@@ -25,7 +25,7 @@ EasyAssess.directives["esAppAjaxDownloader"]
             }
 
             if (!$scope.esButtonText) {
-                $scope.esButtonText = "下载";
+                $scope.esButtonText = EasyAssess.lang.widgets.downloader.defaultButtonText;
             }
 
             if (!$scope.esData) {
@@ -39,7 +39,7 @@ EasyAssess.directives["esAppAjaxDownloader"]
                         return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                     break;
                     default:
-                        EasyAssess.QuickMessage.error("文件类型错误");
+                        EasyAssess.QuickMessage.error(EasyAssess.lang.widgets.downloader.msgFileTypeError);
                         break
                 }
             }

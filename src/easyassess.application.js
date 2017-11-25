@@ -35,7 +35,6 @@ var EasyAssess = {
     description: 'EasyAssess Application Namespace'
 }
 
-
 EasyAssess.session = {};
 
 var env = function() {
@@ -583,6 +582,10 @@ EasyAssess.QuickMessage = {
 		this._display(message, "error");
 	}
 };
+
+EasyAssess.langEnv = 'cn';
+
+EasyAssess.lang = EasyAssess.langEnv === 'en' ? require('./langs/en') : require('./langs/cn');
 
 module.exports = EasyAssess;
 

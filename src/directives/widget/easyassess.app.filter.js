@@ -11,7 +11,7 @@ EasyAssess.directives["esAppFilter"]
 				+ '<a uib-dropdown-toggle><span style="color:grey;" class="glyphicon glyphicon-chevron-down"><span ng-bind="selected.text"></span></span></a>'
 				+ '<ul class="dropdown-menu" uib-dropdown-menu><li ng-repeat="option in esSearchOptions"><a ng-click="click(option)">{{option.text}}</a></li></ul>'
 				+ '</span>'
-				+ '<input ng-keydown="$event.key===\'Enter\'? search() : false" ng-model="keyword" type="text" placeholder="输入关键字..." class="form-control" style="height:36px;">'
+				+ '<input ng-keydown="$event.key===\'Enter\'? search() : false" ng-model="keyword" type="text" placeholder="' + EasyAssess.lang.widgets.filter.inputKeywordText + '..." class="form-control" style="height:36px;">'
 				+ '<span ng-click="search()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
 				+ '</div>',
 		scope: {

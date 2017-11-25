@@ -14,8 +14,7 @@ EasyAssess.app.filter('esMenuFilter', function() {
        }
        return array;
    };  
- });  
-
+ });
 
 EasyAssess.directives["esAppMenu"] 
 	= EasyAssess.app.directive("esAppMenu", function($timeout, $http, $state,$animate) {
@@ -29,7 +28,7 @@ EasyAssess.directives["esAppMenu"]
                      +'<div ng-hide="!showMenu" class="es-app-sidebar animate-show" style="height:700px;" ng-mouseleave="collapse()">'
                      + '<div class="es-app-seperator-line es-app-search-wrapper">'
                      +	'<div class="input-group">'
-                     +		'<input ng-model="searchKeyword" type="text" placeholder="搜索功能..." class="form-control">'
+										 +		'<input ng-model="searchKeyword" type="text" placeholder="' + EasyAssess.lang.widgets.menu.searchModuleText + '..." class="form-control">'
                      + 		'<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>'
                      +'	</div>'
                      + '</div>'

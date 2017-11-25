@@ -9,15 +9,15 @@ EasyAssess.directives["esAppMaintButtonGroup"]
 		template: '<div class="es-maint-button-group">'
 					+ '<button ng-click="save()" type="button" class="btn btn-primary" ng-class="{disabled:!esValidate}">'
 					+ 	'<span class="glyphicon glyphicon-ok"></span>'
-					+ 	'<span class="es-icon-button-text" >保存</span>'
+					+ 	'<span class="es-icon-button-text" >' + EasyAssess.lang.widgets.buttonGroup.saveText + '</span>'
 					+ '</button>'
 					+ '<button ng-click="delete()" type="button" class="btn btn-primary">'
 					+ 	'<span class="glyphicon glyphicon-remove"></span>'
-					+ 	'<span class="es-icon-button-text">删除</span>'
+					+ 	'<span class="es-icon-button-text">' + EasyAssess.lang.widgets.buttonGroup.deleteText + '</span>'
 					+ '</button>'
 					+ '<button ng-click="cancel()" type="button" class="btn btn-primary">'
 					+ 	'<span class="glyphicon glyphicon-share-alt"></span>'
-					+ 	'<span class="es-icon-button-text">取消</span>'
+					+ 	'<span class="es-icon-button-text">' + EasyAssess.lang.widgets.buttonGroup.cancelText + '</span>'
 					+ '</button>'
 				+'</div>',
 		scope: {

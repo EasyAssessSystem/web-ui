@@ -11,9 +11,9 @@ EasyAssess.directives["esAppWizard"]
                   +'<div class="es-info-message" ng-if="info">{{info}}</div>'
                   +'<div ng-transclude class="es-wizard" style="padding-top: 10px;"></div>'
                   +'<div class="btn-group">'
-                  +'<button ng-click="prev()" ng-if="currentPage != 0" type="button" class="btn btn-primary">上一步</button>'
-                  +'<button ng-click="next()" ng-if="currentPage < pageCount - 1" type="button" class="btn btn-primary">下一步</button>'
-                  +'<button ng-click="finish()" ng-if="currentPage == pageCount - 1" type="button" class="btn btn-primary">完成</button>'
+                  +'<button ng-click="prev()" ng-if="currentPage != 0" type="button" class="btn btn-primary">' + EasyAssess.lang.widgets.wizard.prevButtonText + '</button>'
+                  +'<button ng-click="next()" ng-if="currentPage < pageCount - 1" type="button" class="btn btn-primary">' + EasyAssess.lang.widgets.wizard.nextButtonText + '</button>'
+                  +'<button ng-click="finish()" ng-if="currentPage == pageCount - 1" type="button" class="btn btn-primary">' + EasyAssess.lang.widgets.wizard.finishButtonText + '</button>'
                   +'</div>'
                   +'</div>',
         scope: {
@@ -48,7 +48,7 @@ EasyAssess.directives["esAppWizard"]
                 if ($scope.esConfirmMessage) {
                     ngDialog.openConfirm({
                         template: '<div class="ngdialog-message">' + $scope.esConfirmMessage + '</div>'
-                        + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                        + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.widgets.wizard.okButtonText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.widgets.wizard.cancelButtonText + '</button></div>',
                         plain: true
                     }).then(
                         (function(value){

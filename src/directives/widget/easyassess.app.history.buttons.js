@@ -8,7 +8,7 @@ EasyAssess.directives["esAppHistoryButtons"]
         transclude: true,
         template: '<div>'
         +'<ol ng-if="hasHistory() && false" class="breadcrumb">'
-        +'<li ng-click="back()"><a href="#">返回</a></li>'
+        +'<li ng-click="back()"><a href="#">' + EasyAssess.lang.widgets.history.backText + '</a></li>'
         +'</ol>'
         +'</div>',
         scope: {

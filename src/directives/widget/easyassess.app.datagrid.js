@@ -19,7 +19,7 @@ EasyAssess.directives["esAppDatagrid"]
                 + '<td ng-repeat="column in esColumns" ng-click="column.clickHandler ? column.clickHandler($index, getRecordModel(rec), $event) : select($index, getRecordModel(rec), $event)"><div ng-if="column.template" ng-include="column.template"></div><span ng-if="!column.template" ng-bind="getColumnContent(rec, column)"></span></td>'
                 + '</tr>'
                 + '</table>'
-                + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">没有匹配的记录</div>'
+                + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">' + EasyAssess.lang.widgets.datagrid.noRecordsText + '</div>'
                 + '<div ng-show="pagination.length">'
                 + '<table><tr><td><ul class="pagination pagination-sm">'
                 + '<li><a ng-click="first()" href="javascript:void(0)"><span class="glyphicon glyphicon-backward"></span></a></li>'
@@ -28,8 +28,8 @@ EasyAssess.directives["esAppDatagrid"]
                 + '<li><a ng-click="next()" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>'
                 + '<li><a ng-click="last()" href="javascript:void(0)"><span class="glyphicon glyphicon-forward"></span></a></li>'
                 + '</ul></td>'
-                + '<td><div class="pagination form-group" style="padding-left: 50px;"><table><tr><td><span style="float: left;padding:5px 5px 0px 0px;">跳转: </span></td><td><input class="form-control" style="width: 50px;height:30px;" type="tel" min=1 ng-keyup="go(pageNum, $event)" ng-model="pageNum"/></td></tr></table></div></td>'
-                + '<td><div class="pagination form-group" style="padding-left: 50px;"><table><tr><td><span style="float: left;padding:5px 5px 0px 0px;">每页显示(行): </span></td><td><select class="form-control" ng-change="setPageSize(esPageSize)" ng-model="esPageSize" style="width: 60px;height:30px;"><option selected="selected" value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></td></tr></table></div></td>'
+                + '<td><div class="pagination form-group" style="padding-left: 50px;"><table><tr><td><span style="float: left;padding:5px 5px 0px 0px;">' + EasyAssess.lang.widgets.datagrid.goToText + ': </span></td><td><input class="form-control" style="width: 50px;height:30px;" type="tel" min=1 ng-keyup="go(pageNum, $event)" ng-model="pageNum"/></td></tr></table></div></td>'
+                + '<td><div class="pagination form-group" style="padding-left: 50px;"><table><tr><td><span style="float: left;padding:5px 5px 0px 0px;">' + EasyAssess.lang.widgets.datagrid.pageSizeText + ': </span></td><td><select class="form-control" ng-change="setPageSize(esPageSize)" ng-model="esPageSize" style="width: 60px;height:30px;"><option selected="selected" value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option></select></td></tr></table></div></td>'
                 + '</tr></table>'
                 + '</div>';
             return tpl;

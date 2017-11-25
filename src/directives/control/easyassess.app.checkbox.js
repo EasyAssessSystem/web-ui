@@ -19,9 +19,9 @@ EasyAssess.directives["esAppCheckbox"]
 		controller: ["$scope", function($scope, $element, $attrs){
 			$scope.readonlyText = function() {
 				if ($scope.esModel) {
-					return "是";
+					return EasyAssess.lang.controls.checkbox.valueY;
 				} else {
-					return "否";
+					return EasyAssess.lang.controls.checkbox.valueN;
 				}
 			}
 		}]
