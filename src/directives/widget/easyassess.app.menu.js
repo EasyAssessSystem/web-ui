@@ -1,5 +1,5 @@
 var EasyAssess = require('../../easyassess.application');
-var MenuTemplate = require('../../data/menu.template');
+var MenuTemplate = EasyAssess.langEnv === 'en' ? require('../../data/menu.template.en') : require('../../data/menu.template');
 
 EasyAssess.app.filter('esMenuFilter', function() {  
    return function(input, keyword, group) {  
@@ -34,7 +34,7 @@ EasyAssess.directives["esAppMenu"]
                      + '</div>'
                      + '<div ng-show="isLoading" style="padding:20px 20px 20px 20px;"><es-spinner></es-spinner></div>'
                      + '<div ng-repeat="group in esMenu.items">'
-                     +		'<div ng-click="toggle(group)" class="es-app-menu-group" align="center" ><span class="glyphicon {{group.icon}}" style="padding-right:20px;color:#00B312;"></span><span>{{group.text}}</span><div class="glyphicon {{arrowIcon(group)}}" style="float:right;"></div></div>'
+                     +		'<div ng-click="toggle(group)" class="es-app-menu-group" align="center" ><span class="glyphicon {{group.icon}}" style="padding-right:20px;color:#00B312;"></span><span style="display:inline-block; min-width:120px">{{group.text}}</span><div class="glyphicon {{arrowIcon(group)}}" style="float:right;"></div></div>'
                      + 		'<div class="es-app-menu-block" align="center" ng-show="expanded(group)">'
                      +			'<table style="width:100%;"><tr class="es-app-menu-item" ng-repeat="item in group.items| esMenuFilter:searchKeyword:group">'
                      +			   '<td><span class="glyphicon glyphicon-circle-arrow-right" style="font-size:12px;position:relative;left:50px;"></span></td><td><a style="position:relative;left:50px;" ng-click="activate(item)">{{item.text}}</a></td>'
@@ -59,9 +59,9 @@ EasyAssess.directives["esAppMenu"]
 				return group.expanded;
 			}
 
-            $scope.collapse = function() {
-                $scope.showMenu = !$scope.showMenu;
-            }
+			$scope.collapse = function() {
+					$scope.showMenu = !$scope.showMenu;
+			}
 
 			$scope.toggle = function(group) {
 				if (group.expanded) {

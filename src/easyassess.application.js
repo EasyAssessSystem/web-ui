@@ -584,7 +584,9 @@ EasyAssess.QuickMessage = {
 	}
 };
 
-EasyAssess.langEnv = 'en';
+if (window.location.toString().indexOf('clang=en') != -1) {
+	EasyAssess.langEnv = 'en';
+}
 
 EasyAssess.lang = EasyAssess.langEnv === 'en' ? require('./langs/en') : require('./langs/cn');
 
