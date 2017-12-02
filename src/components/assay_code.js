@@ -6,18 +6,18 @@ EasyAssess.app.AssayCodeController = function($scope, $timeout, ngDialog, esRequ
 EasyAssess.app.AssayCodeController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		$scope.fields = [
-			{title:"代码", field:"codeNumber", type:"string",searchable:true,default:true},
-			{title:"名称", field:"name", type:"string",searchable:true,default:false},
-			{title:"状态", field:"status", type:"string",searchable:false},
-			{title:"代码组", field:"groupName", type:"string",searchable:true, cascadeField:"group.name"}
+			{title: EasyAssess.lang.pages.codes.codeText, field:"codeNumber", type:"string",searchable:true,default:true},
+			{title: EasyAssess.lang.pages.codes.codeNameText, field:"name", type:"string",searchable:true,default:false},
+			{title: EasyAssess.lang.pages.common.statusText, field:"status", type:"string",searchable:false},
+			{title: EasyAssess.lang.pages.codes.codeGroupText, field:"groupName", type:"string",searchable:true, cascadeField:"group.name"}
 		];
 
 		$scope.groupFields = [
-			{title:"名称", field:"name", type:"string",searchable:true,default:true}
+			{title: EasyAssess.lang.pages.codes.codeGroupText, field:"name", type:"string",searchable:true,default:true}
 		];
 
 		$scope.categoryFields = [
-			{title:"名称", field:"name", type:"string",searchable:true,default:true}
+			{title: EasyAssess.lang.pages.codes.categoryText, field:"name", type:"string",searchable:true,default:true}
 		];
 
 		$scope.validations = {
@@ -32,7 +32,7 @@ EasyAssess.app.AssayCodeController.prototype = EasyAssess.extend({
 					return result;
 				},
 				validateResult: true,
-				errorMessage: "名称不能为空"
+				errorMessage: EasyAssess.lang.pages.codes.msgRequireCodeNameError
 			}
 		}
 

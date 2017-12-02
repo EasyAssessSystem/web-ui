@@ -201,13 +201,27 @@ module.exports = {
       "createCategoryText": "Create Test Category",
       "categoryNameText": "Name",
       "inputCategoryNameText": "Input category name",
-      "msgRequireCategoryNameError": "Category name can not be empty",
+      "msgRequireCategoryNameError": "Category name can not be empty"
     },
     "codeGroups": {
       "createCodeGroupText": "Create Code Group",
       "groupNameText": "Name",
       "inputGroupNameText": "Input code group name",
-      "msgRequireNameError": "Code group name can not be empty",
+      "msgRequireNameError": "Code group name can not be empty"
+    },
+    "codes": {
+      "createCodeText": "Create Code",
+      "codeText": "Code",
+      "codeNameText": "Code Name",
+      "inputCodeText": "Input code",
+      "inputCodeNameText": "Input code",
+      "msgRequireCodeError": "Code can not be empty",
+      "msgRequireCodeNameError": "Code name can not be empty",
+      "codeGroupText": "Code Group",
+      "testCategoryText": "Test Category",
+      "addCategoryText": "Add Category",
+      "categoryText": "Category",
+      "actionText": "Action"
     },
     "assessment": {
       "msgNewAssessmentConfirmText": "Assessment won't be changed again, please review your settings. Are you sure to create it?",

@@ -2,7 +2,7 @@
 	<div ng-show="!activeModel || !activeModel.id">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<es-add-new es-text="创建检测分类"></es-add-new>
+				<es-add-new es-text="{{lang.pages.codes.createCodeText}}"></es-add-new>
 			</div>
 			<div class="panel-body">
 				<es-app-datagrid es-resource="{{resource}}" es-columns="fields" es-options="options"></es-app-datagrid>
@@ -12,22 +12,22 @@
 	<div ng-show="!activeModel || !activeModel.id">
 	</div>
 	<div ng-show="activeModel && activeModel.id">
-		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.codeNumber" es-field="number" es-placeholder="输入代码编号" es-label="代码编号"></es-app-textbox>
-		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入类别名称" es-label="类别名称"></es-app-textbox>
-		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="状态"></es-app-select>
-		<es-app-lookup es-readonly="readonly" es-readonly="readonly" es-model="activeModel.group.name" es-label="代码组" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup>
+		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.codeNumber" es-field="number" es-placeholder="{{lang.pages.codes.inputCodeText}}" es-label="{{lang.pages.codes.codeText}}"></es-app-textbox>
+		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="{{lang.pages.codes.inputCodeNameText}}" es-label="{{lang.pages.codes.codeNameText}}"></es-app-textbox>
+		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="{{lang.pages.common.statusText}}"></es-app-select>
+		<es-app-lookup es-readonly="readonly" es-readonly="readonly" es-model="activeModel.group.name" es-label="{{lang.pages.codes.codeGroupText}}" es-resource="group" es-columns="groupFields" es-id="groupLookup" es-value-field="name"></es-app-lookup>
 		<fieldset>
-			<legend style="font-size:14px;font-weight: 700;margin-bottom: 0px;">检测类别</legend>
+			<legend style="font-size:14px;font-weight: 700;margin-bottom: 0px;">{{lang.pages.codes.testCategoryText}}</legend>
 			<div style="padding-top: 10px;">
-				<es-app-lookup  es-provider="link" ng-if="!readonly" es-label="增加类别" es-columns="categoryFields" es-id="categoryLookup" es-resource="category"></es-app-lookup>
+				<es-app-lookup  es-provider="link" ng-if="!readonly" es-label="{{lang.pages.codes.addCategoryText}}" es-columns="categoryFields" es-id="categoryLookup" es-resource="category"></es-app-lookup>
 			</div>
 		</fieldset>
 		<div>
 			<table class="table table-striped">
 				<thead>
 				<tr>
-					<th><span>类别</span></th>
-					<th><span>操作</span></th>
+					<th><span>{{lang.pages.codes.categoryText}}</span></th>
+					<th><span>{{lang.pages.codes.actionText}}</span></th>
 				</tr>
 				</thead>
 				<tr>

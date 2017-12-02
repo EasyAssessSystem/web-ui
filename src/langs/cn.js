@@ -201,13 +201,27 @@ module.exports = {
       "createCategoryText": "创建检测类别",
       "categoryNameText": "名称",
       "inputCategoryNameText": "请输入检测类别名称",
-      "msgRequireCategoryNameError": "检测类别名称不能为空",
+      "msgRequireCategoryNameError": "检测类别名称不能为空"
     },
     "codeGroups": {
       "createCodeGroupText": "创建代码组",
       "groupNameText": "名称",
       "inputGroupNameText": "请输入代码组名称",
-      "msgRequireNameError": "代码组名称不能为空",
+      "msgRequireNameError": "代码组名称不能为空"
+    },
+    "codes": {
+      "createCodeText": "创建代码",
+      "codeText": "代码编号",
+      "codeNameText": "类别名称",
+      "inputCodeText": "请输入代码编号",
+      "inputCodeNameText": "请输入类别名称",
+      "msgRequireCodeError": "代码编号不能为空",
+      "msgRequireCodeNameError": "类别名称不能为空",
+      "codeGroupText": "代码组",
+      "testCategoryText": "检测类别",
+      "addCategoryText": "增加类别",
+      "categoryText": "类别",
+      "actionText": "操作"
     },
     "assessment": {
       "msgNewAssessmentConfirmText": "考评提交后将无法修改,请仔细核实提交的数据.是否确定提交?",
