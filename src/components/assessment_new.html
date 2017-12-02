@@ -1,14 +1,14 @@
 <div>
     <es-spinner ng-if="isLoading"></es-spinner>
-    <es-app-wizard ng-if="!isLoading" es-confirm-message="考评提交后将无法修改,请仔细核实提交的数据.是否确定提交?">
+    <es-app-wizard ng-if="!isLoading" es-confirm-message="{{lang.pages.assessment.msgNewAssessmentConfirmText}}">
         <es-app-wizard-content es-step-validator="validatePageOne()">
-            <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="输入考评名称"
-                            es-label="考评名"></es-app-textbox>
-            <es-app-lookup es-service="assess" es-readonly="readonly" es-model="emptyModel.template" es-label="模板" es-resource="template"
+            <es-app-textbox es-readonly="readonly" es-model="emptyModel.name" es-field="name" es-placeholder="{{lang.pages.assessment.inputAssessmentNameText}}"
+                            es-label="{{lang.pages.assessment.assessmentNameText}}"></es-app-textbox>
+            <es-app-lookup es-service="assess" es-readonly="readonly" es-model="emptyModel.template" es-label="{{lang.pages.assessment.templateText}}" es-resource="template"
                            es-columns="templateFields" es-id="templateLookup" es-value-field="header.name"></es-app-lookup>
             <div style="height: 140px">
                 <div style="position: relative">
-                    <p>开始时间:</p>
+                    <p>{{lang.pages.assessment.startDateText}}:</p>
                     <div class="input-group" style="width: 200px;">
                         <date-picker ng-hide="hideStart" ng-model="emptyModel.startDate" style="position: absolute;top:45px;z-index: 999"
                                      on-date-selected="closeStartPop()"
@@ -20,7 +20,7 @@
                 </div>
 
                 <div style="position: relative">
-                    <p>结束时间:</p>
+                    <p>{{lang.pages.assessment.endDateText}}:</p>
                     <div class="input-group" style="width: 200px;">
                         <date-picker ng-hide="hideEnd" ng-model="emptyModel.endDate" style="position: absolute;top:45px;z-index: 999"
                                      on-date-selected="closeEndPop()"
@@ -30,14 +30,14 @@
                     </div>
                 </div>
             </div>
-            <es-app-checkbox style="padding-top:5px;" es-model="emptyModel.enableCert" es-label="启用证书"></es-app-checkbox>
+            <es-app-checkbox style="padding-top:5px;" es-model="emptyModel.enableCert" es-label="{{lang.pages.assessment.enableCertificationText}}"></es-app-checkbox>
             <div ng-if="emptyModel.enableCert" style="padding-bottom:5px;">
-                <es-app-textbox es-model="emptyModel.passScore" es-field="passScore" es-placeholder="设置合格分数"
-                                es-label="合格分数"></es-app-textbox>
-                <es-app-textbox es-model="emptyModel.certIssuer" es-field="certIssuer" es-placeholder="输入证书颁发者名称"
-                                es-label="证书颁发者"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.passScore" es-field="passScore" es-placeholder="{{lang.pages.assessment.inputQualificationScoreText}}"
+                                es-label="{{lang.pages.assessment.qualificationScoreText}}"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certIssuer" es-field="certIssuer" es-placeholder="{{lang.pages.assessment.inputIssuerText}}"
+                                es-label="{{lang.pages.assessment.issuerText}}"></es-app-textbox>
                 <div style="position: relative">
-                    <p>颁发日期:</p>
+                    <p>{{lang.pages.assessment.issueDateText}}:</p>
                     <div class="input-group" style="width: 200px;">
                         <date-picker ng-hide="hideIssueDate" ng-model="emptyModel.certIssueDate" style="position: absolute;top:45px;z-index: 999"
                                      on-date-selected="closeIssueDate()"
@@ -46,23 +46,23 @@
                         <span class="input-group-addon" ng-click="openIssueDate()"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                 </div>
-                <es-app-textbox es-model="emptyModel.certTitle" es-field="certTitle" es-placeholder="输入证书标题"
-                                es-label="证书标题"></es-app-textbox>
-                <es-app-textbox es-model="emptyModel.certSubTitle" es-field="certSubTitle" es-placeholder="输入证书子标题"
-                                es-label="证书子标题"></es-app-textbox>
-                <es-app-textbox es-model="emptyModel.certContent" es-field="certContent" es-placeholder="输入证书内容"
-                                es-label="证书内容"></es-app-textbox>
-                <es-app-textbox es-model="emptyModel.certCommentLabel" es-field="certCommentLabel" es-placeholder="输入证书备注标题"
-                                es-label="证书备注标题"></es-app-textbox>
-                <es-app-textbox es-model="emptyModel.certCommentContent" es-field="certCommentContent" es-placeholder="输入证书备注"
-                                es-label="证书备注"></es-app-textbox>
-                <a ng-click="previewCert()" href="javascript:void(0);">预览证书</a>
+                <es-app-textbox es-model="emptyModel.certTitle" es-field="certTitle" es-placeholder="{{lang.pages.assessment.inputCertTitleText}}"
+                                es-label="{{lang.pages.assessment.certTitleText}}"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certSubTitle" es-field="certSubTitle" es-placeholder="{{lang.pages.assessment.inputCertSubTitleText}}"
+                                es-label="{{lang.pages.assessment.certSubTitleText}}"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certContent" es-field="certContent" es-placeholder="{{lang.pages.assessment.inputCertContentText}}"
+                                es-label="{{lang.pages.assessment.certContentText}}"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certCommentLabel" es-field="certCommentLabel" es-placeholder="{{lang.pages.assessment.inputCertCommentLabelText}}"
+                                es-label="{{lang.pages.assessment.certCommentLabelText}}"></es-app-textbox>
+                <es-app-textbox es-model="emptyModel.certCommentContent" es-field="certCommentContent" es-placeholder="{{lang.pages.assessment.inputCertCommentText}}"
+                                es-label="{{lang.pages.assessment.certCommentText}}"></es-app-textbox>
+                <a ng-click="previewCert()" href="javascript:void(0);">{{lang.pages.assessment.previewCertText}}</a>
             </div>
         </es-app-wizard-content>
         <es-app-wizard-content es-step-validator="validatePageTwo()">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <p>请选择考评机构:</p>
+                    <p>{{lang.pages.assessment.selectParticipantsText}}:</p>
                 </div>
                 <div class="panel-body">
                     <script type="text/ng-template" id="ministry_renderer_ass_creation.html">
@@ -104,7 +104,7 @@
         </es-app-wizard-content>
         <es-app-wizard-content es-step-validator="validatePageThree()">
             <div>
-                <div ng-if="!selectedTemplate">没有选择测试模版</div>
+                <div ng-if="!selectedTemplate">{{lang.pages.assessment.msgRequireTemplateError}}</div>
                 <div ng-if="selectedTemplate">
                     <!--<table ng-repeat="group in selectedTemplate.groups" class="table table-striped">-->
                         <!--<thead>-->
@@ -121,15 +121,15 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th><span>样本代码</span></th>
-                            <th><span>操作</span></th>
+                            <th><span>{{lang.pages.assessment.specimenText}}</span></th>
+                            <th><span>{{lang.pages.assessment.actionText}}</span></th>
                         </tr>
                         </thead>
                         <tr ng-repeat="number in getSpecimens()" style="cursor:pointer;">
                             <td>{{number}}</td>
                             <td>
                                 <button ng-click="setSpecimenCodes(number)" class="btn"
-                                        ng-class="getSetButtonClass(number)">设置盲样码
+                                        ng-class="getSetButtonClass(number)">{{lang.pages.assessment.inputSpecimenCodeText}}
                                 </button>
                             </td>
                         </tr>

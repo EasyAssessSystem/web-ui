@@ -346,6 +346,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 	_postInitialize: function() {
 		this._restrict();
 		this._filterOptions();
+		this.$scope.lang = EasyAssess.lang;
 	},
 
 	_filterOptions: function() {
@@ -583,7 +584,7 @@ EasyAssess.QuickMessage = {
 	}
 };
 
-EasyAssess.langEnv = 'cn';
+EasyAssess.langEnv = 'en';
 
 EasyAssess.lang = EasyAssess.langEnv === 'en' ? require('./langs/en') : require('./langs/cn');
 

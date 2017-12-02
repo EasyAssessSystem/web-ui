@@ -25,7 +25,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             "passScore": 60
         };
         $scope.templateFields = [
-            {title: "模板", field: "header.name", type: "string", searchable: true, default: true}
+            {title: EasyAssess.lang.pages.assessment.templateText, field: "header.name", type: "string", searchable: true, default: true}
         ];
         $scope.emptyModel.startDate = null;
         $scope.emptyModel.endDate = null;
@@ -135,7 +135,7 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                 || !$scope.emptyModel.template
                 || !$scope.emptyModel.startDate
                 || !$scope.emptyModel.endDate) {
-                return "所有字段必须填写";
+                return EasyAssess.lang.pages.assessment.msgRequireAllFields;
             }
 
             if ($scope.emptyModel.enableCert) {
@@ -145,12 +145,12 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
                     || !$scope.emptyModel.certCommentLabel
                     || !$scope.emptyModel.certCommentContent
                     || !$scope.emptyModel.certIssuer) {
-                    return "证书字段不能为空";
+                    return EasyAssess.lang.pages.assessment.msgRequireAllCertFieldsError;
                 }
                 if (isNaN($scope.emptyModel.passScore)
                     || Number($scope.emptyModel.passScore) > 100
                     || Number($scope.emptyModel.passScore) < 1) {
-                    return "请输入合法的合格分数";
+                    return EasyAssess.lang.pages.assessment.msgInvalidScoreError;
                 }
             }
 
@@ -159,12 +159,12 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
 
         $scope.validatePageTwo = function() {
             if (Object.getOwnPropertyNames($scope.emptyModel.participants).length > 0) return true;
-            return "至少选择一个参与考评的单位";
+            return EasyAssess.lang.pages.assessment.msgRequireParticipantError;
         }
 
         $scope.validatePageThree = function() {
             if ($('.btn-danger').length > 0) {
-                return "请输入盲样码";
+                return EasyAssess.lang.pages.assessment.msgRequireSpecimenCodeError;
             }
             return true;
         }
@@ -249,11 +249,11 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             ngDialog.open({
                 template: '<div class="es-dialog-content">'
                           + '<div>'
-                          + '双盲样码: <input type="radio" checked name="codeType" ng-click="normalCodeSelected()"/>'
-                          + '单盲样码: <input type="radio" name="codeType" ng-click="plainCodeSelected()"/>'
+                          + EasyAssess.lang.pages.assessment.singleSpecimenCodeText + ': <input type="radio" checked name="codeType" ng-click="normalCodeSelected()"/>'
+                          + EasyAssess.lang.pages.assessment.doubleSpecimenCodeText + ': <input type="radio" name="codeType" ng-click="plainCodeSelected()"/>'
                           + '</div>'
                           + '<div><textarea ng-hide="plainCode" class="form-control" style="height:300px;padding-bottom: 10px;" ng-model="codes"></textarea></div>'
-                          + '<div><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div></div>',
+                          + '<div><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.okButtonText + '</button></div></div>',
                 plain: true,
                 controller: ['$scope', function ($dialog) {
                     $dialog.plainCode = false;
