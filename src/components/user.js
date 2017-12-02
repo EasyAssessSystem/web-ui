@@ -7,7 +7,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		 $scope.emptyModel = {"id":-1,"name":"","phone":"","status":"A","username":"","password":"",confirmedPassword:"","canLaunchAssessment":true,"ministries":[],"roles":[{"id":1,"name":"系统用户","status":"A"}]},
 		 $scope.resource = "user";
-		 $scope.newItem = "创建新用户";
+		 $scope.newItem = EasyAssess.lang.pages.users.createUserText;
 		 $scope.validations = {
 			 username:{
 				 validateMethod: function(value){
@@ -21,7 +21,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 				 },
 
 				 validateResult:true,
-				 errorMessage:"请输入有效用户名(长度3到8位的字符)"
+				 errorMessage: EasyAssess.lang.pages.users.msgInvalidUsernameError
 			 },
 			 name:{
 				 validateMethod: function(value){
@@ -34,7 +34,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 					 return result;
 				 },
 				 validateResult:true,
-				 errorMessage:"姓名不能为空"
+				 errorMessage: EasyAssess.lang.pages.users.msgInvalidNameError
 			 },
 			 password:{
 				 validateMethod: function(value){
@@ -47,7 +47,7 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 					 return result;
 				 },
 				 validateResult:true,
-				 errorMessage:"请输入有效密码(长度6到10位的字符)"
+				 errorMessage: EasyAssess.lang.pages.users.msgInvalidPasswordError
 			 },
 			 comfirmPassword:{
 				 validateMethod: function(value){
@@ -61,25 +61,25 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 				 },
 
 				 validateResult:true,
-				 errorMessage:"两次密码不一致"
+				 errorMessage: EasyAssess.lang.pages.users.msgInvalidPasswordNotMatchError
 			 }
 		 };
 
 		$scope.fields = [
-			{title: "用户名", field: "username", type: "string", searchable: true, default: true},
-			{title: "姓名", field: "name", type: "string", searchable: true, default: false},
-			{title: "状态", field: "status", type: "string", searchable: false, default: false},
-			{title: "角色", field: "roles[0].name", type: "string", searchable: false, default: false},
-			{title: "机构", field: "ministries[0].name", type: "string", searchable: false, default: false}
+			{title: EasyAssess.lang.pages.users.usernameText, field: "username", type: "string", searchable: true, default: true},
+			{title: EasyAssess.lang.pages.users.nameText, field: "name", type: "string", searchable: true, default: false},
+			{title: EasyAssess.lang.pages.common.statusText, field: "status", type: "string", searchable: false, default: false},
+			{title: EasyAssess.lang.pages.users.roleText, field: "roles[0].name", type: "string", searchable: false, default: false},
+			{title: EasyAssess.lang.pages.users.orgText, field: "ministries[0].name", type: "string", searchable: false, default: false}
 		];
 
 		 $scope.roleFields = [
-			{title:"姓名", field:"name", type:"string", searchable:true, default:true}
+			{title: EasyAssess.lang.pages.users.nameText, field:"name", type:"string", searchable:true, default:true}
 		 ];
 
 		 $scope.ministriesFields = [
-			{title:"名称", field:"name", type:"string",searchable:true,default:true},
-			{title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
+			{title: EasyAssess.lang.pages.users.orgNameText, field:"name", type:"string",searchable:true,default:true},
+			{title: EasyAssess.lang.pages.users.supervisorText, field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
 		 ];
 
 		 $scope.roleOptions = [
@@ -114,9 +114,9 @@ EasyAssess.app.UserController.prototype = EasyAssess.extend({
 		 $scope.transferData = function(rawData){
 			 return rawData.map(function(obj){
 				 if (obj['status'] === "A")
-					 obj['status'] = "有效";
+					 obj['status'] = EasyAssess.lang.pages.common.statusActiveText;
 				 else
-					 obj['status'] = "无效";
+					 obj['status'] = EasyAssess.lang.pages.common.statusInactiveText;
 				 return obj
 			 })
 		 }

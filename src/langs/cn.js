@@ -105,6 +105,15 @@ module.exports = {
 
   },
   "pages": {
+    "common": {
+      "statusText": "状态",
+      "statusActiveText": "有效",
+      "statusInactiveText": "无效",
+      "msgSaveCompleted": "保存成功",
+      "msgConfirmDelete": "删除操作无法恢复,是否确定要删除?",
+      "okText": "确定",
+      "cancelText": "取消"
+    },
     "assessmentTemplate": {
       "nameText": "名称",
       "newText": "新建",
@@ -121,6 +130,28 @@ module.exports = {
       "msgSaveSuccessText": "保存成功",
       "msgDeleteConfirmText": "删除操作无法恢复,是否确定要删除?",
       "msgDeleteSuccessText": "删除成功"
+    },
+    "users": {
+      "createUserText": "创建新用户",
+      "usernameText": "用户名",
+      "inputUsernameText": "请输入用户名",
+      "passwordText": "密码",
+      "inputPasswordText": "请输入密码",
+      "confirmPasswordText": "确认密码",
+      "inputConfirmPasswordText": "请再次输入密码",
+      "nameText": "姓名",
+      "inputNameText": "请输入姓名",
+      "phoneText": "电话",
+      "inputPhoneText": "请输入电话",
+      "roleText": "角色",
+      "orgText": "卫生机构",
+      "orgUserText": "卫生机构用户",
+      "orgNameText": "所属卫生机构",
+      "supervisorText": "上级单位",
+      "msgInvalidUsernameError": "请输入有效用户名(长度3到8位的字符)",
+      "msgInvalidNameError": "姓名不能为空",
+      "msgInvalidPasswordError": "请输入有效密码(长度6到10位的字符)",
+      "msgInvalidPasswordNotMatchError": "两次密码不一致"
     },
     "assessment": {
       "msgNewAssessmentConfirmText": "考评提交后将无法修改,请仔细核实提交的数据.是否确定提交?",

@@ -2,7 +2,7 @@
 	<div ng-show="!activeModel || !activeModel.id">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<es-add-new es-text="创建新用户"></es-add-new>
+				<es-add-new es-text="{{lang.pages.users.createUserText}}"></es-add-new>
 			</div>
 			<div class="panel-body">
 				<es-app-datagrid es-resource="user" es-columns="fields" es-options="options"></es-app-datagrid>
@@ -10,15 +10,15 @@
 		</div>
 	</div>
 	<div ng-show="activeModel && activeModel.id">
-		<es-app-textbox es-readonly="readonly" es-model="activeModel.username" es-field="username" es-placeholder="输入用户名" es-label="用户名" es-validate="validations.username"></es-app-textbox>
-		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="姓名" es-validate="validations.name"></es-app-textbox>
-		<es-app-textbox ng-hide="readonly" es-type="password" es-model="activeModel.password" es-field="password" es-placeholder="输入密码" es-label="密码" es-validate="validations.password"></es-app-textbox>
-		<es-app-textbox ng-hide="readonly" es-type="password" es-model="confirmedPassword" es-field="confirmPassword" es-placeholder="再次输入密码" es-label="确认密码" es-validate="validations.comfirmPassword"></es-app-textbox>
-		<es-app-textbox es-readonly="readonly" es-model="activeModel.phone" es-field="phone" es-placeholder="输入电话" es-label="电话"></es-app-textbox>
-		<es-app-lookup  es-readonly="readonly" es-model="activeModel.roles[0].name" es-label="用户组" es-resource="role" es-columns="roleFields" es-options="roleOptions" es-id="roleLookup" es-value-field="name"></es-app-lookup>
-		<es-app-checkbox es-readonly="readonly" style="padding-top:5px;" es-model="bindWithMinistry" es-label="卫生机构用户"></es-app-checkbox>
-		<es-app-lookup es-readonly="readonly" ng-if="bindWithMinistry" es-readonly="readonly" es-model="activeModel.ministries[0].name" es-label="所属卫生机构" es-resource="ministry" es-columns="ministriesFields" es-id="ministryLookup" es-value-field="name"></es-app-lookup>
-		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="type" es-label="状态" es-options="normalStatus"></es-app-select>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.username" es-field="username" es-placeholder="{{lang.pages.users.inputUsernameText}}" es-label="{{lang.pages.users.usernameText}}" es-validate="validations.username"></es-app-textbox>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="{{lang.pages.users.inputNameText}}" es-label="{{lang.pages.users.nameText}}" es-validate="validations.name"></es-app-textbox>
+		<es-app-textbox ng-hide="readonly" es-type="password" es-model="activeModel.password" es-field="password" es-placeholder="{{lang.pages.users.inputPasswordText}}" es-label="{{lang.pages.users.passwordText}}" es-validate="validations.password"></es-app-textbox>
+		<es-app-textbox ng-hide="readonly" es-type="password" es-model="confirmedPassword" es-field="confirmPassword" es-placeholder="{{lang.pages.users.inputConfirmPasswordText}}" es-label="{{lang.pages.users.confirmPasswordText}}" es-validate="validations.comfirmPassword"></es-app-textbox>
+		<es-app-textbox es-readonly="readonly" es-model="activeModel.phone" es-field="phone" es-placeholder="{{lang.pages.users.inputPhoneText}}" es-label="{{lang.pages.users.phoneText}}"></es-app-textbox>
+		<es-app-lookup  es-readonly="readonly" es-model="activeModel.roles[0].name" es-label="{{lang.pages.users.roleText}}" es-resource="role" es-columns="roleFields" es-options="roleOptions" es-id="roleLookup" es-value-field="name"></es-app-lookup>
+		<es-app-checkbox es-readonly="readonly" style="padding-top:5px;" es-model="bindWithMinistry" es-label="{{lang.pages.users.orgUserText}}"></es-app-checkbox>
+		<es-app-lookup es-readonly="readonly" ng-if="bindWithMinistry" es-readonly="readonly" es-model="activeModel.ministries[0].name" es-label="{{lang.pages.users.orgNameText}}" es-resource="ministry" es-columns="ministriesFields" es-id="ministryLookup" es-value-field="name"></es-app-lookup>
+		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="type" es-label="{{lang.pages.common.statusText}}" es-options="normalStatus"></es-app-select>
 		<es-app-maint-button-group es-model="activeModel" es-validate="validateFinalResult"></es-app-maint-button-group>
 	</div>
 </div>

@@ -105,6 +105,15 @@ module.exports = {
 
   },
   "pages": {
+    "common": {
+      "statusText": "Status",
+      "statusActiveText": "Active",
+      "statusInactiveText": "Inactive",
+      "msgSaveCompleted": "Save Complete",
+      "msgConfirmDelete": "You are sure to delete record",
+      "okText": "OK",
+      "cancelText": "Cancel"
+    },
     "assessmentTemplate": {
       "nameText": "Name",
       "newText": "New",
@@ -121,6 +130,28 @@ module.exports = {
       "msgSaveSuccessText": "Save Successfully",
       "msgDeleteConfirmText": "Are you sure to delete this template",
       "msgDeleteSuccessText": "Delete Successfully"
+    },
+    "users": {
+      "createUserText": "Create new user",
+      "usernameText": "Username",
+      "inputUsernameText": "Input username",
+      "passwordText": "Password",
+      "inputPasswordText": "Input password",
+      "confirmPasswordText": "Confirm password",
+      "inputConfirmPasswordText": "Input password again",
+      "nameText": "Name",
+      "inputNameText": "Input name",
+      "phoneText": "Phone",
+      "inputPhoneText": "Input phone",
+      "roleText": "Role",
+      "orgText": "Org",
+      "orgUserText": "Org user",
+      "orgNameText": "Org name",
+      "supervisorText": "Supervisor",
+      "msgInvalidUsernameError": "Invalid username (please input 3~8 characters)",
+      "msgInvalidNameError": "Name field is required",
+      "msgInvalidPasswordError": "Invalid password (please input 3~10 characters)",
+      "msgInvalidPasswordNotMatchError": "Please confirm your password"
     },
     "assessment": {
       "msgNewAssessmentConfirmText": "Assessment won't be changed again, please review your settings. Are you sure to create it?",

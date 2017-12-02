@@ -326,8 +326,8 @@ EasyAssess.app.MaintenanceController.prototype = {
 		}
 
 		this._statusMap = {
-			"A": "有效",
-			"U": "无效"
+			"A": EasyAssess.lang.pages.common.statusActiveText,
+			"U": EasyAssess.lang.pages.common.statusInactiveText
 		};
 
 		this._service = EasyAssess.activeEnv.pdm();
@@ -401,7 +401,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 						this._postSave(result.data)
 					}
 					if (this._showSaveMessage) {
-						EasyAssess.QuickMessage.message("保存成功");
+						EasyAssess.QuickMessage.message(EasyAssess.lang.pages.common.msgSaveCompleted);
 					} else {
 						$scope.activeModel = null;
 					}
@@ -413,7 +413,7 @@ EasyAssess.app.MaintenanceController.prototype = {
 						this._postSave(result.data)
 					}
 					if (this._showSaveMessage) {
-						EasyAssess.QuickMessage.message("保存成功");
+						EasyAssess.QuickMessage.message(EasyAssess.lang.pages.common.msgSaveCompleted);
 					} else {
 						$scope.activeModel = null;
 					}
@@ -423,8 +423,8 @@ EasyAssess.app.MaintenanceController.prototype = {
 
 	_delete: function() {
 		this.ngDialog.openConfirm({
-			template:   '<div class="ngdialog-message">删除操作无法恢复,是否确定要删除?</div>'
-			+ '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+			template:   '<div class="ngdialog-message">' + EasyAssess.lang.pages.common.msgConfirmDelete + '</div>'
+			+ '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.common.okText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.common.cancelText + '</button></div>',
 			plain: true
 		}).then(
 			(function(value){
@@ -453,8 +453,8 @@ EasyAssess.app.MaintenanceController.prototype = {
     __default: function($scope,ngDialog,esRequestService) {
 
 		$scope.normalStatus = [
-			{text: "无效", value: "U"},
-			{text: "有效", value: "A"}
+			{text: EasyAssess.lang.pages.common.statusActiveText, value: "U"},
+			{text: EasyAssess.lang.pages.common.statusInactiveText, value: "A"}
 		];
 
 		$scope.$watch('activeModel',function(newValue, oldValue, scope){
