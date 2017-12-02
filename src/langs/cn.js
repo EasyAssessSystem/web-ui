@@ -197,6 +197,18 @@ module.exports = {
       "msgRequireRoleNameError": "角色名不能为空",
       "inputRoleNameText": "输入角色名"
     },
+    "categories": {
+      "createCategoryText": "创建检测类别",
+      "categoryNameText": "名称",
+      "inputCategoryNameText": "请输入检测类别名称",
+      "msgRequireCategoryNameError": "检测类别名称不能为空",
+    },
+    "codeGroups": {
+      "createCodeGroupText": "创建代码组",
+      "groupNameText": "名称",
+      "inputGroupNameText": "请输入代码组名称",
+      "msgRequireNameError": "代码组名称不能为空",
+    },
     "assessment": {
       "msgNewAssessmentConfirmText": "考评提交后将无法修改,请仔细核实提交的数据.是否确定提交?",
       "msgRequireTemplateError": "没有选择测试模版",

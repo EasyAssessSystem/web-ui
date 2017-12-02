@@ -197,6 +197,18 @@ module.exports = {
       "msgRequireRoleNameError": "Role name can not be empty",
       "inputRoleNameText": "Input role name"
     },
+    "categories": {
+      "createCategoryText": "Create Test Category",
+      "categoryNameText": "Name",
+      "inputCategoryNameText": "Input category name",
+      "msgRequireCategoryNameError": "Category name can not be empty",
+    },
+    "codeGroups": {
+      "createCodeGroupText": "Create Code Group",
+      "groupNameText": "Name",
+      "inputGroupNameText": "Input code group name",
+      "msgRequireNameError": "Code group name can not be empty",
+    },
     "assessment": {
       "msgNewAssessmentConfirmText": "Assessment won't be changed again, please review your settings. Are you sure to create it?",
       "msgRequireTemplateError": "You have to choose a template",

@@ -6,8 +6,8 @@ EasyAssess.app.AssayCategoryController = function($scope, $timeout, ngDialog, es
 EasyAssess.app.AssayCategoryController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		$scope.fields = [
-			{title:"名称", field:"name", type:"string",searchable:true,default:true},
-			{title:"状态", field:"status", type:"string",searchable:false}
+			{title: EasyAssess.lang.pages.categories.categoryNameText, field:"name", type:"string",searchable:true,default:true},
+			{title: EasyAssess.lang.pages.common.statusText, field:"status", type:"string",searchable:false}
 		];
 
 		$scope.validations = {
@@ -22,7 +22,7 @@ EasyAssess.app.AssayCategoryController.prototype = EasyAssess.extend({
 					return result;
 				},
 				validateResult: true,
-				errorMessage: "名称不能为空"
+				errorMessage: EasyAssess.lang.pages.categories.msgRequireCategoryNameError
 			}
 		}
 
