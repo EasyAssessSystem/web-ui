@@ -25,15 +25,15 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 					return result;
 				},
 				validateResult: true,
-				errorMessage: "名称不能为空"
+				errorMessage: EasyAssess.lang.pages.roles.msgRequireRoleNameError
 			}
 		 }
 
 		 $scope.resource = "role";
      	
          $scope.fields = [
-              {title:"姓名", "field":"name", "name":"string",searchable:true,default:true},
-              {title:"状态", "field":"status", "type":"string",searchable:true,default:true}
+              {title: EasyAssess.lang.pages.roles.roleNameText, "field":"name", "name":"string",searchable:true,default:true},
+              {title: EasyAssess.lang.pages.common.statusText, "field":"status", "type":"string",searchable:true,default:true}
          ];
 
 		 $scope.options = $scope.fields.filter(function(eachfield){
@@ -49,9 +49,9 @@ EasyAssess.app.RoleController.prototype = EasyAssess.extend({
 		$scope.transferData = function(rawData){
 			return rawData.map(function(obj){
 				if (obj['status'] === "A")
-					obj['status'] = "有效";
+					obj['status'] = EasyAssess.lang.pages.common.statusActiveText;
 				else
-					obj['status'] = "无效";
+					obj['status'] = EasyAssess.lang.pages.common.statusInactiveText;
 				return obj
 			})
 		}

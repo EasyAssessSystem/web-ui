@@ -2,7 +2,7 @@
 	<div ng-show="!activeModel || !activeModel.id">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<es-add-new es-text="创建新角色"></es-add-new>
+				<es-add-new es-text="{{lang.pages.roles.createRoleText}}"></es-add-new>
 			</div>
 			<div class="panel-body">
 				<es-app-datagrid es-resource="role" es-columns="fields" es-options="options"></es-app-datagrid>
@@ -12,17 +12,17 @@
 	<div ng-show="!activeModel || !activeModel.id">
 	</div>
 	<div ng-show="activeModel && activeModel.id">
-		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="输入姓名" es-label="用户组"></es-app-textbox>
-		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="状态"></es-app-select>
+		<es-app-textbox es-validate="validations.name" es-readonly="readonly" es-model="activeModel.name" es-field="name" es-placeholder="{{lang.pages.roles.inputRoleNameText}}" es-label="{{lang.pages.roles.roleNameText}}"></es-app-textbox>
+		<es-app-select es-readonly="readonly" es-model="activeModel.status" es-field="status" es-options="normalStatus" es-label="{{lang.pages.common.statusText}}"></es-app-select>
 		<div>
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th style="width:300px;"><span>模块</span></th>
-						<th><span>查看</span></th>
-						<th><span>修改</span></th>
-						<th><span>添加</span></th>
-						<th><span>删除</span></th>
+						<th style="width:300px;"><span>{{lang.pages.roles.moduleText}}</span></th>
+						<th><span>{{lang.pages.roles.readText}}</span></th>
+						<th><span>{{lang.pages.roles.saveText}}</span></th>
+						<th><span>{{lang.pages.roles.addText}}</span></th>
+						<th><span>{{lang.pages.roles.deleteText}}</span></th>
 					</tr>
 				</thead>
 				<tr ng-hide="permissionLoaded" style="padding:20px 20px 20px 20px;">
@@ -41,11 +41,11 @@
 			<table class="table table-striped">
 				<thead>
 				<tr>
-					<th style="width:300px;"><span>功能</span></th>
-					<th><span>查看</span></th>
-					<th><span>修改</span></th>
-					<th><span>添加</span></th>
-					<th><span>删除</span></th>
+					<th style="width:300px;"><span>{{lang.pages.roles.functionalityText}}</span></th>
+					<th><span>{{lang.pages.roles.readText}}</span></th>
+					<th><span>{{lang.pages.roles.saveText}}</span></th>
+					<th><span>{{lang.pages.roles.addText}}</span></th>
+					<th><span>{{lang.pages.roles.deleteText}}</span></th>
 				</tr>
 				</thead>
 				<tr ng-hide="permissionLoaded" style="padding:20px 20px 20px 20px;">

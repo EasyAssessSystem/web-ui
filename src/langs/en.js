@@ -185,6 +185,18 @@ module.exports = {
       "inputOrgTypeText": "Input org type",
       "noAffiliatesText": "No Affiliates"
     },
+    "roles": {
+      "createRoleText": "Create Role",
+      "moduleText": "Module",
+      "functionalityText": "Functionality",
+      "readText": "Read",
+      "saveText": "Save",
+      "addText": "Add",
+      "deleteText": "Delete",
+      "roleNameText": "Role Name",
+      "msgRequireRoleNameError": "Role name can not be empty",
+      "inputRoleNameText": "Input role name"
+    },
     "assessment": {
       "msgNewAssessmentConfirmText": "Assessment won't be changed again, please review your settings. Are you sure to create it?",
       "msgRequireTemplateError": "You have to choose a template",

@@ -185,6 +185,18 @@ module.exports = {
       "inputOrgTypeText": "输入机构性质",
       "noAffiliatesText": "尚无下属机构"
     },
+    "roles": {
+      "createRoleText": "创建新角色",
+      "moduleText": "模块",
+      "functionalityText": "功能",
+      "readText": "查看",
+      "saveText": "修改",
+      "addText": "添加",
+      "deleteText": "删除",
+      "roleNameText": "角色名称",
+      "msgRequireRoleNameError": "角色名不能为空",
+      "inputRoleNameText": "输入角色名"
+    },
     "assessment": {
       "msgNewAssessmentConfirmText": "考评提交后将无法修改,请仔细核实提交的数据.是否确定提交?",
       "msgRequireTemplateError": "没有选择测试模版",
