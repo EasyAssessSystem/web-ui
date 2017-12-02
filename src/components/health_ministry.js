@@ -6,15 +6,15 @@ EasyAssess.app.HealthMinistryController = function($scope, $timeout, ngDialog, e
 EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 	_initialize: function($scope) {
 		$scope.fields = [
-			{title:"名称", field:"name", type:"string",searchable:true,default:true},
-			{title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
+			{title: EasyAssess.lang.pages.participants.orgNameText, field:"name", type:"string",searchable:true,default:true},
+			{title: EasyAssess.lang.pages.participants.supervisorText, field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
 		];
 
 		$scope.levels = [
 			{text: "", value: ""},
-			{text: "一级", value: "一级"},
-			{text: "二级", value: "二级"},
-			{text: "三级", value: "三级"}
+			{text: EasyAssess.lang.pages.participants.qualification1, value: "一级"},
+			{text: EasyAssess.lang.pages.participants.qualification2, value: "二级"},
+			{text: EasyAssess.lang.pages.participants.qualification3, value: "三级"}
 		];
 
 		$scope.validations = {
@@ -29,7 +29,7 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 					return result;
 				},
 				validateResult: true,
-				errorMessage: "名称不能为空"
+				errorMessage: EasyAssess.lang.pages.participants.msgOrgRequiredNameError
 			}
 		}
 
@@ -79,12 +79,12 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 				},
 				withCredentials: true
 			}).success(function (data, status, headers, config) {
-				EasyAssess.QuickMessage.message("上传成功");
+				EasyAssess.QuickMessage.message(EasyAssess.lang.pages.participants.uploadCompleteText);
 				$scope.uploading = false;
 				$scope.activeModel.logo = data.data;
 				$scope.logoUrl = $scope.activeModel.logo;
 			}).error(function (data, status, headers, config) {
-				EasyAssess.QuickMessage.error("上传失败");
+				EasyAssess.QuickMessage.error(EasyAssess.lang.pages.participants.uploadFailedText);
 				$scope.uploading = false;
 			});
 		}).bind(this));
@@ -110,12 +110,12 @@ EasyAssess.app.HealthMinistryController.prototype = EasyAssess.extend({
 				},
 				withCredentials: true
 			}).success(function (data, status, headers, config) {
-				EasyAssess.QuickMessage.message("上传成功");
+				EasyAssess.QuickMessage.message(EasyAssess.lang.pages.participants.uploadCompleteText);
 				$scope.uploading = false;
 				$scope.activeModel.signature = data.data;
 				$scope.signatureUrl = $scope.activeModel.signature;
 			}).error(function (data, status, headers, config) {
-				EasyAssess.QuickMessage.error("上传失败");
+				EasyAssess.QuickMessage.error(EasyAssess.lang.pages.participants.uploadFailedText);
 				$scope.uploading = false;
 			});
 		}).bind(this));
