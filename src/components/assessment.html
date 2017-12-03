@@ -35,10 +35,10 @@
             </div>
             <div class="ds-data-grid">
                 <script type="text/ng-template" id="assessment_button_column.html">
-                    <a href="javascript:void(0)" es-id="close" style="width:100px;height:30px;" title="结束考评并打分" ng-if="getRecordModel(rec).status == 'A'">结束</a>
-                    <a href="javascript:void(0)" es-id="export" style="width:100px;height:30px;" title="导出Excel">导出</a>
-                    <a href="javascript:void(0)" es-id="delete" style="width:100px;height:30px;" title="删除考评记录和结果" ng-if="parent.canDelete">删除</a>
-                    <a href="javascript:void(0)" es-id="reopen" style="width:100px;height:30px;" title="重置考评" ng-if="getRecordModel(rec).status == 'F'">重开</a>
+                    <a href="javascript:void(0)" es-id="close" style="width:100px;height:30px;" title="" ng-if="getRecordModel(rec).status == 'A'">{{lang.pages.assessment.statusFinalizedText}}</a>
+                    <a href="javascript:void(0)" es-id="export" style="width:100px;height:30px;" title="">{{lang.pages.assessment.exportText}}</a>
+                    <a href="javascript:void(0)" es-id="delete" style="width:100px;height:30px;" title="" ng-if="parent.canDelete">{{lang.pages.assessment.deleteText}}</a>
+                    <a href="javascript:void(0)" es-id="reopen" style="width:100px;height:30px;" title="" ng-if="getRecordModel(rec).status == 'F'">{{lang.pages.assessment.reopenText}}</a>
                 </script>
                 <es-app-datagrid es-service="assess" es-resource="assessment" es-columns="fields"
                                  es-options="options"></es-app-datagrid>
@@ -46,15 +46,15 @@
         </div>
         <div ng-if="doFinalize">
             <es-spinner ng-if="!template"></es-spinner>
-            <es-app-wizard ng-if="template" es-confirm-message="考评提交后将不能修改,请检查确定无误后提交?">
+            <es-app-wizard ng-if="template" es-confirm-message="{{lang.pages.assessment.msgConfirmFinalize}}">
                 <es-app-wizard-content>
                         <div class="es-page-section" ng-repeat="group in template.groups">
                             <div class="es-form-group">
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>检测分类</th>
-                                        <th>样本</th>
+                                        <th>{{lang.pages.assessment.testCategoryText}}</th>
+                                        <th>{{lang.pages.assessment.specimenText}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -85,7 +85,7 @@
                     <div class="es-page-section">
                         <div>
                             <div class="es-page-section" ng-repeat="group in template.groups">
-                                <div align="right"><span class="glyphicon glyphicon-remove es-delete-button" title="删除检测组" ng-click="removeGroup(group.guid)" style="padding-right:5px;"></span></div>
+                                <div align="right"><span class="glyphicon glyphicon-remove es-delete-button" title="{{lang.pages.assessment.deleteText}}" ng-click="removeGroup(group.guid)" style="padding-right:5px;"></span></div>
                                 <es-form-group es-type="assess" es-group="group"></es-form-group>
                             </div>
                         </div>

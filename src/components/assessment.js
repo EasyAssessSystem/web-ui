@@ -8,13 +8,13 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
         $scope.canDelete = this._permission.delete;
         $scope.doFinalize = false;
         $scope.fields = [
-            {title: "考评名称", field: "name", type: "string", searchable: true, default: true},
-            {title: "开始日期", field: "startDate", type: "string", searchable: false, default: false},
-            {title: "截止日期", field: "endDate", type: "string", searchable: false, default: false},
-            {title: "发起人", field: "ownerName", type: "string", searchable: true, default: false},
-            {title: "状态", field: "status", type: "string", searchable: true, default: false},
+            {title: EasyAssess.lang.pages.assessment.assessmentNameText, field: "name", type: "string", searchable: true, default: true},
+            {title: EasyAssess.lang.pages.assessment.startDateText, field: "startDate", type: "string", searchable: false, default: false},
+            {title: EasyAssess.lang.pages.assessment.endDateText, field: "endDate", type: "string", searchable: false, default: false},
+            {title: EasyAssess.lang.pages.assessment.creatorText, field: "ownerName", type: "string", searchable: true, default: false},
+            {title: EasyAssess.lang.pages.assessment.statusText, field: "status", type: "string", searchable: true, default: false},
             {
-                title: "操作",
+                title: EasyAssess.lang.pages.assessment.actionText,
                 template: "assessment_button_column.html",
                 clickHandler: (function($index, model, $event) {
                     if ($($event.target).attr('es-id') == 'close') {
@@ -35,8 +35,8 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                         window.open(EasyAssess.activeEnv.assess() + "assessment/excel/" + model.id)
                     } else if ($($event.target).attr('es-id') == 'reopen') {
                         ngDialog.openConfirm({
-                            template:   '<div class="ngdialog-message">是否确定要重置考评?</div>'
-                            + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                            template:   '<div class="ngdialog-message">' + EasyAssess.lang.pages.assessment.msgConfirmReset + '</div>'
+                            + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.okButtonText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.cancelButtonText + '</button></div>',
                             plain: true
                         }).then(
                           (function(){
@@ -48,8 +48,8 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                         );
                     } else {
                         ngDialog.openConfirm({
-                            template:   '<div class="ngdialog-message">删除操作会清空所有本次考评的提交结果,是否确定要删除?</div>'
-                            + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                            template:   '<div class="ngdialog-message">' + EasyAssess.lang.pages.assessment.msgConfirmDeleteAssessment + '</div>'
+                            + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.okButtonText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.cancelButtonText + '</button></div>',
                             plain: true
                         }).then(
                           (function(){
@@ -65,8 +65,8 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
         ];
 
         this._statusMap = {
-            "A": "进行中",
-            "F": "已完成"
+            "A": EasyAssess.lang.pages.assessment.statusInprogressText,
+            "F": EasyAssess.lang.pages.assessment.statusFinalizedText
         };
 
         $scope.data = [300, 500, 100];
@@ -113,7 +113,7 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                 });
 
                 average = total / average.length;
-                return ["均值:" + average.toFixed(2)];
+                return [EasyAssess.lang.pages.assessment.averageText + ":" + average.toFixed(2)];
             } else if (Object.getOwnPropertyNames(counts).length > 0){
                 var percentages = [];
                 for (var key in counts) {

@@ -18,14 +18,14 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
     $scope.loading = false;
     $scope.assessname = $scope.assessment.name;
     $scope.fields = [
-      {title: "机构名称", field: "name", type: "string", searchable: true, default: true},
-      {title: "状态", field: "status", type: "string", searchable: false, default: false},
-      {title: "分数", field: "scores", type: "string", searchable: false, default: false}
+      {title: EasyAssess.lang.pages.assessment.participantText, field: "name", type: "string", searchable: true, default: true},
+      {title: EasyAssess.lang.pages.assessment.statusText, field: "status", type: "string", searchable: false, default: false},
+      {title: EasyAssess.lang.pages.assessment.assessmentScoreText, field: "scores", type: "string", searchable: false, default: false}
     ];
 
     $scope.ministriesFields = [
-      {title:"名称", field:"name", type:"string",searchable:true,default:true},
-      {title:"上级", field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
+      {title: EasyAssess.lang.pages.assessment.participantText, field:"name", type:"string",searchable:true,default:true},
+      {title: EasyAssess.lang.pages.assessment.supervisorText, field:"supervisorName", type:"string",searchable:true, cascadeField: "supervisor.name"}
     ];
 
     var firstback = function () {
@@ -53,18 +53,18 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
       switch (status) {
         case "A":
         case "S":
-          return "未完成";
+          return EasyAssess.lang.pages.assessment.statusUnfilledText;
         case "C":
-          return "已提交";
+          return EasyAssess.lang.pages.assessment.statusFilledText;
         case "F":
-          return "已审核";
+          return EasyAssess.lang.pages.assessment.statusReviewedText;
       }
-      return "未知状态";
+      return EasyAssess.lang.pages.assessment.statusUnknownText;
     }
 
     $scope.items = [
       {
-        name: '考评记录',
+        name: EasyAssess.lang.pages.assessment.assessmentsText,
         bindfunc: firstback
       },
       {
@@ -105,8 +105,8 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
 
     $scope.reject = function (form) {
       ngDialog.openConfirm({
-        template: '<div class="ngdialog-message">是否确定打回操作?</div>'
-        + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+        template: '<div class="ngdialog-message">' + EasyAssess.lang.pages.assessment.msgConfirmReopen + '</div>'
+        + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.okButtonText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.cancelButtonText + '</button></div>',
         plain: true
       }).then(
         (function () {
@@ -114,7 +114,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
           $scope.loading = true;
           self.esRequestService.esPut(EasyAssess.activeEnv.assess() + "form/reject/" + form.id).then(
             (function (result) {
-              EasyAssess.QuickMessage.message("操作成功");
+              EasyAssess.QuickMessage.message(EasyAssess.lang.pages.assessment.msgOperationComplete);
               form.status = 'A';
             }).bind(this)
           );
@@ -129,9 +129,9 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
       // el.removeClass('es-transparent-input');
       ngDialog.open({
         template: '<div class="es-dialog-content">'
-                 +  '<div class="es-dialog-form-line">附加分: <input class="form-control" ng-model="score" style="width:300px;" placeholder="输入分数"/></div>'
-                 +  '<div class="es-dialog-form-line">说明: <textarea class="form-control" ng-model="desc" style="width:300px;" placeholder="附加分说明"></textarea></div>'
-                 +  '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">确定</button></div>'
+                 +  '<div class="es-dialog-form-line">' + EasyAssess.lang.pages.assessment.additionalScoreText + ': <input class="form-control" ng-model="score" style="width:300px;" placeholder="输入分数"/></div>'
+                 +  '<div class="es-dialog-form-line">' + EasyAssess.lang.pages.assessment.additionScoreStatementText + ': <textarea class="form-control" ng-model="desc" style="width:300px;" placeholder="' + EasyAssess.lang.pages.assessment.inputAdditionScoreStatementText + '"></textarea></div>'
+                 +  '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.okButtonText + '</button></div>'
                  +'</div>',
         plain: true,
         controller: ['$scope', function ($dlgScope) {
@@ -145,7 +145,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
                 desc: form.additationScoreDesc
             }).then(
                 (function () {
-                  EasyAssess.QuickMessage.message("操作成功");
+                  EasyAssess.QuickMessage.message(EasyAssess.lang.pages.assessment.msgOperationComplete);
                 }).bind(this));
             $dlgScope.closeThisDialog();
           }
@@ -173,8 +173,8 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
 
     $scope.remove = function (form, idx) {
       ngDialog.openConfirm({
-        template: '<div class="ngdialog-message">是否确定删除操作?</div>'
-        + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+        template: '<div class="ngdialog-message">' + EasyAssess.lang.pages.assessment.msgConfirmDelete + '</div>'
+        + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.okButtonText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.cancelButtonText + '</button></div>',
         plain: true
       }).then(
         (function () {
@@ -188,7 +188,7 @@ EasyAssess.app.AssessmentDetailController.prototype = EasyAssess.extend({
                   break;
                 }
               }
-              EasyAssess.QuickMessage.message("操作成功");
+              EasyAssess.QuickMessage.message(EasyAssess.lang.pages.assessment.msgOperationComplete);
             }).bind(this)
           );
         }).bind(this)

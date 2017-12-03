@@ -1,17 +1,17 @@
 <div>
     <es-app-breadcrumb es-items="items"></es-app-breadcrumb>
-    <es-app-lookup es-provider="link" ng-if="!readonly" es-label="添加机构" es-columns="ministriesFields" es-id="ministryLookup" es-resource="ministry/list/"></es-app-lookup>
+    <es-app-lookup es-provider="link" ng-if="!readonly" es-label="{{lang.pages.assessment.addParticipantText}}" es-columns="ministriesFields" es-id="ministryLookup" es-resource="ministry/list/"></es-app-lookup>
     <div ng-if="!activeModel">
         <es-spinner ng-if="loading"></es-spinner>
         <table ng-if="!loading" class="table table-striped">
             <thead>
             <tr>
-                <th>机构</th>
-                <th>状态</th>
-                <th>考评得分</th>
-                <th>附加分</th>
-                <th>总分</th>
-                <th>操作</th>
+                <th>{{lang.pages.assessment.participantText}}</th>
+                <th>{{lang.pages.assessment.statusText}}</th>
+                <th>{{lang.pages.assessment.assessmentScoreText}}</th>
+                <th>{{lang.pages.assessment.additionalScoreText}}</th>
+                <th>{{lang.pages.assessment.totalScoreText}}</th>
+                <th>{{lang.pages.assessment.actionText}}</th>
             </tr>
             </thead>
             <tbody>
@@ -34,11 +34,11 @@
                     {{form.additionalScore + form.totalScore}}
                 </td>
                 <td>
-                    <span ng-if="form.status=='C' || form.status=='F'"><a ng-click="export(form)" href="javascript:void(0)">导出</a></span>
-                    <span ng-if="form.status=='C'"><a ng-click="reject(form)" href="javascript:void(0)">打回</a></span>
-                    <span ng-if="form.status!='F'"><a ng-click="remove(form, $index)" href="javascript:void(0)">删除</a></span>
-                    <span ng-if="form.qualifiedForCert"><a ng-click="getCertUrl(form)" href="javascript:void(0)">证书</a></span>
-                    <a ng-if="form.attachment" href="{{form.attachment}}">附件</a>
+                    <span ng-if="form.status=='C' || form.status=='F'"><a ng-click="export(form)" href="javascript:void(0)">{{lang.pages.assessment.exportText}}</a></span>
+                    <span ng-if="form.status=='C'"><a ng-click="reject(form)" href="javascript:void(0)">{{lang.pages.assessment.reopenText}}</a></span>
+                    <span ng-if="form.status!='F'"><a ng-click="remove(form, $index)" href="javascript:void(0)">{{lang.pages.assessment.deleteText}}</a></span>
+                    <span ng-if="form.qualifiedForCert"><a ng-click="getCertUrl(form)" href="javascript:void(0)">{{lang.pages.assessment.certificationText}}</a></span>
+                    <a ng-if="form.attachment" href="{{form.attachment}}">{{lang.pages.assessment.attachmentText}}</a>
                 </td>
             </tr>
             </tbody>

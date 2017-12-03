@@ -48,6 +48,7 @@ EasyAssess.directives["esAppDatagrid"]
         },
         controller: ["$scope", function ($scope, $element, $attrs) {
             $scope.parent = $scope.$parent;
+            $scope.lang = EasyAssess.lang;
             if (!$scope.esPageSize) {
                 $scope.esPageSize = "5";
             }
