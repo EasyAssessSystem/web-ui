@@ -12,7 +12,7 @@ EasyAssess.directives["esFormResult"]
                             + '<div class="es-page-section" ng-repeat="group in esTemplate.groups">'
                             + '<div class="es-form-group">'
                             +	 '<table class="table table-striped">'
-                            + 	'<thead><tr><th style="width:15%;">检测分类</th><th style="width:45%;">样本</th><!--th style="width:40%;">编码组</th>--></tr></thead>'
+                            + 	'<thead><tr><th style="width:15%;">' + EasyAssess.lang.forms.group.categoryText+ '</th><th style="width:45%;">' + EasyAssess.lang.forms.group.specimenText + '</th><!--th style="width:40%;">' + EasyAssess.lang.forms.group.codeGroupText + '</th>--></tr></thead>'
                             +     '<tbody>'
                             +			'<tr>'
                             +				'<td>'
@@ -29,7 +29,7 @@ EasyAssess.directives["esFormResult"]
                             +					'<table>'
                             +						'<tr>'
                             +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span class="es-form-group-title" ng-if="esForm.status==\'F\'">{{specimen.number}} </span><span class="es-form-group-title">{{getSpecimenCode(specimen.guid)}}</span></td>'
-                            +             '<td align="right" class="es-form-group-cell" ng-if="esForm.status==\'F\'"><span class="es-form-group-title">分数</span></td>'
+                            +             '<td align="right" class="es-form-group-cell" ng-if="esForm.status==\'F\'"><span class="es-form-group-title">' + EasyAssess.lang.forms.group.scoreText + '</span></td>'
                             +						'</tr>'
                             +						'<tr ng-repeat="row in group.rows">'
                             +							'<td class="es-form-group-cell" ng-repeat="specimen in group.specimens"><span ng-bind="getValue(row, specimen)"></span></td>'
@@ -50,8 +50,8 @@ EasyAssess.directives["esFormResult"]
                             +       '<td>'
                             +          '<table cellpadding="10" cellspacing="10" style="width: 100%;">'
                             +						'<tr>'
-                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">试剂批号</span></td>'
-                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">试剂有效期</span></td>'
+                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">' + EasyAssess.lang.forms.group.batchCodeText + '</span></td>'
+                            +							'<td class="es-form-group-cell"><span class="es-form-group-title">' + EasyAssess.lang.forms.group.expireDateText + '</span></td>'
                             +						'</tr>'
                             +            '<tr ng-repeat="row in group.rows">'
                             +               '<td class="es-form-group-cell"><span class="es-form-signature-line">{{detailsMap[row.guid].batchNumber}}</span></td>'
@@ -64,18 +64,18 @@ EasyAssess.directives["esFormResult"]
                             +   '<table style="width: 100%;">'
                             +       '<tr>'
                             +           '<td style="width: 60%;"></td>'
-                            +           '<td align="right" class="es-form-group-cell"><span>检测人: {{signatures[group.guid]["tester"]}}</span></td>'
-                            +           '<td align="center" class="es-form-group-cell"><span>检测日期: {{signatures[group.guid]["testDate"]}}</span></td>'
+                            +           '<td align="right" class="es-form-group-cell"><span>' + EasyAssess.lang.forms.group.testerText + ': {{signatures[group.guid]["tester"]}}</span></td>'
+                            +           '<td align="center" class="es-form-group-cell"><span>' + EasyAssess.lang.forms.group.testDateText + ': {{signatures[group.guid]["testDate"]}}</span></td>'
                             +       '</tr>'
                             +       '<tr>'
                             +           '<td style="width: 60%;"></td>'
-                            +           '<td align="right" class="es-form-group-cell"><span>审核人: {{signatures[group.guid]["reviewer"]}}</span></td>'
-                            +           '<td align="center" class="es-form-group-cell"><span>审核日期: {{signatures[group.guid]["reviewDate"]}}</span></td>'
+                            +           '<td align="right" class="es-form-group-cell"><span>' + EasyAssess.lang.forms.group.reviewerText + ': {{signatures[group.guid]["reviewer"]}}</span></td>'
+                            +           '<td align="center" class="es-form-group-cell"><span>' + EasyAssess.lang.forms.group.reviewDateText + ': {{signatures[group.guid]["reviewDate"]}}</span></td>'
                             +       '</tr>'
                             +       '<tr>'
                             +           '<td style="width: 60%;"></td>'
                             +           '<td colspan="2">'
-                            +               '<span align="left" class="es-form-group-title">备注:</span>'
+                            +               '<span align="left" class="es-form-group-title">' + EasyAssess.lang.forms.group.commentText + ':</span>'
                             +               '<span style="word-wrap:break-word;word-break:break-all;">{{signatures[group.guid]["comments"]}}</span>'
                             +           '</td>'
                             +       '</tr>'
@@ -84,11 +84,11 @@ EasyAssess.directives["esFormResult"]
                         + '</div>'
                     + '</div>'
                     +   '<div style="padding: 10px 0px 10px 0px;">'
-                    +      '<div class="es-form-group-title">附加分: {{esForm.additionalScore}}</div>'
-                    +      '<div class="es-form-group-title">附加分说明: {{esForm.additationScoreDesc}}</div>'
+                    +      '<div class="es-form-group-title">' + EasyAssess.lang.pages.assessment.additionalScoreText + ': {{esForm.additionalScore}}</div>'
+                    +      '<div class="es-form-group-title">' + EasyAssess.lang.pages.assessment.additionScoreStatementText + ': {{esForm.additationScoreDesc}}</div>'
                     +   '</div>'
                     +   '<div style="padding: 10px 0px 10px 0px;">'
-                    +      '<span class="es-form-group-title">填报说明:</span>'
+                    +      '<span class="es-form-group-title">' + EasyAssess.lang.forms.group.statementText + ':</span>'
                     +      '<es-form-footer es-editable="false" es-footer="esTemplate.footer"></es-form-footer>'
                     +   '</div>'
                 + '</div>',
@@ -141,7 +141,7 @@ EasyAssess.directives["esFormResult"]
                         }
                         $scope.scoreMap[value.subjectGuid][value.specimenGuid] = value.score;
                         $scope.scoreMap[value.subjectGuid].total += Number(value.score);
-                        $scope.scoreMap[value.subjectGuid].details += '样本:' + value.specimenNumber + '(' + value.specimenCode + ') 得 ' + value.score + '分\n';
+                        $scope.scoreMap[value.subjectGuid].details += EasyAssess.lang.forms.group.specimenText + ':' + value.specimenNumber + '(' + value.specimenCode + ')'  + EasyAssess.lang.forms.group.getText + value.score + EasyAssess.lang.forms.group.scoreText + '\n';
                     }
                 });
             }
