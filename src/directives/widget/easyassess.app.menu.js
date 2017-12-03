@@ -1,5 +1,5 @@
 var EasyAssess = require('../../easyassess.application');
-var MenuTemplate = EasyAssess.langEnv === 'en' ? require('../../data/menu.template.en') : require('../../data/menu.template');
+var MenuTemplate = window.langEnv === 'en' ? require('../../data/menu.template.en') : require('../../data/menu.template');
 
 EasyAssess.app.filter('esMenuFilter', function() {  
    return function(input, keyword, group) {  
