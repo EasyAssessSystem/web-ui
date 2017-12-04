@@ -35,7 +35,7 @@
             </div>
             <div class="ds-data-grid">
                 <script type="text/ng-template" id="assessment_button_column.html">
-                    <a href="javascript:void(0)" es-id="close" style="width:100px;height:30px;" title="" ng-if="getRecordModel(rec).status == 'A'">{{lang.pages.assessment.statusFinalizedText}}</a>
+                    <a href="javascript:void(0)" es-id="close" style="width:100px;height:30px;" title="" ng-if="getRecordModel(rec).status == 'A'">{{lang.pages.assessment.finalizeText}}</a>
                     <a href="javascript:void(0)" es-id="export" style="width:100px;height:30px;" title="">{{lang.pages.assessment.exportText}}</a>
                     <a href="javascript:void(0)" es-id="delete" style="width:100px;height:30px;" title="" ng-if="parent.canDelete">{{lang.pages.assessment.deleteText}}</a>
                     <a href="javascript:void(0)" es-id="reopen" style="width:100px;height:30px;" title="" ng-if="getRecordModel(rec).status == 'F'">{{lang.pages.assessment.reopenText}}</a>

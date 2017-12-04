@@ -35,7 +35,7 @@
                 </td>
                 <td>
                     <span ng-if="form.status=='C' || form.status=='F'"><a ng-click="export(form)" href="javascript:void(0)">{{lang.pages.assessment.exportText}}</a></span>
-                    <span ng-if="form.status=='C'"><a ng-click="reject(form)" href="javascript:void(0)">{{lang.pages.assessment.reopenText}}</a></span>
+                    <span ng-if="form.status=='C'"><a ng-click="reject(form)" href="javascript:void(0)">{{lang.pages.assessment.rejectText}}</a></span>
                     <span ng-if="form.status!='F'"><a ng-click="remove(form, $index)" href="javascript:void(0)">{{lang.pages.assessment.deleteText}}</a></span>
                     <span ng-if="form.qualifiedForCert"><a ng-click="getCertUrl(form)" href="javascript:void(0)">{{lang.pages.assessment.certificationText}}</a></span>
                     <a ng-if="form.attachment" href="{{form.attachment}}">{{lang.pages.assessment.attachmentText}}</a>

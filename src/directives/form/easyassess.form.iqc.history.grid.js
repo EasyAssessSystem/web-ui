@@ -18,7 +18,7 @@ EasyAssess.directives["esAppIqcHistoryGrid"]
                 + '<table class="table table-striped">'
                 +   '<tr ng-repeat="item in record.items">'
                 +       '<td>{{item.subject}}</td>'
-                +       '<td ng-repeat="specimen in item.specimens">{{specimen.number}}: {{specimen.value}}</td>'
+                +       '<td ng-repeat="specimen in item.specimens">{{specimen.number}}: {{specimen.value}} ({{specimen.targetValue}} ±{{specimen.floatValue}})</td>'
                 +   '</tr>'
                 + '</table>'
                 + '<table class="table table-striped">'
