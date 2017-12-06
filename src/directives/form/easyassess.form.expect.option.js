@@ -212,8 +212,8 @@ EasyAssess.directives["esFormExpectOption"]
 		replace: true,
 		transclude: false,
 		template:  '<div class="es-form-option">'
-				 +		'<div ng-if="!isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-danger es-expection-button">' + EasyAssess.lang.forms.expectOptions.customizeText + '</div>'
-				 + 		'<div ng-if="isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-success es-expection-button">'+ EasyAssess.lang.forms.expectOptions.nonCustomizeText +'</div>'
+				 +		'<div ng-if="!isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-danger es-expection-button">' + EasyAssess.lang.forms.expectOptions.nonCustomizeText + '</div>'
+				 + 		'<div ng-if="isSetted(esGroupRow,esSpecimenColumn)" ng-click="setSpecimenOptions(esGroupRow, esSpecimenColumn)" class="btn btn-success es-expection-button">'+ EasyAssess.lang.forms.expectOptions.customizeText +'</div>'
 		         + '</div>',
 		scope: {
 			esGroupRow: "=",
