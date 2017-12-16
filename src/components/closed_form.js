@@ -8,15 +8,15 @@ EasyAssess.app.ClosedFormController .prototype = EasyAssess.extend({
         $scope.loading = false;
         $scope.activeModel = null;
         $scope.fields = [
-            {title:"考评名称", field:"formName", type:"string",searchable:true,default:true},
-            {title:"状态",field:"status",type:"string",searchable:false,default:false},
-            {title:"提交日期", field:"submitDate", type:"string",searchable:false,default:false},
-            {title:"分数", field:"totalScore", type:"number",searchable:false,default:false},
-            {title:"附加分", field:"additionalScore", type:"number",searchable:false,default:false},
-            {title:"总分", field:"totalScore+additionalScore", type:"number",searchable:false,default:false},
-            {title:"考评发起单位", field:"securedAssessment.ownerName", type:"string",searchable:false,default:false},
+            {title: EasyAssess.lang.pages.assessment.assessmentNameText, field:"formName", type:"string",searchable:true,default:true},
+            {title: EasyAssess.lang.pages.assessment.statusText,field:"status",type:"string",searchable:false,default:false},
+            {title: EasyAssess.lang.pages.forms.submitDate, field:"submitDate", type:"string",searchable:false,default:false},
+            {title: EasyAssess.lang.pages.forms.scoreText, field:"totalScore", type:"number",searchable:false,default:false},
+            {title: EasyAssess.lang.pages.forms.attachmentScoreText, field:"additionalScore", type:"number",searchable:false,default:false},
+            {title: EasyAssess.lang.pages.forms.totalScoreText, field:"totalScore+additionalScore", type:"number",searchable:false,default:false},
+            {title: EasyAssess.lang.pages.forms.assessmentOwnerText, field:"securedAssessment.ownerName", type:"string",searchable:false,default:false},
             {
-                title: "操作",
+                title: EasyAssess.lang.pages.forms.actionText,
                 template: "form_action_column.html",
                 clickHandler: (function ($index, model, $event) {
                     if ($($event.target).attr('es-id') == 'export') {
@@ -29,9 +29,9 @@ EasyAssess.app.ClosedFormController .prototype = EasyAssess.extend({
         ];
 
         this._statusMap = {
-            "A": "未完成",
-            "C": "评审中",
-            "F": "已公布"
+            "A": EasyAssess.lang.pages.assessment.statusUnfilledText,
+            "C": EasyAssess.lang.pages.assessment.statusReviewingText,
+            "F": EasyAssess.lang.pages.assessment.statusPublishedText
         };
     },
 

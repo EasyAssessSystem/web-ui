@@ -119,6 +119,7 @@ module.exports = {
       "msgSaveCompleted": "Save Complete",
       "msgConfirmDelete": "You are sure to delete record",
       "okText": "OK",
+      "backText": "Back",
       "cancelText": "Cancel"
     },
     "assessmentTemplate": {
@@ -159,6 +160,27 @@ module.exports = {
       "msgInvalidNameError": "Name field is required",
       "msgInvalidPasswordError": "Invalid password (please input 3~10 characters)",
       "msgInvalidPasswordNotMatchError": "Please confirm your password"
+    },
+    "forms": {
+      "submitText": "Submit",
+      "formText": "Form",
+      "previewText": "Preview",
+      "uploadAttachmentText": "Attachment",
+      "msgSubmitConfirm": "You won't be able to edit form after submit it, are you sure to submit it?",
+      "msgAttachmentWarning": "NOTE: Each form can only bind with one attachment，attachment will be overwritten if you upload multi-times. And attachment can not be larger than 50MB",
+      "chooseFileText": "Choose file",
+      "viewAttachmentText": "View attachment",
+      "assessmentOwnerText": "Creator",
+      "submitDate": "Submit date",
+      "scoreText": "Score",
+      "totalScoreText": "Total score",
+      "attachmentScoreText": "attachment score",
+      "actionText": "Action",
+      "uploadText": "Upload",
+      "msgSaved": "Saved successfully",
+      "msgUploaded": "Upload successfully",
+      "msgFailed": "Upload failed",
+      "msgChooseFile": "Please choose a file"
     },
     "participants": {
       "orgNameText": "Org Name",
@@ -286,6 +308,9 @@ module.exports = {
       "statusInprogressText": "In progress",
       "statusReviewedText": "Reviewed",
       "statusUnfilledText": "Open",
+      "statusDraftText": "Draft",
+      "statusReviewingText": "Reviewing",
+      "statusPublishedText": "Published",
       "statusFilledText": "Submitted",
       "certificationText": "Certification",
       "supervisorText": "Supervisor",

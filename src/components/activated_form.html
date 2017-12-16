@@ -6,7 +6,7 @@
         <es-form-submit es-form="activeModel" es-type="assess"></es-form-submit>
     </div>
     <div ng-if="activeModel && activeModel.status == 'C' && template">
-        <a ng-click="back()" href="#">返回</a>
+        <a ng-click="back()" href="#">{{lang.pages.common.backText}}</a>
         <es-form-result es-form="activeModel" es-template="template"></es-form-result>
     </div>
 </div>

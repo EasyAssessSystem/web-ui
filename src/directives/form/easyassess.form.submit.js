@@ -9,12 +9,12 @@ EasyAssess.directives["esFormSubmit"]
         template:'<div>'
                      +'<es-form-page>'
                          +'<div>'
-                            +'<button type="button" class="btn btn-primary" ng-click="submit()">提交</button>'
-                            +'<button type="button" class="btn btn-primary" ng-click="manageAttachment()">上传附件</button>'
+                            +'<button type="button" class="btn btn-primary" ng-click="submit()">' + EasyAssess.lang.pages.forms.submitText + '</button>'
+                            +'<button type="button" class="btn btn-primary" ng-click="manageAttachment()">' + EasyAssess.lang.pages.forms.uploadAttachmentText + '</button>'
                             //+'<button ng-if="esType!=\'plan\'" type="button" class="btn btn-primary" ng-click="save()">保存</button>'
                          +'</div>'
                          +'<es-app-tab-pane>'
-                         + '<es-app-tab es-active="true" es-ref="formView" es-title="表单">'
+                         + '<es-app-tab es-active="true" es-ref="formView" es-title="' + EasyAssess.lang.pages.forms.formText + '">'
                             +'<div class="es-page-section">'
                             +'<es-form-header es-header="formHeader" es-editable="false"></es-form-header>'
                             +'</div>'
@@ -25,12 +25,12 @@ EasyAssess.directives["esFormSubmit"]
                             + '</div>'
                             +'</div>'
                             +   '<div style="padding: 10px 0px 10px 0px;">'
-                            +      '<span class="es-form-group-title">填报说明:</span>'
+                            +      '<span class="es-form-group-title">' + EasyAssess.lang.pages.assessmentTemplate.statementText + ':</span>'
                             +      '<es-form-footer ng-if="template" es-editable="false" es-footer="template.footer"></es-form-footer>'
                             +   '</div>'
                             +'</div>'
                          + '</es-app-tab>'
-                         + '<es-app-tab es-ref="preView" es-title="预览">'
+                         + '<es-app-tab es-ref="preView" es-title="' + EasyAssess.lang.pages.forms.previewText + '">'
                          +    '<es-form-result ng-if="template && previewModel" es-form="previewModel" es-template="template"></es-form-result>'
                          + '</es-app-tab>'
                         +'</es-app-tab-pane>'
@@ -74,16 +74,16 @@ EasyAssess.directives["esFormSubmit"]
                 ngDialog.open({
                     template: '<div style="padding: 10px 10px 10px 10px;">'
                             +	'<div class="es-dialog-form-line">'
-                            +  '<span style="color: #9d261d;">注意: 每个表单只能上传一个附件，重复上传会相互覆盖.且文件大小不能大于50MB</span>'
+                            +  '<span style="color: #9d261d;">' + EasyAssess.lang.pages.forms.msgAttachmentWarning+ '</span>'
                             +  '</div>'
                             +  '<es-spinner ng-if="loading"></es-spinner>'
                             +	'<div class="es-dialog-form-line">'
-                             +      '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="50MB" ngf-min-height="100">选择文件</a>'
-                             +      '<a ng-if="attachment" href="{{attachment}}" style="padding-left: 20px;">查看附件</a>'
+                             +      '<a href="javascript:void(0)" class="button" ngf-select ng-model="file" name="file" ngf-max-size="50MB" ngf-min-height="100">' + EasyAssess.lang.pages.forms.chooseFileText + '</a>'
+                             +      '<a ng-if="attachment" href="{{attachment}}" style="padding-left: 20px;">' + EasyAssess.lang.pages.forms.viewAttachmentText + '</a>'
                              +  '</div>'
 
                              +	'<div class="es-dialog-form-line">'
-                             +      '<button type="submit" class="btn btn-primary" ng-click="submit()">上传</button>'
+                             +      '<button type="submit" class="btn btn-primary" ng-click="submit()">' + EasyAssess.lang.pages.forms.uploadText + '</button>'
                              +  '</div>'
                              + '</div>',
                     plain: true,
@@ -91,7 +91,7 @@ EasyAssess.directives["esFormSubmit"]
                         $dialogScope.attachment = $scope.esForm.attachment;
                         $dialogScope.submit = function () {
                             if (!$dialogScope.file) {
-                                EasyAssess.QuickMessage.error("请选择文件");
+                                EasyAssess.QuickMessage.error(EasyAssess.lang.pages.forms.msgChooseFile);
                             } else {
                                 $dialogScope.loading = true;
                                 $dialogScope.upload($dialogScope.file);
@@ -109,10 +109,10 @@ EasyAssess.directives["esFormSubmit"]
                             }).success(function (data, status, headers, config) {
                                 $scope.esForm.attachment = data.data;
                                 $dialogScope.attachment = data.data;
-                                EasyAssess.QuickMessage.message("上传成功");
+                                EasyAssess.QuickMessage.message(EasyAssess.lang.pages.forms.msgUploaded);
                                 $dialogScope.closeThisDialog();
                             }).error(function (data, status, headers, config) {
-                                EasyAssess.QuickMessage.error("上传失败");
+                                EasyAssess.QuickMessage.error(EasyAssess.lang.pages.forms.msgFailed);
                             });
                         };
                     }]
@@ -141,15 +141,15 @@ EasyAssess.directives["esFormSubmit"]
                     $scope.esForm.signatures = $scope.answer.signatures;
 
                     esRequestService.esPut(url, $scope.esForm).then(function(res){
-                        EasyAssess.QuickMessage.message("保存成功");
+                        EasyAssess.QuickMessage.message(EasyAssess.lang.pages.forms.msgSaved);
                     });
                 }
             };
 
             $scope.submit = function(){
                 ngDialog.openConfirm({
-                    template:   '<div class="ngdialog-message">答案一旦提交无法修改,是否确定提交?</div>'
-                    + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">确定</button><button ng-click="closeThisDialog()" class="btn btn-primary">取消</button></div>',
+                    template:   '<div class="ngdialog-message">' + EasyAssess.lang.pages.forms.msgSubmitConfirm + '</div>'
+                    + '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.common.okText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.common.cancelText + '</button></div>',
                     plain: true
                 }).then(
                     function(){

@@ -119,6 +119,7 @@ module.exports = {
       "msgSaveCompleted": "保存成功",
       "msgConfirmDelete": "删除操作无法恢复,是否确定要删除?",
       "okText": "确定",
+      "backText": "返回",
       "cancelText": "取消"
     },
     "assessmentTemplate": {
@@ -159,6 +160,27 @@ module.exports = {
       "msgInvalidNameError": "姓名不能为空",
       "msgInvalidPasswordError": "请输入有效密码(长度6到10位的字符)",
       "msgInvalidPasswordNotMatchError": "两次密码不一致"
+    },
+    "forms": {
+      "submitText": "提交",
+      "formText": "表单",
+      "previewText": "预览",
+      "uploadAttachmentText": "上传附件",
+      "msgSubmitConfirm": "答案一旦提交无法修改,是否确定提交?",
+      "msgAttachmentWarning": "注意: 每个表单只能上传一个附件，重复上传会相互覆盖.且文件大小不能大于50MB",
+      "chooseFileText": "选择文件",
+      "viewAttachmentText": "查看附件",
+      "assessmentOwnerText": "考评发起单位",
+      "submitDate": "提交日期",
+      "scoreText": "分数",
+      "totalScoreText": "总分",
+      "attachmentScoreText": "附加分",
+      "actionText": "操作",
+      "uploadText": "上传",
+      "msgSaved": "保存成功",
+      "msgUploaded": "上传成功",
+      "msgFailed": "上传失败",
+      "msgChooseFile": "请选择文件"
     },
     "participants": {
       "orgNameText": "名称",
@@ -286,6 +308,9 @@ module.exports = {
       "statusInprogressText": "进行中",
       "statusReviewedText": "已审核",
       "statusUnfilledText": "未完成",
+      "statusDraftText": "草稿",
+      "statusReviewingText": "评审中",
+      "statusPublishedText": "已发布",
       "statusFilledText": "已提交",
       "certificationText": "证书",
       "supervisorText": "上级",

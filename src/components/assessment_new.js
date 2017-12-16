@@ -249,8 +249,8 @@ EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
             ngDialog.open({
                 template: '<div class="es-dialog-content">'
                           + '<div>'
-                          + EasyAssess.lang.pages.assessment.singleSpecimenCodeText + ': <input type="radio" checked name="codeType" ng-click="normalCodeSelected()"/>'
-                          + EasyAssess.lang.pages.assessment.doubleSpecimenCodeText + ': <input type="radio" name="codeType" ng-click="plainCodeSelected()"/>'
+                          + EasyAssess.lang.pages.assessment.doubleSpecimenCodeText + ': <input type="radio" checked name="codeType" ng-click="normalCodeSelected()"/>'
+                          + EasyAssess.lang.pages.assessment.singleSpecimenCodeText + ': <input type="radio" name="codeType" ng-click="plainCodeSelected()"/>'
                           + '</div>'
                           + '<div><textarea ng-hide="plainCode" class="form-control" style="height:300px;padding-bottom: 10px;" ng-model="codes"></textarea></div>'
                           + '<div><button ng-click="submit()" es-ids="btnSubmit" class="btn btn-primary">' + EasyAssess.lang.pages.assessment.okButtonText + '</button></div></div>',

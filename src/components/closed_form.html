@@ -1,8 +1,8 @@
 <div>
     <div ng-if="!activeModel" class="ds-data-grid">
         <script type="text/ng-template" id="form_action_column.html">
-            <a href="javascript:void(0)" es-id="export" style="width:100px;height:30px;" title="导出Excel">导出</a>
-            <a ng-if="rec.qualifiedForCert" href="javascript:void(0)" es-id="cert" style="width:100px;height:30px;" title="查看证书">证书</a>
+            <a href="javascript:void(0)" es-id="export" style="width:100px;height:30px;" title="{{lang.pages.assessment.exportText}}">{{lang.pages.assessment.exportText}}</a>
+            <a ng-if="rec.qualifiedForCert" href="javascript:void(0)" es-id="cert" style="width:100px;height:30px;" title="{{lang.pages.assessment.certificationText}}">{{lang.pages.assessment.certificationText}}</a>
         </script>
         <es-app-datagrid es-service="assess" es-resource="form/closed" es-columns="fields" es-options="options"></es-app-datagrid>
     </div>
