@@ -17,7 +17,7 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
                   .then(function(){
                       return esRequestService.esPut(EasyAssess.activeEnv.pdm() + 'ministry/myministry',$scope.activeModel.ministries[0])
                   }).then(function(){
-                      EasyAssess.QuickMessage.message("用户信息保存成功");
+                      EasyAssess.QuickMessage.message(EasyAssess.lang.pages.profile.msgProfileSaved);
                       EasyAssess.session.currentUser = $scope.activeModel;
                   }).catch(function(err){
                     console.log(err);
@@ -37,7 +37,7 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
                     return result;
                 },
                 validateResult:true,
-                errorMessage:"姓名不能为空"
+                errorMessage: EasyAssess.lang.pages.profile.msgRequireNameError
             },
             password:{
                 validateMethod: function(value){
@@ -50,7 +50,7 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
                     return result;
                 },
                 validateResult:true,
-                errorMessage:"请输入有效密码(长度6到10位的字符)"
+                errorMessage: EasyAssess.lang.pages.profile.msgInvalidPasswordError
             },
             comfirmPassword:{
                 validateMethod: function(value){
@@ -64,7 +64,7 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
                 },
 
                 validateResult:true,
-                errorMessage:"两次密码不一致"
+                errorMessage: EasyAssess.lang.pages.profile.msgInvalidConfirmPasswordError
             },
             ministryName:{
                 validateMethod: function(value){
@@ -77,7 +77,7 @@ EasyAssess.app.UserDetailController.prototype = EasyAssess.extend({
                     return result;
                 },
                 validateResult:true,
-                errorMessage:"机构名称不能为空"
+                errorMessage: EasyAssess.lang.pages.profile.msgRequireOrgNameError
             }
         };
 
