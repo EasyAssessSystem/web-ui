@@ -120,8 +120,8 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
         };
 
         $scope.viewRecords = function (model) {
-            esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records")
-              .then((function(response){
+            //esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records")
+              //.then((function(response){
                   ngDialog.open({
                       template: '<div class="es-dialog-content">'
                       + '<div style="height: 800px; overflow-y: auto; overflow-x:visible;"><es-iqc-viewer es-plan="plan" es-records="records"></es-iqc-viewer></div>'
@@ -131,9 +131,18 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                       controller: ['$scope', function ($dialog) {
                           $dialog.plan = model;
                           $dialog.records = response.data;
+
+                          $dialog.$on('$targetDateChanged', (function(e, date){
+                            if (date) {
+                              esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records?targetDate=" + date)
+                                .then(function(response){
+                                  $dialog.records = response.data;
+                                });
+                            }
+                          }).bind(this));
                       }]
                   });
-              }).bind(this));
+              //}).bind(this));
         }
 
         $scope.inputRecord = function (model) {

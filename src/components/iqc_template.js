@@ -318,8 +318,8 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
     }
 
     $scope.viewRecords = function (model) {
-      esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records")
-        .then((function(response){
+      //esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records")
+        //.then((function(response){
           ngDialog.open({
             template: '<div class="es-dialog-content">'
             + '<div style="height: 800px; overflow-y: auto; overflow-x:visible;"><es-iqc-viewer es-records="records" es-enable-comment="true" es-plan="plan"></es-iqc-viewer></div>'
@@ -327,11 +327,19 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
             plain: true,
             className: 'ngdialog-theme-default es-large-dialog',
             controller: ['$scope', function ($dialog) {
-              $dialog.records = response.data;
               $dialog.plan = model;
+
+              $dialog.$on('$targetDateChanged', (function(e, date){
+                if (date) {
+                  esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records?targetDate=" + date)
+                    .then(function(response){
+                      $dialog.records = response.data;
+                    });
+                }
+              }).bind(this));
             }]
           });
-        }).bind(this));
+        //}).bind(this));
     }
 
     $scope.$on('$planTemplatesselected', (function (e, model) {
