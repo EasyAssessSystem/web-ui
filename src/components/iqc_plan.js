@@ -130,8 +130,6 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                       className: 'ngdialog-theme-default es-large-dialog',
                       controller: ['$scope', function ($dialog) {
                           $dialog.plan = model;
-                          $dialog.records = response.data;
-
                           $dialog.$on('$targetDateChanged', (function(e, date){
                             if (date) {
                               esRequestService.esGet(EasyAssess.activeEnv.iqc() + "plan/" + model.id + "/records?targetDate=" + date)
