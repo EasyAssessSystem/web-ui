@@ -32,7 +32,7 @@ var MenuTemplate = {
             root: true
         },
         {
-            text:"Assessments",
+            text:"PT",
             icon:"glyphicon-list-alt",
             items: [
                 {
@@ -44,13 +44,13 @@ var MenuTemplate = {
                     link:"assessment"
                 },
                 {
-                    text:"Launch Assessment",
+                    text:"Launch PT",
                     link:"assessment.new"
                 }
             ],
             root: true
         },{
-          text:"My Assessments",
+          text:"My PT",
           icon:"glyphicon-list-alt",
           items:[
               {
