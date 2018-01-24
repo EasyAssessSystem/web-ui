@@ -1,6 +1,7 @@
 var EasyAssess = require('./easyassess.application');
 
 require("./components/assessment");
+require("./components/notices");
 require("./components/user");
 require("./components/user_detail");
 require("./components/template");
@@ -23,6 +24,11 @@ require("./components/iqc_form_active");
 require("./components/iqc_form_closed");
 require("./components/iqc_form_detail");
 
+EasyAssess.app.stateProvider.state('notices', {
+    url:"/notices",
+    templateUrl: 'notices.html',
+    controller:  "noticesController"
+});
 
 EasyAssess.app.stateProvider.state('user', {
     url:"/user",

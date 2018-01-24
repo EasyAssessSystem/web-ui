@@ -62,6 +62,7 @@ require('./directives/form/easyassess.form.iqc.history.grid');
 require('./directives/form/easyassess.form.iqc.plan.summary');
 require('./directives/form/easyassess.form.iqc.statistic.comparison.chart');
 require('./directives/form/easyassess.form.iqc.statistic.comparison.grid');
+require('./directives/form/easyassess.form.notice')
 
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);
 
@@ -77,6 +78,7 @@ app.controller("esApplicationController", function ($scope, $http, $cookies,$sta
                     EasyAssess.session = response.data;
                     buildSession();
                     $scope.authenticated = true;
+                    EasyAssess.TaskManager.start("notices", $state)
                 } else if (response.messages.length > 0) {
                     $scope.error = response.messages[0].message;
                 }
@@ -117,6 +119,15 @@ app.controller("esApplicationController", function ($scope, $http, $cookies,$sta
                     }
                 }
             }
+
+            // TO-DO
+            EasyAssess.session.componentPermissionMap["notices"] = {
+                "get": true,
+                "post": true,
+                "put": true,
+                "delete": true,
+                "usablity": true
+            };
         }
     };
 });

@@ -8,8 +8,6 @@ EasyAssess.app.IQCPlanMinistryController.prototype = EasyAssess.extend({
 
         $scope.plan = $state.current.data.detail;
         $scope.planName = $scope.plan.name;
-        console.log($scope.plan);
-
 
         $scope.health_ministries = [];
         angular.forEach($scope.plan.participants,function(value,key){

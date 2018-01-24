@@ -2,6 +2,7 @@ var angular = require('angular');
 var router = require('angular-ui-router');
 
 require('./components/assessment.html');
+require('./components/notices.html');
 require('./components/user.html');
 require('./components/user_detail.html');
 require('./components/role.html');
