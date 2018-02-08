@@ -367,7 +367,7 @@ EasyAssess.directives["esIqcPlan"]
 							+	'<td>'
 							+		'<table>'
 							+			'<tr>'
-							+				'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td></td></tr></table></td>'
+							+				'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" style="width: auto;" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td></td></tr></table></td>'
 							+			'</tr>'
 							+		'</table>'
 							+	'</td>'
