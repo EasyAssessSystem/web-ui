@@ -7,7 +7,7 @@ EasyAssess.directives["esFormNotice"]
 		restrict: 'E',
 		replace: true,
 		transclude: false,
-		template: '<div>Notice</div>',
+		template: '<div></div>',
 		scope: {
 		},
 		controller: ["$scope", function($scope, $element, $attrs){
