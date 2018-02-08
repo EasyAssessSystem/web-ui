@@ -96,7 +96,7 @@ EasyAssess.directives["esIqcPlanDesigner"]
 		+				'<td>'
 		+					'<table>'
 		+						'<tr>'
-		+							'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeSpecimen(item, specimen)"></span></td></tr></table></td>'
+		+							'<td class="es-form-group-cell" ng-repeat="specimen in item.specimens"><table><tr><td><div class="btn btn-primary" style="width: auto;" ng-click="setSpecimenOptions(specimen)">{{specimen.number}}</div></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeSpecimen(item, specimen)"></span></td></tr></table></td>'
 		+							'<td><es-add-button ng-click="addSpecimen(item)" style="min-width:50px;" es-text="样本" title="添加样本"></es-add-button></td>'
 		+						'</tr>'
 		+					'</table>'
