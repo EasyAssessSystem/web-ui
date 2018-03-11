@@ -33,10 +33,11 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
 
                     } else if ($($event.target).attr('es-id') == 'editNotice') {
                         ngDialog.open({
-                            template: '<div style="padding: 10px 10px 10px 10px;">'
+                            template: '<div style="padding: 10px 10px 10px 10px;height: 700px;overflow-y: auto;">'
                               + '<es-form-notice-editor es-assessment-id="' + model.id + '"></es-form-notice-editor>'
                               +  '</div>',
                             plain: true,
+                            width: 1000,
                             controller: ['$scope', function ($dialogScope) {
 
                             }]

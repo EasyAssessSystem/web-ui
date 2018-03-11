@@ -62,7 +62,6 @@ require('./directives/form/easyassess.form.iqc.history.grid');
 require('./directives/form/easyassess.form.iqc.plan.summary');
 require('./directives/form/easyassess.form.iqc.statistic.comparison.chart');
 require('./directives/form/easyassess.form.iqc.statistic.comparison.grid');
-require('./directives/form/easyassess.form.notice');
 require('./directives/form/easyassess.form.notice.editor');
 
 var app = angular.module("esApplication", [EasyAssess.app.name, "ngCookies"]);

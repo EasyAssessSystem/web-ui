@@ -16,7 +16,7 @@ EasyAssess.directives["esFormNoticeEditor"]
 							+ 				'</tbody>'
 							+ 			'</table>'
 							+					'<es-app-textbox es-placeholder="' + EasyAssess.lang.forms.notice.inputTitleText + '" ng-if="activeModel" es-model="activeModel.subject"></es-app-textbox>'
-							+					'<ng-quill-editor ng-if="activeModel" ng-model="activeModel.content"></ng-quill-editor>'
+							+					'<ng-quill-editor placeholder="' + EasyAssess.lang.forms.notice.placeholderText + '" ng-if="activeModel" ng-model="activeModel.content"></ng-quill-editor>'
 							+					'<es-add-button ng-if="!activeModel" ng-click="createNew()" es-text="' + EasyAssess.lang.forms.notice.addNewButtonText + '"></es-add-button>'
 							+ 				'<div ng-if="activeModel" class="es-dialog-form-line" align="right">'
 							+						'<button ng-click="submit()" class="btn btn-primary">' + EasyAssess.lang.pages.common.okText + '</button>'

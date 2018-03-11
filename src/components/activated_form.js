@@ -5,7 +5,6 @@ EasyAssess.app.ActivatedFormController = function($scope,$state,esRequestService
 
 EasyAssess.app.ActivatedFormController .prototype = EasyAssess.extend({
     _initialize: function($scope,$state) {
-        console.log(EasyAssess.lang.widgets.assessment);
         $scope.fields = [
             {title: EasyAssess.lang.pages.assessment.assessmentNameText, field:"formName", type:"string",searchable:true,default:true},
             {title: EasyAssess.lang.pages.assessment.statusText,field:"status",type:"string",searchable:false,default:false},

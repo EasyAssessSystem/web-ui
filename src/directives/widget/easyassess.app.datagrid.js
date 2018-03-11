@@ -9,7 +9,7 @@ EasyAssess.directives["esAppDatagrid"]
         transclude: true,
         template: function ($element, $attr) {
             var tpl = '<div>'
-                + '<es-app-filter es-search-options="esOptions"></es-app-filter>'
+                + '<es-app-filter ng-if="!esDisableSearch" es-search-options="esOptions"></es-app-filter>'
                 + '<table class="table table-striped">'
                 + '<thead><tr>'
                 + '<th ng-repeat="column in esColumns" style="cursor:pointer;"><span ng-bind="column.title"></span></th>'
@@ -20,7 +20,7 @@ EasyAssess.directives["esAppDatagrid"]
                 + '</tr>'
                 + '</table>'
                 + '<div align="center" style="color:darkgray;font-style: italic;" ng-if="esData.length == 0 && !isLoading">' + EasyAssess.lang.widgets.datagrid.noRecordsText + '</div>'
-                + '<div ng-show="pagination.length">'
+                + '<div ng-if="!esDisablePageNavigation" ng-show="pagination.length">'
                 + '<table><tr><td><ul class="pagination pagination-sm">'
                 + '<li><a ng-click="first()" href="javascript:void(0)"><span class="glyphicon glyphicon-backward"></span></a></li>'
                 + '<li><a ng-click="previous()" href="javascript:void(0)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>'
@@ -44,7 +44,9 @@ EasyAssess.directives["esAppDatagrid"]
             esQuery: "@",
             esId: "@",
             esService:"@",
-            esFormatters: "=?"
+            esFormatters: "=?",
+            esDisableSearch: "=?",
+            esDisablePageNavigation: "=?"
         },
         controller: ["$scope", function ($scope, $element, $attrs) {
             $scope.parent = $scope.$parent;
