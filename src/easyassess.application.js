@@ -82,7 +82,8 @@ EasyAssess.app = angular.module("EasyAssessApp",[
 	require('angular-chart.js'),
 	require('angular-bootstrap-calendar'),
 	require('angular-ui-bootstrap'),
-	require('ng-file-upload')
+	require('ng-file-upload'),
+	require('ng-quill')
 ],function($controllerProvider){
 	EasyAssess.app.controllerProvider = $controllerProvider;
 });

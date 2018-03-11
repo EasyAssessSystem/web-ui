@@ -510,3 +510,5 @@ select {
 .table-striped>tbody>tr:hover, .table-striped>tbody>tr:nth-of-type(odd):hover {
 	background-color: #f2f2f2;
 }
+
+[ng-quill-editor] { display: block; }

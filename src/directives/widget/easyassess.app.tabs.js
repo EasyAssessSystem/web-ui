@@ -6,7 +6,7 @@ EasyAssess.directives["esAppTabPane"]
 		restrict: 'E',
 		replace: true,
 		transclude: true,
-		template:    '<div class="container">'
+		template:    '<div class="">'
 								+ '<ul class="nav nav-tabs">'
 								+	 '<li ng-repeat="tab in tabs" ng-click="select(tab)" ng-class="{active:tab.selected}"><a data-toggle="tab" href="#{{tab.esRef}}">{{tab.esTitle}}</a></li>'
 								+ '</ul>'

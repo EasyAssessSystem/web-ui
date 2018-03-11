@@ -39,6 +39,17 @@ module.exports = {
     }
   },
   "forms": {
+    "notice": {
+      "assetsText": "资源文件",
+      "assetsManagementText": "管理资源",
+      "announcementText": "公告",
+      "announcementManagementsText": "管理公告",
+      "titleText": "标题",
+      "inputTitleText": "请输入标题",
+      "addNewButtonText": "添加",
+      "msgSaveSuccessfullyText": "保存成功",
+      "msgConfirmDeleteText": "确定删除?"
+    },
     "expectOptions": {
       "scoreWeightText": "分值",
       "inputScoreWeightText": "请输入分值",
@@ -328,6 +339,7 @@ module.exports = {
       "additionalScoreText": "附加分",
       "totalScoreText": "总分",
       "exportText": "导出",
+      "noticeText": "公告",
       "deleteText": "删除",
       "reopenText": "重开",
       "rejectText": "打回",

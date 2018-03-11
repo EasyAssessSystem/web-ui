@@ -39,6 +39,17 @@ module.exports = {
     }
   },
   "forms": {
+    "notice": {
+      "assetsText": "Assets",
+      "assetsManagementText": "Manage Assets",
+      "announcementText": "Announcement",
+      "announcementManagementsText": "Manage Announcements",
+      "titleText": "Title",
+      "inputTitleText": "Please input notice title",
+      "addNewButtonText": "Add New",
+      "msgSaveSuccessfullyText": "Save successfully",
+      "msgConfirmDeleteText": "Are you sure to remove?"
+    },
     "expectOptions": {
       "scoreWeightText": "Score weight",
       "inputScoreWeightText": "Please input score weight",
@@ -328,6 +339,7 @@ module.exports = {
       "additionalScoreText": "Additional Score",
       "totalScoreText": "Total Score",
       "exportText": "Export",
+      "noticeText": "Notice",
       "deleteText": "Delete",
       "reopenText": "Re-open",
       "rejectText": "Reject",

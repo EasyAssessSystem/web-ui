@@ -31,6 +31,16 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                           }).bind(this)
                         );
 
+                    } else if ($($event.target).attr('es-id') == 'editNotice') {
+                        ngDialog.open({
+                            template: '<div style="padding: 10px 10px 10px 10px;">'
+                              + '<es-form-notice-editor es-assessment-id="' + model.id + '"></es-form-notice-editor>'
+                              +  '</div>',
+                            plain: true,
+                            controller: ['$scope', function ($dialogScope) {
+
+                            }]
+                        });
                     } else if ($($event.target).attr('es-id') == 'export') {
                         window.open(EasyAssess.activeEnv.assess() + "assessment/excel/" + model.id)
                     } else if ($($event.target).attr('es-id') == 'reopen') {
