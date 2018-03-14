@@ -26,6 +26,7 @@ EasyAssess.directives["esFormNoticeEditor"]
 							+ 				'</div>'
 							+				'</es-app-tab>'
 							+    		'<es-app-tab es-ref="editAssets" es-title="' + EasyAssess.lang.forms.notice.assetsManagementText + '">'
+							+ 				'<es-spinner ng-if="uploading"></es-spinner>'
 							+ 				'<table class="table table-striped" style="margin-top: 10px;">'
 							+ 					'<tbody>'
 							+ 						'<tr ng-if="asset" ng-repeat="asset in assets">'
@@ -36,7 +37,7 @@ EasyAssess.directives["esFormNoticeEditor"]
 							+							'</tr>'
 							+ 					'</tbody>'
 							+ 				'</table>'
-							+					'<a href="javascript:void(0)" ngf-select ng-model="file" ngf-change="upload($file)" name="file" ngf-max-size="50MB" ngf-min-height="100"><es-add-button es-text="' + EasyAssess.lang.forms.notice.addNewButtonText + '"></es-add-button></a>'
+							+					'<a ng-if="!uploading" href="javascript:void(0)" ngf-select ng-model="file" ngf-change="upload($file)" name="file" ngf-max-size="50MB" ngf-min-height="100"><es-add-button es-text="' + EasyAssess.lang.forms.notice.addNewButtonText + '"></es-add-button></a>'
 							+				'</es-app-tab>'
 							+			'</es-app-tab-pane>'
 							+ '</div>',
@@ -59,6 +60,7 @@ EasyAssess.directives["esFormNoticeEditor"]
 			};
 
 			$scope.upload = function (file) {
+				$scope.uploading = true;
 				if (!file) return;
 				Upload.upload({
 					url: EasyAssess.activeEnv.assess() + "assessment/" + $scope.esAssessmentId + "/assets",
@@ -68,8 +70,9 @@ EasyAssess.directives["esFormNoticeEditor"]
 					withCredentials: true
 				}).success(function (data, status, headers, config) {
 					$scope.getAssets();
+					$scope.uploading = false;
 				}).error(function (data, status, headers, config) {
-
+					$scope.uploading = false;
 				});
 			};
 
