@@ -1,10 +1,16 @@
 <div ui-view>
 	<es-app-tab-pane ng-if="!activeModel">
 		<es-app-tab es-title="未读公告" es-active="true" es-ref="assessmentUnreadNoticeTab">
-			<es-app-datagrid es-disable-page-navigation="true" es-page-size="5" es-service="assess" es-resource="readers/mine/articles/unread/list" es-disable-search="true" es-columns="fields" es-options="options"></es-app-datagrid>
+			<!--<script type="text/ng-template" id="unread_notice_button_column.html">-->
+				<!--<a href="javascript:void(0)" style="width:100px;height:30px;">{{lang.forms.notice.markAsReadText}}</a>-->
+			<!--</script>-->
+			<es-app-datagrid es-page-size="10" es-service="assess" es-resource="readers/mine/articles/unread/list" es-disable-search="true" es-columns="fields" es-options="options"></es-app-datagrid>
 		</es-app-tab>
 		<es-app-tab es-title="已读公告"  es-ref="assessmentReadNoticeTab">
-			<es-app-datagrid es-disable-page-navigation="true" es-page-size="5" es-service="assess" es-resource="readers/mine/articles/read/list" es-disable-search="true" es-columns="fields" es-options="options"></es-app-datagrid>
+			<script type="text/ng-template" id="read_notice_button_column.html">
+				<a href="javascript:void(0)" style="width:100px;height:30px;">{{lang.forms.notice.markAsUnReadText}}</a>
+			</script>
+			<es-app-datagrid es-page-size="10" es-service="assess" es-resource="readers/mine/articles/read/list" es-disable-search="true" es-columns="readFields" es-options="options"></es-app-datagrid>
 		</es-app-tab>
 	</es-app-tab-pane>
 	<div ng-if="activeModel">

@@ -55,7 +55,10 @@ module.exports = {
       "downloadText": "Download",
       "copyToClipboardText": "Copy Url to Clipboard",
       "deleteText": "Delete",
-      "msgCopySuccessfullyText": "Asset url has been copied to clipboard"
+      "msgCopySuccessfullyText": "Asset url has been copied to clipboard",
+      "msgUploadingInProgressText": "Uploading is in progress, you need to wait until uploading finish",
+      "markAsUnReadText": "Mark as unread",
+      "markAsReadText": "Mark as read"
     },
     "expectOptions": {
       "scoreWeightText": "Score weight",

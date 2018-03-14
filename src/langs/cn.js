@@ -55,7 +55,10 @@ module.exports = {
       "downloadText": "下载",
       "copyToClipboardText": "复制链接到剪贴板",
       "deleteText": "删除",
-      "msgCopySuccessfullyText": "资源链接已经成功复制到剪贴板"
+      "msgCopySuccessfullyText": "资源链接已经成功复制到剪贴板",
+      "msgUploadingInProgressText": "正在上传，请耐心等待",
+      "markAsUnReadText": "标示成已读",
+      "markAsReadText": "标示成未读"
     },
     "expectOptions": {
       "scoreWeightText": "分值",

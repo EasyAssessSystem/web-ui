@@ -26,8 +26,11 @@ EasyAssess.directives["esFormNoticeEditor"]
 							+ 				'</div>'
 							+				'</es-app-tab>'
 							+    		'<es-app-tab es-ref="editAssets" es-title="' + EasyAssess.lang.forms.notice.assetsManagementText + '">'
-							+ 				'<es-spinner ng-if="uploading"></es-spinner>'
-							+ 				'<table class="table table-striped" style="margin-top: 10px;">'
+							+					'<div ng-if="uploading" style="margin: 10px;">'
+							+ 					'<es-spinner></es-spinner>'
+							+						'<div align="center" style="color:darkgray;font-style: italic;">' + EasyAssess.lang.forms.notice.msgUploadingInProgressText + '</div>'
+							+					'</div>'
+							+ 				'<table ng-if="!uploading" class="table table-striped" style="margin-top: 10px;">'
 							+ 					'<tbody>'
 							+ 						'<tr ng-if="asset" ng-repeat="asset in assets">'
 							+								'<td>{{asset.title}}</td>'
@@ -73,7 +76,7 @@ EasyAssess.directives["esFormNoticeEditor"]
 					$scope.uploading = false;
 				}).error(function (data, status, headers, config) {
 					$scope.uploading = false;
-				});
+				}).progress(function (evt) {});
 			};
 
 			$scope.selectArticle = function (article) {
