@@ -51,7 +51,11 @@ module.exports = {
       "inputTitleText": "Please input notice title",
       "addNewButtonText": "Add New",
       "msgSaveSuccessfullyText": "Save successfully",
-      "msgConfirmDeleteText": "Are you sure to remove?"
+      "msgConfirmDeleteText": "Are you sure to remove?",
+      "downloadText": "Download",
+      "copyToClipboardText": "Copy Url to Clipboard",
+      "deleteText": "Delete",
+      "msgCopySuccessfullyText": "Asset url has been copied to clipboard"
     },
     "expectOptions": {
       "scoreWeightText": "Score weight",

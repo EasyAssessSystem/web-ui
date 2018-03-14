@@ -51,7 +51,11 @@ module.exports = {
       "inputTitleText": "请输入标题",
       "addNewButtonText": "添加",
       "msgSaveSuccessfullyText": "保存成功",
-      "msgConfirmDeleteText": "确定删除?"
+      "msgConfirmDeleteText": "确定删除?",
+      "downloadText": "下载",
+      "copyToClipboardText": "复制链接到剪贴板",
+      "deleteText": "删除",
+      "msgCopySuccessfullyText": "资源链接已经成功复制到剪贴板"
     },
     "expectOptions": {
       "scoreWeightText": "分值",
