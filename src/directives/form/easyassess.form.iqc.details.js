@@ -15,7 +15,7 @@ EasyAssess.directives["esIqcDetails"]
 						+ 					'<table class="table table-striped">'
 						+   					'<tr ng-repeat="item in record.items">'
 						+       					'<td>{{item.subject}}</td>'
-						+       					'<td ng-repeat="specimen in item.specimens">{{specimen.number}}: {{specimen.value}}</td>'
+						+       					'<td ng-repeat="specimen in item.specimens"><a href="javascript:void(0)" title="({{specimen.targetValue}} ±{{specimen.floatValue}})">{{specimen.number}}: {{specimen.value}}</a></td>'
 						+   					'</tr>'
 						+ 					'</table>'
 						+ 					'<table class="table table-striped">'
