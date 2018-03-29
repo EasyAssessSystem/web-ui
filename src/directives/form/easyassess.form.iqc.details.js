@@ -10,7 +10,7 @@ EasyAssess.directives["esIqcDetails"]
 						+'<div class="panel panel-default">'
 						+	'<div class="panel-heading">IQC 历史</div>'
 						+		'<div class="panel-body" style="max-width: 1000px;overflow: auto"">'
-						+ 			'<table class="table table-striped"><tr><td ng-repeat="record in esData"><span>{{record.date}}</span><a ng-click="addComment(record)" ng-if="esEnableComment">添加批注</a></td></tr>'
+						+ 			'<table class="table table-striped"><tr><td ng-repeat="record in esData"><span>{{record.date}}</span><a ng-click="addComment(record)" ng-if="esEnableComment">添加批注</a><a ng-if="allowDelete"><span class="glyphicon glyphicon-remove" ng-click="removeRecord(record)"></span><a></td></tr>'
 						+ 				'<tr><td ng-repeat="record in esData">'
 						+ 					'<table class="table table-striped">'
 						+   					'<tr ng-repeat="item in record.items">'
@@ -51,6 +51,29 @@ EasyAssess.directives["esIqcDetails"]
 		},
 		
 		controller: ["$scope", function($scope){
+			$scope.allowDelete = EasyAssess.session.currentUser.ministries.length == 0;
+
+			$scope.removeRecord = function (record) {
+				ngDialog.openConfirm({
+					template:   '<div class="ngdialog-message">' + EasyAssess.lang.forms.notice.msgConfirmDeleteText + '</div>'
+					+ '<div align="right"><button ng-click="confirm()" class="btn btn-primary">' + EasyAssess.lang.pages.common.okText + '</button><button ng-click="closeThisDialog()" class="btn btn-primary">' + EasyAssess.lang.pages.common.cancelText + '</button></div>',
+					plain: true
+				}).then(
+					function(){
+						esRequestService.esDelete(EasyAssess.activeEnv.iqc() + "plan/record/" + record.id)
+							.then(function(){
+								EasyAssess.QuickMessage.message("删除成功");
+								$scope.esData = $scope.esData.filter(function (r) {
+									return record.id != r.id;
+								});
+								$scope.$broadcast('$refresh');
+							});
+					},
+					function(reason){
+					}
+				);
+			};
+
 			$scope.addComment = function (record) {
 				ngDialog.open({
 					template: '<div class="es-dialog-content">'
