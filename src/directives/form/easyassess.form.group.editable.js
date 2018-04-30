@@ -13,6 +13,7 @@ EasyAssess.directives["esFormGroupEdit"]
         scope: {
             esGroup:"=",
             esData:"=?",
+            esForm:"=?",
             esType:"@"
         },
         template:'<div class="es-form-group">'
@@ -31,7 +32,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +					'</table>'
         +				'</td>'
         +				'<td>'
-        +					'<es-form-group-specimens-assess ng-if="esType == \'assess\'" es-data="esData" es-group="esGroup"></es-form-group-specimens-assess>'
+        +					'<es-form-group-specimens-assess ng-if="esType == \'assess\'" es-data="esData" es-form="esForm" es-group="esGroup"></es-form-group-specimens-assess>'
         +					'<es-form-group-specimens-track ng-if="esType != \'assess\'" es-data="esData" es-group="esGroup"></es-form-group-specimens-track>'
         +				'</td>'
         +  			'<td>'
@@ -41,7 +42,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
         +							'<td class="es-form-group-cell" ng-repeat="group in esGroup.codeGroups">'
-        +                 '<div style="min-height:46px;"><es-app-lookup ng-if="!row.disableCodeGroup" subject-guid="{{row.guid}}" code-group-guid="{{group.guid}}" es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject="row" es-value-field="codeNumber"></es-app-lookup></div>'
+        +                 '<div style="min-height:46px;"><es-app-lookup ng-if="!row.disableCodeGroup" es-model="getCodeValue(row, group)" es-lookup-guid="{{row.guid}}-{{group.guid}}" subject-guid="{{row.guid}}" code-group-guid="{{group.guid}}" es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject="row" es-value-field="codeNumber"></es-app-lookup></div>'
         +              '</td>'
         +						'</tr>'
         +					'</table>'
@@ -54,8 +55,8 @@ EasyAssess.directives["esFormGroupEdit"]
         //+							'<td class="es-form-group-cell"><span class="es-form-group-title">检测日期</span></td>'
         +						'</tr>'
         +            '<tr style="height: 46px;" ng-repeat="row in esGroup.rows">'
-        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" ng-blur="detailChanged(row, \'batchNumber\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputBatchCodeText + '"/></td>'
-        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" ng-blur="detailChanged(row, \'expire\', $event)" placeholder="' + EasyAssess.lang.forms.group.inputExpireDateText + '"/></td>'
+        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" value="{{getDetailValue(row, \'batchNumber\')}}" ng-blur="detailChanged(row, \'batchNumber\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputBatchCodeText + '"/></td>'
+        +               '<td class="es-form-group-cell"><input ng-if="!row.disableCodeGroup" class="es-form-signature-line" value="{{getDetailValue(row, \'expire\')}}" ng-blur="detailChanged(row, \'expire\', $event)" placeholder="' + EasyAssess.lang.forms.group.inputExpireDateText + '"/></td>'
         // +               '<td class="es-form-group-cell"><es-app-calendar es-id="row" es-date="testDate" es-holder="请输入时间"></es-app-calendar></td>'
         +            '</tr>'
         +           '</table>'
@@ -65,19 +66,19 @@ EasyAssess.directives["esFormGroupEdit"]
         +   '<table style="width: 100%;">'
         +       '<tr>'
         +           '<td style="width: 60%;"></td>'
-        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'tester\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputTesterText + '"/></td>'
-        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="testDate" es-date="testDate" es-holder="' + EasyAssess.lang.forms.group.inputTestDateText + '"></es-app-calendar></td>'
+        +           '<td align="right" class="es-form-group-cell"><input value="{{getSignatureValue(\'tester\')}}" class="es-form-signature-line" ng-blur="signatureChanged(\'tester\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputTesterText + '"/></td>'
+        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="testDate" es-date="{{getSignatureValue(\'testDate\')}}" es-holder="' + EasyAssess.lang.forms.group.inputTestDateText + '"></es-app-calendar></td>'
         +       '</tr>'
         +       '<tr>'
         +           '<td style="width: 60%;"></td>'
-        +           '<td align="right" class="es-form-group-cell"><input class="es-form-signature-line" ng-blur="signatureChanged(\'reviewer\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputReviewerText + '"/></td>'
-        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="reviewDate" es-date="reviewDate" es-holder="' + EasyAssess.lang.forms.group.inputReviewDateText + '"></es-app-calendar></td>'
+        +           '<td align="right" class="es-form-group-cell"><input value="{{getSignatureValue(\'reviewer\')}}" class="es-form-signature-line" ng-blur="signatureChanged(\'reviewer\' ,$event)" placeholder="' + EasyAssess.lang.forms.group.inputReviewerText + '"/></td>'
+        +           '<td align="center" class="es-form-group-cell"><es-app-calendar es-id="reviewDate" es-date="{{getSignatureValue(\'reviewDate\')}}" es-holder="' + EasyAssess.lang.forms.group.inputReviewDateText + '"></es-app-calendar></td>'
         +       '</tr>'
         +       '<tr>'
         +           '<td style="width: 60%;"></td>'
         +           '<td colspan="2">'
         +               '<span class="es-form-group-title" align="left">' + EasyAssess.lang.forms.group.commentText + ':</span>'
-        +               '<textarea ng-blur="signatureChanged(\'comments\' ,$event)" class="form-control" rows="3"></textarea>'
+        +               '<textarea ng-blur="signatureChanged(\'comments\' ,$event)" class="form-control" rows="3">{{getSignatureValue(\'comments\')}}</textarea>'
         +           '</td>'
         +       '</tr>'
         +   '</table>'
@@ -111,6 +112,23 @@ EasyAssess.directives["esFormGroupEdit"]
                 $scope.hideDate = false;
             };
 
+            $scope.getCodeValue = function (row, group) {
+                if (!$scope.esForm) return null;
+                var code = $scope.esForm.codes.find(function (c) {
+                    return c.subjectGuid === row.guid && c.codeGroup.guid === group.guid;
+                });
+                if (!code) return null;
+                return code.codeNumber;
+            };
+
+            $scope.getDetailValue = function(row, field){
+                if (!$scope.esForm) return null;
+                var detail = $scope.esForm.details.find(function (d) {
+                    return d.subjectGuid === row.guid;
+                });
+                return detail ? detail[field] : null;
+            };
+
             $scope.detailChanged = function(row, field ,e){
                 var targetValue = $(e.target).val();
                 var value = {
@@ -118,6 +136,12 @@ EasyAssess.directives["esFormGroupEdit"]
                     value:targetValue
                 };
                 $scope.$emit(field + 'Changed',value);
+            };
+
+            $scope.getSignatureValue = function(field){
+                if (!$scope.esForm) return null;
+                if (!$scope.esForm.signatures[$scope.esGroup.guid]) return null;
+                return $scope.esForm.signatures[$scope.esGroup.guid][field];
             };
 
             $scope.signatureChanged = function(field ,e){

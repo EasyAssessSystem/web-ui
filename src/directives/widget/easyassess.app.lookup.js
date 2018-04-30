@@ -3,7 +3,7 @@ var EasyAssess = require('../../easyassess.application');
 EasyAssess.builders.register("esAppLookup", "textfield", function(){
 	var html = '<label ng-if="esLabel">{{esLabel}}</label>'
 		+ '<div ng-hide="esReadonly" class="input-group" style="width:{{esWidth}}px;">'
-		+ '<input ng-model="esModel" style="height:36px;" ng-readonly="esEditable" type="text" class="form-control">'
+		+ '<input value="esData" ng-model="esModel" style="height:36px;" ng-readonly="esEditable" type="text" class="form-control">'
 		+ '<span ng-click="lookup()" class="input-group-addon" style="cursor:pointer;"><span class="glyphicon glyphicon-search"></span></span>'
 		+ '</div>'
 		+ '<div ng-hide="!esReadonly">{{esModel}}</div>';

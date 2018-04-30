@@ -11,11 +11,12 @@ EasyAssess.directives["esAppCalendar"]
         + '</div>',
         scope: {
             esId:"@?",
-            esHolder:"@"
+            esHolder:"@",
+            esDate: "@?"
         },
         controller: ["$scope", function($scope, $element, $attrs){
             $scope.hideView = true;
-            $scope.esDate = '';
+            if (!$scope.esDate) $scope.esDate = '';
 
             $scope.closeStartPop = function(){
                 $scope.hideView = true;

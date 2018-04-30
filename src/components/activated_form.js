@@ -32,7 +32,7 @@ EasyAssess.app.ActivatedFormController .prototype = EasyAssess.extend({
 
     _select: function(model) {
         this.$scope.template = null;
-        if (model.status == "A") {
+        if (model.status == "A" || model.status == "S") {
             this.$scope.activeModel = model;
         } else if (model.status == "C") {
             var url = EasyAssess.activeEnv['assess']() + 'template/' + model.securedAssessment.templateGuid;

@@ -187,6 +187,7 @@ module.exports = {
       "formText": "表单",
       "previewText": "预览",
       "uploadAttachmentText": "上传附件",
+      "saveText": "保存",
       "msgSubmitConfirm": "答案一旦提交无法修改,是否确定提交?",
       "msgAttachmentWarning": "注意: 每个表单只能上传一个附件，重复上传会相互覆盖.且文件大小不能大于50MB",
       "chooseFileText": "选择文件",

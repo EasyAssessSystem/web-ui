@@ -187,6 +187,7 @@ module.exports = {
       "formText": "Form",
       "previewText": "Preview",
       "uploadAttachmentText": "Attachment",
+      "saveText": "Save",
       "msgSubmitConfirm": "You won't be able to edit form after submit it, are you sure to submit it?",
       "msgAttachmentWarning": "NOTE: Each form can only bind with one attachment，attachment will be overwritten if you upload multi-times. And attachment can not be larger than 50MB",
       "chooseFileText": "Choose file",

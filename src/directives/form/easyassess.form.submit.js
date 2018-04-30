@@ -11,7 +11,7 @@ EasyAssess.directives["esFormSubmit"]
                          +'<div>'
                             +'<button type="button" class="btn btn-primary" ng-click="submit()">' + EasyAssess.lang.pages.forms.submitText + '</button>'
                             +'<button type="button" class="btn btn-primary" ng-click="manageAttachment()">' + EasyAssess.lang.pages.forms.uploadAttachmentText + '</button>'
-                            //+'<button ng-if="esType!=\'plan\'" type="button" class="btn btn-primary" ng-click="save()">保存</button>'
+                            +'<button ng-if="esType!=\'plan\'" type="button" class="btn btn-primary" ng-click="save()">' + EasyAssess.lang.pages.forms.saveText + '</button>'
                          +'</div>'
                          +'<es-app-tab-pane>'
                          + '<es-app-tab es-active="true" es-ref="formView" es-title="' + EasyAssess.lang.pages.forms.formText + '">'
@@ -21,7 +21,7 @@ EasyAssess.directives["esFormSubmit"]
                             +'<div style="position: relative">'
                             +'<div style="width: 100%; overflow-x:auto; overflow-y: visible;">'
                             +'<div ng-repeat="group in template.groups" class="es-page-section">'
-                            +'<es-form-group-edit es-type="{{esType}}" es-group="group" es-data="helpData"></es-form-group-edit>'
+                            +'<es-form-group-edit es-form="esForm" es-type="{{esType}}" es-group="group" es-data="helpData"></es-form-group-edit>'
                             + '</div>'
                             +'</div>'
                             +   '<div style="padding: 10px 0px 10px 0px;">'
@@ -118,8 +118,8 @@ EasyAssess.directives["esFormSubmit"]
                     }]
                 });
             };
-            
-            $scope.answer = {
+
+            $scope.answer = $scope.esForm ? $scope.esForm : {
                 values:[],
                 codes:[],
                 details:[],
@@ -129,7 +129,7 @@ EasyAssess.directives["esFormSubmit"]
             $scope.save = function(){
                 if($scope.esType != 'plan'){
                     angular.forEach($scope.rawCodeList,function(rawCode){
-                        delete rawCode['codeGuid']
+                       // delete rawCode['codeGuid']
                     });
                     $scope.answer.codes = $scope.rawCodeList;
 
@@ -154,7 +154,7 @@ EasyAssess.directives["esFormSubmit"]
                 }).then(
                     function(){
                         angular.forEach($scope.rawCodeList,function(rawCode){
-                            delete rawCode['codeGuid']
+                          //  delete rawCode['codeGuid']
                         });
 
                         $scope.answer.codes = $scope.rawCodeList;
@@ -173,7 +173,11 @@ EasyAssess.directives["esFormSubmit"]
 
             };
 
-            $scope.rawCodeList = [];
+            $scope.rawCodeList = $scope.esForm ? $scope.esForm.codes : [];
+
+            $scope.rawCodeList.forEach(function (c) {
+                c.codeGuid = c.subjectGuid + '-' + c.codeGroup.guid;
+            });
 
             $scope.$on('$codeItemLookup_selected',function(e, data, attrs){
                 var subjectGuid = attrs.subjectGuid;

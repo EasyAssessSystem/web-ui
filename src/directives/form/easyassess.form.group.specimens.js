@@ -11,15 +11,16 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
         transclude: false,
         scope: {
             esGroup:"=",
-            esData:"=?"
+            esData:"=?",
+            esForm:"=?"
         },
         template:'<div>'
         +					'<table  border="0" cellspacing="0" cellpadding="0" style="float:left;">'
         +						'<tr>'
-        +							'<td class="es-form-group-cell" ng-repeat="specimen in specimens"><table><tr><td class="es-add-button" style="min-width: 50px" ng-click="addNewSample(specimen)"><span>{{specimen.specimenCode}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(specimen)"></span></td></tr></table></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="specimen in specimens"><table><tr><td class="es-add-button" style="min-width: 50px" ng-click="addNewSample(specimen, $index)"><span>{{specimen.specimenCode}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(specimen)"></span></td></tr></table></td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows" style="height: 46px;">'
-        +							'<td class="es-form-group-cell" ng-repeat="specimen in specimens"><div ng-show="isInput(row, specimen).show ==\'true\'"><div ng-show="isInput(row, specimen).input==\'true\'"><input type="number" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)" ></div><div ng-show="isInput(row, specimen).select==\'true\'"><select class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)"><option value=""></option><option ng-repeat="option in getOptions(row, specimen)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="specimen in specimens"><div ng-if="isInput(row, specimen).show ==\'true\'"><div ng-if="isInput(row, specimen).input==\'true\'"><input id="{{row.guid}}-{{specimen.guid}}" type="number" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)" ></div><div ng-if="isInput(row, specimen).select==\'true\'"><select id="{{row.guid}}-{{specimen.guid}}" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)"><option value=""></option><option ng-repeat="option in getOptions(row, specimen)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
         +						'</tr>'
         +					'</table>'
         +        '</div>',
@@ -107,13 +108,15 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                     subjectGuid: row.guid,
                     specimenCode: specimen.specimenCode,
                     specimenGuid: specimen.guid,
-                    value:field
+                    value:field,
+                    pos: specimen.pos
                 };
                 $scope.$emit('valueChanged',value);
             };
 
             // add specimen
-            $scope.addNewSample = function(speciman){
+            $scope.addNewSample = function(speciman, index){
+                speciman.pos = index;
                 ngDialog.open({
                     template: '<div class="es-dialog-content">'
                     +'<div ng-repeat="input in inputs" class="es-dialog-form-line">'
@@ -183,6 +186,23 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                 });
                 return result;
             }
+
+            if ($scope.esForm) {
+                $scope.esForm.values.forEach(function (v) {
+                    var col = $scope.esGroup.specimens.find(function (s) {
+                        return s.guid === v.specimenGuid;
+                    });
+                    var row = $scope.esGroup.rows.find(function (s) {
+                        return s.guid === v.subjectGuid;
+                    });
+                    if (col && row) {
+                        _updateSpecimanList(v.specimenGuid, v.specimenCode, $scope.specimens[v.pos]);
+                        setTimeout(function () {
+                            $('#'+v.subjectGuid + '-' + v.specimenGuid).val(v.value);
+                        }, 500);
+                    }
+                })
+            }
         }]
     }
 });
@@ -203,7 +223,7 @@ EasyAssess.directives["esFormGroupSpecimensTrack"]
         +							'<td class="es-form-group-cell" ng-repeat="specimen in esGroup.specimens"><table><tr><td><span>{{specimen.number}}</span></td></tr></table></td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows" style="height: 46px;">'
-        +							'<td class="es-form-group-cell" ng-repeat="specimen in esGroup.specimens"><div ng-show="isInput(row, specimen).show ==\'true\'"><div ng-show="isInput(row, specimen).input==\'true\'"><input type="text" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)" ></div><div ng-show="isInput(row, specimen).select==\'true\'"><select class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)"><option value=""></option><option ng-repeat="option in getOptions(row, specimen)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="specimen in esGroup.specimens"><div ng-if="isInput(row, specimen).show ==\'true\'"><div ng-if="isInput(row, specimen).input==\'true\'"><input type="text" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)" ></div><div ng-if="isInput(row, specimen).select==\'true\'"><select class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)"><option value=""></option><option ng-repeat="option in getOptions(row, specimen)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
         +						'</tr>'
         +					'</table>'
         +        '</div>',
