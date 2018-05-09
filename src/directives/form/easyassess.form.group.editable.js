@@ -42,7 +42,7 @@ EasyAssess.directives["esFormGroupEdit"]
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows">'
         +							'<td class="es-form-group-cell" ng-repeat="group in esGroup.codeGroups">'
-        +                 '<div style="min-height:46px;"><es-app-lookup ng-if="!row.disableCodeGroup" es-model="getCodeValue(row, group)" es-lookup-guid="{{row.guid}}-{{group.guid}}" subject-guid="{{row.guid}}" code-group-guid="{{group.guid}}" es-resource="code/list/categorized?group_id={{group.id}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject="row" es-value-field="codeNumber"></es-app-lookup></div>'
+        +                 '<div style="min-height:46px;"><es-app-lookup ng-if="!row.disableCodeGroup" es-model="getCodeValue(row, group)" es-lookup-guid="{{row.guid}}-{{group.guid}}" subject-guid="{{row.guid}}" code-group-guid="{{group.guid}}" es-resource="code/list/categorized?group_id={{group.id}}&category_name={{row.item.subject}}" es-columns="codeFields" es-width="100" es-id="codeItemLookup" es-subject="row" es-value-field="codeNumber"></es-app-lookup></div>'
         +              '</td>'
         +						'</tr>'
         +					'</table>'
