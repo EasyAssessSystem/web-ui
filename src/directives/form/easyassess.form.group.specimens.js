@@ -51,10 +51,11 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
             }
 
             $scope.removeColumn = function(specimen) {
+                var specimenCode = specimen.specimenCode;
                 specimen.specimenCode = EasyAssess.lang.forms.group.specimenText;
                 specimen.subjects = [];
                 specimen.guid = null;
-                $scope.$emit('removeSpecimen',specimen.specimenCode);
+                $scope.$emit('removeSpecimen', specimenCode);
             };
 
             function _updateSpecimanList(data,field,speciman){
