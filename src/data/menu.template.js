@@ -50,7 +50,7 @@ var MenuTemplate = {
             ],
             root: true
         },{
-          text:"我的考评",
+          text:"室间质控",
           icon:"glyphicon-list-alt",
           items:[
               {
@@ -63,7 +63,7 @@ var MenuTemplate = {
               }
           ]
         }, {
-           text:"质控管理",
+           text:"室内质控",
            icon:"glyphicon-list-alt",
            items:[
                {
