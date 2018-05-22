@@ -147,6 +147,8 @@ module.exports = {
       "nameText": "名称",
       "newText": "新建",
       "openText": "打开",
+      "createFromScratchText": "创建空白模版",
+      "createFromSharedTemplateText": "从分享的模版创建",
       "saveText": "保存",
       "copyText": "复制",
       "deleteText": "删除",
@@ -158,7 +160,8 @@ module.exports = {
       "cancelButtonText": "取消",
       "msgSaveSuccessText": "保存成功",
       "msgDeleteConfirmText": "删除操作无法恢复,是否确定要删除?",
-      "msgDeleteSuccessText": "删除成功"
+      "msgDeleteSuccessText": "删除成功",
+      "enableSharingText": "分享模版"
     },
     "users": {
       "createUserText": "创建新用户",

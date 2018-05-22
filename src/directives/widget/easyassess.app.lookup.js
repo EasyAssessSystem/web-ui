@@ -12,7 +12,7 @@ EasyAssess.builders.register("esAppLookup", "textfield", function(){
 
 EasyAssess.builders.register("esAppLookup", "button", function(){
 	var html = '<div ng-hide="esReadonly" style="width:{{esWidth}}px;">'
-		+ '<button ng-click="lookup()" type="button" class="btn btn-primary">'
+		+ '<button ng-click="lookup()" type="button" class="btn btn-primary" style="width:{{esWidth}}px;">'
 		+ 	'<span class="glyphicon glyphicon-plus-sign"></span>'
 		+ 	'<span class="es-icon-button-text">{{esLabel}}</span>'
 		+ '</button>'

@@ -147,6 +147,8 @@ module.exports = {
       "nameText": "Name",
       "newText": "New",
       "openText": "Open",
+      "createFromScratchText": "Create empty template",
+      "createFromSharedTemplateText": "Create from shared template",
       "saveText": "Save",
       "copyText": "Copy",
       "deleteText": "Delete",
@@ -158,7 +160,8 @@ module.exports = {
       "cancelButtonText": "Cancel",
       "msgSaveSuccessText": "Save Successfully",
       "msgDeleteConfirmText": "Are you sure to delete this template",
-      "msgDeleteSuccessText": "Delete Successfully"
+      "msgDeleteSuccessText": "Delete Successfully",
+      "enableSharingText": "Share this template"
     },
     "users": {
       "createUserText": "Create new user",
