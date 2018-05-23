@@ -15,6 +15,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 
 		$scope.lookupFields = [
 			{title: EasyAssess.lang.pages.assessmentTemplate.nameText, field:"header.name", type:"string",searchable:true,default:true},
+			{title: EasyAssess.lang.pages.assessmentTemplate.templateScopeTemplateText, field:"enableSharing", type:"string",searchable:false},
 		];
 
 		$scope.groups = [];
@@ -114,6 +115,12 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 						$dialog.closeThisDialog();
 					});
 
+					$dialog.$on('$sharedTemplateLookup_postLookup', (function(e, rows){
+						rows.forEach((function(row){
+							return  row.enableSharing = row.enableSharing ? EasyAssess.lang.pages.assessmentTemplate.publicTemplateText:EasyAssess.lang.pages.assessmentTemplate.privateTemplateText;
+						}).bind(this));
+					}).bind(this));
+
 					$dialog.createFromScratch = function () {
 						$dialog.closeThisDialog();
 						$scope.createFromScratch();
@@ -129,7 +136,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 					$scope.header = {name:null};
 					$scope.footer = {content:null};
 					$scope.groups = [];
-					$scope.sharingOptions.enableSharing = false;
+					$scope.sharingOptions.enableSharing = true;
 				});
 			},100);
 		};
@@ -138,7 +145,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 			$scope.header = model.header;
 			$scope.footer = model.footer;
 			$scope.groups = model.groups;
-			$scope.sharingOptions.enableSharing = model.enableSharing;
+			$scope.sharingOptions.enableSharing = false;
 			$scope.activeModel = null;
 		};
 
@@ -147,6 +154,24 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 			$scope.activeModel = null;
 			$scope.save();
 		}
+
+		$scope.isAdmin = EasyAssess.session.currentUser.ministries.length === 0;
+
+		// $scope.$on('$preLookup', (function(e, condition){
+		// 	if (this._statusMap && condition.by == "status" && condition.keyword) {
+		// 		for (var key in this._statusMap) {
+		// 			if (this._statusMap[key].indexOf(condition.keyword) == 0) {
+		// 				condition.keyword = key;
+		// 			}
+		// 		}
+		// 	}
+		// }).bind(this));
+
+		$scope.$on('$templateLookup_postLookup', (function(e, rows){
+			rows.forEach((function(row){
+				return  row.enableSharing = row.enableSharing ? EasyAssess.lang.pages.assessmentTemplate.publicTemplateText:EasyAssess.lang.pages.assessmentTemplate.privateTemplateText;
+			}).bind(this));
+		}).bind(this));
 	}
 }, {});
 

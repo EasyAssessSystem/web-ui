@@ -96,6 +96,11 @@ EasyAssess.directives["esAppLookup"]
 						$dialog.fields = $scope.esColumns;
 						$dialog.options = $scope.esOptions;
 						$dialog.service = $scope.esService;
+
+						$dialog.$on('$postLookup', function(e, rows){
+							$scope.$emit('$' + $scope.esId + '_postLookup', rows, $attrs);
+						});
+
 						$dialog.$on('$selected', function(e, model){
 							$scope.$emit('$' + $scope.esId + '_selected', model, $attrs);
 

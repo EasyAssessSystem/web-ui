@@ -50,7 +50,7 @@ var MenuTemplate = {
             ],
             root: true
         },{
-          text:"室间质控",
+          text:"室间质评",
           icon:"glyphicon-list-alt",
           items:[
               {

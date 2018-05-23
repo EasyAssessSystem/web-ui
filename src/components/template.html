@@ -19,7 +19,7 @@
             <es-app-tab-pane>
                 <es-app-tab es-active="true" es-ref="designView" es-title="{{lang.pages.assessmentTemplate.designViewText}}">
                     <div style="padding-top: 10px;">
-                        <es-app-checkbox style="padding-top:5px;" es-model="sharingOptions.enableSharing" es-label="{{lang.pages.assessmentTemplate.enableSharingText}}"></es-app-checkbox>
+                        <es-app-checkbox ng-show="isAdmin" style="padding-top:5px;" es-model="sharingOptions.enableSharing" es-label="{{lang.pages.assessmentTemplate.enableSharingText}}"></es-app-checkbox>
                         <es-form-header es-header="header"></es-form-header>
                         <div style="width: 100%;overflow-x: auto;">
                             <div class="es-page-section" ng-repeat="group in groups">

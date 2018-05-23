@@ -161,7 +161,10 @@ module.exports = {
       "msgSaveSuccessText": "Save Successfully",
       "msgDeleteConfirmText": "Are you sure to delete this template",
       "msgDeleteSuccessText": "Delete Successfully",
-      "enableSharingText": "Share this template"
+      "enableSharingText": "Share this template",
+      "templateScopeTemplateText": "Template Scope",
+      "publicTemplateText": "Public",
+      "privateTemplateText": "Private",
     },
     "users": {
       "createUserText": "Create new user",
