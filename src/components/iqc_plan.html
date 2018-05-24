@@ -11,7 +11,7 @@
                             <td style="width: 100px;">
                                 <es-app-lookup ng-if="!selectedGroup" es-service="iqc" es-provider="link" ng-if="!readonly" es-label="加入计划" es-columns="templateFields" es-id="templateLookup" es-resource="template/list/available"></es-app-lookup>
                                 <a ng-click="createPlan()" ng-if="selectedGroup" style="text-decoration: underline;padding-left: 5px;cursor: pointer;">
-                                    创建记录集
+                                    创建检测体系
                                 </a>
                             </td>
                         </tr>
@@ -28,7 +28,7 @@
                     <script type="text/ng-template" id="plan_button_column.html">
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="录入"><span es-id="input" class="glyphicon glyphicon-pencil"></span></a>
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="查看"><span es-id="view" class="glyphicon glyphicon-stats"></span></a>
-                        <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="修改计划"><span es-id="edit" class="glyphicon glyphicon-cog"></span></a>
+                        <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="设置靶值"><span es-id="edit" class="glyphicon glyphicon-cog"></span></a>
                         <a href="javascript:void(0)" style="color:#333;width:100px;height:30px;padding:0 5px 0 5px;" title="删除计划"><span es-id="delete" class="glyphicon glyphicon-trash"></span></a>
                     </script>
                     <es-app-datagrid es-service="iqc" es-resource="group/{{selectedGroup.id}}/plan/list" es-columns="fields" es-options="options"></es-app-datagrid>

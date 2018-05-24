@@ -73,7 +73,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
             ngDialog.open({
                 template: '<div class="es-dialog-content">'
                 +       '<div style="height: 150px; overflow-y: auto; overflow-x:visible;">'
-                +           '<label>记录集名称:</label><input ng-model="name" class="form-control"/>'
+                +           '<label>检测体系名称:</label><input ng-model="name" class="form-control"/>'
                 +           '<div class="es-dialog-form-line" align="right"><button ng-click="submit()" class="btn btn-primary">确定</button></div>'
                 +       '</div>'
                 +'</div>',
@@ -89,7 +89,7 @@ EasyAssess.app.IQCPlanController.prototype = EasyAssess.extend({
                                   $dialog.closeThisDialog();
                               });
                         } else {
-                            EasyAssess.QuickMessage.error("请输入记录集名称");
+                            EasyAssess.QuickMessage.error("请输入检测体系名称");
                         }
                     }
                 }]

@@ -277,7 +277,7 @@ EasyAssess.app.IQCPlanTemplateController.prototype = EasyAssess.extend({
     ];
 
     $scope.planFields = [
-      {title:"记录集名称", field:"name", type:"string", searchable:true, default:true},
+      {title:"检测体系名称", field:"name", type:"string", searchable:true, default:true},
       {
         title: "操作",
         template: "plan_actions.html",
