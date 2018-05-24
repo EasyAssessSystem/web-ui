@@ -71,11 +71,62 @@ app.controller("esApplicationController", function ($scope, $http, $cookies,$sta
         username: '',
         password: ''
     };
+
+    function buildSession() {
+        // component-permission map
+        EasyAssess.session.componentPermissionMap = {};
+        var authentication = EasyAssess.session.authentication;
+        for (var i=0;i<authentication.length;i++) {
+            var rolePermission = authentication[i];
+            for (var j=0;j<rolePermission.permissions.length;j++) {
+                var permission = rolePermission.permissions[j];
+                if (!permission.component) continue;
+                var existingPermission = EasyAssess.session.componentPermissionMap[permission.component];
+                if (existingPermission) {
+                    existingPermission = {
+                        "get": permission.get || existingPermission.get,
+                        "post": permission.post || existingPermission.post,
+                        "put": permission.put || existingPermission.put,
+                        "delete": permission.delete || existingPermission.delete,
+                        "usablity": permission.usablity || existingPermission.usablity
+                    };
+                } else {
+                    EasyAssess.session.componentPermissionMap[permission.component] = {
+                        "get": permission.get,
+                        "post": permission.post,
+                        "put": permission.put,
+                        "delete": permission.delete,
+                        "usability": permission.usability
+                    };
+                }
+            }
+        }
+
+        // TO-DO
+        EasyAssess.session.componentPermissionMap["notices"] = {
+            "get": true,
+            "post": true,
+            "put": true,
+            "delete": true,
+            "usablity": true
+        };
+    }
+
+    $http.get(EasyAssess.activeEnv.pdm('default') + "user/session", {withCredentials: true}).success((function (response) {
+        if (response.data != null) {
+            EasyAssess.session = response.data;
+            buildSession();
+            $scope.authenticated = true;
+            EasyAssess.TaskManager.start("notices", $state);
+        }
+    }).bind(this));
+
     $scope.logon = function () {
         $http.get(EasyAssess.activeEnv.pdm('default') + "user/session/" + $scope.input.username + "/" + $scope.input.password).success(
             (function (response) {
                 if (response.result == "SUCC") {
                     EasyAssess.session = response.data;
+                    $cookies.put("SESSION", EasyAssess.session.sessionKey);
                     buildSession();
                     $scope.authenticated = true;
                     EasyAssess.TaskManager.start("notices", $state)
@@ -86,49 +137,6 @@ app.controller("esApplicationController", function ($scope, $http, $cookies,$sta
         ).error(function(){
             $scope.error = "登录失败";
         });
-
-
-        function buildSession() {
-            $cookies.put("SESSION", EasyAssess.session.sessionKey);
-
-            // component-permission map
-            EasyAssess.session.componentPermissionMap = {};
-            var authentication = EasyAssess.session.authentication;
-            for (var i=0;i<authentication.length;i++) {
-                var rolePermission = authentication[i];
-                for (var j=0;j<rolePermission.permissions.length;j++) {
-                    var permission = rolePermission.permissions[j];
-                    if (!permission.component) continue;
-                    var existingPermission = EasyAssess.session.componentPermissionMap[permission.component];
-                    if (existingPermission) {
-                        existingPermission = {
-                            "get": permission.get || existingPermission.get,
-                            "post": permission.post || existingPermission.post,
-                            "put": permission.put || existingPermission.put,
-                            "delete": permission.delete || existingPermission.delete,
-                            "usablity": permission.usablity || existingPermission.usablity
-                        };
-                    } else {
-                        EasyAssess.session.componentPermissionMap[permission.component] = {
-                            "get": permission.get,
-                            "post": permission.post,
-                            "put": permission.put,
-                            "delete": permission.delete,
-                            "usability": permission.usability
-                        };
-                    }
-                }
-            }
-
-            // TO-DO
-            EasyAssess.session.componentPermissionMap["notices"] = {
-                "get": true,
-                "post": true,
-                "put": true,
-                "delete": true,
-                "usablity": true
-            };
-        }
     };
 });
 
