@@ -27,7 +27,8 @@
             2. &nbsp;<a style="padding-left: 5px;" href="http://rj.baidu.com/soft/detail/14744.html?ald">Chrome(谷歌浏览器)</a><br>
         </div>
     </div>
-    <div id="login-window" ng-if="!authenticated" align="center" style="display: none;">
+    <div ng-if="checking" align="center" style="color:#aaa;padding-top: 50px;">正在建立会话...</div>
+    <div id="login-window" ng-if="!authenticated && !checking" align="center" style="display: none;">
         <div style="position: relative;top:130px;width:600px;heigh:300px;border-radius: 8px 8px 8px 8px;background-color: #5B6A7D;box-shadow: 0 1px 2px 1px rgba(0,0,0,.08), 0 3px 6px rgba(0,0,0,.08);"
              align="left">
             <div style="padding: 20px 30px 0px 30px;">

@@ -112,6 +112,8 @@ app.controller("esApplicationController", function ($scope, $http, $cookies,$sta
         };
     }
 
+    $scope.checking = true;
+
     $http.get(EasyAssess.activeEnv.pdm('default') + "user/session", {withCredentials: true}).success((function (response) {
         if (response.data != null) {
             EasyAssess.session = response.data;
@@ -119,6 +121,7 @@ app.controller("esApplicationController", function ($scope, $http, $cookies,$sta
             $scope.authenticated = true;
             EasyAssess.TaskManager.start("notices", $state);
         }
+        $scope.checking = false;
     }).bind(this));
 
     $scope.logon = function () {
