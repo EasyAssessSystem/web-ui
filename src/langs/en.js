@@ -311,6 +311,7 @@ module.exports = {
       "actionText": "Action"
     },
     "assessment": {
+      "msgNotAllowCreateAssessmentText": "Your account is restricted to use this functionality, contact system admin for more details",
       "msgNewAssessmentConfirmText": "PT won't be changed again, please review your settings. Are you sure to create it?",
       "msgRequireTemplateError": "You have to choose a template",
       "msgRequireAllCertFieldsError": "Please finish your certification settings",

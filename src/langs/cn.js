@@ -311,6 +311,7 @@ module.exports = {
       "actionText": "操作"
     },
     "assessment": {
+      "msgNotAllowCreateAssessmentText": "您的账号无权使用此功能，请联系系统管理员以获得授权",
       "msgNewAssessmentConfirmText": "考评提交后将无法修改,请仔细核实提交的数据.是否确定提交?",
       "msgRequireTemplateError": "没有选择测试模版",
       "msgRequireAllCertFieldsError": "证书字段不能为空",

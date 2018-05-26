@@ -455,8 +455,8 @@ EasyAssess.app.MaintenanceController.prototype = {
     __default: function($scope,ngDialog,esRequestService) {
 
 		$scope.normalStatus = [
-			{text: EasyAssess.lang.pages.common.statusActiveText, value: "U"},
-			{text: EasyAssess.lang.pages.common.statusInactiveText, value: "A"}
+			{text: EasyAssess.lang.pages.common.statusActiveText, value: "A"},
+			{text: EasyAssess.lang.pages.common.statusInactiveText, value: "U"}
 		];
 
 		$scope.$watch('activeModel',function(newValue, oldValue, scope){

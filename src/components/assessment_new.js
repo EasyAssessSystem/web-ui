@@ -5,6 +5,8 @@ EasyAssess.app.assessmentNewController = function ($scope, $element, ngDialog, e
 
 EasyAssess.app.assessmentNewController.prototype = EasyAssess.extend({
     _initialize: function ($scope, $element, ngDialog, esRequestService, $state) {
+        $scope.isActiveUser = EasyAssess.session.currentUser.status === 'A';
+
         $scope.emptyModel = {
             "id": -1,
             "name": "",
