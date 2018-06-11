@@ -21,6 +21,10 @@
                     <div style="padding-top: 10px;">
                         <es-app-checkbox ng-show="isAdmin" style="padding-top:5px;" es-model="sharingOptions.enableSharing" es-label="{{lang.pages.assessmentTemplate.enableSharingText}}"></es-app-checkbox>
                         <es-form-header es-header="header"></es-form-header>
+                        <div style="padding: 10px 0px 10px 0px;">
+                            <span class="es-form-group-title">{{lang.pages.assessmentTemplate.statementText}}:</span>
+                            <es-form-footer es-footer="footer"></es-form-footer>
+                        </div>
                         <div style="width: 100%;overflow-x: auto;">
                             <div class="es-page-section" ng-repeat="group in groups">
                                 <div align="right"><span class="glyphicon glyphicon-remove es-delete-button" title="{{lang.pages.assessmentTemplate.deleteTestGroupText}}"
@@ -31,10 +35,6 @@
                             <div class="es-page-section">
                                 <es-add-button ng-click="addGroup()" es-text="{{lang.pages.assessmentTemplate.addTestGroupText}}"></es-add-button>
                             </div>
-                        </div>
-                        <div style="padding: 10px 0px 10px 0px;">
-                            <span class="es-form-group-title">{{lang.pages.assessmentTemplate.statementText}}:</span>
-                            <es-form-footer es-footer="footer"></es-form-footer>
                         </div>
                     </div>
                 </es-app-tab>

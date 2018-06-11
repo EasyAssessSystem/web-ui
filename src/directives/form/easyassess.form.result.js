@@ -8,6 +8,10 @@ EasyAssess.directives["esFormResult"]
         transclude: false,
         template: '<div>'
                     + '<div class="es-form-header"><span class="es-form-header-text">{{esForm.formName}} ({{esForm.ownerName}})</span></div>'
+                        + '<div style="padding: 10px 0px 10px 0px;">'
+                        +    '<span class="es-form-group-title">' + EasyAssess.lang.forms.group.statementText + ':</span>'
+                        +    '<es-form-footer es-editable="false" es-footer="esTemplate.footer"></es-form-footer>'
+                        + '</div>'
                         + '<div style="overflow-x:auto;">'
                             + '<div class="es-page-section" ng-repeat="group in esTemplate.groups">'
                             + '<div class="es-form-group">'
@@ -86,10 +90,6 @@ EasyAssess.directives["esFormResult"]
                     +   '<div style="padding: 10px 0px 10px 0px;">'
                     +      '<div class="es-form-group-title">' + EasyAssess.lang.pages.assessment.additionalScoreText + ': {{esForm.additionalScore}}</div>'
                     +      '<div class="es-form-group-title">' + EasyAssess.lang.pages.assessment.additionScoreStatementText + ': {{esForm.additationScoreDesc}}</div>'
-                    +   '</div>'
-                    +   '<div style="padding: 10px 0px 10px 0px;">'
-                    +      '<span class="es-form-group-title">' + EasyAssess.lang.forms.group.statementText + ':</span>'
-                    +      '<es-form-footer es-editable="false" es-footer="esTemplate.footer"></es-form-footer>'
                     +   '</div>'
                 + '</div>',
         scope: {
