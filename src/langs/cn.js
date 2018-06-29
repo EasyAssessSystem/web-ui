@@ -358,6 +358,7 @@ module.exports = {
       "totalScoreText": "总分",
       "exportText": "导出",
       "noticeText": "公告",
+      "updateText": "修改",
       "deleteText": "删除",
       "reopenText": "重开",
       "rejectText": "发回",

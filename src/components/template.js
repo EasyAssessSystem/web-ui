@@ -1,17 +1,38 @@
 var EasyAssess = require('../easyassess.application');
 
-EasyAssess.app.TemplateController = function($scope, $timeout, ngDialog, esRequestService, ngDialog) {
+EasyAssess.app.TemplateController = function($scope, $timeout, $state, $stateParams, ngDialog, esRequestService, ngDialog) {
 	this.initialize.apply(this, arguments);
 };
 
 EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
-	initialize: function($scope, $timeout, ngDialog, esRequestService, ngDialog) {
-
+	initialize: function($scope, $timeout, $state, $stateParams, ngDialog, esRequestService, ngDialog) {
 		$scope.lang = EasyAssess.lang;
 
+		$scope.templateGuid = $state.params.id;
 		$scope.sharingOptions = {
 			enableSharing: false
 		};
+
+		if ($scope.templateGuid) {
+			esRequestService.esGet(EasyAssess.activeEnv.assess() + "template/" + $scope.templateGuid).then(
+				function(response) {
+					var model = response.data;
+					$scope.activeModel = model;
+					if (!$scope.activeModel.footer) {
+						$scope.activeModel.footer = {content:null};
+					}
+					$timeout(function(){
+						$scope.$apply(function () {
+							for (var key in model) {
+								if (key == 'enableSharing') continue;
+								$scope[key] = model[key];
+							}
+							$scope.sharingOptions.enableSharing = false;
+						});
+					},100)
+				}
+			);
+		}
 
 		$scope.lookupFields = [
 			{title: EasyAssess.lang.pages.assessmentTemplate.nameText, field:"header.name", type:"string",searchable:true,default:true},
@@ -55,6 +76,7 @@ EasyAssess.app.TemplateController.prototype = EasyAssess.extend({
 					"header": $scope.header,
 					"footer": $scope.footer,
 					"groups": $scope.groups,
+					"status": $scope.status,
 					"enableSharing": $scope.sharingOptions.enableSharing
 				})).then(
 					function(response) {

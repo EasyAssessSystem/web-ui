@@ -358,6 +358,7 @@ module.exports = {
       "totalScoreText": "Total Score",
       "exportText": "Export",
       "noticeText": "Notice",
+      "updateText": "Edit",
       "deleteText": "Delete",
       "reopenText": "Re-open",
       "rejectText": "Reject",

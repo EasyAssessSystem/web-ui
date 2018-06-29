@@ -57,6 +57,8 @@ EasyAssess.app.AssessmentController.prototype = EasyAssess.extend({
                                 }).bind(this));
                           }).bind(this)
                         );
+                    } else if ($($event.target).attr('es-id') == 'edit') {
+                        EasyAssess.TaskManager.start('template.edit', this.$state, null, {id: model.templateGuid});
                     } else {
                         ngDialog.openConfirm({
                             template:   '<div class="ngdialog-message">' + EasyAssess.lang.pages.assessment.msgConfirmDeleteAssessment + '</div>'

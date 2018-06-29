@@ -49,6 +49,15 @@ EasyAssess.app.stateProvider.state('template', {
     controller:  "templateController"
 });
 
+EasyAssess.app.stateProvider.state('template.edit', {
+    url:"/template?id",
+    templateUrl: 'template.html',
+    controller:  "templateController",
+    params: {
+        id: null
+    }
+});
+
 EasyAssess.app.stateProvider.state('role', {
     url:"/role",
     templateUrl: 'role.html',
