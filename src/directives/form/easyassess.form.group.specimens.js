@@ -29,7 +29,7 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
             $scope.specimens = [];
 
             function getPlainSpecimen(code, specimen) {
-                var safeCode = code.replace('/', '%slash%');
+                var safeCode = code.replace('/', '**slash**');
                 var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/group/' + $scope.esGroup.guid + '/specimen/guid/' + safeCode;
                 esRequestService.esGet(url).then(function(res){
                     if(res.data.length >0){
