@@ -20,7 +20,7 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
         +							'<td class="es-form-group-cell" ng-repeat="specimen in specimens"><table><tr><td class="es-add-button" style="min-width: 50px" ng-click="addNewSample(specimen, $index)"><span>{{specimen.specimenCode}}</span></td><td><span class="glyphicon glyphicon-remove es-delete-button" ng-click="removeColumn(specimen)"></span></td></tr></table></td>'
         +						'</tr>'
         +						'<tr ng-repeat="row in esGroup.rows" style="height: 46px;">'
-        +							'<td class="es-form-group-cell" ng-repeat="specimen in specimens"><div ng-if="isInput(row, specimen).show ==\'true\'"><div ng-if="isInput(row, specimen).input==\'true\'"><input id="{{row.guid}}-{{specimen.guid}}" type="number" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)" ></div><div ng-if="isInput(row, specimen).select==\'true\'"><select id="{{row.guid}}-{{specimen.guid}}" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)"><option value=""></option><option ng-repeat="option in getOptions(row, specimen)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
+        +							'<td class="es-form-group-cell" ng-repeat="specimen in specimens"><div ng-if="isInput(row, specimen).show ==\'true\'"><div ng-if="isInput(row, specimen).input==\'true\'"><input id="{{row.guid}}-{{specimen.guid}}" ng-keydown="forceNumber($event)" class="form-control es-form-group-contorl es-number-only" ng-blur="valueChanged(row, specimen, $event)" ></div><div ng-if="isInput(row, specimen).select==\'true\'"><select id="{{row.guid}}-{{specimen.guid}}" class="form-control es-form-group-contorl" ng-blur="valueChanged(row, specimen, $event)"><option value=""></option><option ng-repeat="option in getOptions(row, specimen)" value="{{option.value}}">{{option.value}}</option></select></div></td>'
         +						'</tr>'
         +					'</table>'
         +        '</div>',
@@ -114,6 +114,13 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                     pos: specimen.pos
                 };
                 $scope.$emit('valueChanged',value);
+            };
+
+            $scope.forceNumber = function(evt) {
+                var key = evt.key;
+                if (key.length === 1 && !/[\d|\.|\>|\<|\-|\+]+/g.test(key)) {
+                  evt.preventDefault();
+                }
             };
 
             // add specimen
