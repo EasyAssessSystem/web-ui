@@ -115,6 +115,7 @@ module.exports = {
       "inputSpecimenNumberText": "请输入样本编号",
       "mixedSpecimenNumberText": "样本组成",
       "addMixedSpecimenNumberText": "添加混合样本号",
+      "duplicatedOrInvalidGuidText": "无效或重复的样本号",
       "copyFromExistingSpecimenText": "从其他样本复制",
       "okButtonText": "确定",
       "testItemText": "检测项",

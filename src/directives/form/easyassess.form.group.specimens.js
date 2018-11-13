@@ -168,8 +168,15 @@ EasyAssess.directives["esFormGroupSpecimensAssess"]
                                     var url = EasyAssess.activeEnv['assess']() + 'assessment/' +$scope.esData + '/group/' + $scope.esGroup.guid + '/specimen/guid/' +number;
                                     esRequestService.esGet(url).then(function(res){
                                         if(res.data.length >0){
-                                            _updateSpecimanList(res.data, number, speciman);
-                                            $dialog.closeThisDialog();
+                                            var duplicatedGuid = $scope.specimens.filter(function (item) {
+                                                return item.guid == res.data;
+                                            });
+                                            if (duplicatedGuid && duplicatedGuid.length > 0) {
+                                                EasyAssess.QuickMessage.error(EasyAssess.lang.forms.group.duplicatedOrInvalidGuidText);
+                                            } else {
+                                                _updateSpecimanList(res.data, number, speciman);
+                                                $dialog.closeThisDialog();
+                                            }
                                         }else{
                                             EasyAssess.QuickMessage.error(EasyAssess.lang.forms.group.msgInvalidSpecimenError);
                                         }

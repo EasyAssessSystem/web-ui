@@ -115,6 +115,7 @@ module.exports = {
       "inputSpecimenNumberText": "Please input specimen number",
       "mixedSpecimenNumberText": "Mixed specimen",
       "addMixedSpecimenNumberText": "Add mixed specimen",
+      "duplicatedOrInvalidGuidText": "Invalid Or Duplicated Specimen",
       "copyFromExistingSpecimenText": "Copy from existing specimen",
       "okButtonText": "OK",
       "testItemText": "Test item",
