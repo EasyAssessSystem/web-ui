@@ -22,7 +22,7 @@
     "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
-    "angular": "1.5.5",
+    "angular": "1.8.0",
     "angular-animate": "1.5.5",
     "angular-bootstrap-calendar": "0.23.0",
     "angular-chart.js": "1.0.0",
