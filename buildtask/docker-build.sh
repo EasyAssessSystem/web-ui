@@ -4,4 +4,4 @@ npm install
 
 npm run build
 
-docker build --no-cache=true -f Dockerfile -t registry.cn-beijing.aliyuncs.com/easyassess/web-ui:latest ./
+docker build --no-cache=true -f Dockerfile -t ${DOCKER_REPO}/web-ui:latest ./
