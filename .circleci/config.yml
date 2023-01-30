@@ -16,6 +16,6 @@ jobs:
           name: Push docker image
           command: ./buildtask/docker-push.sh
 workflows:
-  pdm-pipeline:
+  web-ui-pipeline:
     jobs:
       - build-and-test
